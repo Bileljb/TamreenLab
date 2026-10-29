@@ -8,3 +8,8 @@ onlyBuiltDependencies:
   - esbuild
   - prisma
   - sharp
+
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - unrs-resolver
