@@ -1,6 +1,6 @@
 # ADR 001 — Formula engine
 
-- **Status:** proposed, awaiting the developer's decision **D4**
+- **Status:** accepted (D4 decided 2026-10-29); revisit at the launch gate
 - **Date:** 2026-10-29
 - **Decider:** developer
 
@@ -86,4 +86,9 @@ Other HyperFormula findings:
 
 ## Decision
 
-_Pending D4. The developer chooses A, B or C._
+**D4 = Option A**, decided by the developer on 2026-10-29.
+
+- Phase 1 builds a custom evaluator in `packages/engine`, behind the `FormulaEngine` interface, starting from the spike code.
+- **Scope:** implement only the functions used in the Phase 3 lessons (cells and selection; SUM/AVERAGE/MIN/MAX/COUNT; IF/AND/OR; SUMIF/COUNTIF; VLOOKUP; summaries). A function outside that list is added only when a lesson needs it, with tests first. Unsupported functions return `#NAME?`, and `content:lint` will reject lessons that use them.
+- HyperFormula is not a dependency of any shipped package. It stays only in `spikes/formula-engine` as a record of this comparison.
+- **Revisit at the launch gate (after Phase 5):** review the real formula mix from learner attempts and the planned curriculum (dynamic arrays, pivot tables). Then either keep A, or switch the adapter to option B.

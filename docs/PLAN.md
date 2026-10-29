@@ -317,7 +317,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] CI (GitHub Actions): install, typecheck, lint, test, build.
 - [x] **Spike:** implement the same 15 test formulas (SUM, IF, SUMIF, COUNTIFS, VLOOKUP, XLOOKUP, INDEX/MATCH, LEFT/MID/FIND, DATEDIF) with HyperFormula and with a small custom evaluator; compare function coverage, bundle size, correctness and license; write `docs/adr/001-formula-engine.md`.
 **Acceptance**
-- [ ] `pnpm dev` starts web, api and db; `pnpm test` and `pnpm build` pass in CI.
+- [x] `pnpm dev` starts web, api and db; `pnpm test` and `pnpm build` pass in CI.
 - [x] The Arabic RTL home page renders, and a formula inside Arabic text stays LTR.
 - [x] ADR 001 exists with a clear recommendation and a license note.
 **Stop and ask:** present the spike results to the developer before choosing the formula engine (decision D4).
