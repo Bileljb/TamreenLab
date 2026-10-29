@@ -309,17 +309,17 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 ### Phase 0 — Foundations and decisions (2–3 days)
 **Goal:** a clean monorepo, working local dev, and the decisions that are expensive to change later.
 **Tasks**
-- [ ] Scaffold the pnpm + Turborepo workspace per 3.1; TypeScript strict; ESLint, Prettier; Vitest; Playwright with an empty smoke test.
-- [ ] Create `CLAUDE.md` at the repo root from section 9, and copy this file to `docs/PLAN.md`.
-- [ ] `docker-compose.yml` with Postgres; Prisma initialised with the schema in 3.4; first migration; seed script stub.
-- [ ] `apps/web`: Next.js + Tailwind + next-intl, `dir="rtl"`, Arabic font, a placeholder RTL home page, and a Next rewrite from `/api/*` to Express.
-- [ ] `apps/api`: Express + zod + helmet + a health route + error middleware.
-- [ ] CI (GitHub Actions): install, typecheck, lint, test, build.
-- [ ] **Spike:** implement the same 15 test formulas (SUM, IF, SUMIF, COUNTIFS, VLOOKUP, XLOOKUP, INDEX/MATCH, LEFT/MID/FIND, DATEDIF) with HyperFormula and with a small custom evaluator; compare function coverage, bundle size, correctness and license; write `docs/adr/001-formula-engine.md`.
+- [x] Scaffold the pnpm + Turborepo workspace per 3.1; TypeScript strict; ESLint, Prettier; Vitest; Playwright with an empty smoke test.
+- [x] Create `CLAUDE.md` at the repo root from section 9, and copy this file to `docs/PLAN.md`.
+- [x] `docker-compose.yml` with Postgres; Prisma initialised with the schema in 3.4; first migration; seed script stub.
+- [x] `apps/web`: Next.js + Tailwind + next-intl, `dir="rtl"`, Arabic font, a placeholder RTL home page, and a Next rewrite from `/api/*` to Express.
+- [x] `apps/api`: Express + zod + helmet + a health route + error middleware.
+- [x] CI (GitHub Actions): install, typecheck, lint, test, build.
+- [x] **Spike:** implement the same 15 test formulas (SUM, IF, SUMIF, COUNTIFS, VLOOKUP, XLOOKUP, INDEX/MATCH, LEFT/MID/FIND, DATEDIF) with HyperFormula and with a small custom evaluator; compare function coverage, bundle size, correctness and license; write `docs/adr/001-formula-engine.md`.
 **Acceptance**
 - [ ] `pnpm dev` starts web, api and db; `pnpm test` and `pnpm build` pass in CI.
-- [ ] The Arabic RTL home page renders, and a formula inside Arabic text stays LTR.
-- [ ] ADR 001 exists with a clear recommendation and a license note.
+- [x] The Arabic RTL home page renders, and a formula inside Arabic text stays LTR.
+- [x] ADR 001 exists with a clear recommendation and a license note.
 **Stop and ask:** present the spike results to the developer before choosing the formula engine (decision D4).
 
 ### Phase 1 — Exercise engine (1–2 weeks) — the riskiest phase
