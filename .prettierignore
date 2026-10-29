@@ -7,3 +7,4 @@ coverage
 **/migrations/**
 PLAN-Exel Simulator.md
 docs/PLAN.md
+**/next-env.d.ts
