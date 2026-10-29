@@ -1,0 +1,10 @@
+packages:
+  - apps/*
+  - packages/*
+  - spikes/*
+
+onlyBuiltDependencies:
+  - '@prisma/engines'
+  - esbuild
+  - prisma
+  - sharp
