@@ -1,0 +1,139 @@
+// Data model from docs/PLAN.md §3.4. Do not add subscription, premium or certificate fields (§8).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum LessonKind {
+  CONCEPT
+  PRACTICE
+  SUMMARY
+  CASE_STUDY
+}
+
+enum StepType {
+  SELECT_CELL
+  SELECT_RANGE
+  ENTER_VALUE
+  ENTER_FORMULA
+  SHORTCUT
+  MULTIPLE_CHOICE
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           String           @id @default(cuid())
+  email        String           @unique
+  passwordHash String
+  displayName  String
+  role         Role             @default(USER)
+  locale       String           @default("ar")
+  createdAt    DateTime         @default(now())
+  attempts     Attempt[]
+  progress     LessonProgress[]
+  points       PointEvent[]
+  streak       Streak?
+}
+
+model Track {
+  id      String   @id @default(cuid())
+  slug    String   @unique
+  titleAr String
+  order   Int
+  lessons Lesson[]
+}
+
+model Lesson {
+  id        String           @id @default(cuid())
+  trackId   String
+  track     Track            @relation(fields: [trackId], references: [id])
+  slug      String           @unique
+  order     Int
+  kind      LessonKind
+  titleAr   String
+  summaryAr String
+  minutes   Int
+  status    PublishStatus    @default(DRAFT)
+  seoJson   Json? // title, description, faq for the lesson page
+  steps     Step[]
+  progress  LessonProgress[]
+}
+
+model Step {
+  id         String    @id @default(cuid())
+  lessonId   String
+  lesson     Lesson    @relation(fields: [lessonId], references: [id])
+  order      Int
+  type       StepType
+  promptAr   String // markdown-lite, glossary terms marked
+  sheetJson  Json // initial cells, visible range, formats
+  checkJson  Json // check spec (see §3.5)
+  hintAr     String?
+  explainAr  String?
+  basePoints Int       @default(300)
+  attempts   Attempt[]
+
+  @@unique([lessonId, order])
+}
+
+model Attempt {
+  id        String   @id @default(cuid())
+  userId    String
+  stepId    String
+  correct   Boolean
+  firstTry  Boolean
+  timeMs    Int
+  answer    Json
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  step      Step     @relation(fields: [stepId], references: [id])
+
+  @@index([userId, stepId])
+}
+
+model LessonProgress {
+  userId       String
+  lessonId     String
+  stepsDone    Int       @default(0)
+  completedAt  DateTime?
+  firstTryRate Float?
+  user         User      @relation(fields: [userId], references: [id])
+  lesson       Lesson    @relation(fields: [lessonId], references: [id])
+
+  @@id([userId, lessonId])
+}
+
+// Ledger: leaderboards are SUM() by day.
+model PointEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  delta     Int
+  reason    String
+  day       DateTime @db.Date
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([day, userId])
+}
+
+model Streak {
+  userId  String    @id
+  current Int       @default(0)
+  longest Int       @default(0)
+  lastDay DateTime? @db.Date
+  user    User      @relation(fields: [userId], references: [id])
+}
