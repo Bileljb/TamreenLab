@@ -355,12 +355,12 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 **Goal:** author lessons as files, validate them, load them into Postgres.
 **Tasks**
 - [x] Content format (JSON or YAML) = the step spec from 3.5 plus lesson metadata. `pnpm content:lint` validates with zod, runs a reference solution for every step through the engine, checks glossary terms, and rejects empty or duplicated step prompts.
-- [ ] `pnpm content:sync` upserts tracks, lessons and steps into Postgres, idempotently.
+- [x] `pnpm content:sync` upserts tracks, lessons and steps into Postgres, idempotently.
 - [ ] `docs/CONTENT.md`: step-writing rules (one idea per step, 5–8 steps per lesson, worked example first), Arabic style (neutral Modern Standard Arabic, short sentences, English term in brackets on first use), dataset rules (original data, local currencies and names).
 - [ ] Author the first 20 lessons: cells and selection (3), SUM/AVERAGE/MIN/MAX/COUNT (5), IF/AND/OR (3), SUMIF/COUNTIF (4), VLOOKUP (3), two summary lessons.
 **Acceptance**
 - [ ] `content:lint` passes with 0 errors and every step has a verified reference solution.
-- [ ] Running `content:sync` twice produces no diff.
+- [x] Running `content:sync` twice produces no diff.
 **Stop and ask:** the developer arranges the native-Arabic review of the 20 lessons. Record reviewer and date in `docs/CONTENT.md` before they are published.
 
 ### Phase 4 — Backend: auth, attempts, progress, scoring (1–2 weeks)

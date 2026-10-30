@@ -77,6 +77,8 @@ model Step {
   id         String    @id @default(cuid())
   lessonId   String
   lesson     Lesson    @relation(fields: [lessonId], references: [id])
+  /// Stable id from the content file; steps are matched by slug, never by order (ADR 005).
+  slug       String
   order      Int
   type       StepType
   promptAr   String // markdown-lite, glossary terms marked
@@ -88,6 +90,7 @@ model Step {
   attempts   Attempt[]
 
   @@unique([lessonId, order])
+  @@unique([lessonId, slug])
 }
 
 model Attempt {

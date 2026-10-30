@@ -18,7 +18,7 @@
     "db:migrate": "pnpm --filter @tamreen/api db:migrate",
     "db:seed": "pnpm --filter @tamreen/api db:seed",
     "content:lint": "pnpm --filter @tamreen/content content:lint",
-    "content:sync": "node scripts/not-yet.mjs content:sync 3",
+    "content:sync": "pnpm --filter @tamreen/api content:sync",
     "metrics:report": "node scripts/not-yet.mjs metrics:report 5"
   },
   "devDependencies": {
