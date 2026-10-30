@@ -354,7 +354,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 ### Phase 3 — Content pipeline and first curriculum (1–2 weeks; can overlap Phase 4)
 **Goal:** author lessons as files, validate them, load them into Postgres.
 **Tasks**
-- [ ] Content format (JSON or YAML) = the step spec from 3.5 plus lesson metadata. `pnpm content:lint` validates with zod, runs a reference solution for every step through the engine, checks glossary terms, and rejects empty or duplicated step prompts.
+- [x] Content format (JSON or YAML) = the step spec from 3.5 plus lesson metadata. `pnpm content:lint` validates with zod, runs a reference solution for every step through the engine, checks glossary terms, and rejects empty or duplicated step prompts.
 - [ ] `pnpm content:sync` upserts tracks, lessons and steps into Postgres, idempotently.
 - [ ] `docs/CONTENT.md`: step-writing rules (one idea per step, 5–8 steps per lesson, worked example first), Arabic style (neutral Modern Standard Arabic, short sentences, English term in brackets on first use), dataset rules (original data, local currencies and names).
 - [ ] Author the first 20 lessons: cells and selection (3), SUM/AVERAGE/MIN/MAX/COUNT (5), IF/AND/OR (3), SUMIF/COUNTIF (4), VLOOKUP (3), two summary lessons.

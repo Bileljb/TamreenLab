@@ -17,7 +17,7 @@
     "format:check": "prettier --check .",
     "db:migrate": "pnpm --filter @tamreen/api db:migrate",
     "db:seed": "pnpm --filter @tamreen/api db:seed",
-    "content:lint": "node scripts/not-yet.mjs content:lint 3",
+    "content:lint": "pnpm --filter @tamreen/content content:lint",
     "content:sync": "node scripts/not-yet.mjs content:sync 3",
     "metrics:report": "node scripts/not-yet.mjs metrics:report 5"
   },

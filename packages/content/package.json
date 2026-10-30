@@ -1,0 +1,25 @@
+{
+  "name": "@tamreen/content",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Content loading, linting and sync planning. Node only; never bundled for the browser.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "content:lint": "tsx src/cli/lint.ts"
+  },
+  "dependencies": {
+    "@tamreen/engine": "workspace:*",
+    "@tamreen/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "tsx": "4.23.15",
+    "vitest": "5.0.5"
+  }
+}

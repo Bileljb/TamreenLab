@@ -14,6 +14,7 @@
     "a11y": "node scripts/a11y.mjs"
   },
   "dependencies": {
+    "@tamreen/content": "workspace:*",
     "@tamreen/engine": "workspace:*",
     "@tamreen/shared": "workspace:*",
     "@tamreen/ui": "workspace:*",

@@ -1,0 +1,8 @@
+[
+  { "slug": "basics", "titleAr": "الأساسيات", "order": 1 },
+  { "slug": "aggregation", "titleAr": "الجمع والإحصاء", "order": 2 },
+  { "slug": "logic", "titleAr": "الشروط المنطقية", "order": 3 },
+  { "slug": "conditional", "titleAr": "الجمع والعد بشرط", "order": 4 },
+  { "slug": "lookup", "titleAr": "البحث عن البيانات", "order": 5 },
+  { "slug": "review", "titleAr": "المراجعة", "order": 6 }
+]
