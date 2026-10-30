@@ -6,6 +6,13 @@ const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Expected a kebab-case
 export const LESSON_KINDS = ['CONCEPT', 'PRACTICE', 'SUMMARY', 'CASE_STUDY'] as const;
 export const PUBLISH_STATUSES = ['DRAFT', 'PUBLISHED'] as const;
 
+/** A question and answer shown on a public page and in FAQPage structured data. */
+export const FaqItemSchema = z.object({
+  qAr: z.string().trim().min(1),
+  aAr: z.string().trim().min(1),
+});
+export type FaqItem = z.infer<typeof FaqItemSchema>;
+
 /** A lesson file in `content/lessons/<track>/<slug>.json`. `content:lint` adds the rules zod cannot. */
 export const LessonFileSchema = z
   .object({
@@ -18,6 +25,9 @@ export const LessonFileSchema = z
     titleAr: z.string().trim().min(1),
     summaryAr: z.string().trim().min(1),
     minutes: z.number().int().positive(),
+    /** Explanation shown above the player on the public lesson page; paragraphs split by blank lines. */
+    introAr: z.string().trim().min(1).optional(),
+    faq: z.array(FaqItemSchema).optional(),
     steps: z.array(StepSpecSchema).min(1),
   })
   .superRefine((lesson, ctx) => {

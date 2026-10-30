@@ -1,0 +1,49 @@
+{
+  "name": "RIGHT",
+  "slug": "right",
+  "category": "text",
+  "order": 10,
+  "titleAr": "الدالة RIGHT: آخر الحروف",
+  "summaryAr": "تعيد RIGHT عددًا من الحروف من نهاية النص.",
+  "introAr": "`RIGHT` تقتطع آخر حروف من نص، مثل حرف الفئة في نهاية الرمز.",
+  "syntax": "RIGHT(text, [num_chars])",
+  "args": [
+    {
+      "name": "text",
+      "descAr": "النص أو مرجع خلية فيها نص."
+    },
+    {
+      "name": "num_chars",
+      "descAr": "عدد الحروف، والافتراضي 1.",
+      "optional": true
+    }
+  ],
+  "examples": [
+    {
+      "sheet": {
+        "visible": "A1:A3",
+        "cells": {
+          "A1": "رمز الشحنة",
+          "A2": "TUN-1204-B",
+          "A3": "CAI-0087-A"
+        }
+      },
+      "formula": "=RIGHT(A3,1)",
+      "result": "A",
+      "explainAr": "آخر حرف من رمز الشحنة الثانية."
+    }
+  ],
+  "errors": [
+    {
+      "code": "#VALUE!",
+      "causeAr": "عدد الحروف سالب."
+    }
+  ],
+  "faq": [
+    {
+      "qAr": "ماذا لو طلبت حروفًا أكثر من طول النص؟",
+      "aAr": "تعيد `RIGHT` النص كله دون خطأ."
+    }
+  ],
+  "lessons": []
+}

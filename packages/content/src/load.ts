@@ -1,10 +1,12 @@
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import {
+  FunctionFileSchema,
   GlossarySchema,
   LessonFileSchema,
   StyleFileSchema,
   TracksFileSchema,
+  type FunctionFile,
   type Glossary,
   type LessonFile,
   type StyleFile,
@@ -16,6 +18,8 @@ export type RawFile = { path: string; json: unknown } | { path: string; error: s
 
 export type RawContent = {
   lessons: RawFile[];
+  /** `functions/<slug>.json`; empty when the folder does not exist. */
+  functions?: RawFile[];
   tracks: RawFile;
   glossary: RawFile;
   style: RawFile;
@@ -40,18 +44,25 @@ export async function readContent(dir: string): Promise<RawContent> {
         lessons.push(await readJson(dir, `lessons/${track.name}/${file}`));
     }
   }
+  const functions: RawFile[] = [];
+  const functionFiles = await readdir(path.join(dir, 'functions')).catch(() => [] as string[]);
+  for (const file of functionFiles.sort()) {
+    if (file.endsWith('.json')) functions.push(await readJson(dir, `functions/${file}`));
+  }
   const [tracks, glossary, style] = await Promise.all([
     readJson(dir, 'tracks.json'),
     readJson(dir, 'glossary.json'),
     readJson(dir, 'style.json'),
   ]);
-  return { lessons, tracks, glossary, style };
+  return { lessons, functions, tracks, glossary, style };
 }
 
 export type Curriculum = {
   tracks: TracksFile;
   /** In curriculum order. */
   lessons: LessonFile[];
+  /** Function reference pages, in their `order`. */
+  functions: FunctionFile[];
   glossary: Glossary;
   style: StyleFile;
 };
@@ -59,6 +70,9 @@ export type Curriculum = {
 /** The expected location of a lesson file. */
 export const lessonPath = (lesson: { track: string; slug: string }) =>
   `lessons/${lesson.track}/${lesson.slug}.json`;
+
+/** The expected location of a function file. */
+export const functionPath = (fn: { slug: string }) => `functions/${fn.slug}.json`;
 
 function json(file: RawFile): unknown {
   if ('error' in file) throw new Error(`${file.path}: ${file.error}`);
@@ -79,9 +93,18 @@ export async function loadCurriculum(dir: string): Promise<Curriculum> {
     }
     return parsed.data;
   });
+  const functions = (raw.functions ?? []).map((file) => {
+    const parsed = FunctionFileSchema.safeParse(json(file));
+    if (!parsed.success) throw new Error(`${file.path}: ${parsed.error.message}`);
+    if (functionPath(parsed.data) !== file.path) {
+      throw new Error(`${file.path}: must live at ${functionPath(parsed.data)}`);
+    }
+    return parsed.data;
+  });
   return {
     tracks: TracksFileSchema.parse(json(raw.tracks)).sort((a, b) => a.order - b.order),
     lessons: lessons.sort((a, b) => a.order - b.order),
+    functions: functions.sort((a, b) => a.order - b.order),
     glossary: GlossarySchema.parse(json(raw.glossary)),
     style: StyleFileSchema.parse(json(raw.style)),
   };

@@ -38,6 +38,11 @@ const goodLesson = (overrides: Partial<LessonFileInput> = {}): LessonFileInput =
   titleAr: 'الجمع',
   summaryAr: 'ملخص الدرس',
   minutes: 4,
+  introAr: 'شرح قصير للدرس.',
+  faq: [
+    { qAr: 'سؤال أول؟', aAr: 'جواب أول.' },
+    { qAr: 'سؤال ثان؟', aAr: 'جواب ثان.' },
+  ],
   steps: [
     formulaStep('s1'),
     formulaStep('s2'),
@@ -213,6 +218,97 @@ describe('lintContent', () => {
   it('formats issues as file:step — message', () => {
     expect(formatIssue({ file: 'a.json', step: 's1', message: 'bad' })).toBe('a.json:s1 — bad');
     expect(formatIssue({ file: 'a.json', message: 'bad' })).toBe('a.json — bad');
+  });
+});
+
+describe('lesson page text', () => {
+  it('requires an intro and at least two FAQ entries', () => {
+    const issues = messages(
+      lint([goodLesson({ introAr: undefined, faq: [{ qAr: 'س؟', aAr: 'ج.' }] })]),
+    );
+    expect(issues).toContain('missing introAr (the explanation shown above the player)');
+    expect(issues).toContain('needs at least 2 faq entries');
+  });
+
+  it('applies the style rules to the intro and FAQ', () => {
+    const issues = messages(lint([goodLesson({ introAr: 'اكتب الصيغة هنا.' })]));
+    expect(issues).toContain('avoid "صيغة"; use "معادلة"');
+  });
+});
+
+describe('function pages', () => {
+  const goodFunction = (overrides: Record<string, unknown> = {}) => ({
+    name: 'SUM',
+    slug: 'sum',
+    category: 'aggregation',
+    order: 1,
+    titleAr: 'الدالة SUM',
+    summaryAr: 'تجمع الأرقام.',
+    introAr: 'شرح الدالة.',
+    syntax: 'SUM(number1, [number2], ...)',
+    args: [{ name: 'number1', descAr: 'أول رقم أو نطاق.' }],
+    examples: [
+      {
+        sheet: { visible: 'A1:A3', cells: { A1: 2, A2: 3 } },
+        formula: '=SUM(A1:A3)',
+        result: 5,
+        explainAr: 'تجمع الخليتين.',
+      },
+    ],
+    errors: [{ code: '#VALUE!', causeAr: 'نص لا يمكن تحويله.' }],
+    lessons: ['sum-basics'],
+    faq: [{ qAr: 'هل تجمع النصوص؟', aAr: 'لا.' }],
+    ...overrides,
+  });
+  const withFunctions = (...fns: Record<string, unknown>[]) =>
+    lintContent(
+      content([goodLesson()], {
+        functions: fns.map((f) => ({ path: `functions/${f.slug}.json`, json: f })),
+      }),
+    );
+
+  it('passes a good function page', () => {
+    expect(withFunctions(goodFunction())).toEqual([]);
+  });
+
+  it.each<[string, Record<string, unknown>, RegExp]>([
+    [
+      'a wrong example result',
+      { examples: [{ ...goodFunction().examples[0], result: 6 }] },
+      /gives 5, not 6/,
+    ],
+    [
+      'an example that does not use the function',
+      { examples: [{ ...goodFunction().examples[0], formula: '=A1+A2' }] },
+      /does not use SUM/,
+    ],
+    ['an unknown lesson link', { lessons: ['nope'] }, /links to unknown lesson "nope"/],
+    ['a file in the wrong place', { slug: 'other' }, /must live at functions\/other.json/],
+    ['a lower-case name', { name: 'sum' }, /^name:/],
+  ])('rejects %s', (_name, overrides, pattern) => {
+    const fn = goodFunction(overrides);
+    const issues = lintContent(
+      content([goodLesson()], { functions: [{ path: 'functions/sum.json', json: fn }] }),
+    );
+    expect(
+      messages(issues).some((m) => pattern.test(m)),
+      messages(issues).join('\n'),
+    ).toBe(true);
+  });
+
+  it('skips the check for examples marked unverified', () => {
+    const example = {
+      formula: '=SUM(TODAY())',
+      result: 45000,
+      explainAr: 'مثال.',
+      verified: false,
+    };
+    expect(withFunctions(goodFunction({ examples: [example] }))).toEqual([]);
+  });
+
+  it('rejects two pages for the same function', () => {
+    const issues = withFunctions(goodFunction(), goodFunction({ slug: 'sum-copy', order: 2 }));
+    expect(messages(issues)).toContain('name:SUM also used by functions/sum.json');
   });
 });
 

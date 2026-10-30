@@ -1,0 +1,49 @@
+{
+  "name": "LEFT",
+  "slug": "left",
+  "category": "text",
+  "order": 9,
+  "titleAr": "الدالة LEFT: أول الحروف",
+  "summaryAr": "تعيد LEFT عددًا من الحروف من بداية النص.",
+  "introAr": "`LEFT` تقتطع أول حروف من نص، مثل رمز البلد في رقم شحنة. تُحسب البداية من أول حرف في النص المخزّن.",
+  "syntax": "LEFT(text, [num_chars])",
+  "args": [
+    {
+      "name": "text",
+      "descAr": "النص أو مرجع خلية فيها نص."
+    },
+    {
+      "name": "num_chars",
+      "descAr": "عدد الحروف، والافتراضي 1.",
+      "optional": true
+    }
+  ],
+  "examples": [
+    {
+      "sheet": {
+        "visible": "A1:A3",
+        "cells": {
+          "A1": "رمز الشحنة",
+          "A2": "TUN-1204-B",
+          "A3": "CAI-0087-A"
+        }
+      },
+      "formula": "=LEFT(A2,3)",
+      "result": "TUN",
+      "explainAr": "أول ثلاثة حروف من رمز الشحنة."
+    }
+  ],
+  "errors": [
+    {
+      "code": "#VALUE!",
+      "causeAr": "عدد الحروف سالب."
+    }
+  ],
+  "faq": [
+    {
+      "qAr": "من أين تبدأ LEFT في النص العربي؟",
+      "aAr": "من أول حرف في النص المخزّن، وهو أول حرف تقرؤه في الكلمة العربية."
+    }
+  ],
+  "lessons": []
+}

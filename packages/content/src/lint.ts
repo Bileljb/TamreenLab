@@ -11,6 +11,7 @@ import {
   type CellValue,
 } from '@tamreen/engine';
 import {
+  FunctionFileSchema,
   GlossarySchema,
   LessonFileSchema,
   StyleFileSchema,
@@ -21,12 +22,13 @@ import {
   type StepSpec,
   type StyleFile,
 } from '@tamreen/shared';
-import { lessonPath, type RawContent, type RawFile } from './load';
+import { functionPath, lessonPath, type RawContent, type RawFile } from './load';
 
 export type LintIssue = { file: string; step?: string; message: string };
 
 export const MIN_STEPS = 5;
 export const MAX_STEPS = 8;
+export const MIN_FAQ = 2;
 
 type Options = {
   /** Text of docs/CONTENT.md; PUBLISHED lessons must appear in its review log. */
@@ -152,16 +154,7 @@ function lintStep(step: StepSpec, glossary: Glossary, style: StyleFile): string[
     }
   }
 
-  for (const text of texts(step)) {
-    for (const term of glossaryTerms(text)) {
-      if (!(term in glossary) && !(glossaryTermKey(term) in glossary)) {
-        problems.push(`glossary term {{${term}}} is not in glossary.json`);
-      }
-    }
-    for (const bad of avoidedWords(text, style)) {
-      problems.push(`avoid "${bad}"; use "${style.avoid[bad]}"`);
-    }
-  }
+  for (const text of texts(step)) problems.push(...textIssues(text, glossary, style));
   return problems;
 }
 
@@ -205,9 +198,16 @@ export function lintContent(raw: RawContent, options: Options = {}): LintIssue[]
     if (lesson.status === 'PUBLISHED' && !reviewed.has(lesson.slug)) {
       add('PUBLISHED, but not in the review log of docs/CONTENT.md');
     }
-    for (const bad of avoidedWords(`${lesson.titleAr} ${lesson.summaryAr}`, style)) {
-      add(`avoid "${bad}"; use "${style.avoid[bad]}"`);
-    }
+    // The public lesson page needs an explanation and an FAQ (PLAN Phase 5).
+    if (!lesson.introAr) add('missing introAr (the explanation shown above the player)');
+    if ((lesson.faq?.length ?? 0) < MIN_FAQ) add(`needs at least ${MIN_FAQ} faq entries`);
+    const pageTexts = [
+      lesson.titleAr,
+      lesson.summaryAr,
+      lesson.introAr ?? '',
+      ...(lesson.faq ?? []).flatMap((f) => [f.qAr, f.aAr]),
+    ];
+    for (const problem of pageTexts.flatMap((t) => textIssues(t, glossary, style))) add(problem);
 
     for (const step of lesson.steps) {
       const key = step.promptAr.replace(/\s+/g, ' ').trim();
@@ -217,7 +217,75 @@ export function lintContent(raw: RawContent, options: Options = {}): LintIssue[]
       for (const problem of lintStep(step, glossary, style)) add(problem, step.slug);
     }
   }
+
+  lintFunctions(raw.functions ?? [], new Set(slugs.keys()), glossary, style, issues);
   return issues;
+}
+
+/** Function reference pages: valid, unique, linked to real lessons, and every example verified. */
+function lintFunctions(
+  files: RawFile[],
+  lessonSlugs: Set<string>,
+  glossary: Glossary,
+  style: StyleFile,
+  issues: LintIssue[],
+) {
+  const seen = new Map<string, string>();
+  for (const file of files) {
+    const fn = parse(file, FunctionFileSchema, issues);
+    if (!fn) continue;
+    const add = (message: string, step?: string) => issues.push({ file: file.path, step, message });
+    if (functionPath(fn) !== file.path) add(`must live at ${functionPath(fn)}`);
+    for (const key of [`slug:${fn.slug}`, `name:${fn.name}`, `order:${fn.order}`]) {
+      if (seen.has(key)) add(`${key} also used by ${seen.get(key)}`);
+      seen.set(key, file.path);
+    }
+    for (const lesson of fn.lessons) {
+      if (!lessonSlugs.has(lesson)) add(`links to unknown lesson "${lesson}"`);
+    }
+    fn.examples.forEach((example, i) => {
+      const where = `example-${i + 1}`;
+      const used = customEngine.functionsUsed(example.formula);
+      if (!used) return add(`formula ${example.formula} does not parse`, where);
+      if (!used.includes(fn.name)) add(`formula ${example.formula} does not use ${fn.name}`, where);
+      if (!example.verified) return;
+      const actual = new Sheet(example.sheet?.cells ?? {}).evaluate(example.formula);
+      const expected = example.result;
+      const ok =
+        typeof expected === 'number' && typeof actual === 'number'
+          ? Math.abs(actual - expected) < 1e-9
+          : actual === expected;
+      if (!ok)
+        add(
+          `formula ${example.formula} gives ${JSON.stringify(actual)}, not ${JSON.stringify(expected)}`,
+          where,
+        );
+    });
+    const texts = [
+      fn.titleAr,
+      fn.summaryAr,
+      fn.introAr,
+      ...fn.args.map((a) => a.descAr),
+      ...fn.examples.map((e) => e.explainAr),
+      ...fn.errors.map((e) => e.causeAr),
+      ...fn.faq.flatMap((f) => [f.qAr, f.aAr]),
+    ];
+    for (const problem of texts.flatMap((t) => textIssues(t, glossary, style))) add(problem);
+  }
+}
+
+/** Glossary terms that do not resolve, and discouraged words, in one learner-facing text. */
+function textIssues(text: string, glossary: Glossary, style: StyleFile): string[] {
+  const problems: string[] = [];
+  for (const term of glossaryTerms(text)) {
+    if (!(term in glossary) && !(glossaryTermKey(term) in glossary)) {
+      problems.push(`glossary term {{${term}}} is not in glossary.json`);
+    }
+  }
+  for (const bad of avoidedWords(text, style)) {
+    problems.push(`avoid "${bad}"; use "${style.avoid[bad]}"`);
+  }
+  return problems;
 }
 
 export function formatIssue(issue: LintIssue): string {

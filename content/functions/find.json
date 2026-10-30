@@ -1,0 +1,53 @@
+{
+  "name": "FIND",
+  "slug": "find",
+  "category": "text",
+  "order": 12,
+  "titleAr": "الدالة FIND: موقع نص داخل نص",
+  "summaryAr": "تعيد FIND رقم موقع أول ظهور لنص داخل نص آخر، وتفرّق بين الحروف الكبيرة والصغيرة.",
+  "introAr": "`FIND` تبحث عن نص قصير داخل نص أطول، وتعيد رقم موقعه. تفرّق بين الحروف الكبيرة والصغيرة، أما `SEARCH` فلا تفرّق.",
+  "syntax": "FIND(find_text, within_text, [start_num])",
+  "args": [
+    {
+      "name": "find_text",
+      "descAr": "ما تبحث عنه."
+    },
+    {
+      "name": "within_text",
+      "descAr": "النص الذي تبحث فيه."
+    },
+    {
+      "name": "start_num",
+      "descAr": "الموقع الذي يبدأ منه البحث، والافتراضي 1.",
+      "optional": true
+    }
+  ],
+  "examples": [
+    {
+      "sheet": {
+        "visible": "A1:A3",
+        "cells": {
+          "A1": "رمز الشحنة",
+          "A2": "TUN-1204-B",
+          "A3": "CAI-0087-A"
+        }
+      },
+      "formula": "=FIND(\"-\",A2)",
+      "result": 4,
+      "explainAr": "أول شرطة في الحرف الرابع."
+    }
+  ],
+  "errors": [
+    {
+      "code": "#VALUE!",
+      "causeAr": "النص غير موجود، أو اختلف حجم الحروف."
+    }
+  ],
+  "faq": [
+    {
+      "qAr": "ما الفرق بين FIND وSEARCH؟",
+      "aAr": "`FIND` تفرّق بين الحروف الكبيرة والصغيرة ولا تقبل النجمة، و`SEARCH` لا تفرّق."
+    }
+  ],
+  "lessons": []
+}

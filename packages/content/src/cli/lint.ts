@@ -16,5 +16,7 @@ const steps = raw.lessons.reduce(
 );
 
 for (const issue of issues) console.error(formatIssue(issue));
-console.log(`content:lint: ${raw.lessons.length} lessons, ${steps} steps, ${issues.length} errors`);
+console.log(
+  `content:lint: ${raw.lessons.length} lessons, ${steps} steps, ${raw.functions?.length ?? 0} functions, ${issues.length} errors`,
+);
 process.exit(issues.length ? 1 : 0);
