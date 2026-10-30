@@ -146,7 +146,12 @@ describe('answers and attempts', () => {
   });
 
   it('rejects a client-supplied "correct" flag', () => {
-    const clean = { stepId: 's1', answer: { cell: 'A1' }, timeMs: 1200 };
+    const clean = {
+      lessonSlug: 'sum-basics',
+      stepSlug: 's1',
+      answer: { cell: 'A1' },
+      timeMs: 1200,
+    };
     expect(AttemptRequestSchema.safeParse({ ...clean, correct: true }).success).toBe(false);
     expect(AttemptRequestSchema.safeParse(clean).success).toBe(true);
   });

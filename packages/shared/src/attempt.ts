@@ -63,12 +63,23 @@ export const AnswerSchema = z.union([
 ]);
 export type Answer = z.output<typeof AnswerSchema>;
 
-/** `POST /attempts` body. There is deliberately no "correct" field: the API decides. */
+const slug = z
+  .string()
+  .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)
+  .max(80);
+
+/**
+ * `POST /attempts` body. Steps are addressed by their content slugs (ADR 006). There is
+ * deliberately no "correct" field: the API decides. The flags can only lower the points.
+ */
 export const AttemptRequestSchema = z
   .object({
-    stepId: z.string().min(1).max(64),
-    answer: AnswerSchema,
+    lessonSlug: slug,
+    stepSlug: slug,
+    answer: z.unknown(),
     timeMs: z.number().int().nonnegative().max(86_400_000),
+    hintUsed: z.boolean().default(false),
+    answerShown: z.boolean().default(false),
   })
   .strict();
 export type AttemptRequest = z.infer<typeof AttemptRequestSchema>;

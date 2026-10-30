@@ -36,17 +36,18 @@ enum PublishStatus {
 }
 
 model User {
-  id           String           @id @default(cuid())
-  email        String           @unique
-  passwordHash String
-  displayName  String
-  role         Role             @default(USER)
-  locale       String           @default("ar")
-  createdAt    DateTime         @default(now())
-  attempts     Attempt[]
-  progress     LessonProgress[]
-  points       PointEvent[]
-  streak       Streak?
+  id            String           @id @default(cuid())
+  email         String           @unique
+  passwordHash  String
+  displayName   String
+  role          Role             @default(USER)
+  locale        String           @default("ar")
+  createdAt     DateTime         @default(now())
+  attempts      Attempt[]
+  progress      LessonProgress[]
+  points        PointEvent[]
+  streak        Streak?
+  refreshTokens RefreshToken[]
 }
 
 model Track {
@@ -102,7 +103,7 @@ model Attempt {
   timeMs    Int
   answer    Json
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   step      Step     @relation(fields: [stepId], references: [id])
 
   @@index([userId, stepId])
@@ -114,7 +115,7 @@ model LessonProgress {
   stepsDone    Int       @default(0)
   completedAt  DateTime?
   firstTryRate Float?
-  user         User      @relation(fields: [userId], references: [id])
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   lesson       Lesson    @relation(fields: [lessonId], references: [id])
 
   @@id([userId, lessonId])
@@ -128,8 +129,10 @@ model PointEvent {
   reason    String
   day       DateTime @db.Date
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  // One award per reason (e.g. step:<id>): a step can never be paid twice (ADR 006).
+  @@unique([userId, reason])
   @@index([day, userId])
 }
 
@@ -138,5 +141,20 @@ model Streak {
   current Int       @default(0)
   longest Int       @default(0)
   lastDay DateTime? @db.Date
-  user    User      @relation(fields: [userId], references: [id])
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Refresh tokens, stored hashed. Rotation: each use revokes the token and issues a new one in the
+// same family; a revoked token used again revokes the whole family (ADR 006).
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  family    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([family])
 }
