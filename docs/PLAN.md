@@ -341,8 +341,8 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 **Tasks**
 - [x] `SpreadsheetGrid` in `packages/ui`: column and row headers, name box, formula bar, cell selection, range selection (drag and shift+arrows), arrow/Tab/Enter navigation, edit mode, copy/paste of values, accessible roles, touch support.
 - [x] Mobile formula helper bar: on-screen `=  (  )  ,  :  $  "` keys and quick insert of function names.
-- [ ] `LessonPlayer`: progress bar, prompt with glossary highlighting, Check / Continue (Enter), Skip, Previous, hint, Show Answer, feedback bar with points, step transitions, keyboard-first flow.
-- [ ] A lesson state reducer; guest progress in localStorage under a versioned key.
+- [x] `LessonPlayer`: progress bar, prompt with glossary highlighting, Check / Continue (Enter), Skip, Previous, hint, Show Answer, feedback bar with points, step transitions, keyboard-first flow.
+- [x] A lesson state reducer; guest progress in localStorage under a versioned key.
 - [ ] Two hand-written lessons (cells and selection; SUM) loaded from `/content/lessons`.
 - [ ] Playwright e2e: complete both lessons by keyboard; complete one on a mobile viewport.
 **Acceptance**
