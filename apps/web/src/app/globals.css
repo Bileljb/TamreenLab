@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+/* Workspace packages live outside this app, so Tailwind must be told to scan them. */
+@source '../../../../packages/ui/src';
 
 @theme {
   --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;

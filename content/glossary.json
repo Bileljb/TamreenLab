@@ -1,0 +1,15 @@
+{
+  "خلية": "cell",
+  "عمود": "column",
+  "صف": "row",
+  "نطاق": "range",
+  "معادلة": "formula",
+  "دالة": "function",
+  "وسيط": "argument",
+  "مرجع": "reference",
+  "ورقة عمل": "worksheet",
+  "مصنف": "workbook",
+  "جدول محوري": "pivot table",
+  "مقبض التعبئة": "fill handle",
+  "مربع الاسم": "name box"
+}

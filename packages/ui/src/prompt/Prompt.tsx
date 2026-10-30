@@ -27,15 +27,19 @@ export function tokenizePrompt(text: string): PromptToken[] {
   return tokens;
 }
 
+/** `{{الخلية}}` and `{{خلية}}` are the same glossary term; glossary keys have no article. */
+export const termKey = (text: string) => text.trim().replace(/^ال/, '');
+
 /** Glossary terms each prompt introduces: a term gets its English name on first use per lesson. */
 export function firstUses(prompts: string[]): Set<string>[] {
   const seen = new Set<string>();
   return prompts.map((prompt) => {
     const fresh = new Set<string>();
     for (const token of tokenizePrompt(prompt)) {
-      if (token.kind === 'term' && !seen.has(token.text)) {
-        seen.add(token.text);
-        fresh.add(token.text);
+      const key = token.kind === 'term' ? termKey(token.text) : null;
+      if (key !== null && !seen.has(key)) {
+        seen.add(key);
+        fresh.add(key);
       }
     }
     return fresh;
@@ -63,13 +67,14 @@ export function Prompt({ text, glossary, introduce }: Props) {
           </Formula>
         );
       case 'term': {
-        const english = glossary[token.text];
+        const key = termKey(token.text);
+        const english = glossary[token.text] ?? glossary[key];
         return (
           <span key={i}>
             <dfn className="font-semibold not-italic text-emerald-800" title={english}>
               {token.text}
             </dfn>
-            {english && introduce.has(token.text) ? (
+            {english && introduce.has(key) ? (
               <>
                 {' ('}
                 <bdi dir="ltr" lang="en">

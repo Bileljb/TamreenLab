@@ -8,7 +8,12 @@
     "tagline": "خطوات قصيرة، تصحيح فوري، بدون تسجيل.",
     "exampleTitle": "مثال سريع",
     "example": "لجمع مبيعات المنتج «قلم» فقط، اكتب في الخلية <cell>D2</cell> المعادلة (formula) <formula>=SUMIF(A2:A8,\"قلم\",B2:B8)</formula> ثم اضغط Enter.",
-    "comingSoon": "الدروس التفاعلية قيد الإعداد."
+    "lessonsTitle": "ابدأ التمرين",
+    "minutes": "{minutes, plural, one {دقيقة واحدة} two {دقيقتان} few {# دقائق} many {# دقيقة} other {# دقيقة}}"
+  },
+  "lesson": {
+    "breadcrumb": "مسار التنقل",
+    "home": "الرئيسية"
   },
   "grid": {
     "label": "ورقة العمل",

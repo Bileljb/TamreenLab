@@ -22,6 +22,15 @@ describe('firstUses', () => {
     const uses = firstUses(['{{خلية}} و{{نطاق}}', '{{خلية}} و{{معادلة}}', 'لا شيء']);
     expect(uses.map((s) => [...s])).toEqual([['خلية', 'نطاق'], ['معادلة'], []]);
   });
+
+  it('treats a term with the article as the same term', () => {
+    const uses = firstUses(['{{الخلية}}', '{{خلية}} و{{المعادلة}}']);
+    expect(uses.map((s) => [...s])).toEqual([['خلية'], ['معادلة']]);
+    const html = renderToStaticMarkup(
+      <Prompt text="{{الخلية}}" glossary={{ خلية: 'cell' }} introduce={uses[0]!} />,
+    );
+    expect(html).toContain('الخلية</dfn> (<bdi dir="ltr" lang="en">cell</bdi>)');
+  });
 });
 
 describe('Prompt', () => {
