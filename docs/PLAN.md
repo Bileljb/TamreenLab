@@ -346,9 +346,9 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] Two hand-written lessons (cells and selection; SUM) loaded from `/content/lessons`.
 - [x] Playwright e2e: complete both lessons by keyboard; complete one on a mobile viewport.
 **Acceptance**
-- [ ] Both lessons complete end to end with correct and incorrect feedback, with the API not running.
-- [ ] The layout is correct in RTL on desktop and on a 390px-wide phone, with no horizontal scroll.
-- [ ] Lighthouse accessibility score is at least 90 on the lesson page.
+- [x] Both lessons complete end to end with correct and incorrect feedback, with the API not running.
+- [x] The layout is correct in RTL on desktop and on a 390px-wide phone, with no horizontal scroll.
+- [x] Lighthouse accessibility score is at least 90 on the lesson page.
 **Report:** save Playwright screenshots at 390px, 768px and 1280px to `docs/screenshots/phase-2/` for the developer to review.
 
 ### Phase 3 — Content pipeline and first curriculum (1–2 weeks; can overlap Phase 4)
