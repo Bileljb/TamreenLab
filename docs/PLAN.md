@@ -329,11 +329,11 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] `packages/engine`: `Sheet` model (A1 parsing, ranges, typed cell values), the `FormulaEngine` adapter from ADR 001, and normalisation (leading `=`, whitespace, case, `,` vs `;`, equivalent absolute/relative references when `acceptEquivalentRefs`).
 - [x] Checkers: `SELECT_CELL`, `SELECT_RANGE`, `ENTER_VALUE` (with tolerance), `ENTER_FORMULA` (expected value, must/must-not-use functions, variant datasets), `MULTIPLE_CHOICE`, `SHORTCUT` (key-combo matching only; browser capture is Phase 6).
 - [x] The feedback codes from 3.5, and a function that extracts the functions used in a formula.
-- [ ] Table-driven tests, at least 120 cases: correct answers, equivalent answers, hard-coded answers, wrong ranges, syntax errors, `#N/A`, separators, Arabic text in cells.
+- [x] Table-driven tests, at least 120 cases: correct answers, equivalent answers, hard-coded answers, wrong ranges, syntax errors, `#N/A`, separators, Arabic text in cells.
 **Acceptance**
-- [ ] All tests pass; coverage on `packages/engine` is at least 90%.
-- [ ] The package runs in Node and in a browser bundle with no Node-only imports.
-- [ ] A hard-coded `=450` fails a SUMIF step through the variant check.
+- [x] All tests pass; coverage on `packages/engine` is at least 90%.
+- [x] The package runs in Node and in a browser bundle with no Node-only imports.
+- [x] A hard-coded `=450` fails a SUMIF step through the variant check.
 **Report:** coverage, and any function the engine cannot support.
 
 ### Phase 2 — Grid and lesson player (1–2 weeks)

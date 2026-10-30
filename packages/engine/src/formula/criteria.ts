@@ -11,7 +11,7 @@ export function makeCriterion(criterion: Scalar): (v: Scalar) => boolean {
     return (v) =>
       v === criterion || (typeof v === 'string' && v.trim() !== '' && Number(v) === criterion);
   }
-  const text = criterion === null || typeof criterion === 'object' ? '' : criterion;
+  const text = criterion ?? '';
   const m = /^(<>|<=|>=|=|<|>)?(.*)$/s.exec(text)!;
   const op = m[1] ?? '=';
   const operand = m[2]!;

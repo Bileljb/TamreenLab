@@ -1,6 +1,6 @@
 import type { AnswerFor, FeedbackCode, StepOf } from '@tamreen/shared';
 import { customEngine } from '../formula';
-import type { CellValue, ErrorCode } from '../formula/types';
+import { isError, type CellValue, type ErrorCode } from '../formula/types';
 import { anchoringMatches, hasCellReference, prepareFormula } from '../normalize';
 import { normalizeAddress, sameCell } from '../ref';
 import { Sheet } from '../sheet';
@@ -15,8 +15,6 @@ const ERROR_CODES: Partial<Record<ErrorCode, FeedbackCode>> = {
   SYNTAX: 'SYNTAX_ERROR',
   TIMEOUT: 'TIMEOUT',
 };
-
-const isError = (v: CellValue): v is { error: ErrorCode } => typeof v === 'object' && v !== null;
 
 /** Excel shows an empty result as 0, so null is 0 (or "") for comparison. */
 function sameValue(actual: CellValue, expected: CellValue, tolerance?: number): boolean {
