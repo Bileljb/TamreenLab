@@ -78,6 +78,37 @@ describe('SpreadsheetGrid', () => {
     expect(nameBox()).toHaveProperty('value', 'C4');
   });
 
+  it('Tab leaves the grid at its edges, so the keyboard is never trapped', async () => {
+    const user = userEvent.setup();
+    renderWithIntl(<Harness />);
+    cell('A1').focus();
+    await user.keyboard('{Shift>}{Tab}{/Shift}');
+    expect(document.activeElement).not.toBe(cell('A1'));
+    expect(cell('A1').contains(document.activeElement)).toBe(false);
+    cell('A1').focus();
+    await user.keyboard('{ArrowRight}{ArrowRight}');
+    expect(nameBox()).toHaveProperty('value', 'C1');
+    await user.keyboard('{Tab}');
+    expect(nameBox()).toHaveProperty('value', 'C1');
+    expect(document.activeElement).not.toBe(cell('C1'));
+  });
+
+  it('Shift+Tab passes through an unchanged formula bar to the name box', async () => {
+    const user = userEvent.setup();
+    renderWithIntl(<Harness />);
+    // (jsdom has no CSS, so the helper bar that sits between the bar and the grid is tabbable
+    // here; the e2e test covers the full path from the grid.)
+    await user.click(formulaBar());
+    expect(latest?.edit).not.toBeNull();
+    await user.keyboard('{Shift>}{Tab}{/Shift}');
+    expect(document.activeElement).toBe(nameBox());
+    expect(latest?.edit).toBeNull();
+    // Once something is typed, Tab commits like Excel (the bar edits the existing content).
+    await user.click(formulaBar());
+    await user.keyboard('x{Tab}');
+    expect(cell('A1').textContent).toBe('المنتجx');
+  });
+
   it('types into a cell, commits with Enter and recomputes formulas', async () => {
     const user = userEvent.setup();
     renderWithIntl(<Harness />);

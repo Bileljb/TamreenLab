@@ -68,6 +68,7 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
   const cellInput = useRef<HTMLInputElement>(null);
   const barInput = useRef<HTMLInputElement>(null);
   const container = useRef<HTMLDivElement>(null);
+  const table = useRef<HTMLTableElement>(null);
   const drag = useRef<{ anchor: Pos; point: boolean } | null>(null);
   const [nameBox, setNameBox] = useState<string | null>(null);
 
@@ -83,11 +84,11 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
   const activeAddress = addressOf(state.active);
   const edit = state.edit;
 
-  // Keep keyboard focus on the active cell when it moves, as long as focus is inside the grid.
+  // Keep keyboard focus on the active cell when it moves, as long as focus is on a cell. (After an
+  // edit the editor unmounts; focusAfterEdit handles that case.)
   useEffect(() => {
     if (edit) return;
-    if (!container.current?.contains(document.activeElement)) return;
-    if (document.activeElement === barInput.current) return;
+    if (!table.current?.contains(document.activeElement)) return;
     cellRefs.current.get(activeAddress)?.focus();
   }, [activeAddress, edit]);
 
@@ -115,6 +116,11 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
       e.preventDefault();
       dispatch({ type: 'move', dRow: move[0], dCol: move[1], extend: e.shiftKey });
     } else if (e.key === 'Tab') {
+      // Excel-style Tab moves right, but at the edge it leaves the grid: no keyboard trap.
+      const atEdge = e.shiftKey
+        ? state.active.col === state.top.col
+        : state.active.col === state.bottom.col;
+      if (atEdge) return;
       e.preventDefault();
       dispatch({ type: 'move', dRow: 0, dCol: e.shiftKey ? -1 : 1 });
     } else if (e.key === 'Enter') {
@@ -138,6 +144,11 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
       dispatch({ type: 'commit', move: 'down' });
       focusAfterEdit();
     } else if (e.key === 'Tab') {
+      // Nothing typed: Tab just moves focus on, as anywhere else on the page.
+      if (edit && edit.text === rawText(state, activeAddress)) {
+        dispatch({ type: 'cancel' });
+        return;
+      }
       e.preventDefault();
       dispatch({ type: 'commit', move: e.shiftKey ? 'none' : 'right' });
       focusAfterEdit();
@@ -232,6 +243,7 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
   }
 
   const barValue = edit ? edit.text : rawText(state, activeAddress);
+  const barIsFormula = barValue.trimStart().startsWith('=');
 
   return (
     <div ref={container} dir="ltr" className="flex w-full max-w-full flex-col gap-2 text-start">
@@ -256,7 +268,10 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
         <input
           ref={barInput}
           aria-label={t('formulaBar')}
-          className="min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-2 py-1.5 font-mono text-sm focus:outline-2 focus:outline-emerald-600"
+          dir={barIsFormula ? 'ltr' : 'auto'}
+          className={`min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm focus:outline-2 focus:outline-emerald-600 ${
+            barIsFormula ? 'font-mono' : ''
+          }`}
           value={barValue}
           spellCheck={false}
           autoComplete="off"
@@ -291,6 +306,7 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
 
       <div className="max-w-full overflow-x-auto rounded-md border border-slate-300 bg-white">
         <table
+          ref={table}
           role="grid"
           aria-label={t('label')}
           aria-rowcount={rows.length + 1}
@@ -374,7 +390,10 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
                         <input
                           ref={cellInput}
                           aria-label={t('cellEditor', { address })}
-                          className="absolute inset-0 w-full bg-white px-2 font-mono outline-2 -outline-offset-2 outline-emerald-600"
+                          dir={edit.text.trimStart().startsWith('=') ? 'ltr' : 'auto'}
+                          className={`absolute inset-0 w-full bg-white px-2 outline-2 -outline-offset-2 outline-emerald-600 ${
+                            edit.text.trimStart().startsWith('=') ? 'font-mono' : ''
+                          }`}
                           value={edit.text}
                           spellCheck={false}
                           autoComplete="off"
@@ -388,8 +407,13 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
                           }
                           onKeyDown={onEditorKeyDown}
                         />
-                      ) : (
+                      ) : numeric ? (
                         text
+                      ) : (
+                        // Text follows its own direction, so Arabic aligns right as in Excel.
+                        <span dir="auto" className="block truncate">
+                          {text}
+                        </span>
                       )}
                     </td>
                   );

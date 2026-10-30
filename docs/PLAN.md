@@ -344,7 +344,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] `LessonPlayer`: progress bar, prompt with glossary highlighting, Check / Continue (Enter), Skip, Previous, hint, Show Answer, feedback bar with points, step transitions, keyboard-first flow.
 - [x] A lesson state reducer; guest progress in localStorage under a versioned key.
 - [x] Two hand-written lessons (cells and selection; SUM) loaded from `/content/lessons`.
-- [ ] Playwright e2e: complete both lessons by keyboard; complete one on a mobile viewport.
+- [x] Playwright e2e: complete both lessons by keyboard; complete one on a mobile viewport.
 **Acceptance**
 - [ ] Both lessons complete end to end with correct and incorrect feedback, with the API not running.
 - [ ] The layout is correct in RTL on desktop and on a 390px-wide phone, with no horizontal scroll.

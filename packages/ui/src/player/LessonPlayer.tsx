@@ -249,8 +249,9 @@ function StepView(props: StepViewProps) {
   // On arriving at a step by navigation, focus where the learner works.
   useEffect(() => {
     if (!props.autoFocus) return;
+    // A choice step answers with the options, even when it shows a sheet for reference.
     const target = body.current?.querySelector<HTMLElement>(
-      '[data-active="true"], input[type="radio"]',
+      step.type === 'MULTIPLE_CHOICE' ? 'input[type="radio"]' : '[data-active="true"]',
     );
     target?.focus({ preventScroll: false });
   }, []);
