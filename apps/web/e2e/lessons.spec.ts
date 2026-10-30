@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
+import fs from 'node:fs';
 import path from 'node:path';
 
 const LESSON_1 = '/ar/lessons/basics/cells-and-selection';
@@ -147,7 +148,10 @@ test.describe('desktop, keyboard only', () => {
     await expectCorrectThenContinue(page);
 
     await expect(page.getByRole('heading', { name: 'أحسنت! أكملت الدرس' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'الدرس التالي' })).toHaveCount(0);
+    await expect(page.getByRole('link', { name: 'الدرس التالي' })).toHaveAttribute(
+      'href',
+      '/ar/lessons/aggregation/average',
+    );
     noApi();
   });
 
@@ -272,4 +276,28 @@ test.describe('mobile, touch', () => {
     await expect(page.getByRole('heading', { name: 'أحسنت! أكملت الدرس' })).toBeVisible();
     noApi();
   });
+});
+
+test.describe('every lesson', () => {
+  test.skip(({ isMobile }) => isMobile, 'one viewport is enough for the smoke check');
+
+  const lessonsDir = path.resolve(import.meta.dirname, '../../../content/lessons');
+  const lessons = fs.readdirSync(lessonsDir).flatMap((track) =>
+    fs
+      .readdirSync(path.join(lessonsDir, track))
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => JSON.parse(fs.readFileSync(path.join(lessonsDir, track, f), 'utf8'))),
+  ) as { track: string; slug: string; titleAr: string; steps: unknown[] }[];
+
+  for (const lesson of lessons) {
+    test(`renders ${lesson.track}/${lesson.slug}`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on('pageerror', (e) => errors.push(e.message));
+      await page.goto(`/ar/lessons/${lesson.track}/${lesson.slug}`);
+      await expect(page.getByRole('heading', { level: 1 })).toHaveText(lesson.titleAr);
+      await expect(step(page, 1, lesson.steps.length)).toBeVisible();
+      await expect(page.getByRole('button', { name: 'تحقّق' })).toBeVisible();
+      expect(errors).toEqual([]);
+    });
+  }
 });
