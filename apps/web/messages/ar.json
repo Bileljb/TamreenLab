@@ -9,5 +9,14 @@
     "exampleTitle": "مثال سريع",
     "example": "لجمع مبيعات المنتج «قلم» فقط، اكتب في الخلية <cell>D2</cell> المعادلة (formula) <formula>=SUMIF(A2:A8,\"قلم\",B2:B8)</formula> ثم اضغط Enter.",
     "comingSoon": "الدروس التفاعلية قيد الإعداد."
+  },
+  "grid": {
+    "label": "ورقة العمل",
+    "nameBox": "مربع الاسم",
+    "formulaBar": "شريط المعادلة",
+    "cellEditor": "تحرير الخلية {address}",
+    "helperBar": "أزرار إدخال المعادلة",
+    "insertKey": "أدرج {key}",
+    "insertFunction": "أدرج الدالة {name}"
   }
 }
