@@ -54,6 +54,19 @@ jobs:
   e2e:
     runs-on: ubuntu-latest
     needs: check
+    env:
+      DATABASE_URL: postgresql://tamreen:tamreen@localhost:5432/tamreen?schema=public
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: tamreen
+          POSTGRES_PASSWORD: tamreen
+          POSTGRES_DB: tamreen
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U tamreen -d tamreen"
+          --health-interval 2s --health-timeout 3s --health-retries 30
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -63,7 +76,11 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --filter @tamreen/web exec playwright install --with-deps chromium
-      - run: pnpm turbo run build --filter=@tamreen/web
+      - run: pnpm turbo run build --filter=@tamreen/web --filter=@tamreen/api
+      - name: Database with the curriculum
+        run: |
+          pnpm --filter @tamreen/api exec prisma migrate deploy
+          pnpm content:sync
       - run: pnpm e2e
         env:
           CI: true

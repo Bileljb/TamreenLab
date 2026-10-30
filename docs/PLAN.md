@@ -371,12 +371,12 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] `POST /progress/sync`: idempotent, ignores steps already completed, caps points per merge.
 - [x] `GET /leaderboard/daily` (aggregate over `PointEvent`), display-name rules, basic moderation (length, blocked-word list).
 - [x] Rate limiting, validation, error shape, OpenAPI at `/api/docs`.
-- [ ] Wire the web app to the API: login and register pages, progress, stats, leaderboard panel.
+- [x] Wire the web app to the API: login and register pages, progress, stats, leaderboard panel.
 - [x] supertest integration tests for every route, including a test proving a forged "correct" claim from the client earns no points.
 **Acceptance**
-- [ ] A new user can play as a guest, register, and keep their progress.
-- [ ] Resubmitting the same correct step does not award points twice.
-- [ ] Integration tests are green.
+- [x] A new user can play as a guest, register, and keep their progress.
+- [x] Resubmitting the same correct step does not award points twice.
+- [x] Integration tests are green.
 
 ### Phase 5 — Public site, SEO, ads, metrics (1–2 weeks)
 **Goal:** every lesson and function is an indexable Arabic page, the site is fast, ad slots are in place, and usage can be measured.

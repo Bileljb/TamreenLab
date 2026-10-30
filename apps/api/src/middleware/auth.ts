@@ -5,6 +5,8 @@ import { verifyAccessToken } from '../lib/tokens';
 
 export const ACCESS_COOKIE = 'tamreen_at';
 export const REFRESH_COOKIE = 'tamreen_rt';
+/** Not a secret: tells the browser a session may exist, so guests never call /auth/refresh. */
+export const SESSION_HINT_COOKIE = 'tamreen_session';
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace -- Express's own extension point

@@ -7,3 +7,8 @@ export { LessonPlayer } from './player/LessonPlayer';
 export * from './player/lessonState';
 export * from './player/guestProgress';
 export { Prompt, firstUses, tokenizePrompt } from './prompt/Prompt';
+export { api, ApiError, POINTS_EVENT, announcePoints } from './api/client';
+export { SessionProvider, useSession, type Session } from './api/session';
+export { AuthForm } from './api/AuthForm';
+export { AccountMenu } from './api/AccountMenu';
+export { StatsPanel, LeaderboardPanel } from './api/Panels';

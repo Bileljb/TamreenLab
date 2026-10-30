@@ -25,7 +25,22 @@ describe('auth', () => {
     const cookies = res.headers['set-cookie'] as unknown as string[];
     expect(cookies.find((c) => c.startsWith('tamreen_at='))).toMatch(/HttpOnly/);
     expect(cookies.find((c) => c.startsWith('tamreen_rt='))).toMatch(/Path=\/api\/auth/);
+    // A readable, non-secret hint so the browser knows a session may exist.
+    const hint = cookies.find((c) => c.startsWith('tamreen_session='));
+    expect(hint).toMatch(/^tamreen_session=1;/);
+    expect(hint).not.toMatch(/HttpOnly/);
     expect((await agent.get('/api/me')).body.displayName).toBe('هدى');
+  });
+
+  it('does not count refreshes against the sign-in rate limit', async () => {
+    const app = makeApp({ rateLimits: { auth: 1, attempts: 1000, general: 1000 } });
+    for (let i = 0; i < 3; i++) {
+      expect((await request(app).post('/api/auth/refresh').send({})).status).toBe(401);
+    }
+    const login = await request(app)
+      .post('/api/auth/login')
+      .send({ email: 'a@b.co', password: 'x' });
+    expect(login.status).toBe(401);
   });
 
   it('rejects a taken email, a blocked name and bad input', async () => {

@@ -59,7 +59,10 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
     const ctx = createContext(db, config);
     const { rateLimits } = config;
     app.use('/api', requireJson, authenticate(ctx), limiter(rateLimits.general, 60_000));
-    app.use('/api/auth', limiter(rateLimits.auth, 15 * 60_000));
+    // The strict limit guards password guessing only; refresh and logout use the general limit.
+    const authLimit = limiter(rateLimits.auth, 15 * 60_000);
+    app.use('/api/auth/login', authLimit);
+    app.use('/api/auth/register', authLimit);
     app.use('/api/attempts', limiter(rateLimits.attempts, 60_000, 'user'));
     for (const router of [
       authRouter,

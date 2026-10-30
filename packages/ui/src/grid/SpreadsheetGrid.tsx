@@ -84,11 +84,18 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
   const activeAddress = addressOf(state.active);
   const edit = state.edit;
 
-  // Keep keyboard focus on the active cell when it moves, as long as focus is on a cell. (After an
-  // edit the editor unmounts; focusAfterEdit handles that case.)
+  // Keep keyboard focus on the active cell when it moves, as long as focus is on a cell. When an
+  // in-cell edit ends, its input unmounts and focus falls to <body>: bring it back at once, so the
+  // next key (Delete, an arrow) is not lost.
+  const editedInCell = useRef(false);
   useEffect(() => {
-    if (edit) return;
-    if (!table.current?.contains(document.activeElement)) return;
+    if (edit) {
+      editedInCell.current = edit.source === 'cell';
+      return;
+    }
+    const fellToBody = editedInCell.current && document.activeElement === document.body;
+    editedInCell.current = false;
+    if (!fellToBody && !table.current?.contains(document.activeElement)) return;
     cellRefs.current.get(activeAddress)?.focus();
   }, [activeAddress, edit]);
 

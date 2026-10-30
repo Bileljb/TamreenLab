@@ -37,7 +37,9 @@ export type LessonAction =
   | { type: 'next'; now: number }
   | { type: 'previous'; now: number }
   | { type: 'resume'; done: boolean[]; now: number }
-  | { type: 'restart'; now: number };
+  | { type: 'restart'; now: number }
+  /** The server's award for a step (signed-in learners): it replaces the local estimate. */
+  | { type: 'scored'; index: number; points: number };
 
 const freshRun = (startedAt: number | null = null): StepRun => ({
   status: 'idle',
@@ -126,6 +128,8 @@ export function lessonReducer(state: LessonState, action: LessonAction): LessonS
       const first = steps.findIndex((r) => r.status !== 'done');
       return goTo({ ...state, steps }, first < 0 ? 0 : first, action.now);
     }
+    case 'scored':
+      return updateStep(state, action.index, { points: Math.max(0, Math.round(action.points)) });
     case 'restart':
       return createLessonState(state.steps.length, action.now);
   }

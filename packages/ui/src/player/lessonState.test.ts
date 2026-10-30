@@ -87,6 +87,16 @@ describe('lessonReducer', () => {
     expect(s.index).toBe(0);
   });
 
+  it('takes the server award over the local estimate', () => {
+    const s = run(createLessonState(2, 0), check(ok, 1_000), {
+      type: 'scored',
+      index: 0,
+      points: 0,
+    });
+    expect(s.steps[0]).toMatchObject({ status: 'correct', points: 0 });
+    expect(run(s, { type: 'scored', index: 0, points: 412.6 }).steps[0]!.points).toBe(413);
+  });
+
   it('restarts from scratch', () => {
     const s = run(createLessonState(2, 0), check(ok, 1), { type: 'restart', now: 100 });
     expect(s).toEqual(createLessonState(2, 100));

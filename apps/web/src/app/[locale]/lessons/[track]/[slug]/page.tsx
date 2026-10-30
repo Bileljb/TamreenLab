@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { LessonPlayer } from '@tamreen/ui';
+import { LeaderboardPanel, LessonPlayer, StatsPanel } from '@tamreen/ui';
 import { getGlossary, getLesson, listLessons } from '@/lib/content';
 
 type Params = { locale: string; track: string; slug: string };
@@ -53,6 +53,12 @@ export default async function LessonPage({ params }: Props) {
         lessonsHref={`/${locale}`}
         nextLessonHref={next ? `/${locale}/lessons/${next.track}/${next.slug}` : undefined}
       />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <StatsPanel
+          loginHref={`/${locale}/login?next=${encodeURIComponent(`/${locale}/lessons/${track}/${slug}`)}`}
+        />
+        <LeaderboardPanel />
+      </div>
     </main>
   );
 }

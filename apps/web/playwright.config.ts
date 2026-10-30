@@ -15,11 +15,20 @@ export default defineConfig({
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
-  webServer: {
-    // CI runs against the production build; locally the dev server is reused if already running.
-    command: isCI ? 'pnpm start' : 'pnpm dev',
-    url: 'http://localhost:3000/ar',
-    reuseExistingServer: !isCI,
-    timeout: 120_000,
-  },
+  // CI runs against production builds; locally running servers are reused. The API needs Postgres
+  // with the curriculum synced (docker compose up -d db, pnpm db:migrate, pnpm content:sync).
+  webServer: [
+    {
+      command: isCI ? 'pnpm start' : 'pnpm dev',
+      url: 'http://localhost:3000/ar',
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
+    {
+      command: isCI ? 'pnpm --filter @tamreen/api start' : 'pnpm --filter @tamreen/api dev',
+      url: 'http://localhost:4000/api/health',
+      reuseExistingServer: !isCI,
+      timeout: 60_000,
+    },
+  ],
 });

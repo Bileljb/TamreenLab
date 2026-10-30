@@ -9,7 +9,7 @@ import {
   newRefreshToken,
   signAccessToken,
 } from '../lib/tokens';
-import { ACCESS_COOKIE, REFRESH_COOKIE } from '../middleware/auth';
+import { ACCESS_COOKIE, REFRESH_COOKIE, SESSION_HINT_COOKIE } from '../middleware/auth';
 
 function cookieOptions(ctx: Ctx, path: string, maxAgeSeconds: number): CookieOptions {
   return {
@@ -44,11 +44,20 @@ export async function issueSession(
     cookieOptions(ctx, '/', ACCESS_TTL_SECONDS),
   );
   res.cookie(REFRESH_COOKIE, refresh, cookieOptions(ctx, '/api/auth', REFRESH_TTL_SECONDS));
+  res.cookie(SESSION_HINT_COOKIE, '1', {
+    ...cookieOptions(ctx, '/', REFRESH_TTL_SECONDS),
+    httpOnly: false,
+  });
 }
 
 export function clearSession(ctx: Ctx, res: Response) {
   res.clearCookie(ACCESS_COOKIE, { ...cookieOptions(ctx, '/', 0), maxAge: undefined });
   res.clearCookie(REFRESH_COOKIE, { ...cookieOptions(ctx, '/api/auth', 0), maxAge: undefined });
+  res.clearCookie(SESSION_HINT_COOKIE, {
+    ...cookieOptions(ctx, '/', 0),
+    httpOnly: false,
+    maxAge: undefined,
+  });
 }
 
 /**

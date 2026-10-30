@@ -10,6 +10,8 @@ import {
   type CheckResult,
 } from '@tamreen/engine';
 import type { FeedbackCode, Glossary, LessonFile, StepSpec } from '@tamreen/shared';
+import { api, announcePoints } from '../api/client';
+import { useSession } from '../api/session';
 import { Formula } from '../Formula';
 import { SpreadsheetGrid, useGrid } from '../grid/SpreadsheetGrid';
 import { addressOf, selectionLabel, type GridState } from '../grid/state';
@@ -40,31 +42,66 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
   const [resumed, setResumed] = useState(false);
   const navigated = useRef(false);
   const guest = useLessonProgress(lesson.slug);
+  const session = useSession();
+  const signedIn = session.status === 'user';
   const introduced = useMemo(() => firstUses(lesson.steps.map((s) => s.promptAr)), [lesson.steps]);
 
-  // Resume from guest progress once it has been read on the client.
+  // Resume once we know who is playing: from the server when signed in, else from localStorage.
   const resumeDone = useRef(false);
   useEffect(() => {
-    if (!guest.progress || resumeDone.current) return;
-    resumeDone.current = true;
-    const done = lesson.steps.map((s) => guest.progress!.stepsDone.includes(s.slug));
-    if (done.some(Boolean)) {
-      dispatch({ type: 'resume', done, now: Date.now() });
-      setResumed(done.some((d) => !d));
+    if (resumeDone.current || session.status === 'loading') return;
+    const resume = (stepsDone: string[]) => {
+      resumeDone.current = true;
+      const done = lesson.steps.map((s) => stepsDone.includes(s.slug));
+      if (done.some(Boolean)) {
+        dispatch({ type: 'resume', done, now: Date.now() });
+        setResumed(done.some((d) => !d));
+      }
+    };
+    if (session.status === 'user') {
+      api
+        .progress()
+        .then((all) => resume(all.find((p) => p.lessonSlug === lesson.slug)?.stepsDone ?? []))
+        .catch(() => resume([]));
+    } else if (guest.progress) {
+      resume(guest.progress.stepsDone);
     }
-  }, [guest.progress, lesson.steps]);
+  }, [session.status, guest.progress, lesson.slug, lesson.steps]);
 
-  function act(action: LessonAction) {
+  function act(action: LessonAction, answer?: unknown) {
     navigated.current =
       action.type !== 'checked' && action.type !== 'hint' && action.type !== 'reveal';
+    const index = state.index;
+    const before = state.steps[index]!;
     const next = lessonReducer(state, action);
     dispatch(action);
-    const before = state.steps[state.index]!;
-    const after = next.steps[state.index]!;
-    if (before.status !== 'correct' && after.status === 'correct') {
-      guest.recordStep(lesson.steps[state.index]!.slug, after.points, after.firstTry);
+    const after = next.steps[index]!;
+    const step = lesson.steps[index]!;
+    const newlyCorrect = before.status !== 'correct' && after.status === 'correct';
+
+    if (action.type === 'checked' && signedIn && after !== before) {
+      // The server re-checks and decides the points (PLAN T3); local feedback stays instant.
+      api
+        .attempt({
+          lessonSlug: lesson.slug,
+          stepSlug: step.slug,
+          answer,
+          timeMs: Math.max(0, action.now - (before.startedAt ?? action.now)),
+          hintUsed: before.hintShown,
+          answerShown: false,
+        })
+        .then((res) => {
+          if (res.correct) dispatch({ type: 'scored', index, points: res.pointsAwarded });
+          if (res.pointsAwarded > 0) announcePoints();
+        })
+        .catch(() => {
+          // API unreachable: keep the step locally so nothing is lost; it merges on next sign-in.
+          if (newlyCorrect) guest.recordStep(step.slug, after.points, after.firstTry);
+        });
+    } else if (newlyCorrect && !signedIn) {
+      guest.recordStep(step.slug, after.points, after.firstTry);
     }
-    if (!state.finished && next.finished) guest.complete();
+    if (!state.finished && next.finished && !signedIn) guest.complete();
   }
 
   const totals = lessonTotals(state);
@@ -117,13 +154,16 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
           autoFocus={navigated.current}
           glossary={glossary}
           introduce={introduced[state.index]!}
-          onChecked={(result) =>
-            act({
-              type: 'checked',
-              result,
-              basePoints: lesson.steps[state.index]!.basePoints,
-              now: Date.now(),
-            })
+          onChecked={(result, answer) =>
+            act(
+              {
+                type: 'checked',
+                result,
+                basePoints: lesson.steps[state.index]!.basePoints,
+                now: Date.now(),
+              },
+              answer,
+            )
           }
           onNext={() => act({ type: 'next', now: Date.now() })}
           onSkip={() => act({ type: 'skip', now: Date.now() })}
@@ -143,7 +183,7 @@ type StepViewProps = {
   autoFocus: boolean;
   glossary: Glossary;
   introduce: Set<string>;
-  onChecked: (result: CheckResult) => void;
+  onChecked: (result: CheckResult, answer: unknown) => void;
   onNext: () => void;
   onSkip: () => void;
   onPrevious: () => void;
@@ -200,13 +240,13 @@ function StepView(props: StepViewProps) {
     }
     setNotice(null);
     try {
-      props.onChecked(checkAnswer(step, answer));
+      props.onChecked(checkAnswer(step, answer), answer);
     } catch (e) {
       if (!(e instanceof InvalidAnswerError)) throw e;
-      props.onChecked({
-        correct: false,
-        code: step.type === 'SELECT_RANGE' ? 'WRONG_CELL' : 'WRONG_VALUE',
-      });
+      props.onChecked(
+        { correct: false, code: step.type === 'SELECT_RANGE' ? 'WRONG_CELL' : 'WRONG_VALUE' },
+        answer,
+      );
     }
   }
 

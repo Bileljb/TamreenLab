@@ -12,13 +12,17 @@ const step = (page: Page, n: number, total = 6) =>
   page.getByText(`الخطوة ${n} من ${total}`).first();
 const correct = /صحيح! \+\d+ نقطة/;
 
-/** Phase 2 runs with no API: fail the test if the page calls /api at all. */
-function forbidApi(page: Page) {
-  const calls: string[] = [];
-  page.on('request', (r) => {
-    if (new URL(r.url()).pathname.startsWith('/api/')) calls.push(r.url());
+/**
+ * Guests must be able to play with the API down (Phase 2 acceptance): every /api request fails,
+ * and the returned check asserts that the page never tried to submit an attempt.
+ */
+async function apiDown(page: Page) {
+  const attempts: string[] = [];
+  await page.route('**/api/**', (route) => {
+    if (route.request().url().includes('/api/attempts')) attempts.push(route.request().url());
+    return route.abort();
   });
-  return () => expect(calls).toEqual([]);
+  return () => expect(attempts).toEqual([]);
 }
 
 /** Moves the keyboard selection from A1, which has focus when a step opens. */
@@ -37,7 +41,7 @@ test.describe('desktop, keyboard only', () => {
   test.skip(({ isMobile }) => isMobile, 'keyboard flow');
 
   test('completes "cells and selection" by keyboard', async ({ page }) => {
-    const noApi = forbidApi(page);
+    const noApi = await apiDown(page);
     await page.goto(LESSON_1);
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('الخلايا والتحديد');
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
@@ -104,7 +108,7 @@ test.describe('desktop, keyboard only', () => {
   test('completes "SUM basics" by keyboard, with a hard-coded answer rejected', async ({
     page,
   }) => {
-    const noApi = forbidApi(page);
+    const noApi = await apiDown(page);
     await page.goto(LESSON_2);
     await cell(page, 'A1').focus();
 
@@ -197,7 +201,7 @@ test.describe('mobile, touch', () => {
   test.skip(({ isMobile }) => !isMobile, 'touch flow');
 
   test('completes "SUM basics" with taps and the helper bar', async ({ page }) => {
-    const noApi = forbidApi(page);
+    const noApi = await apiDown(page);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto(LESSON_2);
     const bar = page.getByRole('toolbar', { name: 'أزرار إدخال المعادلة' });
