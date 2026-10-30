@@ -403,7 +403,16 @@ function answerText(step: StepSpec): ReactNode {
         </>
       );
     case 'MULTIPLE_CHOICE':
-      return step.check.options[step.check.correct];
+      // Options use the same markup as prompts (a formula in backticks stays LTR).
+      return (
+        <span className="inline-block [&>p]:inline [&>p]:text-base">
+          <Prompt
+            text={step.check.options[step.check.correct]!}
+            glossary={{}}
+            introduce={new Set()}
+          />
+        </span>
+      );
     case 'SHORTCUT':
       return <Formula>{step.check.combos[0]!.win}</Formula>;
   }

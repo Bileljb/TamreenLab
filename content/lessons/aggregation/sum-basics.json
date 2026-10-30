@@ -1,7 +1,7 @@
 {
   "slug": "sum-basics",
   "track": "aggregation",
-  "order": 2,
+  "order": 4,
   "kind": "CONCEPT",
   "titleAr": "الجمع بالدالة SUM",
   "summaryAr": "اكتب أول معادلة جمع، ثم استخدم الدالة SUM مع نطاق، واجعل النتيجة تتحدث وحدها عندما تتغير البيانات.",
@@ -31,9 +31,18 @@
       },
       "check": {
         "target": "B7",
-        "expected": { "value": 420 },
+        "expected": {
+          "value": 420
+        },
         "solution": "=B2+B3+B4+B5+B6",
-        "variants": [{ "cells": { "B2": 100, "B5": 10 } }]
+        "variants": [
+          {
+            "cells": {
+              "B2": 100,
+              "B5": 10
+            }
+          }
+        ]
       },
       "hintAr": "ابدأ بعلامة `=` ثم اكتب أسماء الخلايا بينها علامة `+`."
     },
@@ -61,10 +70,19 @@
       },
       "check": {
         "target": "B7",
-        "expected": { "value": 420 },
+        "expected": {
+          "value": 420
+        },
         "solution": "=SUM(B2:B6)",
         "mustUseFunctions": ["SUM"],
-        "variants": [{ "cells": { "B2": 100, "B5": 10 } }]
+        "variants": [
+          {
+            "cells": {
+              "B2": 100,
+              "B5": 10
+            }
+          }
+        ]
       },
       "hintAr": "النطاق `B2:B6` يعني كل الخلايا من `B2` إلى `B6`."
     },
@@ -92,10 +110,19 @@
       },
       "check": {
         "target": "B7",
-        "expected": { "value": 420 },
+        "expected": {
+          "value": 420
+        },
         "solution": "=SUM(B2:B6)",
         "mustUseFunctions": ["SUM"],
-        "variants": [{ "cells": { "B3": 5, "B6": 1 } }]
+        "variants": [
+          {
+            "cells": {
+              "B3": 5,
+              "B6": 1
+            }
+          }
+        ]
       },
       "hintAr": "بعد كتابة القوس `(` يُدرج إكسل اسم أي خلية تنقرها في المعادلة."
     },
@@ -123,10 +150,24 @@
       },
       "check": {
         "target": "B7",
-        "expected": { "value": 450 },
+        "expected": {
+          "value": 450
+        },
         "solution": "=SUM(B2:B6)",
         "mustUseFunctions": ["SUM"],
-        "variants": [{ "cells": { "B2": 100, "B4": 90 } }, { "cells": { "B6": 0 } }]
+        "variants": [
+          {
+            "cells": {
+              "B2": 100,
+              "B4": 90
+            }
+          },
+          {
+            "cells": {
+              "B6": 0
+            }
+          }
+        ]
       },
       "hintAr": "لو كتبت 450 مباشرة فلن تتغير النتيجة إذا تغيرت الكميات. استخدم `SUM` مع النطاق."
     },
@@ -156,10 +197,19 @@
       },
       "check": {
         "target": "D2",
-        "expected": { "value": 295 },
+        "expected": {
+          "value": 295
+        },
         "solution": "=SUM(B2:B4)",
         "mustUseFunctions": ["SUM"],
-        "variants": [{ "cells": { "B3": 10, "B5": 300 } }]
+        "variants": [
+          {
+            "cells": {
+              "B3": 10,
+              "B5": 300
+            }
+          }
+        ]
       },
       "hintAr": "النطاق يبدأ من `B2` وينتهي عند `B4`."
     },
@@ -180,7 +230,10 @@
           "B4": 90
         }
       },
-      "check": { "options": ["140", "205", "295", "B2+B3"], "correct": 1 },
+      "check": {
+        "options": ["140", "205", "295", "B2+B3"],
+        "correct": 1
+      },
       "hintAr": "تجمع المعادلة الخليتين `B2` و`B3` فقط."
     }
   ]

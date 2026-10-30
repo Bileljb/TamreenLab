@@ -1,0 +1,196 @@
+{
+  "slug": "min-and-max",
+  "track": "aggregation",
+  "order": 6,
+  "kind": "CONCEPT",
+  "status": "DRAFT",
+  "titleAr": "أصغر قيمة وأكبرها: MIN وMAX",
+  "summaryAr": "أوجد أكبر قيمة وأصغرها في نطاق، واحسب الفرق بينهما بمعادلة واحدة.",
+  "minutes": 4,
+  "steps": [
+    {
+      "slug": "max-function",
+      "type": "ENTER_FORMULA",
+      "promptAr": "هذا عدد العملاء الذين زارهم كل مندوب. `MAX` تعيد أكبر قيمة في النطاق. اكتب في `B7` المعادلة `=MAX(B2:B6)`.",
+      "sheet": {
+        "visible": "A1:D9",
+        "cells": {
+          "A1": "المندوب",
+          "B1": "عدد العملاء",
+          "D1": "أكبر الاثنين",
+          "A2": "سلمى",
+          "B2": 18,
+          "A3": "يوسف",
+          "B3": 25,
+          "A4": "مريم",
+          "B4": 12,
+          "A5": "كريم",
+          "B5": 30,
+          "A6": "هدى",
+          "B6": 21,
+          "A7": "الأعلى",
+          "A8": "الأدنى",
+          "A9": "الفرق"
+        }
+      },
+      "check": {
+        "target": "B7",
+        "expected": {
+          "value": 30
+        },
+        "solution": "=MAX(B2:B6)",
+        "mustUseFunctions": ["MAX"],
+        "variants": [
+          {
+            "cells": {
+              "B5": 10
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "min-function",
+      "type": "ENTER_FORMULA",
+      "promptAr": "والدالة `MIN` تعيد أصغر قيمة. اكتب في `B8` معادلة تعيد أقل عدد من العملاء.",
+      "sheet": {
+        "visible": "A1:D9",
+        "cells": {
+          "A1": "المندوب",
+          "B1": "عدد العملاء",
+          "D1": "أكبر الاثنين",
+          "A2": "سلمى",
+          "B2": 18,
+          "A3": "يوسف",
+          "B3": 25,
+          "A4": "مريم",
+          "B4": 12,
+          "A5": "كريم",
+          "B5": 30,
+          "A6": "هدى",
+          "B6": 21,
+          "A7": "الأعلى",
+          "A8": "الأدنى",
+          "A9": "الفرق"
+        }
+      },
+      "check": {
+        "target": "B8",
+        "expected": {
+          "value": 12
+        },
+        "solution": "=MIN(B2:B6)",
+        "mustUseFunctions": ["MIN"],
+        "variants": [
+          {
+            "cells": {
+              "B4": 40
+            }
+          }
+        ]
+      },
+      "hintAr": "مثل الخطوة السابقة، لكن بالدالة `MIN`."
+    },
+    {
+      "slug": "max-minus-min",
+      "type": "ENTER_FORMULA",
+      "promptAr": "احسب في `B9` الفرق بين أكبر عدد وأصغر عدد، بمعادلة واحدة تستخدم `MAX` و`MIN`.",
+      "sheet": {
+        "visible": "A1:D9",
+        "cells": {
+          "A1": "المندوب",
+          "B1": "عدد العملاء",
+          "D1": "أكبر الاثنين",
+          "A2": "سلمى",
+          "B2": 18,
+          "A3": "يوسف",
+          "B3": 25,
+          "A4": "مريم",
+          "B4": 12,
+          "A5": "كريم",
+          "B5": 30,
+          "A6": "هدى",
+          "B6": 21,
+          "A7": "الأعلى",
+          "A8": "الأدنى",
+          "A9": "الفرق"
+        }
+      },
+      "check": {
+        "target": "B9",
+        "expected": {
+          "value": 18
+        },
+        "solution": "=MAX(B2:B6)-MIN(B2:B6)",
+        "mustUseFunctions": ["MAX", "MIN"],
+        "variants": [
+          {
+            "cells": {
+              "B2": 50
+            }
+          }
+        ]
+      },
+      "hintAr": "اطرح ناتج `MIN(B2:B6)` من ناتج `MAX(B2:B6)`."
+    },
+    {
+      "slug": "separate-arguments",
+      "type": "ENTER_FORMULA",
+      "promptAr": "يمكن أن تأخذ {{الدالة}} أكثر من {{وسيط}}، بينها فواصل. اكتب في `D2` المعادلة `=MAX(B2,B4)` لتقارن سلمى بمريم فقط.",
+      "sheet": {
+        "visible": "A1:D9",
+        "cells": {
+          "A1": "المندوب",
+          "B1": "عدد العملاء",
+          "D1": "أكبر الاثنين",
+          "A2": "سلمى",
+          "B2": 18,
+          "A3": "يوسف",
+          "B3": 25,
+          "A4": "مريم",
+          "B4": 12,
+          "A5": "كريم",
+          "B5": 30,
+          "A6": "هدى",
+          "B6": 21,
+          "A7": "الأعلى",
+          "A8": "الأدنى",
+          "A9": "الفرق"
+        }
+      },
+      "check": {
+        "target": "D2",
+        "expected": {
+          "value": 18
+        },
+        "solution": "=MAX(B2,B4)",
+        "mustUseFunctions": ["MAX"],
+        "variants": [
+          {
+            "cells": {
+              "B4": 20
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "min-of-three",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "ما ناتج `=MIN(7,3,9)`؟",
+      "check": {
+        "options": ["3", "7", "9", "19"],
+        "correct": 0
+      }
+    },
+    {
+      "slug": "which-for-top-score",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "أي دالة تستخدمها لإيجاد أعلى درجة في اختبار؟",
+      "check": {
+        "options": ["`MIN`", "`MAX`", "`AVERAGE`", "`COUNT`"],
+        "correct": 1
+      }
+    }
+  ]
+}
