@@ -16,6 +16,7 @@ import {
   type User,
 } from '@tamreen/shared';
 import { loadGuestProgress, saveGuestProgress } from '../player/guestProgress';
+import { track } from '../analytics/track';
 import { api } from './client';
 
 export type Session =
@@ -67,7 +68,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     () => ({
       ...session,
       login: async (body) => signedIn(await api.login(body)),
-      register: async (body) => signedIn(await api.register(body)),
+      register: async (body) => {
+        const user = await api.register(body);
+        track('signup');
+        await signedIn(user);
+      },
       logout: async () => {
         await api.logout().catch(() => undefined);
         setSession({ status: 'guest', user: null });

@@ -384,9 +384,9 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] Landing page, curriculum page, lesson pages (SSR/ISR: Arabic explanation, example, FAQ; the player loads as a client island via `dynamic(..., { ssr: false })`), function pages from `/content/functions` (MDX), shortcut pages, about/privacy/terms/contact.
 - [x] Metadata per page, canonical, hreflang, JSON-LD (`Course` or `LearningResource` for lessons, `FAQPage` where there is an FAQ), `sitemap.xml`, `robots.txt`, OG images via `next/og`.
 - [ ] Performance budget on the lesson page, on a mid-range phone profile: LCP under 2.5s and CLS under 0.1. The grid code is lazy-loaded.
-- [ ] Analytics with events `lesson_start`, `step_correct`, `step_incorrect`, `lesson_complete`, `signup`.
-- [ ] `pnpm metrics:report`: prints activation (visitors who complete the first lesson), 7-day return rate, median steps per session, and per-lesson step drop-off.
-- [ ] Ads: a consent banner and a provider-agnostic `<AdSlot>` component with reserved space (no layout shift), used on explanation and summary areas and between lessons. Never place an ad inside or beside the exercise grid. The ad network is chosen later (decision D5).
+- [x] Analytics with events `lesson_start`, `step_correct`, `step_incorrect`, `lesson_complete`, `signup`.
+- [x] `pnpm metrics:report`: prints activation (visitors who complete the first lesson), 7-day return rate, median steps per session, and per-lesson step drop-off.
+- [x] Ads: a consent banner and a provider-agnostic `<AdSlot>` component with reserved space (no layout shift), used on explanation and summary areas and between lessons. Never place an ad inside or beside the exercise grid. The ad network is chosen later (decision D5).
 - [x] Write 15 function pages (SUM, IF, SUMIF, COUNTIF, VLOOKUP, XLOOKUP, INDEX, MATCH, LEFT, RIGHT, MID, FIND, TODAY, DATEDIF, IFERROR), each with a "Practice this" link.
 **Acceptance**
 - [ ] All pages return 200 and are indexable (no `noindex`); the sitemap is valid.

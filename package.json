@@ -19,7 +19,7 @@
     "db:seed": "pnpm --filter @tamreen/api db:seed",
     "content:lint": "pnpm --filter @tamreen/content content:lint",
     "content:sync": "pnpm --filter @tamreen/api content:sync",
-    "metrics:report": "node scripts/not-yet.mjs metrics:report 5"
+    "metrics:report": "pnpm --filter @tamreen/api metrics:report"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

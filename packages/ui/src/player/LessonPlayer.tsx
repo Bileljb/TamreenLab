@@ -10,6 +10,7 @@ import {
   type CheckResult,
 } from '@tamreen/engine';
 import type { FeedbackCode, Glossary, LessonFile, StepSpec } from '@tamreen/shared';
+import { track } from '../analytics/track';
 import { api, announcePoints } from '../api/client';
 import { useSession } from '../api/session';
 import { Formula } from '../Formula';
@@ -47,6 +48,11 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
   const introduced = useMemo(() => firstUses(lesson.steps.map((s) => s.promptAr)), [lesson.steps]);
 
   // Resume once we know who is playing: from the server when signed in, else from localStorage.
+  // One lesson_start per view of the lesson (and per restart).
+  useEffect(() => {
+    track('lesson_start', { lessonSlug: lesson.slug });
+  }, [lesson.slug, round]);
+
   const resumeDone = useRef(false);
   useEffect(() => {
     if (resumeDone.current || session.status === 'loading') return;
@@ -101,6 +107,13 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
     } else if (newlyCorrect && !signedIn) {
       guest.recordStep(step.slug, after.points, after.firstTry);
     }
+    if (action.type === 'checked' && after !== before) {
+      track(after.status === 'correct' ? 'step_correct' : 'step_incorrect', {
+        lessonSlug: lesson.slug,
+        stepSlug: step.slug,
+      });
+    }
+    if (!state.finished && next.finished) track('lesson_complete', { lessonSlug: lesson.slug });
     if (!state.finished && next.finished && !signedIn) guest.complete();
   }
 

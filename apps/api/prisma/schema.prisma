@@ -158,3 +158,18 @@ model RefreshToken {
 
   @@index([family])
 }
+
+// Anonymous usage events for the launch metrics (ADR 007): no user id, no IP address.
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  name       String
+  anonId     String
+  sessionId  String
+  lessonSlug String?
+  stepSlug   String?
+  day        DateTime @db.Date
+  createdAt  DateTime @default(now())
+
+  @@index([name, day])
+  @@index([anonId])
+}

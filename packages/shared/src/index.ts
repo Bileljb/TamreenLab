@@ -15,3 +15,4 @@ export * from './lesson';
 export * from './progress';
 export * from './api';
 export * from './functions';
+export * from './analytics';

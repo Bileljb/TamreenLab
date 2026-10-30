@@ -406,3 +406,52 @@ describe('GET /docs', () => {
     );
   });
 });
+
+describe('POST /events', () => {
+  const event = {
+    name: 'lesson_start',
+    anonId: 'anon-12345678',
+    sessionId: 'session-1234',
+    lessonSlug: 'sum-basics',
+  };
+
+  it('stores an anonymous event with the day and nothing about the person', async () => {
+    const res = await request(makeApp()).post('/api/events').send(event);
+    expect(res.status).toBe(204);
+    const rows = await db.analyticsEvent.findMany({ where: { anonId: 'anon-12345678' } });
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({
+      name: 'lesson_start',
+      lessonSlug: 'sum-basics',
+      stepSlug: null,
+    });
+    expect(rows[0]!.day.toISOString().slice(0, 10)).toBe('2026-10-30');
+    expect(Object.keys(rows[0]!)).not.toContain('userId');
+    await db.analyticsEvent.deleteMany({ where: { anonId: 'anon-12345678' } });
+  });
+
+  it('rejects unknown events and extra fields', async () => {
+    const app = makeApp();
+    expect(
+      (
+        await request(app)
+          .post('/api/events')
+          .send({ ...event, name: 'clicked' })
+      ).status,
+    ).toBe(400);
+    expect(
+      (
+        await request(app)
+          .post('/api/events')
+          .send({ ...event, email: 'a@b.co' })
+      ).status,
+    ).toBe(400);
+    expect(
+      (
+        await request(app)
+          .post('/api/events')
+          .send({ ...event, anonId: 'x' })
+      ).status,
+    ).toBe(400);
+  });
+});

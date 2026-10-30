@@ -15,7 +15,8 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "prisma db seed",
-    "content:sync": "node --env-file-if-exists=.env --import tsx scripts/content-sync.ts"
+    "content:sync": "node --env-file-if-exists=.env --import tsx scripts/content-sync.ts",
+    "metrics:report": "node --env-file-if-exists=.env --import tsx scripts/metrics-report.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",

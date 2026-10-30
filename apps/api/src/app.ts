@@ -13,6 +13,7 @@ import { errorHandler, notFound } from './middleware/errors';
 import { openApiDocument } from './openapi';
 import { attemptsRouter } from './routes/attempts';
 import { authRouter } from './routes/auth';
+import { eventsRouter } from './routes/events';
 import { healthRouter, type DbCheck } from './routes/health';
 import { leaderboardRouter } from './routes/leaderboard';
 import { lessonsRouter } from './routes/lessons';
@@ -71,6 +72,7 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
       attemptsRouter,
       progressRouter,
       leaderboardRouter,
+      eventsRouter,
     ]) {
       app.use('/api', router(ctx));
     }

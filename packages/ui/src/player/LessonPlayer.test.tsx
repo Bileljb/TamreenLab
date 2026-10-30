@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { GUEST_PROGRESS_KEY, LessonFileSchema, type LessonFileInput } from '@tamreen/shared';
@@ -170,5 +170,38 @@ describe('LessonPlayer', () => {
     await waitFor(() => expect(screen.getByText('الخطوة 2 من 3')).toBeTruthy());
     expect(screen.getByText('تابعنا من حيث توقفت.')).toBeTruthy();
     expect(screen.getByRole('progressbar').getAttribute('aria-valuenow')).toBe('1');
+  });
+});
+
+describe('LessonPlayer analytics', () => {
+  it('sends anonymous lesson and step events, unless the learner opted out', async () => {
+    const sent: { name: string; stepSlug?: string; anonId: string }[] = [];
+    const fetchMock = vi.fn(async (url: string, init?: RequestInit) => {
+      if (url === '/api/events') sent.push(JSON.parse(String(init?.body)));
+      return new Response(null, { status: 204 });
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    const user = userEvent.setup();
+    renderPlayer();
+    await user.click(cell('B2'));
+    await user.keyboard('{Enter}');
+    await user.keyboard('{ArrowDown}{Enter}');
+    expect(sent.map((e) => [e.name, e.stepSlug])).toEqual([
+      ['lesson_start', undefined],
+      ['step_incorrect', 'pick'],
+      ['step_correct', 'pick'],
+    ]);
+    expect(new Set(sent.map((e) => e.anonId)).size).toBe(1);
+    expect(JSON.stringify(sent)).not.toMatch(/email|userId/);
+
+    sent.length = 0;
+    window.localStorage.setItem(
+      'tamreen.consent.v1',
+      JSON.stringify({ analytics: false, personalisedAds: false, decidedAt: 'x' }),
+    );
+    await user.click(screen.getByRole('button', { name: 'متابعة' }));
+    await user.click(screen.getByRole('button', { name: 'تخطَّ' }));
+    expect(sent).toEqual([]);
+    vi.unstubAllGlobals();
   });
 });

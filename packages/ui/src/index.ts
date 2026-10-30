@@ -21,3 +21,4 @@ export {
   writeConsent,
   type Consent,
 } from './consent/consent';
+export { track } from './analytics/track';
