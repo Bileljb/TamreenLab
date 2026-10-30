@@ -99,6 +99,9 @@ describe('ENTER_FORMULA: SUMIF step', () => {
       correct: false,
       code: 'HARDCODED_VALUE',
     });
+    // Plain "=450" stops at the no-reference rule; adding an empty cell gets past it, so this
+    // one is caught by the variant dataset alone.
+    expect(run(noFunctionRule, '=450+Z99')).toBe('HARDCODED_VALUE');
     // A formula that reads cells but only fits the base data is caught by the variant too.
     expect(run(noFunctionRule, '=D2+D5+D7*0+130')).toBe('HARDCODED_VALUE');
     expect(run(noFunctionRule, '=SUMIF(C2:C9,"قلم",D2:D9)')).toBe('OK');
