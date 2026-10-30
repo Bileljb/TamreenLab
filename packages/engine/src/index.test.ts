@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { ENGINE_VERSION } from './index';
+import { ENGINE_VERSION, customEngine } from './index';
 
 describe('engine package', () => {
-  it('loads without DOM or Node-only imports', () => {
-    expect(ENGINE_VERSION).toBe('0.0.0');
+  it('exposes a version and the formula engine', () => {
+    expect(ENGINE_VERSION).toMatch(/^\d+\.\d+\.\d+$/);
+    expect(customEngine.name).toBe('custom');
   });
 });
