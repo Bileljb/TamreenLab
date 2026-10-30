@@ -1,5 +1,6 @@
 import { pino } from 'pino';
 import { createApp } from './app';
+import { configFromEnv } from './config';
 import { loadEnv } from './lib/env';
 import { prisma } from './lib/prisma';
 
@@ -8,6 +9,8 @@ const logger = pino({ level: env.LOG_LEVEL });
 
 const app = createApp({
   logger,
+  db: prisma,
+  config: configFromEnv(env),
   checkDb: async () => {
     await prisma.$queryRaw`SELECT 1`;
   },

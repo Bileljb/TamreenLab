@@ -366,13 +366,13 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 ### Phase 4 — Backend: auth, attempts, progress, scoring (1–2 weeks)
 **Goal:** accounts, server-verified attempts, points, streaks, a daily leaderboard.
 **Tasks**
-- [ ] Auth endpoints (T5): hashing, refresh rotation, logout, account deletion.
+- [x] Auth endpoints (T5): hashing, refresh rotation, logout, account deletion.
 - [ ] `GET /lessons` and `GET /lessons/:slug`. `POST /attempts` re-verifies with `packages/engine`, records the attempt, writes a `PointEvent`, and updates `LessonProgress` and `Streak`. Decide and document how a "day" is defined for streaks (for example a fixed UTC+3, or the user's timezone) in an ADR.
 - [ ] `POST /progress/sync`: idempotent, ignores steps already completed, caps points per merge.
 - [ ] `GET /leaderboard/daily` (aggregate over `PointEvent`), display-name rules, basic moderation (length, blocked-word list).
-- [ ] Rate limiting, validation, error shape, OpenAPI at `/api/docs`.
+- [x] Rate limiting, validation, error shape, OpenAPI at `/api/docs`.
 - [ ] Wire the web app to the API: login and register pages, progress, stats, leaderboard panel.
-- [ ] supertest integration tests for every route, including a test proving a forged "correct" claim from the client earns no points.
+- [x] supertest integration tests for every route, including a test proving a forged "correct" claim from the client earns no points.
 **Acceptance**
 - [ ] A new user can play as a guest, register, and keep their progress.
 - [ ] Resubmitting the same correct step does not award points twice.

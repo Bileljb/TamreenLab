@@ -18,6 +18,17 @@ env:
 jobs:
   check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: tamreen
+          POSTGRES_PASSWORD: tamreen
+          POSTGRES_DB: tamreen_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U tamreen -d tamreen_test"
+          --health-interval 2s --health-timeout 3s --health-retries 30
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -31,6 +42,13 @@ jobs:
       - run: pnpm lint
       - run: pnpm test
       - run: pnpm content:lint
+      - name: API integration tests (Postgres)
+        run: |
+          pnpm --filter @tamreen/api exec prisma migrate deploy
+          pnpm --filter @tamreen/api test:int
+        env:
+          DATABASE_URL: postgresql://tamreen:tamreen@localhost:5432/tamreen_test?schema=public
+          DATABASE_URL_TEST: postgresql://tamreen:tamreen@localhost:5432/tamreen_test?schema=public
       - run: pnpm build
 
   e2e:
