@@ -15,6 +15,7 @@ import {
   LessonFileSchema,
   StyleFileSchema,
   TracksFileSchema,
+  glossaryTermKey,
   type Glossary,
   type LessonFile,
   type StepSpec,
@@ -153,7 +154,7 @@ function lintStep(step: StepSpec, glossary: Glossary, style: StyleFile): string[
 
   for (const text of texts(step)) {
     for (const term of glossaryTerms(text)) {
-      if (!(term in glossary) && !(term.replace(/^ال/, '') in glossary)) {
+      if (!(term in glossary) && !(glossaryTermKey(term) in glossary)) {
         problems.push(`glossary term {{${term}}} is not in glossary.json`);
       }
     }

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { Glossary } from '@tamreen/shared';
+import { glossaryTermKey, type Glossary } from '@tamreen/shared';
 import { Formula } from '../Formula';
 
 export type PromptToken =
@@ -27,8 +27,8 @@ export function tokenizePrompt(text: string): PromptToken[] {
   return tokens;
 }
 
-/** `{{الخلية}}` and `{{خلية}}` are the same glossary term; glossary keys have no article. */
-export const termKey = (text: string) => text.trim().replace(/^ال/, '');
+/** `{{الخلية}}`, `{{خلية}}` and `{{مرجعًا}}` resolve to glossary keys (see glossaryTermKey). */
+export const termKey = glossaryTermKey;
 
 /** Glossary terms each prompt introduces: a term gets its English name on first use per lesson. */
 export function firstUses(prompts: string[]): Set<string>[] {

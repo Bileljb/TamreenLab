@@ -1,6 +1,20 @@
 import { describe, expect, it } from 'vitest';
-import { GlossarySchema, LessonFileSchema, type LessonFileInput } from './lesson';
+import { GlossarySchema, LessonFileSchema, glossaryTermKey, type LessonFileInput } from './lesson';
 import { GuestProgressSchema, emptyGuestProgress } from './progress';
+
+describe('glossaryTermKey', () => {
+  it.each([
+    ['خلية', 'خلية'],
+    ['الخلية', 'خلية'],
+    [' مرجعًا ', 'مرجع'],
+    ['نطاقاً', 'نطاق'],
+    ['المرجعَ', 'مرجع'],
+    ['مربع الاسم', 'مربع الاسم'],
+    ['ورقة عمل', 'ورقة عمل'],
+  ])('%s -> %s', (term, key) => {
+    expect(glossaryTermKey(term)).toBe(key);
+  });
+});
 
 const lesson: LessonFileInput = {
   slug: 'cells-and-selection',

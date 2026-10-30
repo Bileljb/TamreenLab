@@ -1,0 +1,219 @@
+{
+  "slug": "and-or",
+  "track": "logic",
+  "order": 11,
+  "kind": "CONCEPT",
+  "status": "DRAFT",
+  "titleAr": "أكثر من شرط: AND وOR",
+  "summaryAr": "تحقق من عدة شروط معًا بالدالة AND، أو من شرط واحد على الأقل بالدالة OR.",
+  "minutes": 5,
+  "steps": [
+    {
+      "slug": "and-worked-example",
+      "type": "ENTER_FORMULA",
+      "promptAr": "هؤلاء متقدمون إلى وظيفة. `AND` تعيد `TRUE` إذا تحققت كل الشروط. اكتب في `E2` المعادلة `=AND(B2>=2,C2)` لتعرف هل لدى خالد سنتان من الخبرة على الأقل ويتحدث الإنجليزية.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "المتقدم",
+          "B1": "سنوات الخبرة",
+          "C1": "يتحدث الإنجليزية",
+          "D1": "المدينة",
+          "E1": "مؤهل",
+          "F1": "أولوية",
+          "A2": "خالد",
+          "B2": 3,
+          "C2": true,
+          "D2": "إربد",
+          "A3": "منى",
+          "B3": 1,
+          "C3": true,
+          "D3": "الزرقاء",
+          "A4": "سعيد",
+          "B4": 5,
+          "C4": false,
+          "D4": "إربد",
+          "A5": "دانة",
+          "B5": 4,
+          "C5": true,
+          "D5": "العقبة"
+        }
+      },
+      "check": {
+        "target": "E2",
+        "expected": {
+          "value": true
+        },
+        "solution": "=AND(B2>=2,C2)",
+        "mustUseFunctions": ["AND"],
+        "variants": [
+          {
+            "cells": {
+              "B2": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "and-second-applicant",
+      "type": "ENTER_FORMULA",
+      "promptAr": "اكتب في `E3` المعادلة نفسها لمنى.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "المتقدم",
+          "B1": "سنوات الخبرة",
+          "C1": "يتحدث الإنجليزية",
+          "D1": "المدينة",
+          "E1": "مؤهل",
+          "F1": "أولوية",
+          "A2": "خالد",
+          "B2": 3,
+          "C2": true,
+          "D2": "إربد",
+          "A3": "منى",
+          "B3": 1,
+          "C3": true,
+          "D3": "الزرقاء",
+          "A4": "سعيد",
+          "B4": 5,
+          "C4": false,
+          "D4": "إربد",
+          "A5": "دانة",
+          "B5": 4,
+          "C5": true,
+          "D5": "العقبة"
+        }
+      },
+      "check": {
+        "target": "E3",
+        "expected": {
+          "value": false
+        },
+        "solution": "=AND(B3>=2,C3)",
+        "mustUseFunctions": ["AND"],
+        "variants": [
+          {
+            "cells": {
+              "B3": 6
+            }
+          }
+        ]
+      },
+      "hintAr": "بيانات منى في الصف 3."
+    },
+    {
+      "slug": "or-worked-example",
+      "type": "ENTER_FORMULA",
+      "promptAr": "`OR` تعيد `TRUE` إذا تحقق شرط واحد على الأقل. اكتب في `F2` المعادلة `=OR(D2=\"إربد\",B2>=4)`: هل خالد من إربد أو لديه 4 سنوات خبرة أو أكثر؟",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "المتقدم",
+          "B1": "سنوات الخبرة",
+          "C1": "يتحدث الإنجليزية",
+          "D1": "المدينة",
+          "E1": "مؤهل",
+          "F1": "أولوية",
+          "A2": "خالد",
+          "B2": 3,
+          "C2": true,
+          "D2": "إربد",
+          "A3": "منى",
+          "B3": 1,
+          "C3": true,
+          "D3": "الزرقاء",
+          "A4": "سعيد",
+          "B4": 5,
+          "C4": false,
+          "D4": "إربد",
+          "A5": "دانة",
+          "B5": 4,
+          "C5": true,
+          "D5": "العقبة"
+        }
+      },
+      "check": {
+        "target": "F2",
+        "expected": {
+          "value": true
+        },
+        "solution": "=OR(D2=\"إربد\",B2>=4)",
+        "mustUseFunctions": ["OR"],
+        "variants": [
+          {
+            "cells": {
+              "D2": "العقبة"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "or-second-applicant",
+      "type": "ENTER_FORMULA",
+      "promptAr": "اكتب في `F3` معادلة تعيد `TRUE` إذا كانت منى من إربد أو لديها 4 سنوات خبرة أو أكثر.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "المتقدم",
+          "B1": "سنوات الخبرة",
+          "C1": "يتحدث الإنجليزية",
+          "D1": "المدينة",
+          "E1": "مؤهل",
+          "F1": "أولوية",
+          "A2": "خالد",
+          "B2": 3,
+          "C2": true,
+          "D2": "إربد",
+          "A3": "منى",
+          "B3": 1,
+          "C3": true,
+          "D3": "الزرقاء",
+          "A4": "سعيد",
+          "B4": 5,
+          "C4": false,
+          "D4": "إربد",
+          "A5": "دانة",
+          "B5": 4,
+          "C5": true,
+          "D5": "العقبة"
+        }
+      },
+      "check": {
+        "target": "F3",
+        "expected": {
+          "value": false
+        },
+        "solution": "=OR(D3=\"إربد\",B3>=4)",
+        "mustUseFunctions": ["OR"],
+        "variants": [
+          {
+            "cells": {
+              "B3": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "and-result",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "ما ناتج `=AND(TRUE,FALSE)`؟",
+      "check": {
+        "options": ["`TRUE`", "`FALSE`", "`#VALUE!`", "0"],
+        "correct": 1
+      }
+    },
+    {
+      "slug": "or-result",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "ما ناتج `=OR(TRUE,FALSE)`؟",
+      "check": {
+        "options": ["`TRUE`", "`FALSE`", "`#VALUE!`", "1"],
+        "correct": 0
+      }
+    }
+  ]
+}

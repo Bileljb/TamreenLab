@@ -41,9 +41,25 @@ export type LessonFileInput = z.input<typeof LessonFileSchema>;
 export const GlossarySchema = z.record(z.string().trim().min(1), z.string().trim().min(1));
 export type Glossary = z.infer<typeof GlossarySchema>;
 
+const HARAKAT = /[ً-ْ]/g;
+const TANWEEN_FATH = 'ً';
+
+/**
+ * The glossary key for a term as written in a prompt: `{{الخلية}}`, `{{خلية}}` and `{{مرجعًا}}`
+ * become `خلية` and `مرجع`. Drops harakat, the article, and the alif carrying tanween al-fath.
+ */
+export function glossaryTermKey(term: string): string {
+  const trimmed = term.trim();
+  let key = trimmed.replace(HARAKAT, '');
+  if (trimmed.includes(TANWEEN_FATH) && key.endsWith('ا')) key = key.slice(0, -1);
+  return key.replace(/^ال/, '');
+}
+
 /** `content/tracks.json`: the tracks lessons belong to, in curriculum order. */
 export const TracksFileSchema = z
-  .array(z.object({ slug, titleAr: z.string().trim().min(1), order: z.number().int().nonnegative() }))
+  .array(
+    z.object({ slug, titleAr: z.string().trim().min(1), order: z.number().int().nonnegative() }),
+  )
   .min(1);
 export type TracksFile = z.infer<typeof TracksFileSchema>;
 

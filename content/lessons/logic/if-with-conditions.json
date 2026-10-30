@@ -1,0 +1,239 @@
+{
+  "slug": "if-with-conditions",
+  "track": "logic",
+  "order": 12,
+  "kind": "PRACTICE",
+  "status": "DRAFT",
+  "titleAr": "تمرين: خصومات الطلبات",
+  "summaryAr": "اجمع IF مع AND وOR وNOT لتقرر الخصم والتوصيل لكل طلب.",
+  "minutes": 6,
+  "steps": [
+    {
+      "slug": "discount-if-and",
+      "type": "ENTER_FORMULA",
+      "promptAr": "يحصل الطلب على خصم إذا كانت الكمية 10 أو أكثر وكان العميل دائمًا. اكتب في `D2` معادلة تعيد «خصم» أو «بدون خصم» باستخدام `IF` و`AND`.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "الطلب",
+          "B1": "الكمية",
+          "C1": "عميل دائم",
+          "D1": "الخصم",
+          "E1": "التوصيل",
+          "F1": "عميل جديد",
+          "A2": "الطلب 101",
+          "B2": 12,
+          "C2": true,
+          "A3": "الطلب 102",
+          "B3": 4,
+          "C3": false,
+          "A4": "الطلب 103",
+          "B4": 25,
+          "C4": false,
+          "A5": "الطلب 104",
+          "B5": 8,
+          "C5": true
+        }
+      },
+      "check": {
+        "target": "D2",
+        "expected": {
+          "value": "خصم"
+        },
+        "solution": "=IF(AND(B2>=10,C2),\"خصم\",\"بدون خصم\")",
+        "mustUseFunctions": ["IF", "AND"],
+        "variants": [
+          {
+            "cells": {
+              "C2": false
+            }
+          }
+        ]
+      },
+      "hintAr": "ضع `AND(B2>=10,C2)` مكان الشرط في `IF`."
+    },
+    {
+      "slug": "discount-second-order",
+      "type": "ENTER_FORMULA",
+      "promptAr": "اكتب في `D3` المعادلة نفسها للطلب 102.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "الطلب",
+          "B1": "الكمية",
+          "C1": "عميل دائم",
+          "D1": "الخصم",
+          "E1": "التوصيل",
+          "F1": "عميل جديد",
+          "A2": "الطلب 101",
+          "B2": 12,
+          "C2": true,
+          "A3": "الطلب 102",
+          "B3": 4,
+          "C3": false,
+          "A4": "الطلب 103",
+          "B4": 25,
+          "C4": false,
+          "A5": "الطلب 104",
+          "B5": 8,
+          "C5": true
+        }
+      },
+      "check": {
+        "target": "D3",
+        "expected": {
+          "value": "بدون خصم"
+        },
+        "solution": "=IF(AND(B3>=10,C3),\"خصم\",\"بدون خصم\")",
+        "mustUseFunctions": ["IF", "AND"],
+        "variants": [
+          {
+            "cells": {
+              "B3": 20,
+              "C3": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "delivery-if-or",
+      "type": "ENTER_FORMULA",
+      "promptAr": "التوصيل مجاني إذا كانت الكمية 20 أو أكثر أو كان العميل دائمًا. اكتب في `E2` معادلة تعيد «مجاني» أو «مدفوع».",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "الطلب",
+          "B1": "الكمية",
+          "C1": "عميل دائم",
+          "D1": "الخصم",
+          "E1": "التوصيل",
+          "F1": "عميل جديد",
+          "A2": "الطلب 101",
+          "B2": 12,
+          "C2": true,
+          "A3": "الطلب 102",
+          "B3": 4,
+          "C3": false,
+          "A4": "الطلب 103",
+          "B4": 25,
+          "C4": false,
+          "A5": "الطلب 104",
+          "B5": 8,
+          "C5": true
+        }
+      },
+      "check": {
+        "target": "E2",
+        "expected": {
+          "value": "مجاني"
+        },
+        "solution": "=IF(OR(B2>=20,C2),\"مجاني\",\"مدفوع\")",
+        "mustUseFunctions": ["IF", "OR"],
+        "variants": [
+          {
+            "cells": {
+              "C2": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "delivery-big-order",
+      "type": "ENTER_FORMULA",
+      "promptAr": "اكتب في `E4` معادلة التوصيل نفسها للطلب 103.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "الطلب",
+          "B1": "الكمية",
+          "C1": "عميل دائم",
+          "D1": "الخصم",
+          "E1": "التوصيل",
+          "F1": "عميل جديد",
+          "A2": "الطلب 101",
+          "B2": 12,
+          "C2": true,
+          "A3": "الطلب 102",
+          "B3": 4,
+          "C3": false,
+          "A4": "الطلب 103",
+          "B4": 25,
+          "C4": false,
+          "A5": "الطلب 104",
+          "B5": 8,
+          "C5": true
+        }
+      },
+      "check": {
+        "target": "E4",
+        "expected": {
+          "value": "مجاني"
+        },
+        "solution": "=IF(OR(B4>=20,C4),\"مجاني\",\"مدفوع\")",
+        "mustUseFunctions": ["IF", "OR"],
+        "variants": [
+          {
+            "cells": {
+              "B4": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "not-function",
+      "type": "ENTER_FORMULA",
+      "promptAr": "`NOT` تعكس القيمة: تجعل `TRUE` `FALSE` والعكس. اكتب في `F2` معادلة تعيد `TRUE` إذا لم يكن العميل دائمًا: `=NOT(C2)`.",
+      "sheet": {
+        "visible": "A1:F5",
+        "cells": {
+          "A1": "الطلب",
+          "B1": "الكمية",
+          "C1": "عميل دائم",
+          "D1": "الخصم",
+          "E1": "التوصيل",
+          "F1": "عميل جديد",
+          "A2": "الطلب 101",
+          "B2": 12,
+          "C2": true,
+          "A3": "الطلب 102",
+          "B3": 4,
+          "C3": false,
+          "A4": "الطلب 103",
+          "B4": 25,
+          "C4": false,
+          "A5": "الطلب 104",
+          "B5": 8,
+          "C5": true
+        }
+      },
+      "check": {
+        "target": "F2",
+        "expected": {
+          "value": false
+        },
+        "solution": "=NOT(C2)",
+        "mustUseFunctions": ["NOT"],
+        "variants": [
+          {
+            "cells": {
+              "C2": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "slug": "discount-check",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "طلب كميته 15 وعميله ليس دائمًا. ماذا تعيد له معادلة الخصم من الخطوة الأولى؟",
+      "check": {
+        "options": ["خصم", "بدون خصم", "`TRUE`", "`#VALUE!`"],
+        "correct": 1
+      },
+      "hintAr": "`AND` تحتاج إلى أن يتحقق الشرطان معًا."
+    }
+  ]
+}
