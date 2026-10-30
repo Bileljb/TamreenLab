@@ -356,7 +356,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 **Tasks**
 - [x] Content format (JSON or YAML) = the step spec from 3.5 plus lesson metadata. `pnpm content:lint` validates with zod, runs a reference solution for every step through the engine, checks glossary terms, and rejects empty or duplicated step prompts.
 - [x] `pnpm content:sync` upserts tracks, lessons and steps into Postgres, idempotently.
-- [ ] `docs/CONTENT.md`: step-writing rules (one idea per step, 5–8 steps per lesson, worked example first), Arabic style (neutral Modern Standard Arabic, short sentences, English term in brackets on first use), dataset rules (original data, local currencies and names).
+- [x] `docs/CONTENT.md`: step-writing rules (one idea per step, 5–8 steps per lesson, worked example first), Arabic style (neutral Modern Standard Arabic, short sentences, English term in brackets on first use), dataset rules (original data, local currencies and names).
 - [ ] Author the first 20 lessons: cells and selection (3), SUM/AVERAGE/MIN/MAX/COUNT (5), IF/AND/OR (3), SUMIF/COUNTIF (4), VLOOKUP (3), two summary lessons.
 **Acceptance**
 - [ ] `content:lint` passes with 0 errors and every step has a verified reference solution.
