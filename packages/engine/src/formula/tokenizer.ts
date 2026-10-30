@@ -15,7 +15,9 @@ export class FormulaSyntaxError extends Error {}
 
 const REF = /^\$?[A-Z]{1,3}\$?\d+/i;
 const NUMBER = /^(\d+(\.\d*)?|\.\d+)(E[+-]?\d+)?/i;
-const NAME = /^[A-Z_][A-Z0-9_.]*/i;
+// Any letter starts a name, so Arabic text typed without quotes is #NAME? (as in Excel), not a
+// syntax error. Only known function names evaluate; every other name is #NAME?.
+const NAME = /^[\p{L}_][\p{L}\p{N}_.]*/iu;
 const OPS = ['<>', '<=', '>=', '+', '-', '*', '/', '^', '&', '=', '<', '>', ':', '%'];
 
 /**

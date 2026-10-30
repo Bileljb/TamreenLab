@@ -3,3 +3,13 @@
 export const ENGINE_VERSION = '0.1.0';
 
 export * from './formula';
+export * from './check';
+export { Sheet } from './sheet';
+export { expandRange, normalizeAddress, normalizeRange, sameCell, sameRange } from './ref';
+export {
+  anchoringMatches,
+  canonicalFormula,
+  hasCellReference,
+  normalizeDigits,
+  prepareFormula,
+} from './normalize';

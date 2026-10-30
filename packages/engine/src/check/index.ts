@@ -1,4 +1,5 @@
-import { AnswerSchemas, type StepSpec } from '@tamreen/shared';
+import { AnswerSchemas, type StepOf, type StepSpec } from '@tamreen/shared';
+import { checkEnterFormula } from './formula';
 import { InvalidAnswerError, type CheckResult } from './result';
 import { checkEnterValue, checkMultipleChoice, checkSelectCell, checkSelectRange } from './simple';
 import { checkShortcut } from './shortcut';
@@ -23,8 +24,16 @@ export function checkAnswer(step: StepSpec, answer: unknown): CheckResult {
     case 'SHORTCUT':
       return checkShortcut(step, a);
     case 'ENTER_FORMULA':
-      throw new Error('The ENTER_FORMULA checker is not implemented yet');
+      return checkEnterFormula(step, a);
   }
+}
+
+/**
+ * Runs a formula step's reference solution through its own checker: it must give
+ * `expected.value` and agree with itself on every variant. `content:lint` (Phase 3) uses this.
+ */
+export function verifyReferenceSolution(step: StepOf<'ENTER_FORMULA'>): CheckResult {
+  return checkEnterFormula(step, { cell: step.check.target, formula: step.check.solution });
 }
 
 export { InvalidAnswerError, type CheckResult } from './result';

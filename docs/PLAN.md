@@ -326,9 +326,9 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 **Goal:** a framework-free package that loads a step spec and decides whether an answer is correct, with useful feedback codes.
 **Tasks**
 - [x] `packages/shared`: zod schemas for the step spec and attempt payloads. Write these first.
-- [ ] `packages/engine`: `Sheet` model (A1 parsing, ranges, typed cell values), the `FormulaEngine` adapter from ADR 001, and normalisation (leading `=`, whitespace, case, `,` vs `;`, equivalent absolute/relative references when `acceptEquivalentRefs`).
-- [ ] Checkers: `SELECT_CELL`, `SELECT_RANGE`, `ENTER_VALUE` (with tolerance), `ENTER_FORMULA` (expected value, must/must-not-use functions, variant datasets), `MULTIPLE_CHOICE`, `SHORTCUT` (key-combo matching only; browser capture is Phase 6).
-- [ ] The feedback codes from 3.5, and a function that extracts the functions used in a formula.
+- [x] `packages/engine`: `Sheet` model (A1 parsing, ranges, typed cell values), the `FormulaEngine` adapter from ADR 001, and normalisation (leading `=`, whitespace, case, `,` vs `;`, equivalent absolute/relative references when `acceptEquivalentRefs`).
+- [x] Checkers: `SELECT_CELL`, `SELECT_RANGE`, `ENTER_VALUE` (with tolerance), `ENTER_FORMULA` (expected value, must/must-not-use functions, variant datasets), `MULTIPLE_CHOICE`, `SHORTCUT` (key-combo matching only; browser capture is Phase 6).
+- [x] The feedback codes from 3.5, and a function that extracts the functions used in a formula.
 - [ ] Table-driven tests, at least 120 cases: correct answers, equivalent answers, hard-coded answers, wrong ranges, syntax errors, `#N/A`, separators, Arabic text in cells.
 **Acceptance**
 - [ ] All tests pass; coverage on `packages/engine` is at least 90%.
