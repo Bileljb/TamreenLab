@@ -37,3 +37,5 @@ export function verifyReferenceSolution(step: StepOf<'ENTER_FORMULA'>): CheckRes
 }
 
 export { InvalidAnswerError, type CheckResult } from './result';
+
+export { referenceAnswer } from './reference';

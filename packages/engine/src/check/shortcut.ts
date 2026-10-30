@@ -1,8 +1,8 @@
 import type { AnswerFor, StepOf } from '@tamreen/shared';
 import { result, type CheckResult } from './result';
 
-type Modifier = 'ctrl' | 'shift' | 'alt' | 'meta';
-type Combo = { modifiers: Set<Modifier>; key: string };
+export type Modifier = 'ctrl' | 'shift' | 'alt' | 'meta';
+export type Combo = { modifiers: Set<Modifier>; key: string };
 
 const MODIFIERS: Record<string, Modifier> = {
   CTRL: 'ctrl',
@@ -41,7 +41,7 @@ function normalizeKey(key: string): string {
 }
 
 /** `Ctrl+Shift+L` -> {ctrl, shift} + "L". The last segment is the key, so `Ctrl++` is plus. */
-function parseCombo(text: string): Combo {
+export function parseCombo(text: string): Combo {
   const key = text.endsWith('++') || text === '+' ? '+' : text.slice(text.lastIndexOf('+') + 1);
   const head = text.slice(0, text.length - key.length).replace(/\+$/, '');
   const modifiers = new Set<Modifier>();
