@@ -11,3 +11,5 @@ export function isLocale(value: string): value is Locale {
 export * from './feedback';
 export * from './step';
 export * from './attempt';
+export * from './lesson';
+export * from './progress';
