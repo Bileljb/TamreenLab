@@ -20,9 +20,13 @@ export const MultipleChoiceAnswerSchema = z.object({ choice: z.number().int().no
 export const PLATFORMS = ['win', 'mac'] as const;
 export type Platform = (typeof PLATFORMS)[number];
 
-/** A captured key press, mirroring the fields of a browser KeyboardEvent. */
+/**
+ * A captured key press, mirroring the fields of a browser KeyboardEvent. `code` is the physical
+ * key (`KeyL`): on an Arabic layout Ctrl+L reports `key: "م"`, so matching needs it.
+ */
 export const KeyPressSchema = z.object({
   key: z.string().min(1).max(32),
+  code: z.string().max(32).optional(),
   ctrlKey: z.boolean().default(false),
   shiftKey: z.boolean().default(false),
   altKey: z.boolean().default(false),
