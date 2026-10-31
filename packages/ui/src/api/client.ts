@@ -74,6 +74,7 @@ export const api = {
   register: (body: RegisterRequest) => send<User>('/auth/register', post(body)),
   login: (body: LoginRequest) => send<User>('/auth/login', post(body)),
   logout: () => send<void>('/auth/logout', post({})),
+  deleteAccount: () => call<void>('/me', { method: 'DELETE' }),
   attempt: (body: {
     lessonSlug: string;
     stepSlug: string;

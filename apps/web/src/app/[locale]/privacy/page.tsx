@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DeleteAccount } from '@tamreen/ui';
 import { StaticPage, staticPageMetadata } from '@/components/StaticPage';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -8,5 +9,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  return <StaticPage locale={(await params).locale} page="privacy" />;
+  return (
+    <StaticPage locale={(await params).locale} page="privacy">
+      <DeleteAccount />
+    </StaticPage>
+  );
 }

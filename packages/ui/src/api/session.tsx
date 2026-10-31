@@ -28,6 +28,8 @@ type SessionApi = Session & {
   login: (body: LoginRequest) => Promise<void>;
   register: (body: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
+  /** Deletes the account and all its data on the server; throws ApiError on failure. */
+  deleteAccount: () => Promise<void>;
 };
 
 const SessionContext = createContext<SessionApi | null>(null);
@@ -77,6 +79,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         await api.logout().catch(() => undefined);
         setSession({ status: 'guest', user: null });
       },
+      deleteAccount: async () => {
+        await api.deleteAccount();
+        setSession({ status: 'guest', user: null });
+      },
     }),
     [session, signedIn],
   );
@@ -90,6 +96,7 @@ const GUEST: SessionApi = {
   login: async () => undefined,
   register: async () => undefined,
   logout: async () => undefined,
+  deleteAccount: async () => undefined,
 };
 
 /** The session; outside a provider (tests, stories) everyone is a guest. */

@@ -1,4 +1,5 @@
 import { ImageResponse } from 'next/og';
+import { SITE_NAME } from './seo';
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
@@ -21,8 +22,8 @@ export function ogImage(formula: string, label: string) {
         color: 'white',
       }}
     >
-      <div style={{ display: 'flex', fontSize: 40, fontWeight: 700, letterSpacing: 2 }}>
-        TAMREEN
+      <div style={{ display: 'flex', fontSize: 40, fontWeight: 700, letterSpacing: 1 }}>
+        {SITE_NAME}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
         <div style={{ display: 'flex', gap: 8 }}>

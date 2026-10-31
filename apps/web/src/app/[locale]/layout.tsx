@@ -7,7 +7,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { LOCALE_DIRECTION } from '@tamreen/shared';
 import { AccountMenu, ConsentBanner, SessionProvider } from '@tamreen/ui';
 import { routing } from '@/i18n/routing';
-import { SITE_URL } from '@/lib/seo';
+import { SITE_NAME, SITE_URL } from '@/lib/seo';
 import '../globals.css';
 
 const cairo = Cairo({ subsets: ['arabic', 'latin'], display: 'swap', variable: '--font-cairo' });
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Omit<Props, 'children'>): Pro
   const t = await getTranslations({ locale, namespace: 'meta' });
   return {
     metadataBase: new URL(SITE_URL),
-    title: { default: t('title'), template: '%s | تمرين' },
+    title: { default: t('title'), template: `%s | ${SITE_NAME}` },
     description: t('description'),
   };
 }

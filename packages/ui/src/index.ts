@@ -11,6 +11,7 @@ export { api, ApiError, POINTS_EVENT, announcePoints } from './api/client';
 export { SessionProvider, useSession, type Session } from './api/session';
 export { AuthForm } from './api/AuthForm';
 export { AccountMenu } from './api/AccountMenu';
+export { DeleteAccount } from './api/DeleteAccount';
 export { StatsPanel, LeaderboardPanel } from './api/Panels';
 export { AdSlot, AD_SIZES } from './ads/AdSlot';
 export { ConsentBanner } from './consent/ConsentBanner';

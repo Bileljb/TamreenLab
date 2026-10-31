@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Formula } from '@tamreen/ui';
 import { JsonLd } from '@/components/JsonLd';
 import { lessonHref, listLessons, listTracks } from '@/lib/content';
-import { SITE_URL, pageMetadata } from '@/lib/seo';
+import { SITE_NAME, SITE_URL, pageMetadata } from '@/lib/seo';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -31,7 +31,7 @@ export default async function HomePage({ params }: Props) {
         data={{
           '@context': 'https://schema.org',
           '@type': 'WebSite',
-          name: 'تمرين',
+          name: SITE_NAME,
           url: `${SITE_URL}/${locale}`,
           inLanguage: 'ar',
           description: meta('description'),

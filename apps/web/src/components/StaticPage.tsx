@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { pageMetadata } from '@/lib/seo';
 
@@ -14,7 +15,16 @@ export async function staticPageMetadata(locale: string, page: StaticPageName): 
 }
 
 /** About, privacy, terms and contact: text from the message file, paragraphs split by blank lines. */
-export async function StaticPage({ locale, page }: { locale: string; page: StaticPageName }) {
+export async function StaticPage({
+  locale,
+  page,
+  children,
+}: {
+  locale: string;
+  page: StaticPageName;
+  /** Extra content after the text (the privacy page adds account deletion). */
+  children?: ReactNode;
+}) {
   setRequestLocale(locale);
   const t = await getTranslations(`pages.${page}`);
   const draft = t.has('draft') ? t('draft') : null;
@@ -33,6 +43,7 @@ export async function StaticPage({ locale, page }: { locale: string; page: Stati
             {paragraph}
           </p>
         ))}
+      {children}
     </main>
   );
 }

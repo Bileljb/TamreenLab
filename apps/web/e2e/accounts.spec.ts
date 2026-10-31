@@ -69,3 +69,39 @@ test('shows a clear error for a wrong password', async ({ page }) => {
     'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
   );
 });
+
+test('a learner deletes their account from the privacy page', async ({ page }) => {
+  const email = `e2e-del-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
+
+  // Guests see no delete control.
+  await page.goto('/ar/privacy');
+  await expect(page.getByRole('link', { name: 'تسجيل الدخول' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'حذف حسابي' })).toHaveCount(0);
+
+  await page.goto(`/ar/register?next=${encodeURIComponent('/ar/privacy')}`);
+  await page.getByLabel('الاسم الظاهر').fill('حساب للحذف');
+  await page.getByLabel('البريد الإلكتروني').fill(email);
+  await page.getByLabel('كلمة المرور').fill('correct horse');
+  await page.getByRole('button', { name: 'إنشاء الحساب' }).click();
+  await expect(page).toHaveURL(/\/ar\/privacy$/);
+
+  // Two steps: ask, then confirm. Cancelling keeps the account.
+  const section = page.getByRole('region', { name: 'حذف الحساب' });
+  await section.getByRole('button', { name: 'حذف حسابي' }).click();
+  await section.getByRole('button', { name: 'إلغاء' }).click();
+  await expect(page.getByTestId('account-name')).toBeVisible();
+
+  await section.getByRole('button', { name: 'حذف حسابي' }).click();
+  await section.getByRole('button', { name: 'نعم، احذف حسابي نهائيًا' }).click();
+  await expect(section.getByRole('status')).toHaveText('حُذف حسابك وكل بياناته.');
+  await expect(page.getByRole('link', { name: 'تسجيل الدخول' })).toBeVisible();
+
+  // The account is gone: signing in fails.
+  await page.goto('/ar/login');
+  await page.getByLabel('البريد الإلكتروني').fill(email);
+  await page.getByLabel('كلمة المرور').fill('correct horse');
+  await page.getByRole('button', { name: 'دخول' }).click();
+  await expect(page.locator('form').getByRole('alert')).toHaveText(
+    'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
+  );
+});

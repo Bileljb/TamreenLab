@@ -3,6 +3,9 @@ import type { Metadata } from 'next';
 /** The public origin, used for canonical URLs, the sitemap and structured data. */
 export const SITE_URL = (process.env.SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 
+/** The brand (decision D1, ADR 008). */
+export const SITE_NAME = 'TamreenLab';
+
 export const absoluteUrl = (path: string) => `${SITE_URL}${path}`;
 
 type PageMeta = {
@@ -27,7 +30,7 @@ export function pageMetadata({
     title,
     description,
     alternates: { canonical: url, languages: { ar: url, 'x-default': url } },
-    openGraph: { type: ogType, url, title, description, locale: 'ar_AR', siteName: 'تمرين' },
+    openGraph: { type: ogType, url, title, description, locale: 'ar_AR', siteName: SITE_NAME },
     twitter: { card: 'summary_large_image', title, description },
     ...(noindex ? { robots: { index: false, follow: false } } : {}),
   };
