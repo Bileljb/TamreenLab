@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { LessonFile } from '@tamreen/shared';
-import { LeaderboardPanel, StatsPanel, firstUses } from '@tamreen/ui';
+import { LeaderboardPanel, Prompt, StatsPanel, firstUses } from '@tamreen/ui';
 import { Ad } from '@/components/Ad';
 import { JsonLd } from '@/components/JsonLd';
 import { LessonIsland } from '@/components/LessonIsland';
@@ -56,10 +56,11 @@ function playerHeight(lesson: LessonFile): number {
 export default async function LessonPage({ params }: Props) {
   const { locale, track, slug } = await params;
   setRequestLocale(locale);
-  const [found, glossary, t] = await Promise.all([
+  const [found, glossary, t, tp] = await Promise.all([
     getLesson(track, slug),
     getGlossary(),
     getTranslations('lesson'),
+    getTranslations('player'),
   ]);
   if (!found) notFound();
   const { lesson, next } = found;
@@ -67,6 +68,7 @@ export default async function LessonPage({ params }: Props) {
   const path = lessonHref(locale, lesson);
   // Glossary terms in the intro get their English name there, before the steps use them.
   const introTerms = firstUses([lesson.introAr ?? ''])[0]!;
+  const progress = tp('progress', { current: 1, total: lesson.steps.length });
 
   return (
     <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8">
@@ -133,6 +135,20 @@ export default async function LessonPage({ params }: Props) {
           glossary={glossary}
           lessonsHref={`/${locale}/lessons`}
           nextLessonHref={next ? lessonHref(locale, next) : undefined}
+          preview={
+            // The player's header and first prompt, painted with the page while the grid loads.
+            <>
+              <div className="flex flex-col gap-2">
+                <div className="text-sm text-slate-600">{progress}</div>
+                <div className="h-2 rounded-full bg-slate-200" />
+              </div>
+              <Prompt
+                text={lesson.steps[0]!.promptAr}
+                glossary={glossary}
+                introduce={firstUses([lesson.steps[0]!.promptAr])[0]!}
+              />
+            </>
+          }
         />
       </section>
 
