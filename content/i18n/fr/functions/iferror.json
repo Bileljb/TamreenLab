@@ -1,0 +1,28 @@
+{
+  "slug": "iferror",
+  "title": "La fonction IFERROR : une valeur de repli en cas d'erreur",
+  "summary": "IFERROR renvoie le résultat d'une formule, ou une valeur de repli choisie si le résultat est une erreur.",
+  "intro": "`IFERROR` enveloppe une formule : si elle fonctionne, elle renvoie son résultat ; si une erreur comme `#N/A` ou `#DIV/0!` apparaît, elle renvoie la valeur de repli. Servez-vous-en pour afficher un message clair, pas pour masquer des erreurs que vous ne comprenez pas.",
+  "localName": "SIERREUR",
+  "args": ["La formule qui peut produire une erreur.", "Ce qu'il faut renvoyer en cas d'erreur."],
+  "examples": [
+    "Le code est introuvable : le message s'affiche au lieu de `#N/A`.",
+    "Une division par zéro renvoie 0 au lieu de `#DIV/0!`."
+  ],
+  "errors": [],
+  "faq": [
+    {
+      "q": "Faut-il mettre IFERROR dans toutes les formules ?",
+      "a": "Non, seulement là où une erreur est normale, comme la recherche d'une valeur qui peut ne pas exister, pour ne pas masquer de vraies erreurs."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Produit",
+    "السعر": "Prix",
+    "قلم": "Stylo",
+    "دفتر": "Cahier",
+    "مسطرة": "Règle",
+    "غير موجود": "Introuvable"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "slug": "mid",
+  "title": "La fonction MID : des caractères au milieu",
+  "summary": "MID renvoie un nombre de caractères à partir de la position indiquée.",
+  "intro": "`MID` extrait un morceau du milieu d'un texte : vous indiquez la position de départ et le nombre de caractères. Elle est très utile avec `FIND`, qui trouve la position d'un séparateur comme « - ».",
+  "localName": "STXT",
+  "args": [
+    "Le texte.",
+    "La position du premier caractère voulu ; le premier caractère porte le numéro 1.",
+    "Le nombre de caractères."
+  ],
+  "examples": [
+    "Quatre caractères à partir du cinquième.",
+    "Avec `FIND` : commence après le premier tiret, où qu'il se trouve."
+  ],
+  "errors": ["La position de départ est inférieure à 1."],
+  "faq": [
+    {
+      "q": "Comment connaître la position de départ sans compter à la main ?",
+      "a": "Utilisez `FIND` pour trouver la position du séparateur, puis ajoutez 1."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Code d'expédition"
+  }
+}

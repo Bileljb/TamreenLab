@@ -1,0 +1,68 @@
+{
+  "slug": "count-and-counta",
+  "title": "Counting: COUNT and COUNTA",
+  "summary": "Learn the difference between counting numbers and counting every non-empty cell, and combine the two in one formula.",
+  "intro": "`COUNT` counts only the cells that hold numbers, while `COUNTA` counts every non-empty cell, whether it holds text or a number.\n\nThe difference is handy for spotting missing data: the number of names from `COUNTA` minus the number of ages from `COUNT` tells you who did not enter their age as a number.",
+  "faq": [
+    {
+      "q": "Does `COUNT` count a cell that holds a word?",
+      "a": "No, `COUNT` counts numbers only. Use `COUNTA` to count text as well."
+    },
+    {
+      "q": "Does `COUNTA` count empty cells?",
+      "a": "No, it counts only cells that are not empty."
+    }
+  ],
+  "strings": {
+    "المشارك": "Participant",
+    "العمر": "Age",
+    "المدينة": "City",
+    "أمل": "Amal",
+    "عمّان": "Amman",
+    "طارق": "Tariq",
+    "بيروت": "Beirut",
+    "رنا": "Rana",
+    "زياد": "Ziad",
+    "غير معروف": "unknown",
+    "الرباط": "Rabat",
+    "لينا": "Lina",
+    "الدوحة": "Doha",
+    "عدد الأعمار": "Ages given",
+    "عدد المشاركين": "Participants",
+    "دون عمر رقمي": "No numeric age",
+    "جدة": "Jeddah"
+  },
+  "steps": {
+    "count-numbers": {
+      "prompt": "This is a workshop sign-up list. `COUNT` counts only the cells that hold numbers. In `B8`, type the formula `=COUNT(B2:B6)` to find how many participants entered their age as a number."
+    },
+    "counta-names": {
+      "prompt": "`COUNTA` counts every non-empty cell, text or number. In `B9`, write a formula that counts the participants in the range `A2:A6`."
+    },
+    "counta-cities": {
+      "prompt": "How many cities were entered? In `C9`, write a formula that counts the non-empty cells in `C2:C6`.",
+      "hint": "Rana's city cell is empty."
+    },
+    "count-the-gap": {
+      "prompt": "How many participants did not enter their age as a number? In `B10`, write a formula that subtracts the number of ages (`COUNT` on `B2:B6`) from the number of participants (`COUNTA` on `A2:A6`)."
+    },
+    "text-is-not-counted": {
+      "prompt": "A cell holds the text \"twenty\". Does `COUNT` count it?",
+      "options": [
+        "Yes, because it is not empty",
+        "No, because it does not hold a number",
+        "Yes, because the text means a number",
+        "No, because `COUNT` counts text only"
+      ]
+    },
+    "count-vs-counta": {
+      "prompt": "What is the difference between `COUNT` and `COUNTA`?",
+      "options": [
+        "There is no difference",
+        "`COUNT` counts numbers only, and `COUNTA` counts every non-empty cell",
+        "`COUNT` adds the values, and `COUNTA` counts them",
+        "`COUNTA` counts empty cells"
+      ]
+    }
+  }
+}

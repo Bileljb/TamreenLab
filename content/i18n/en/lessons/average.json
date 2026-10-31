@@ -1,0 +1,54 @@
+{
+  "slug": "average",
+  "title": "Averages with AVERAGE",
+  "summary": "Work out an average by adding and dividing, then with the AVERAGE function, and see what it does with empty cells.",
+  "intro": "The average is the total of the values divided by how many there are. You can work it out yourself with `=SUM(B2:B8)/7`, but the `AVERAGE` function does it directly.\n\nNote that `AVERAGE` ignores empty cells, so they are not part of the division. Zero, however, is a number: it counts and lowers the average.",
+  "faq": [
+    {
+      "q": "Does `AVERAGE` count empty cells?",
+      "a": "No, it ignores them, so the total is divided only by the number of cells that hold numbers."
+    },
+    {
+      "q": "What happens if the whole range is empty?",
+      "a": "`AVERAGE` returns the error `#DIV/0!` because it finds no number to divide by."
+    }
+  ],
+  "strings": {
+    "اليوم": "Day",
+    "درجة الحرارة": "Temperature",
+    "أول ثلاثة أيام": "First three days",
+    "السبت": "Saturday",
+    "الأحد": "Sunday",
+    "الاثنين": "Monday",
+    "الثلاثاء": "Tuesday",
+    "الأربعاء": "Wednesday",
+    "الخميس": "Thursday",
+    "الجمعة": "Friday",
+    "المتوسط": "Average"
+  },
+  "steps": {
+    "average-by-hand": {
+      "prompt": "These are the temperatures over one week. The average is the total of the values divided by how many there are. In `B9`, type the formula `=SUM(B2:B8)/7`."
+    },
+    "average-function": {
+      "prompt": "The `AVERAGE` function works out the average directly. In `B9`, type the formula `=AVERAGE(B2:B8)`."
+    },
+    "average-of-part": {
+      "prompt": "In `D2`, work out the average temperature of the first three days only, that is the range `B2:B4`.",
+      "hint": "Change the range in the formula to `B2:B4`."
+    },
+    "blanks-are-skipped": {
+      "prompt": "Friday's temperature hasn't been recorded yet, so its cell is empty. `AVERAGE` ignores empty cells. In `B9`, work out the average of the range `B2:B8` as it is.",
+      "explain": "The total was divided by 6, not 7, because the empty cell does not count."
+    },
+    "average-of-three": {
+      "prompt": "What is the result of `=AVERAGE(4,6,8)`?",
+      "options": ["6", "18", "3", "8"]
+    },
+    "average-with-a-blank": {
+      "prompt": "Cells `A1` and `A2` hold 10 and 20, and `A3` is empty. What is the result of `=AVERAGE(A1:A3)`?",
+      "hint": "An empty cell is not counted.",
+      "options": ["10", "15", "30", "20"]
+    }
+  }
+}

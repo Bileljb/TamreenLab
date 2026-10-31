@@ -1,0 +1,25 @@
+{
+  "slug": "mid",
+  "title": "The MID function: characters from the middle",
+  "summary": "MID returns a number of characters starting at the position you give.",
+  "intro": "`MID` takes a piece from the middle of a text: you give the start position and the number of characters. It is especially useful with `FIND`, which finds the position of a separator such as \"-\".",
+  "args": [
+    "The text.",
+    "The position of the first character you want; the first character is number 1.",
+    "How many characters."
+  ],
+  "examples": [
+    "Four characters starting at the fifth.",
+    "With `FIND`: starts after the first dash, wherever it is."
+  ],
+  "errors": ["The start position is less than 1."],
+  "faq": [
+    {
+      "q": "How do I find the start position without counting by hand?",
+      "a": "Use `FIND` to get the position of the separator, then add 1."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Shipment code"
+  }
+}

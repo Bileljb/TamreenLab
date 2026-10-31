@@ -1,0 +1,54 @@
+{
+  "slug": "and-or",
+  "title": "More than one condition: AND and OR",
+  "summary": "Check several conditions at once with AND, or at least one condition with OR.",
+  "intro": "`AND` returns `TRUE` if every condition is met, and `OR` returns `TRUE` if at least one condition is met. You write the conditions inside the function, separated by commas.\n\nThey help with decisions such as: does the applicant have enough experience and speak English? Or: do they live in a given city or have long experience?",
+  "faq": [
+    {
+      "q": "What is the result of `=AND(TRUE,FALSE)`?",
+      "a": "`FALSE`, because `AND` needs every condition to be true."
+    },
+    {
+      "q": "How many conditions can I put in `OR`?",
+      "a": "More than two as well, separated by commas, and one true condition is enough."
+    }
+  ],
+  "strings": {
+    "المتقدم": "Applicant",
+    "سنوات الخبرة": "Years of experience",
+    "يتحدث الإنجليزية": "Speaks English",
+    "المدينة": "City",
+    "مؤهل": "Qualified",
+    "أولوية": "Priority",
+    "خالد": "Khaled",
+    "إربد": "Irbid",
+    "منى": "Mona",
+    "الزرقاء": "Zarqa",
+    "سعيد": "Saeed",
+    "دانة": "Dana",
+    "العقبة": "Aqaba"
+  },
+  "steps": {
+    "and-worked-example": {
+      "prompt": "These people applied for a job. `AND` returns `TRUE` if every condition is met. In `E2`, type the formula `=AND(B2>=2,C2)` to find out whether Khaled has at least two years of experience and speaks English."
+    },
+    "and-second-applicant": {
+      "prompt": "In `E3`, type the same formula for Mona.",
+      "hint": "Mona's details are in row 3."
+    },
+    "or-worked-example": {
+      "prompt": "`OR` returns `TRUE` if at least one condition is met. In `F2`, type the formula `=OR(D2=\"Irbid\",B2>=4)`: is Khaled from Irbid or does he have 4 or more years of experience?"
+    },
+    "or-second-applicant": {
+      "prompt": "In `F3`, write a formula that returns `TRUE` if Mona is from Irbid or has 4 or more years of experience."
+    },
+    "and-result": {
+      "prompt": "What is the result of `=AND(TRUE,FALSE)`?",
+      "options": ["`TRUE`", "`FALSE`", "`#VALUE!`", "0"]
+    },
+    "or-result": {
+      "prompt": "What is the result of `=OR(TRUE,FALSE)`?",
+      "options": ["`TRUE`", "`FALSE`", "`#VALUE!`", "1"]
+    }
+  }
+}

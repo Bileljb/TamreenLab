@@ -1,0 +1,36 @@
+{
+  "slug": "sumif",
+  "title": "The SUMIF function: adding up with a condition",
+  "summary": "SUMIF adds up the values whose matching cells meet one condition, such as the sales of one region.",
+  "intro": "`SUMIF` checks the condition in one range and adds up the matching values from another range. The condition can be text, a number, a comparison such as `\">100\"`, or a reference to a cell.",
+  "args": [
+    "The range where the condition is checked.",
+    "The condition: text in quotation marks, a number, a comparison or a reference.",
+    "The values to add. If you leave it out, the first range itself is added."
+  ],
+  "examples": [
+    "Total sales of the North region: 120, 40 and 60.",
+    "Total of the sales that are 90 or more."
+  ],
+  "errors": ["On this site, the condition range and the range to add have different sizes."],
+  "faq": [
+    {
+      "q": "How do I add up with more than one condition?",
+      "a": "Use `SUMIFS`, where the range to add comes first."
+    },
+    {
+      "q": "Does the condition tell upper case from lower case?",
+      "a": "No, matching does not distinguish them."
+    }
+  ],
+  "strings": {
+    "المنتج": "Product",
+    "المنطقة": "Region",
+    "المبيعات": "Sales",
+    "قلم": "Pen",
+    "الشمال": "North",
+    "دفتر": "Notebook",
+    "الجنوب": "South",
+    "مسطرة": "Ruler"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "countif",
+  "title": "La fonction COUNTIF : compter selon une condition",
+  "summary": "COUNTIF compte les cellules d'une plage qui remplissent une condition, et renvoie 0 si elle n'en trouve aucune.",
+  "intro": "`COUNTIF` répond aux questions « combien ? » : combien de commandes du Nord ? Combien de notes au-dessus de 50 ? Elle ne prend que deux arguments : la plage et la condition.",
+  "localName": "NB.SI",
+  "args": [
+    "Les cellules à compter.",
+    "La condition : texte, nombre, comparaison entre guillemets ou référence."
+  ],
+  "examples": ["Trois lignes de la région Nord.", "Les produits qui ne sont pas « Stylo »."],
+  "errors": [],
+  "faq": [
+    {
+      "q": "Comment compter les cellules qui commencent par une lettre donnée ?",
+      "a": "Utilisez l'astérisque : `=COUNTIF(A2:A6,\"C*\")` compte ce qui commence par C."
+    },
+    {
+      "q": "Comment compter les cellules vides ?",
+      "a": "Utilisez un texte vide comme condition : `=COUNTIF(A2:A6,\"\")`."
+    }
+  ],
+  "strings": {
+    "المنتج": "Produit",
+    "المنطقة": "Région",
+    "المبيعات": "Ventes",
+    "قلم": "Stylo",
+    "الشمال": "Nord",
+    "دفتر": "Cahier",
+    "الجنوب": "Sud",
+    "مسطرة": "Règle",
+    "<>قلم": "<>Stylo"
+  }
+}

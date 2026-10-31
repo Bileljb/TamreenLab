@@ -1,0 +1,54 @@
+{
+  "slug": "ranges-and-references",
+  "title": "Plages et références",
+  "summary": "Sélectionnez des plages sur plusieurs colonnes et utilisez les noms de cellules dans les formules pour que les résultats se mettent à jour tout seuls.",
+  "intro": "Une plage peut s'étendre sur plusieurs colonnes et lignes à la fois, comme `B2:D5`. Les fonctions utilisent les plages pour désigner tout un groupe de valeurs d'un coup.\n\nQuand vous tapez le nom d'une cellule dans une formule, c'est une référence à cette cellule. Leur intérêt : le résultat se met à jour tout seul dès que les valeurs changent, sans rien retaper.",
+  "faq": [
+    {
+      "q": "Combien de cellules compte la plage `B2:D5` ?",
+      "a": "Trois colonnes (B, C et D) sur quatre lignes (de 2 à 5), soit 12 cellules."
+    },
+    {
+      "q": "Pourquoi taper `=B2` plutôt que le nombre lui-même ?",
+      "a": "La référence suit la cellule : si sa valeur change, le résultat change automatiquement. Un nombre tapé, lui, reste figé."
+    }
+  ],
+  "strings": {
+    "الطالب": "Élève",
+    "الأحد": "Dimanche",
+    "الاثنين": "Lundi",
+    "الثلاثاء": "Mardi",
+    "المجموع": "Total",
+    "نسخة": "Copie",
+    "ليلى": "Layla",
+    "عمر": "Omar",
+    "نور": "Nour",
+    "سامي": "Sami"
+  },
+  "steps": {
+    "select-a-block": {
+      "prompt": "Voici les heures de révision de quatre élèves. Une plage peut s'étendre sur plusieurs colonnes et lignes. Sélectionnez les heures de Layla et d'Omar sur les trois jours : la plage `B2:D3`.",
+      "hint": "Partez de `B2` et faites glisser jusqu'à `D3`, ou utilisez Maj et les flèches."
+    },
+    "select-all-numbers": {
+      "prompt": "Sélectionnez toutes les heures du tableau. La première cellule de cette plage est `B2` et la dernière `D5`."
+    },
+    "first-reference": {
+      "prompt": "Quand vous tapez le nom d'une cellule dans une formule, c'est une référence à cette cellule. Dans `F2`, tapez la formule `=B2` pour afficher les heures de Layla le dimanche.",
+      "hint": "Commencez par `=`, puis tapez `B2`. Ne tapez pas le nombre 2 vous-même.",
+      "explain": "Si la valeur de `B2` change, le résultat dans `F2` change automatiquement."
+    },
+    "add-with-references": {
+      "prompt": "Dans `E2`, tapez une formule qui additionne les heures de Layla sur les trois jours : `=B2+C2+D2`."
+    },
+    "same-for-omar": {
+      "prompt": "Dans `E3`, tapez de la même façon une formule qui additionne les heures d'Omar.",
+      "hint": "Les heures d'Omar sont sur la ligne 3."
+    },
+    "cells-in-a-range": {
+      "prompt": "Combien de cellules compte la plage `B2:C4` ?",
+      "hint": "Deux colonnes (B et C) sur trois lignes (2, 3 et 4).",
+      "options": ["4", "6", "8", "3"]
+    }
+  }
+}

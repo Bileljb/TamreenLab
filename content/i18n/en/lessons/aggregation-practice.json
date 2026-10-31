@@ -1,0 +1,53 @@
+{
+  "slug": "aggregation-practice",
+  "title": "Practice: juice stand sales",
+  "summary": "Apply SUM, AVERAGE, MAX and COUNTA to one week of sales.",
+  "intro": "In this practice you use what you have learned on a juice stand's sales over five days: the total, the average and the largest value, then the total of two columns with a single range.\n\nThe steps don't start with a ready-made example, so try to write each formula yourself and use the hint when you need it.",
+  "faq": [
+    {
+      "q": "How do I add two columns in one formula?",
+      "a": "Use a range that covers both columns, such as `=SUM(B2:C6)`."
+    },
+    {
+      "q": "Does the hint lower my points?",
+      "a": "Yes, you get half the points after a hint, but that is still better than showing the answer, which gives no points."
+    }
+  ],
+  "strings": {
+    "اليوم": "Day",
+    "عصير برتقال": "Orange juice",
+    "عصير ليمون": "Lemon juice",
+    "كل الأكواب": "All cups",
+    "السبت": "Saturday",
+    "الأحد": "Sunday",
+    "الاثنين": "Monday",
+    "الثلاثاء": "Tuesday",
+    "الأربعاء": "Wednesday",
+    "المجموع": "Total",
+    "المتوسط": "Average",
+    "الأعلى": "Highest"
+  },
+  "steps": {
+    "practice-sum-orange": {
+      "prompt": "These are the cups of juice a stand sold over five days. In `B7`, write the total number of orange juice cups."
+    },
+    "practice-sum-lemon": {
+      "prompt": "In `C7`, write the total number of lemon juice cups."
+    },
+    "practice-average": {
+      "prompt": "In `B8`, write the average number of orange juice cups sold per day."
+    },
+    "practice-max": {
+      "prompt": "In `C9`, write the largest number of lemon juice cups sold in a single day."
+    },
+    "practice-two-columns": {
+      "prompt": "In `E2`, write the total of all cups in one formula, with a range that covers columns `B` and `C` together.",
+      "hint": "The range starts at `B2` and ends at `C6`."
+    },
+    "practice-count-days": {
+      "prompt": "Which formula gives the number of days recorded in the table?",
+      "hint": "The day names are text, not numbers.",
+      "options": ["`=COUNT(A2:A6)`", "`=COUNTA(A2:A6)`", "`=SUM(A2:A6)`", "`=MAX(A2:A6)`"]
+    }
+  }
+}

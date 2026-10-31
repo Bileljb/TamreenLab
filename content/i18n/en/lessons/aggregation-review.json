@@ -1,0 +1,56 @@
+{
+  "slug": "aggregation-review",
+  "title": "Review: summary functions",
+  "summary": "Summarise test results with five formulas: the count, the average, the highest, the lowest and the number of students.",
+  "intro": "This reviews the five summary functions, `COUNT`, `AVERAGE`, `MAX`, `MIN` and `COUNTA`, on the test scores of a class where one student was absent.\n\nWatch what the empty cell does in each function: it is counted neither in the count nor in the average.",
+  "faq": [
+    {
+      "q": "Why does `COUNT` give a different result from `COUNTA` in this table?",
+      "a": "Because the absent student has a name in column A, but their score cell is empty."
+    },
+    {
+      "q": "Should I type 0 for the absent student?",
+      "a": "No, unless 0 really is their score, because a zero counts in the average and lowers it."
+    }
+  ],
+  "strings": {
+    "الطالب": "Student",
+    "الدرجة": "Score",
+    "المؤشر": "Measure",
+    "القيمة": "Value",
+    "ريم": "Reem",
+    "عدد الدرجات": "Scores",
+    "فادي": "Fadi",
+    "المتوسط": "Average",
+    "سارة": "Sara",
+    "الأعلى": "Highest",
+    "أنس": "Anas",
+    "الأدنى": "Lowest",
+    "جود": "Joud",
+    "عدد الطلاب": "Students",
+    "ماهر": "Maher"
+  },
+  "steps": {
+    "review-count": {
+      "prompt": "These are test scores, and Maher was absent. In `D2`, write the number of students who have a score."
+    },
+    "review-average": {
+      "prompt": "In `D3`, write the average score."
+    },
+    "review-max": {
+      "prompt": "In `D4`, write the highest score."
+    },
+    "review-min": {
+      "prompt": "In `D5`, write the lowest score."
+    },
+    "review-counta": {
+      "prompt": "In `D6`, write the number of students on the whole list, including the absent one.",
+      "hint": "Count the names in column A."
+    },
+    "review-zero-vs-blank": {
+      "prompt": "If we typed 0 for Maher instead of leaving his cell empty, what would happen to the average score?",
+      "hint": "Zero is a number and counts in the calculation; an empty cell does not.",
+      "options": ["It goes up", "It goes down", "It stays the same", "An error appears"]
+    }
+  }
+}

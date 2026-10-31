@@ -1,0 +1,62 @@
+{
+  "slug": "cells-and-selection",
+  "title": "Cellules et sélection",
+  "summary": "Découvrez ce qu'est une cellule et comment elle se nomme, sélectionnez une plage et saisissez vos premières données dans une feuille de calcul.",
+  "intro": "Tout ce que vous tapez dans Excel est stocké dans une cellule. Les cellules sont rangées en colonnes désignées par des lettres (A, B, C…) et en lignes numérotées 1, 2, 3… Le nom d'une cellule est donc la lettre de sa colonne suivie du numéro de sa ligne, par exemple `C3`.\n\nDans cette leçon, vous choisissez une cellule d'un clic ou avec les flèches, vous y allez en tapant son nom dans la zone Nom, vous sélectionnez une plage de cellules voisines et vous saisissez vos premières données.",
+  "faq": [
+    {
+      "q": "Quelle est la différence entre une cellule et une plage ?",
+      "a": "Une cellule est une seule case, comme `B2`. Une plage est un bloc de cellules voisines, noté par la première et la dernière cellule séparées par deux-points, comme `A2:A5`."
+    },
+    {
+      "q": "Pourquoi le nom d'une cellule est-il une lettre puis un chiffre ?",
+      "a": "La lettre indique la colonne et le chiffre la ligne : le nom désigne donc un seul endroit de la feuille."
+    }
+  ],
+  "strings": {
+    "الموظف": "Employé",
+    "القسم": "Service",
+    "المدينة": "Ville",
+    "سنوات الخبرة": "Années d'expérience",
+    "سلمى": "Salma",
+    "المبيعات": "Ventes",
+    "عمّان": "Amman",
+    "يوسف": "Youssef",
+    "المحاسبة": "Comptabilité",
+    "تونس": "Tunis",
+    "مريم": "Maryam",
+    "الموارد البشرية": "Ressources humaines",
+    "الدار البيضاء": "Casablanca",
+    "كريم": "Karim",
+    "القاهرة": "Le Caire",
+    "هدى": "Huda"
+  },
+  "steps": {
+    "click-a-cell": {
+      "prompt": "Chaque case d'une feuille Excel est une cellule. Son nom est la lettre de sa colonne suivie du numéro de sa ligne. Cliquez sur la cellule `C3`, qui contient la ville de Youssef, puis appuyez sur Entrée ou sur Vérifier.",
+      "hint": "Repérez la lettre C en haut des colonnes, puis descendez jusqu'à la ligne 3.",
+      "explain": "La cellule `C3` se trouve dans la colonne C et la ligne 3."
+    },
+    "use-the-name-box": {
+      "prompt": "La zone Nom affiche le nom de la cellule sélectionnée, et vous pouvez y taper un nom pour vous y rendre. Tapez `D5` dans la zone Nom et appuyez sur Entrée, puis encore sur Entrée pour vérifier.",
+      "hint": "La zone Nom est la petite case au-dessus de la colonne A, à gauche de la barre de formule."
+    },
+    "select-a-range": {
+      "prompt": "Un bloc de cellules voisines s'appelle une plage. On la note avec la première et la dernière cellule séparées par deux-points : `A2:A5`. Sélectionnez tous les noms des employés en faisant glisser, ou avec Maj et les flèches, puis appuyez sur Entrée.",
+      "hint": "Partez de `A2` et faites glisser jusqu'à `A5`. La zone Nom doit afficher `A2:A5`."
+    },
+    "type-a-name": {
+      "prompt": "Une nouvelle employée, Huda, a rejoint l'équipe. Sélectionnez la cellule `A6`, tapez le nom Huda, puis appuyez sur Entrée.",
+      "hint": "Taper dans une cellule sélectionnée remplace son contenu. Appuyez sur Entrée pour valider."
+    },
+    "type-a-number": {
+      "prompt": "Huda a 3 années d'expérience. Tapez le nombre 3 dans la cellule `D6`, puis appuyez sur Entrée.",
+      "hint": "Tapez le chiffre 3, puis appuyez sur Entrée pour valider."
+    },
+    "name-that-cell": {
+      "prompt": "Quel est le nom de la cellule située dans la colonne B et la ligne 4 ?",
+      "hint": "La lettre de la colonne vient d'abord, puis le numéro de la ligne.",
+      "options": ["4B", "B4", "D2", "A4"]
+    }
+  }
+}

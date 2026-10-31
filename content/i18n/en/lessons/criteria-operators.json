@@ -1,0 +1,59 @@
+{
+  "slug": "criteria-operators",
+  "title": "Comparison criteria and the asterisk",
+  "summary": "Use greater than, less than and not equal to, and the asterisk to match part of a text, in COUNTIF and SUMIF criteria.",
+  "intro": "The criterion in `COUNTIF` and `SUMIF` can be a comparison written between quotation marks: `\"<20\"` means less than 20, `\">=20\"` means 20 or more, and `\"<>Bread\"` means not equal to \"Bread\".\n\nThe asterisk `*` means \"any text\", so the criterion `\"T*\"` matches every word that starts with T.",
+  "faq": [
+    {
+      "q": "How do I write \"greater than or equal to\"?",
+      "a": "Type `\">=\"` and then the number, such as `\">=100\"`, with the greater-than sign before the equals sign."
+    },
+    {
+      "q": "What does the asterisk mean in a criterion?",
+      "a": "It stands for any number of characters, so `\"T*\"` matches \"Tea\" and \"Tahini\"."
+    }
+  ],
+  "strings": {
+    "المنتج": "Product",
+    "المخزون": "Stock",
+    "السعر": "Price",
+    "السؤال": "Question",
+    "الجواب": "Answer",
+    "حليب": "Milk",
+    "خبز": "Bread",
+    "أرز": "Rice",
+    "زيت": "Oil",
+    "شوفان": "Tahini",
+    "شاي": "Tea",
+    "مخزون منخفض": "Low stock",
+    "مخزون كبير": "High stock",
+    "غير الخبز": "Not bread",
+    "أسعار فوق 4": "Prices above 4",
+    "تبدأ بحرف ش": "Starts with T",
+    "<>خبز": "<>Bread",
+    "ش*": "T*",
+    "شعير": "Teff"
+  },
+  "steps": {
+    "less-than": {
+      "prompt": "A criterion can be a comparison between quotation marks. In `F2`, type the formula `=COUNTIF(B2:B7,\"<20\")` to count the products with less than 20 in stock."
+    },
+    "greater-or-equal": {
+      "prompt": "In `F3`, write a formula that adds up the stock of the products with 20 or more in stock.",
+      "hint": "If the range to add is the same as the criterion range, you don't need the third argument."
+    },
+    "not-equal": {
+      "prompt": "The sign `<>` means \"not equal to\". In `F4`, write a formula that counts the products that are not \"Bread\"."
+    },
+    "greater-than-prices": {
+      "prompt": "In `F5`, write a formula that adds up the prices of the products that cost more than 4."
+    },
+    "wildcard": {
+      "prompt": "The asterisk `*` in a criterion means \"any text\". In `F6`, write a formula that counts the products whose name starts with \"T\": `=COUNTIF(A2:A7,\"T*\")`."
+    },
+    "which-criterion": {
+      "prompt": "Which criterion counts the values greater than or equal to 100?",
+      "options": ["`\">100\"`", "`\">=100\"`", "`\"=>100\"`", "`\"100+\"`"]
+    }
+  }
+}

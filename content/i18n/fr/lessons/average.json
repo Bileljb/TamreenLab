@@ -1,0 +1,54 @@
+{
+  "slug": "average",
+  "title": "La moyenne avec AVERAGE",
+  "summary": "Calculez une moyenne en additionnant puis en divisant, puis avec la fonction AVERAGE, et voyez ce qu'elle fait des cellules vides.",
+  "intro": "La moyenne est le total des valeurs divisé par leur nombre. Vous pouvez la calculer vous-même avec `=SUM(B2:B8)/7`, mais la fonction `AVERAGE` (MOYENNE dans Excel en français) le fait directement.\n\nAttention : `AVERAGE` ignore les cellules vides, qui n'entrent pas dans la division. Le zéro, lui, est un nombre : il compte et fait baisser la moyenne.",
+  "faq": [
+    {
+      "q": "`AVERAGE` compte-t-elle les cellules vides ?",
+      "a": "Non, elle les ignore : le total est divisé seulement par le nombre de cellules qui contiennent des nombres."
+    },
+    {
+      "q": "Que se passe-t-il si toute la plage est vide ?",
+      "a": "`AVERAGE` renvoie l'erreur `#DIV/0!`, car elle ne trouve aucun nombre par lequel diviser."
+    }
+  ],
+  "strings": {
+    "اليوم": "Jour",
+    "درجة الحرارة": "Température",
+    "أول ثلاثة أيام": "Trois premiers jours",
+    "السبت": "Samedi",
+    "الأحد": "Dimanche",
+    "الاثنين": "Lundi",
+    "الثلاثاء": "Mardi",
+    "الأربعاء": "Mercredi",
+    "الخميس": "Jeudi",
+    "الجمعة": "Vendredi",
+    "المتوسط": "Moyenne"
+  },
+  "steps": {
+    "average-by-hand": {
+      "prompt": "Voici les températures d'une semaine. La moyenne est le total des valeurs divisé par leur nombre. Dans `B9`, tapez la formule `=SUM(B2:B8)/7`."
+    },
+    "average-function": {
+      "prompt": "La fonction `AVERAGE` calcule directement la moyenne. Dans `B9`, tapez la formule `=AVERAGE(B2:B8)`."
+    },
+    "average-of-part": {
+      "prompt": "Dans `D2`, calculez la température moyenne des trois premiers jours seulement, c'est-à-dire de la plage `B2:B4`.",
+      "hint": "Changez la plage de la formule en `B2:B4`."
+    },
+    "blanks-are-skipped": {
+      "prompt": "La température du vendredi n'a pas encore été relevée : sa cellule est vide. `AVERAGE` ignore les cellules vides. Dans `B9`, calculez la moyenne de la plage `B2:B8` telle quelle.",
+      "explain": "Le total a été divisé par 6 et non par 7, car la cellule vide ne compte pas."
+    },
+    "average-of-three": {
+      "prompt": "Quel est le résultat de `=AVERAGE(4,6,8)` ?",
+      "options": ["6", "18", "3", "8"]
+    },
+    "average-with-a-blank": {
+      "prompt": "Les cellules `A1` et `A2` contiennent 10 et 20, et `A3` est vide. Quel est le résultat de `=AVERAGE(A1:A3)` ?",
+      "hint": "Une cellule vide n'est pas comptée.",
+      "options": ["10", "15", "30", "20"]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "slug": "vlookup-approximate",
+  "title": "Looking up bands: approximate VLOOKUP",
+  "summary": "Use VLOOKUP with TRUE to find the right band in a rate table, then work out the commission.",
+  "intro": "With the argument `TRUE`, `VLOOKUP` does an approximate search: it returns the row of the largest value that does not exceed what you look for. That suits band tables, such as commission rates or grade boundaries.\n\nThe first column of the table must be sorted in ascending order, or the result may be wrong.",
+  "faq": [
+    {
+      "q": "When do I use `TRUE` and when `FALSE`?",
+      "a": "Use `FALSE` to look for one specific value, such as a product code, and `TRUE` to look up sorted number bands."
+    },
+    {
+      "q": "What if the value is smaller than the first band?",
+      "a": "`VLOOKUP` returns the error `#N/A`, which is why band tables usually start at zero."
+    }
+  ],
+  "strings": {
+    "من مبيعات": "Sales from",
+    "نسبة العمولة": "Commission rate",
+    "المندوب": "Rep",
+    "المبيعات": "Sales",
+    "النسبة": "Rate",
+    "العمولة": "Commission",
+    "سلمى": "Salma",
+    "يوسف": "Youssef",
+    "مريم": "Maryam",
+    "كريم": "Karim"
+  },
+  "steps": {
+    "approximate-worked-example": {
+      "prompt": "This is a commission band table. With the argument `TRUE`, `VLOOKUP` returns the row of the largest value that does not exceed what you look for. In `F2`, type the formula `=VLOOKUP(E2,A2:B5,2,TRUE)`.",
+      "explain": "Salma's sales are 3500: the largest band that does not exceed it is 1000, with a rate of 2%."
+    },
+    "approximate-high": {
+      "prompt": "In `F3`, write Youssef's rate the same way."
+    },
+    "approximate-low": {
+      "prompt": "In `F4`, write Maryam's rate."
+    },
+    "approximate-exact-edge": {
+      "prompt": "Karim sold exactly 5000, which is where a band starts. In `F5`, write his rate."
+    },
+    "commission": {
+      "prompt": "In `G2`, work out Salma's commission: her sales in `E2` multiplied by her rate in `F2`."
+    },
+    "why-sorted": {
+      "prompt": "Why must the first column be sorted in ascending order when you use `TRUE`?",
+      "options": [
+        "Because the approximate search assumes the values are sorted",
+        "Because Excel does not accept unsorted numbers",
+        "So that the rates show as percentages",
+        "Sorting is not needed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "slug": "countif-basics",
+  "title": "Compter selon une condition : COUNTIF",
+  "summary": "Comptez les livres d'une bibliothèque scolaire par matière et par état avec la fonction COUNTIF.",
+  "intro": "`COUNTIF` (NB.SI dans Excel en français) compte les cellules qui remplissent une condition. Elle prend deux arguments : la plage et le critère. Par exemple, `=COUNTIF(B2:B7,\"Sciences\")` compte les livres de sciences de la liste.\n\nSi aucune cellule ne correspond au critère, elle renvoie 0, et non une erreur.",
+  "faq": [
+    {
+      "q": "Le critère peut-il se trouver dans une cellule ?",
+      "a": "Oui, mettez la référence de la cellule à la place du critère, comme `=COUNTIF(B2:B7,E5)`."
+    },
+    {
+      "q": "Que renvoie `COUNTIF` si elle ne trouve rien ?",
+      "a": "Elle renvoie 0."
+    }
+  ],
+  "strings": {
+    "الكتاب": "Livre",
+    "التصنيف": "Matière",
+    "الحالة": "État",
+    "السؤال": "Question",
+    "العدد": "Nombre",
+    "رحلة إلى القمر": "Voyage vers la Lune",
+    "علوم": "Sciences",
+    "متاح": "Disponible",
+    "تاريخ الأندلس": "Histoire d'Al-Andalus",
+    "تاريخ": "Histoire",
+    "معار": "Emprunté",
+    "جسم الإنسان": "Le corps humain",
+    "الرياضيات الممتعة": "Les maths amusantes",
+    "رياضيات": "Maths",
+    "عالم النبات": "Le monde des plantes",
+    "مدن قديمة": "Cités antiques",
+    "كتب العلوم": "Livres de sciences",
+    "الكتب المتاحة": "Livres disponibles",
+    "الكتب المعارة": "Livres empruntés"
+  },
+  "steps": {
+    "countif-worked-example": {
+      "prompt": "Voici les livres d'une bibliothèque scolaire. `COUNTIF` compte les cellules qui remplissent une condition. Dans `F2`, tapez la formule `=COUNTIF(B2:B7,\"Sciences\")`."
+    },
+    "count-available": {
+      "prompt": "Dans `F3`, écrivez une formule qui compte les livres disponibles de la colonne C."
+    },
+    "count-borrowed": {
+      "prompt": "Dans `F4`, écrivez une formule qui compte les livres empruntés."
+    },
+    "count-from-a-cell": {
+      "prompt": "Dans `F5`, écrivez une formule qui compte les livres de la matière écrite dans `E5`, en utilisant `E5` comme critère."
+    },
+    "count-missing-category": {
+      "prompt": "Que renvoie `=COUNTIF(B2:B7,\"Poésie\")` dans ce tableau ?",
+      "options": ["0", "6", "`#N/A`", "Poésie"]
+    },
+    "countif-vs-sumif": {
+      "prompt": "Quelle est la différence entre `COUNTIF` et `SUMIF` ?",
+      "options": [
+        "`COUNTIF` compte les cellules, et `SUMIF` additionne leurs valeurs",
+        "Il n'y a aucune différence",
+        "`SUMIF` compte, et `COUNTIF` additionne",
+        "`COUNTIF` ne fonctionne qu'avec du texte"
+      ]
+    }
+  }
+}

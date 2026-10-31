@@ -1,0 +1,33 @@
+{
+  "slug": "countif",
+  "title": "The COUNTIF function: counting with a condition",
+  "summary": "COUNTIF counts the cells in a range that meet a condition, and returns 0 if it finds none.",
+  "intro": "`COUNTIF` answers \"how many?\" questions: how many orders from the North? How many scores above 50? It takes just two arguments: the range and the condition.",
+  "args": [
+    "The cells to count.",
+    "The condition: text, a number, a comparison in quotation marks, or a reference."
+  ],
+  "examples": ["Three rows from the North region.", "The products that are not \"Pen\"."],
+  "errors": [],
+  "faq": [
+    {
+      "q": "How do I count the cells that start with a given letter?",
+      "a": "Use the asterisk: `=COUNTIF(A2:A6,\"N*\")` counts what starts with N."
+    },
+    {
+      "q": "How do I count empty cells?",
+      "a": "Make the condition empty text: `=COUNTIF(A2:A6,\"\")`."
+    }
+  ],
+  "strings": {
+    "المنتج": "Product",
+    "المنطقة": "Region",
+    "المبيعات": "Sales",
+    "قلم": "Pen",
+    "الشمال": "North",
+    "دفتر": "Notebook",
+    "الجنوب": "South",
+    "مسطرة": "Ruler",
+    "<>قلم": "<>Pen"
+  }
+}

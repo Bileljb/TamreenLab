@@ -1,0 +1,54 @@
+{
+  "slug": "sum-basics",
+  "title": "Adding up with SUM",
+  "summary": "Write your first addition formula, then use the SUM function with a range, and let the result update by itself when the data changes.",
+  "intro": "Every formula in Excel starts with `=`. You can add cells with the plus sign, such as `=B2+B3+B4`, but that gets long when there are many cells.\n\nThe `SUM` function adds up a whole range in a short formula: `=SUM(B2:B6)`. The result stays right whenever a value in the range changes, so never type the total yourself.",
+  "faq": [
+    {
+      "q": "What is the difference between `=B2+B3` and `=SUM(B2:B3)`?",
+      "a": "The result is the same, but `SUM` is shorter and easier with long ranges, and it ignores text inside the range."
+    },
+    {
+      "q": "Why not just type the total?",
+      "a": "A typed number does not change when the data changes, while a formula recalculates automatically."
+    }
+  ],
+  "strings": {
+    "الصنف": "Item",
+    "الكمية المبيعة": "Quantity sold",
+    "خبز": "Bread",
+    "كعك": "Cakes",
+    "فطائر": "Pies",
+    "حلويات": "Sweets",
+    "معجنات": "Pastries",
+    "المجموع": "Total",
+    "خبز وكعك وفطائر": "Bread, cakes and pies"
+  },
+  "steps": {
+    "first-formula": {
+      "prompt": "These are the quantities a bakery sold in one day. Every formula starts with `=`. Select cell `B7`, type `=B2+B3+B4+B5+B6`, then press Enter.",
+      "hint": "Start with `=`, then type the cell names with `+` between them."
+    },
+    "sum-function": {
+      "prompt": "The quicker way is the `SUM` function. You put the range you want to add inside its brackets. In `B7`, type the formula `=SUM(B2:B6)`.",
+      "hint": "The range `B2:B6` means every cell from `B2` to `B6`."
+    },
+    "pick-the-range": {
+      "prompt": "You don't have to type the range yourself. Type `=SUM(` in cell `B7`, then drag over the cells from `B2` to `B6` (or tap them one after another), then type `)` and press Enter.",
+      "hint": "After you type the bracket `(`, Excel inserts the name of any cell you click into the formula."
+    },
+    "no-hard-coding": {
+      "prompt": "30 more pies were sold, so the quantity in `B4` is now 120. Don't type the total yourself: in `B7`, write a formula that adds up the quantities, so the result updates by itself whenever the data changes.",
+      "hint": "If you type 450 directly, the result won't change when the quantities do. Use `SUM` with the range."
+    },
+    "part-of-a-column": {
+      "prompt": "The baker wants the total of bread, cakes and pies only. In `D2`, write a formula that adds up the range `B2:B4`.",
+      "hint": "The range starts at `B2` and ends at `B4`."
+    },
+    "read-a-sum": {
+      "prompt": "On this sheet, what is the result of `=SUM(B2:B3)`?",
+      "hint": "The formula adds only the two cells `B2` and `B3`.",
+      "options": ["140", "205", "295", "B2+B3"]
+    }
+  }
+}

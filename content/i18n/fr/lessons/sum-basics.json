@@ -1,0 +1,54 @@
+{
+  "slug": "sum-basics",
+  "title": "Additionner avec SUM",
+  "summary": "Écrivez votre première formule d'addition, puis utilisez la fonction SUM avec une plage, et laissez le résultat se mettre à jour tout seul quand les données changent.",
+  "intro": "Toute formule Excel commence par `=`. Vous pouvez additionner des cellules avec le signe plus, comme `=B2+B3+B4`, mais cela devient long quand les cellules sont nombreuses.\n\nLa fonction `SUM` (SOMME dans Excel en français) additionne toute une plage en une formule courte : `=SUM(B2:B6)`. Le résultat reste juste dès qu'une valeur de la plage change : ne tapez donc jamais le total vous-même.",
+  "faq": [
+    {
+      "q": "Quelle différence entre `=B2+B3` et `=SUM(B2:B3)` ?",
+      "a": "Le résultat est le même, mais `SUM` est plus courte et plus pratique avec de longues plages, et elle ignore le texte de la plage."
+    },
+    {
+      "q": "Pourquoi ne pas taper directement le total ?",
+      "a": "Un nombre tapé ne change pas quand les données changent, alors qu'une formule se recalcule automatiquement."
+    }
+  ],
+  "strings": {
+    "الصنف": "Article",
+    "الكمية المبيعة": "Quantité vendue",
+    "خبز": "Pain",
+    "كعك": "Gâteaux",
+    "فطائر": "Tartes",
+    "حلويات": "Douceurs",
+    "معجنات": "Viennoiseries",
+    "المجموع": "Total",
+    "خبز وكعك وفطائر": "Pain, gâteaux et tartes"
+  },
+  "steps": {
+    "first-formula": {
+      "prompt": "Voici les quantités vendues par une boulangerie en une journée. Toute formule commence par `=`. Sélectionnez la cellule `B7`, tapez `=B2+B3+B4+B5+B6`, puis appuyez sur Entrée.",
+      "hint": "Commencez par `=`, puis tapez les noms des cellules séparés par `+`."
+    },
+    "sum-function": {
+      "prompt": "Plus rapide : la fonction `SUM`. On place entre ses parenthèses la plage à additionner. Dans `B7`, tapez la formule `=SUM(B2:B6)`.",
+      "hint": "La plage `B2:B6` désigne toutes les cellules de `B2` à `B6`."
+    },
+    "pick-the-range": {
+      "prompt": "Inutile de taper la plage à la main. Tapez `=SUM(` dans la cellule `B7`, faites glisser sur les cellules de `B2` à `B6` (ou touchez-les l'une après l'autre), puis tapez `)` et appuyez sur Entrée.",
+      "hint": "Après la parenthèse `(`, Excel insère dans la formule le nom de chaque cellule sur laquelle vous cliquez."
+    },
+    "no-hard-coding": {
+      "prompt": "30 tartes de plus ont été vendues : la quantité dans `B4` est maintenant 120. Ne tapez pas le total vous-même : dans `B7`, écrivez une formule qui additionne les quantités, pour que le résultat se mette à jour tout seul quand les données changent.",
+      "hint": "Si vous tapez 450 directement, le résultat ne changera pas avec les quantités. Utilisez `SUM` avec la plage."
+    },
+    "part-of-a-column": {
+      "prompt": "Le boulanger veut le total du pain, des gâteaux et des tartes seulement. Dans `D2`, écrivez une formule qui additionne la plage `B2:B4`.",
+      "hint": "La plage commence à `B2` et se termine à `B4`."
+    },
+    "read-a-sum": {
+      "prompt": "Sur cette feuille, quel est le résultat de `=SUM(B2:B3)` ?",
+      "hint": "La formule additionne seulement les deux cellules `B2` et `B3`.",
+      "options": ["140", "205", "295", "B2+B3"]
+    }
+  }
+}

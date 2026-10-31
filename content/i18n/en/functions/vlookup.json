@@ -1,0 +1,35 @@
+{
+  "slug": "vlookup",
+  "title": "The VLOOKUP function: vertical lookup",
+  "summary": "VLOOKUP looks for a value in the first column of a table and returns a value from the column you choose, in the same row.",
+  "intro": "`VLOOKUP` looks for a value, such as a product code, in the first column of a table, then returns a value from the same row in the column you give by its number. Use `FALSE` for an exact match and `TRUE` to look up sorted bands.",
+  "args": [
+    "What you are looking for.",
+    "The table; its first column is the one searched.",
+    "The number of the column to return from, counted from the start of the table.",
+    "`FALSE` for an exact match, `TRUE` (the default) for an approximate match."
+  ],
+  "examples": ["The price of the product with code `P-102`.", "The product name from the second column."],
+  "errors": [
+    "The value is not in the first column, or it has an extra space.",
+    "The column number is larger than the number of columns in the table."
+  ],
+  "faq": [
+    {
+      "q": "Does VLOOKUP search any column?",
+      "a": "No, it searches only the first column of the range. To search another column, use `XLOOKUP` or `INDEX` with `MATCH`."
+    },
+    {
+      "q": "How do I hide the `#N/A` error?",
+      "a": "Wrap the formula in `IFERROR`, such as `=IFERROR(VLOOKUP(...),\"Not found\")`."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Product",
+    "السعر": "Price",
+    "قلم": "Pen",
+    "دفتر": "Notebook",
+    "مسطرة": "Ruler"
+  }
+}

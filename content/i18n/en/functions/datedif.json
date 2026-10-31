@@ -1,0 +1,20 @@
+{
+  "slug": "datedif",
+  "title": "The DATEDIF function: the gap between two dates",
+  "summary": "DATEDIF works out the gap between two dates in years, months or days.",
+  "intro": "`DATEDIF` works out the time between a start date and an end date in the unit you choose: `\"y\"` for whole years, `\"m\"` for months and `\"d\"` for days. The start date must come before the end date.",
+  "args": [
+    "The start date.",
+    "The end date.",
+    "The unit: `\"y\"`, `\"m\"` or `\"d\"`, or `\"ym\"` and `\"md\"` for what is left after the years or months."
+  ],
+  "examples": ["Three whole years.", "Three whole months."],
+  "errors": ["The start date is after the end date, or the unit is unknown."],
+  "faq": [
+    {
+      "q": "Why doesn't DATEDIF appear in the function list?",
+      "a": "It is an old function that Excel supports without suggesting it as you type, but it works when you type it in full."
+    }
+  ],
+  "strings": {}
+}

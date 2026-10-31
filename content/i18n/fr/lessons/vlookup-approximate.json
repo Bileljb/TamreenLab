@@ -1,0 +1,55 @@
+{
+  "slug": "vlookup-approximate",
+  "title": "Chercher par tranches : VLOOKUP approximatif",
+  "summary": "Utilisez VLOOKUP avec TRUE pour trouver la bonne tranche dans une grille de taux, puis calculez la commission.",
+  "intro": "Avec l'argument `TRUE`, `VLOOKUP` fait une recherche approximative : elle renvoie la ligne de la plus grande valeur qui ne dépasse pas la valeur cherchée. C'est adapté aux grilles par tranches, comme les taux de commission ou les barèmes de notes.\n\nLa première colonne du tableau doit être triée par ordre croissant, sinon le résultat peut être faux.",
+  "faq": [
+    {
+      "q": "Quand utiliser `TRUE` et quand `FALSE` ?",
+      "a": "Utilisez `FALSE` pour chercher une valeur précise, comme un code produit, et `TRUE` pour chercher dans des tranches de nombres triées."
+    },
+    {
+      "q": "Et si la valeur est inférieure à la première tranche ?",
+      "a": "`VLOOKUP` renvoie l'erreur `#N/A` ; c'est pourquoi les grilles par tranches commencent souvent à zéro."
+    }
+  ],
+  "strings": {
+    "من مبيعات": "Ventes à partir de",
+    "نسبة العمولة": "Taux de commission",
+    "المندوب": "Commercial",
+    "المبيعات": "Ventes",
+    "النسبة": "Taux",
+    "العمولة": "Commission",
+    "سلمى": "Salma",
+    "يوسف": "Youssef",
+    "مريم": "Maryam",
+    "كريم": "Karim"
+  },
+  "steps": {
+    "approximate-worked-example": {
+      "prompt": "Voici une grille de commission par tranches. Avec l'argument `TRUE`, `VLOOKUP` renvoie la ligne de la plus grande valeur qui ne dépasse pas la valeur cherchée. Dans `F2`, tapez la formule `=VLOOKUP(E2,A2:B5,2,TRUE)`.",
+      "explain": "Salma a vendu 3500 : la plus grande tranche qui ne dépasse pas ce montant est 1000, au taux de 2 %."
+    },
+    "approximate-high": {
+      "prompt": "Dans `F3`, écrivez de la même façon le taux de Youssef."
+    },
+    "approximate-low": {
+      "prompt": "Dans `F4`, écrivez le taux de Maryam."
+    },
+    "approximate-exact-edge": {
+      "prompt": "Karim a vendu exactement 5000, ce qui correspond au début d'une tranche. Dans `F5`, écrivez son taux."
+    },
+    "commission": {
+      "prompt": "Dans `G2`, calculez la commission de Salma : ses ventes en `E2` multipliées par son taux en `F2`."
+    },
+    "why-sorted": {
+      "prompt": "Pourquoi la première colonne doit-elle être triée par ordre croissant quand on utilise `TRUE` ?",
+      "options": [
+        "Parce que la recherche approximative suppose des valeurs triées",
+        "Parce qu'Excel refuse les nombres non triés",
+        "Pour que les taux s'affichent en pourcentage",
+        "Le tri n'est pas nécessaire"
+      ]
+    }
+  }
+}

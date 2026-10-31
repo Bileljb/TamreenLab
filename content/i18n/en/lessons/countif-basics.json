@@ -1,0 +1,64 @@
+{
+  "slug": "countif-basics",
+  "title": "Counting with a condition: COUNTIF",
+  "summary": "Count a school library's books by subject and status with the COUNTIF function.",
+  "intro": "`COUNTIF` counts the cells that meet a condition. It takes two arguments: the range and the criterion. For example, `=COUNTIF(B2:B7,\"Science\")` counts the science books in the list.\n\nIf no cell matches the criterion it returns 0, not an error.",
+  "faq": [
+    {
+      "q": "Can the criterion be in a cell?",
+      "a": "Yes, put the cell reference where the criterion goes, such as `=COUNTIF(B2:B7,E5)`."
+    },
+    {
+      "q": "What does `COUNTIF` return if it finds nothing?",
+      "a": "It returns 0."
+    }
+  ],
+  "strings": {
+    "الكتاب": "Book",
+    "التصنيف": "Subject",
+    "الحالة": "Status",
+    "السؤال": "Question",
+    "العدد": "Count",
+    "رحلة إلى القمر": "Trip to the Moon",
+    "علوم": "Science",
+    "متاح": "Available",
+    "تاريخ الأندلس": "History of Al-Andalus",
+    "تاريخ": "History",
+    "معار": "On loan",
+    "جسم الإنسان": "The Human Body",
+    "الرياضيات الممتعة": "Fun with Maths",
+    "رياضيات": "Maths",
+    "عالم النبات": "The World of Plants",
+    "مدن قديمة": "Ancient Cities",
+    "كتب العلوم": "Science books",
+    "الكتب المتاحة": "Available books",
+    "الكتب المعارة": "Books on loan"
+  },
+  "steps": {
+    "countif-worked-example": {
+      "prompt": "These are the books of a school library. `COUNTIF` counts the cells that meet a condition. In `F2`, type the formula `=COUNTIF(B2:B7,\"Science\")`."
+    },
+    "count-available": {
+      "prompt": "In `F3`, write a formula that counts the available books in column C."
+    },
+    "count-borrowed": {
+      "prompt": "In `F4`, write a formula that counts the books on loan."
+    },
+    "count-from-a-cell": {
+      "prompt": "In `F5`, write a formula that counts the books of the subject written in `E5`, using `E5` as the criterion."
+    },
+    "count-missing-category": {
+      "prompt": "What does `=COUNTIF(B2:B7,\"Poetry\")` return in this table?",
+      "options": ["0", "6", "`#N/A`", "Poetry"]
+    },
+    "countif-vs-sumif": {
+      "prompt": "What is the difference between `COUNTIF` and `SUMIF`?",
+      "options": [
+        "`COUNTIF` counts the cells, and `SUMIF` adds up their values",
+        "There is no difference",
+        "`SUMIF` counts, and `COUNTIF` adds",
+        "`COUNTIF` works with text only"
+      ]
+    }
+  }
+}

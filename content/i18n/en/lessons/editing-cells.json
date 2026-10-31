@@ -1,0 +1,52 @@
+{
+  "slug": "editing-cells",
+  "title": "Typing and editing data",
+  "summary": "Replace what is in a cell, edit it from the formula bar, and add a new row to a small table.",
+  "intro": "Typing into a selected cell replaces everything in it. If you only want to change part of it, click in the formula bar above the table or press F2, make your change, then press Enter.\n\nExcel treats text and numbers differently: numbers can be calculated and added up, while text is shown as it is. Decimals are written with a point, such as 1.5.",
+  "faq": [
+    {
+      "q": "How do I edit a cell without erasing it?",
+      "a": "Select the cell, then click in the formula bar or press F2. The content becomes editable."
+    },
+    {
+      "q": "How do I cancel what I typed before confirming it?",
+      "a": "Press Esc before Enter and the cell goes back to what it held before."
+    }
+  ],
+  "strings": {
+    "الأداة": "Item",
+    "العدد": "Count",
+    "السعر": "Price",
+    "أقلام": "Pens",
+    "دفاتر": "Notebooks",
+    "مساطر": "Rulers",
+    "أقلام رصاص": "Pencils",
+    "مساطر خشبية": "Rulers (wooden)",
+    "ألوان": "Paints"
+  },
+  "steps": {
+    "replace-a-number": {
+      "prompt": "This is a classroom supplies list. When you select a cell and type, what you type replaces the old content. New notebooks arrived and there are now 25: select `B3`, type 25, then press Enter.",
+      "hint": "No need to delete the old number first; just start typing."
+    },
+    "edit-in-the-formula-bar": {
+      "prompt": "To change part of a cell without retyping it, select the cell and click in the formula bar above the table, or press F2. Change \"Rulers\" in `A4` to \"Rulers (wooden)\", then press Enter.",
+      "hint": "Put the cursor after \"Rulers\" in the formula bar and type \" (wooden)\"."
+    },
+    "add-a-row": {
+      "prompt": "The school bought boxes of paints. Add them on a new row: type \"Paints\" in cell `A6`."
+    },
+    "add-its-count": {
+      "prompt": "There are 16 boxes of paints. Type that number in `B6`, next to the name."
+    },
+    "decimal-number": {
+      "prompt": "Decimals are written with a point. One pen costs 1.5, so type that number in `C2`.",
+      "hint": "Type 1, then a point, then 5."
+    },
+    "what-happens-on-typing": {
+      "prompt": "You select a cell that holds 24, type 30 and press Enter. What does the cell hold now?",
+      "hint": "Typing into a selected cell replaces its content.",
+      "options": ["30", "2430", "54", "It stays 24"]
+    }
+  }
+}

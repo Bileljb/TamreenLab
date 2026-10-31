@@ -1,0 +1,61 @@
+{
+  "slug": "vlookup-not-found",
+  "title": "When the value isn't there: IFERROR",
+  "summary": "Understand the #N/A error from VLOOKUP, and show a clear message instead with IFERROR.",
+  "intro": "If `VLOOKUP` cannot find the value, it returns the error `#N/A`, which means the value is not available in the table.\n\nTo show a clear message instead of the error, wrap the formula in `IFERROR`: `=IFERROR(VLOOKUP(F3,A2:D5,2,FALSE),\"Not found\")`.",
+  "faq": [
+    {
+      "q": "Why does `#N/A` appear when the value seems to be there?",
+      "a": "Usually because of an extra space or a spelling difference, or because the number is stored as text in one of the cells."
+    },
+    {
+      "q": "Does `IFERROR` hide every error?",
+      "a": "Yes, it returns the fallback value for any error, so first make sure the formula itself is right."
+    }
+  ],
+  "strings": {
+    "الرقم": "ID",
+    "الاسم": "Name",
+    "القسم": "Department",
+    "الهاتف الداخلي": "Extension",
+    "الرقم المطلوب": "ID wanted",
+    "الهاتف": "Phone",
+    "سلمى": "Salma",
+    "المبيعات": "Sales",
+    "يوسف": "Youssef",
+    "المحاسبة": "Accounting",
+    "مريم": "Maryam",
+    "الموارد البشرية": "Human resources",
+    "كريم": "Karim",
+    "غير موجود": "Not found"
+  },
+  "steps": {
+    "find-an-employee": {
+      "prompt": "This is a small company's internal phone list. In `G2`, write a formula that returns the name of the employee whose ID is in `F2`."
+    },
+    "what-is-na": {
+      "prompt": "If we type an ID in `F2` that is not in the table, such as 1009, what does `VLOOKUP` with `FALSE` return?",
+      "explain": "`#N/A` means the value is not available in the table.",
+      "options": ["0", "`#N/A`", "An empty cell", "The last name in the table"]
+    },
+    "iferror-worked-example": {
+      "prompt": "`IFERROR` returns a fallback value if an error appears. In `G3`, type the formula `=IFERROR(VLOOKUP(F3,A2:D5,2,FALSE),\"Not found\")`."
+    },
+    "iferror-yourself": {
+      "prompt": "In `G2`, write a formula that returns the name for the ID in `F2`, or \"Not found\" if it is not in the table."
+    },
+    "iferror-number": {
+      "prompt": "In `H2`, write a formula that returns the extension for the ID in `F2`, or 0 if it is not there.",
+      "hint": "The extension is in the fourth column."
+    },
+    "why-na": {
+      "prompt": "Why might `VLOOKUP` return `#N/A` when the name seems to be in the table?",
+      "options": [
+        "Because the table is long",
+        "Because the cell has an extra space or a spelling difference",
+        "Because the column number is small",
+        "Because `FALSE` accepts any close value"
+      ]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "slug": "vlookup",
+  "title": "La fonction VLOOKUP : recherche verticale",
+  "summary": "VLOOKUP cherche une valeur dans la première colonne d'un tableau et renvoie une valeur de la colonne choisie, sur la même ligne.",
+  "intro": "`VLOOKUP` cherche une valeur, comme un code produit, dans la première colonne d'un tableau, puis renvoie une valeur de la même ligne dans la colonne indiquée par son numéro. Utilisez `FALSE` pour une correspondance exacte et `TRUE` pour chercher dans des tranches triées.",
+  "localName": "RECHERCHEV",
+  "args": [
+    "Ce que vous cherchez.",
+    "Le tableau ; sa première colonne est celle où l'on cherche.",
+    "Le numéro de la colonne à renvoyer, compté depuis le début du tableau.",
+    "`FALSE` pour une correspondance exacte, `TRUE` (par défaut) pour une correspondance approximative."
+  ],
+  "examples": ["Le prix du produit de code `P-102`.", "Le nom du produit, pris dans la deuxième colonne."],
+  "errors": [
+    "La valeur n'est pas dans la première colonne, ou contient une espace en trop.",
+    "Le numéro de colonne dépasse le nombre de colonnes du tableau."
+  ],
+  "faq": [
+    {
+      "q": "VLOOKUP cherche-t-elle dans n'importe quelle colonne ?",
+      "a": "Non, seulement dans la première colonne de la plage. Pour chercher dans une autre colonne, utilisez `XLOOKUP` ou `INDEX` avec `MATCH`."
+    },
+    {
+      "q": "Comment masquer l'erreur `#N/A` ?",
+      "a": "Placez la formule dans `IFERROR`, comme `=IFERROR(VLOOKUP(...),\"Introuvable\")`."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Produit",
+    "السعر": "Prix",
+    "قلم": "Stylo",
+    "دفتر": "Cahier",
+    "مسطرة": "Règle"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "slug": "aggregation-practice",
+  "title": "Exercice : les ventes d'un stand de jus",
+  "summary": "Appliquez SUM, AVERAGE, MAX et COUNTA aux ventes d'une semaine.",
+  "intro": "Dans cet exercice, vous appliquez ce que vous avez appris aux ventes d'un stand de jus sur cinq jours : le total, la moyenne et la plus grande valeur, puis le total de deux colonnes avec une seule plage.\n\nLes étapes ne commencent pas par un exemple tout prêt : essayez d'écrire chaque formule vous-même et utilisez l'indice si besoin.",
+  "faq": [
+    {
+      "q": "Comment additionner deux colonnes dans une seule formule ?",
+      "a": "Utilisez une plage qui couvre les deux colonnes, comme `=SUM(B2:C6)`."
+    },
+    {
+      "q": "L'indice fait-il baisser mes points ?",
+      "a": "Oui, vous obtenez la moitié des points après un indice, mais c'est toujours mieux qu'afficher la réponse, qui ne rapporte aucun point."
+    }
+  ],
+  "strings": {
+    "اليوم": "Jour",
+    "عصير برتقال": "Jus d'orange",
+    "عصير ليمون": "Jus de citron",
+    "كل الأكواب": "Tous les verres",
+    "السبت": "Samedi",
+    "الأحد": "Dimanche",
+    "الاثنين": "Lundi",
+    "الثلاثاء": "Mardi",
+    "الأربعاء": "Mercredi",
+    "المجموع": "Total",
+    "المتوسط": "Moyenne",
+    "الأعلى": "Maximum"
+  },
+  "steps": {
+    "practice-sum-orange": {
+      "prompt": "Voici les verres de jus vendus par un stand sur cinq jours. Dans `B7`, écrivez le total des verres de jus d'orange."
+    },
+    "practice-sum-lemon": {
+      "prompt": "Dans `C7`, écrivez le total des verres de jus de citron."
+    },
+    "practice-average": {
+      "prompt": "Dans `B8`, écrivez le nombre moyen de verres de jus d'orange vendus par jour."
+    },
+    "practice-max": {
+      "prompt": "Dans `C9`, écrivez le plus grand nombre de verres de jus de citron vendus en une journée."
+    },
+    "practice-two-columns": {
+      "prompt": "Dans `E2`, écrivez le total de tous les verres en une seule formule, avec une plage qui couvre à la fois les colonnes `B` et `C`.",
+      "hint": "La plage commence à `B2` et se termine à `C6`."
+    },
+    "practice-count-days": {
+      "prompt": "Quelle formule donne le nombre de jours enregistrés dans le tableau ?",
+      "hint": "Les noms des jours sont du texte, pas des nombres.",
+      "options": ["`=COUNT(A2:A6)`", "`=COUNTA(A2:A6)`", "`=SUM(A2:A6)`", "`=MAX(A2:A6)`"]
+    }
+  }
+}

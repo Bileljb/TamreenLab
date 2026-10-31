@@ -1,0 +1,65 @@
+{
+  "slug": "sumifs-countifs",
+  "title": "More than one condition: SUMIFS and COUNTIFS",
+  "summary": "Add up quantities and count orders that meet two or more conditions at the same time.",
+  "intro": "`SUMIFS` and `COUNTIFS` accept more than one condition, and only count the rows that meet every condition at once.\n\nIn `SUMIFS` the range to add comes first, followed by pairs of a range and a condition. `COUNTIFS` is made of range and condition pairs only.",
+  "faq": [
+    {
+      "q": "How does the order differ between `SUMIF` and `SUMIFS`?",
+      "a": "In `SUMIF` the range to add comes last; in `SUMIFS` it comes first."
+    },
+    {
+      "q": "Can I use `SUMIFS` with a single condition?",
+      "a": "Yes, and it gives the same result as `SUMIF`."
+    }
+  ],
+  "strings": {
+    "المندوب": "Rep",
+    "المنطقة": "Region",
+    "المنتج": "Product",
+    "الكمية": "Quantity",
+    "السؤال": "Question",
+    "الجواب": "Answer",
+    "سلمى": "Salma",
+    "الشمال": "North",
+    "دفتر": "Notebook",
+    "يوسف": "Youssef",
+    "الجنوب": "South",
+    "قلم": "Pen",
+    "مريم": "Maryam",
+    "أقلام الشمال": "Pens in the North",
+    "دفاتر الجنوب": "Notebooks in the South",
+    "طلبات يوسف في الشمال": "Youssef's orders in the North",
+    "طلبات كبيرة في الشمال": "Large orders in the North",
+    "كل كميات سلمى": "All of Salma's quantities"
+  },
+  "steps": {
+    "sumifs-worked-example": {
+      "prompt": "`SUMIFS` adds up with more than one condition. Its first argument is the range to add, followed by pairs of a range and a condition. In `G2`, type the formula `=SUMIFS(D2:D7,B2:B7,\"North\",C2:C7,\"Pen\")`."
+    },
+    "sumifs-notebooks-south": {
+      "prompt": "In `G3`, write the total quantity of notebooks in the South region."
+    },
+    "countifs-worked-example": {
+      "prompt": "`COUNTIFS` counts the rows that meet every condition. In `G4`, write a formula that counts Youssef's orders in the North region.",
+      "hint": "Two pairs: `A2:A7` with \"Youssef\", and `B2:B7` with \"North\"."
+    },
+    "countifs-with-operator": {
+      "prompt": "In `G5`, write a formula that counts the orders of 25 or more in the North region."
+    },
+    "one-condition": {
+      "prompt": "In `G6`, write the total of all of Salma's quantities. One condition is enough here.",
+      "hint": "You can use `SUMIF` or `SUMIFS`."
+    },
+    "sum-range-position": {
+      "prompt": "Where does the range to add go in `SUMIFS`?",
+      "hint": "In `SUMIF` the range to add comes last, but in `SUMIFS` it comes first.",
+      "options": [
+        "At the end of the function",
+        "At the start of the function",
+        "After the first condition",
+        "It is not written"
+      ]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "slug": "today",
+  "title": "La fonction TODAY : la date du jour",
+  "summary": "TODAY renvoie la date du jour, qui se met à jour à chaque ouverture du fichier ou à chaque recalcul.",
+  "intro": "`TODAY` ne prend aucun argument et renvoie la date du jour. Excel stocke les dates sous forme de numéros de série : vous pouvez donc lui soustraire une autre date pour obtenir le nombre de jours qui les séparent.",
+  "localName": "AUJOURDHUI",
+  "args": ["Elle ne prend aucun argument, mais les parenthèses sont obligatoires."],
+  "examples": [
+    "Le résultat change chaque jour.",
+    "Avec `DATEDIF` : l'âge en années jusqu'à aujourd'hui."
+  ],
+  "errors": [],
+  "faq": [
+    {
+      "q": "Pourquoi le résultat de TODAY change-t-il ?",
+      "a": "Parce qu'elle renvoie la date du jour où le fichier est ouvert. Pour figer une date, tapez-la vous-même au lieu d'utiliser la fonction."
+    }
+  ],
+  "strings": {
+    "تاريخ اليوم": "Date du jour",
+    "عدد السنوات منذ 2000": "Années depuis 2000"
+  }
+}

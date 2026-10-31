@@ -1,0 +1,34 @@
+{
+  "slug": "sum",
+  "title": "The SUM function: adding numbers",
+  "summary": "SUM adds up the numbers in one or more ranges, and ignores text and empty cells inside a range.",
+  "intro": "`SUM` is the most used Excel function: it adds up the numbers in one or more ranges. Instead of typing `=C2+C3+C4+C5+C6` you type `=SUM(C2:C6)`, and the result stays right if any value changes.",
+  "args": [
+    "The first number, reference or range to add.",
+    "More numbers or ranges, up to 255 arguments."
+  ],
+  "examples": ["Adds up the sales of every product.", "A range and a separate cell in one formula."],
+  "errors": [
+    "You typed text directly as an argument, such as `=SUM(\"abc\")`. Text inside a range is ignored."
+  ],
+  "faq": [
+    {
+      "q": "Does SUM add cells that hold text?",
+      "a": "No, it ignores text and empty cells inside the range and adds only the numbers."
+    },
+    {
+      "q": "Can I add columns that are not next to each other?",
+      "a": "Yes, separate the ranges with a comma, such as `=SUM(B2:B6,D2:D6)`."
+    }
+  ],
+  "strings": {
+    "المنتج": "Product",
+    "المنطقة": "Region",
+    "المبيعات": "Sales",
+    "قلم": "Pen",
+    "الشمال": "North",
+    "دفتر": "Notebook",
+    "الجنوب": "South",
+    "مسطرة": "Ruler"
+  }
+}

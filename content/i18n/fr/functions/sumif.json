@@ -1,0 +1,37 @@
+{
+  "slug": "sumif",
+  "title": "La fonction SUMIF : additionner selon une condition",
+  "summary": "SUMIF additionne les valeurs dont la cellule correspondante remplit une condition, comme les ventes d'une région.",
+  "intro": "`SUMIF` vérifie la condition dans une plage et additionne les valeurs correspondantes d'une autre plage. La condition peut être un texte, un nombre, une comparaison comme `\">100\"` ou une référence à une cellule.",
+  "localName": "SOMME.SI",
+  "args": [
+    "La plage où la condition est vérifiée.",
+    "La condition : texte entre guillemets, nombre, comparaison ou référence.",
+    "Les valeurs à additionner. Si elle est omise, c'est la première plage qui est additionnée."
+  ],
+  "examples": [
+    "Total des ventes de la région Nord : 120, 40 et 60.",
+    "Total des ventes égales ou supérieures à 90."
+  ],
+  "errors": ["Sur ce site, la plage de la condition et la plage à additionner n'ont pas la même taille."],
+  "faq": [
+    {
+      "q": "Comment additionner selon plusieurs conditions ?",
+      "a": "Utilisez `SUMIFS`, où la plage à additionner vient en premier."
+    },
+    {
+      "q": "La condition distingue-t-elle majuscules et minuscules ?",
+      "a": "Non, la comparaison ne les distingue pas."
+    }
+  ],
+  "strings": {
+    "المنتج": "Produit",
+    "المنطقة": "Région",
+    "المبيعات": "Ventes",
+    "قلم": "Stylo",
+    "الشمال": "Nord",
+    "دفتر": "Cahier",
+    "الجنوب": "Sud",
+    "مسطرة": "Règle"
+  }
+}

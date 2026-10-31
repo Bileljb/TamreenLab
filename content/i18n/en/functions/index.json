@@ -1,0 +1,31 @@
+{
+  "slug": "index",
+  "title": "The INDEX function: the value at a position",
+  "summary": "INDEX returns the value at a given row and column inside a range.",
+  "intro": "`INDEX` returns what is in a given cell of a range: the second row, or the third row and second column. It becomes very powerful with `MATCH`, which gives it the row number.",
+  "args": [
+    "The range.",
+    "The row number inside the range.",
+    "The column number inside the range, if it has more than one column."
+  ],
+  "examples": [
+    "The second item in the names column.",
+    "The third row and third column of the table.",
+    "With `MATCH`: the price of \"Pen\", wherever it is."
+  ],
+  "errors": ["The row or column number is outside the range."],
+  "faq": [
+    {
+      "q": "Why combine INDEX with MATCH?",
+      "a": "Because `MATCH` finds the row number and `INDEX` returns the value from it, so you can search any column and return from any column."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Product",
+    "السعر": "Price",
+    "قلم": "Pen",
+    "دفتر": "Notebook",
+    "مسطرة": "Ruler"
+  }
+}

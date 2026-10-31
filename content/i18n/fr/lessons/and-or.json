@@ -1,0 +1,54 @@
+{
+  "slug": "and-or",
+  "title": "Plusieurs conditions : AND et OR",
+  "summary": "Vérifiez plusieurs conditions à la fois avec AND, ou au moins une condition avec OR.",
+  "intro": "`AND` (ET dans Excel en français) renvoie `TRUE` si toutes les conditions sont remplies, et `OR` (OU) renvoie `TRUE` si au moins une condition est remplie. Les conditions s'écrivent dans la fonction, séparées par des virgules.\n\nElles servent à des décisions comme : le candidat a-t-il assez d'expérience et parle-t-il anglais ? Ou : habite-t-il une ville donnée ou a-t-il une longue expérience ?",
+  "faq": [
+    {
+      "q": "Quel est le résultat de `=AND(TRUE,FALSE)` ?",
+      "a": "`FALSE`, car `AND` exige que toutes les conditions soient vraies."
+    },
+    {
+      "q": "Combien de conditions peut-on mettre dans `OR` ?",
+      "a": "Plus de deux aussi, séparées par des virgules ; il suffit que l'une soit vraie."
+    }
+  ],
+  "strings": {
+    "المتقدم": "Candidat",
+    "سنوات الخبرة": "Années d'expérience",
+    "يتحدث الإنجليزية": "Parle anglais",
+    "المدينة": "Ville",
+    "مؤهل": "Qualifié",
+    "أولوية": "Prioritaire",
+    "خالد": "Khaled",
+    "إربد": "Irbid",
+    "منى": "Mona",
+    "الزرقاء": "Zarqa",
+    "سعيد": "Saïd",
+    "دانة": "Dana",
+    "العقبة": "Aqaba"
+  },
+  "steps": {
+    "and-worked-example": {
+      "prompt": "Ces personnes ont postulé à un emploi. `AND` renvoie `TRUE` si toutes les conditions sont remplies. Dans `E2`, tapez la formule `=AND(B2>=2,C2)` pour savoir si Khaled a au moins deux ans d'expérience et parle anglais."
+    },
+    "and-second-applicant": {
+      "prompt": "Dans `E3`, tapez la même formule pour Mona.",
+      "hint": "Les données de Mona sont sur la ligne 3."
+    },
+    "or-worked-example": {
+      "prompt": "`OR` renvoie `TRUE` si au moins une condition est remplie. Dans `F2`, tapez la formule `=OR(D2=\"Irbid\",B2>=4)` : Khaled vient-il d'Irbid ou a-t-il 4 ans d'expérience ou plus ?"
+    },
+    "or-second-applicant": {
+      "prompt": "Dans `F3`, écrivez une formule qui renvoie `TRUE` si Mona vient d'Irbid ou a 4 ans d'expérience ou plus."
+    },
+    "and-result": {
+      "prompt": "Quel est le résultat de `=AND(TRUE,FALSE)` ?",
+      "options": ["`TRUE`", "`FALSE`", "`#VALUE!`", "0"]
+    },
+    "or-result": {
+      "prompt": "Quel est le résultat de `=OR(TRUE,FALSE)` ?",
+      "options": ["`TRUE`", "`FALSE`", "`#VALUE!`", "1"]
+    }
+  }
+}

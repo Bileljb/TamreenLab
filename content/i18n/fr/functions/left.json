@@ -1,0 +1,22 @@
+{
+  "slug": "left",
+  "title": "La fonction LEFT : les premiers caractères",
+  "summary": "LEFT renvoie un nombre de caractères pris au début d'un texte.",
+  "intro": "`LEFT` extrait les premiers caractères d'un texte, comme le code pays d'un numéro d'expédition. Elle compte à partir du premier caractère du texte stocké.",
+  "localName": "GAUCHE",
+  "args": [
+    "Le texte, ou une référence à une cellule qui contient du texte.",
+    "Le nombre de caractères ; 1 par défaut."
+  ],
+  "examples": ["Les trois premiers caractères du code d'expédition."],
+  "errors": ["Le nombre de caractères est négatif."],
+  "faq": [
+    {
+      "q": "Où LEFT commence-t-elle dans un texte écrit de droite à gauche, comme l'arabe ?",
+      "a": "Au premier caractère du texte stocké, c'est-à-dire le premier que l'on lit dans un mot arabe, même s'il s'affiche à droite."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Code d'expédition"
+  }
+}

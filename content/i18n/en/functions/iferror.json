@@ -1,0 +1,27 @@
+{
+  "slug": "iferror",
+  "title": "The IFERROR function: a fallback on error",
+  "summary": "IFERROR returns the result of a formula, or a fallback value you choose if the result is an error.",
+  "intro": "`IFERROR` wraps a formula: if it works, it returns its result; if an error such as `#N/A` or `#DIV/0!` appears, it returns the fallback value. Use it to show a clear message, not to hide errors you don't understand.",
+  "args": ["The formula that might give an error.", "What to return on an error."],
+  "examples": [
+    "The code is not there, so the message shows instead of `#N/A`.",
+    "Dividing by zero returns 0 instead of `#DIV/0!`."
+  ],
+  "errors": [],
+  "faq": [
+    {
+      "q": "Should I put IFERROR in every formula?",
+      "a": "No, put it where an error is expected, such as a lookup for a value that may not exist, so you don't hide real mistakes."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Product",
+    "السعر": "Price",
+    "قلم": "Pen",
+    "دفتر": "Notebook",
+    "مسطرة": "Ruler",
+    "غير موجود": "Not found"
+  }
+}

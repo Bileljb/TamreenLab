@@ -1,0 +1,53 @@
+{
+  "slug": "min-and-max",
+  "title": "Smallest and largest: MIN and MAX",
+  "summary": "Find the largest and smallest value in a range, and work out the gap between them in one formula.",
+  "intro": "`MAX` returns the largest value in a range and `MIN` returns the smallest. They help you find, for example, the top score in a test or the lowest sales of the month.\n\nA function can take more than one argument, separated by commas, such as `=MAX(B2,B4)`, and you can combine two functions in one formula, such as `=MAX(B2:B6)-MIN(B2:B6)`.",
+  "faq": [
+    {
+      "q": "Do `MIN` and `MAX` ignore text?",
+      "a": "Yes. Inside a range they skip text and empty cells and compare numbers only."
+    },
+    {
+      "q": "How do I work out the gap between the largest and smallest value?",
+      "a": "Subtract the smallest from the largest in one formula: `=MAX(B2:B6)-MIN(B2:B6)`."
+    }
+  ],
+  "strings": {
+    "المندوب": "Rep",
+    "عدد العملاء": "Customers",
+    "أكبر الاثنين": "Larger of the two",
+    "سلمى": "Salma",
+    "يوسف": "Youssef",
+    "مريم": "Maryam",
+    "كريم": "Karim",
+    "هدى": "Huda",
+    "الأعلى": "Highest",
+    "الأدنى": "Lowest",
+    "الفرق": "Gap"
+  },
+  "steps": {
+    "max-function": {
+      "prompt": "This is how many customers each sales rep visited. `MAX` returns the largest value in the range. In `B7`, type the formula `=MAX(B2:B6)`."
+    },
+    "min-function": {
+      "prompt": "The `MIN` function returns the smallest value. In `B8`, write a formula that returns the lowest number of customers.",
+      "hint": "Like the previous step, but with the `MIN` function."
+    },
+    "max-minus-min": {
+      "prompt": "In `B9`, work out the gap between the largest and smallest number with one formula that uses `MAX` and `MIN`.",
+      "hint": "Subtract the result of `MIN(B2:B6)` from the result of `MAX(B2:B6)`."
+    },
+    "separate-arguments": {
+      "prompt": "A function can take more than one argument, separated by commas. In `D2`, type the formula `=MAX(B2,B4)` to compare Salma with Maryam only."
+    },
+    "min-of-three": {
+      "prompt": "What is the result of `=MIN(7,3,9)`?",
+      "options": ["3", "7", "9", "19"]
+    },
+    "which-for-top-score": {
+      "prompt": "Which function do you use to find the top score in a test?",
+      "options": ["`MIN`", "`MAX`", "`AVERAGE`", "`COUNT`"]
+    }
+  }
+}

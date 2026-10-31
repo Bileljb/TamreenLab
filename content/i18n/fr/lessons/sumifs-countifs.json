@@ -1,0 +1,65 @@
+{
+  "slug": "sumifs-countifs",
+  "title": "Plusieurs conditions : SUMIFS et COUNTIFS",
+  "summary": "Additionnez des quantités et comptez les commandes qui remplissent deux conditions ou plus en même temps.",
+  "intro": "`SUMIFS` (SOMME.SI.ENS dans Excel en français) et `COUNTIFS` (NB.SI.ENS) acceptent plusieurs conditions et ne retiennent que les lignes qui les remplissent toutes à la fois.\n\nDans `SUMIFS`, la plage à additionner vient en premier, suivie de paires plage et condition. `COUNTIFS` ne se compose que de paires plage et condition.",
+  "faq": [
+    {
+      "q": "Quelle différence d'ordre entre `SUMIF` et `SUMIFS` ?",
+      "a": "Dans `SUMIF`, la plage à additionner vient en dernier ; dans `SUMIFS`, elle vient en premier."
+    },
+    {
+      "q": "Peut-on utiliser `SUMIFS` avec une seule condition ?",
+      "a": "Oui, et elle donne le même résultat que `SUMIF`."
+    }
+  ],
+  "strings": {
+    "المندوب": "Commercial",
+    "المنطقة": "Région",
+    "المنتج": "Produit",
+    "الكمية": "Quantité",
+    "السؤال": "Question",
+    "الجواب": "Réponse",
+    "سلمى": "Salma",
+    "الشمال": "Nord",
+    "دفتر": "Cahier",
+    "يوسف": "Youssef",
+    "الجنوب": "Sud",
+    "قلم": "Stylo",
+    "مريم": "Maryam",
+    "أقلام الشمال": "Stylos du Nord",
+    "دفاتر الجنوب": "Cahiers du Sud",
+    "طلبات يوسف في الشمال": "Commandes de Youssef au Nord",
+    "طلبات كبيرة في الشمال": "Grosses commandes au Nord",
+    "كل كميات سلمى": "Toutes les quantités de Salma"
+  },
+  "steps": {
+    "sumifs-worked-example": {
+      "prompt": "`SUMIFS` additionne selon plusieurs conditions. Son premier argument est la plage à additionner, suivie de paires plage et condition. Dans `G2`, tapez la formule `=SUMIFS(D2:D7,B2:B7,\"Nord\",C2:C7,\"Stylo\")`."
+    },
+    "sumifs-notebooks-south": {
+      "prompt": "Dans `G3`, écrivez le total des quantités de cahiers dans la région Sud."
+    },
+    "countifs-worked-example": {
+      "prompt": "`COUNTIFS` compte les lignes qui remplissent toutes les conditions. Dans `G4`, écrivez une formule qui compte les commandes de Youssef dans la région Nord.",
+      "hint": "Deux paires : `A2:A7` avec « Youssef », et `B2:B7` avec « Nord »."
+    },
+    "countifs-with-operator": {
+      "prompt": "Dans `G5`, écrivez une formule qui compte les commandes de 25 ou plus dans la région Nord."
+    },
+    "one-condition": {
+      "prompt": "Dans `G6`, écrivez le total de toutes les quantités de Salma. Une seule condition suffit ici.",
+      "hint": "Vous pouvez utiliser `SUMIF` ou `SUMIFS`."
+    },
+    "sum-range-position": {
+      "prompt": "Où se place la plage à additionner dans `SUMIFS` ?",
+      "hint": "Dans `SUMIF`, la plage à additionner vient en dernier, mais dans `SUMIFS` elle vient en premier.",
+      "options": [
+        "À la fin de la fonction",
+        "Au début de la fonction",
+        "Après la première condition",
+        "Elle ne s'écrit pas"
+      ]
+    }
+  }
+}

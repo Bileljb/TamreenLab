@@ -1,0 +1,65 @@
+{
+  "slug": "sumif-basics",
+  "title": "Adding up with a condition: SUMIF",
+  "summary": "Add up the sales that meet one condition, with the condition written in the formula or in a cell.",
+  "intro": "`SUMIF` adds up the values that meet one condition. It takes three arguments: the range where the condition is checked, the condition itself, and the range of values to add.\n\nYou can write the condition as text between quotation marks, such as `\"North\"`, or make it a reference to a cell, so the result changes when that cell changes.",
+  "faq": [
+    {
+      "q": "In what order do the arguments of `SUMIF` go?",
+      "a": "The condition range, then the condition, then the range to add: `=SUMIF(B2:B7,\"North\",C2:C7)`."
+    },
+    {
+      "q": "Does letter case matter in the condition?",
+      "a": "No, matching in conditions does not tell upper case from lower case."
+    }
+  ],
+  "strings": {
+    "المندوب": "Rep",
+    "المنطقة": "Region",
+    "المبيعات": "Sales",
+    "المجموع": "Total",
+    "سلمى": "Salma",
+    "الشمال": "North",
+    "يوسف": "Youssef",
+    "الجنوب": "South",
+    "مريم": "Maryam",
+    "كريم": "Karim",
+    "الوسط": "Centre",
+    "هدى": "Huda",
+    "طارق": "Tariq"
+  },
+  "steps": {
+    "sumif-worked-example": {
+      "prompt": "`SUMIF` adds up the values that meet a condition. In `F2`, type the formula `=SUMIF(B2:B7,\"North\",C2:C7)` to add up the sales of the North region.",
+      "explain": "The condition is checked in `B2:B7`, and the matching values are added from `C2:C7`."
+    },
+    "sumif-south": {
+      "prompt": "In `F3`, write a formula that adds up the sales of the South region."
+    },
+    "criterion-in-a-cell": {
+      "prompt": "Instead of typing the region name inside the formula, the condition can be a reference to a cell. In `F2`, type the formula `=SUMIF(B2:B7,E2,C2:C7)`."
+    },
+    "criterion-in-e4": {
+      "prompt": "In `F4`, write a formula that adds up the sales of the region written in `E4`.",
+      "hint": "Use `E4` as the condition."
+    },
+    "sum-range-role": {
+      "prompt": "In `=SUMIF(B2:B7,\"North\",C2:C7)`, what is the role of `C2:C7`?",
+      "options": [
+        "The range where the condition is checked",
+        "The range whose values are added",
+        "The condition",
+        "Where the result goes"
+      ]
+    },
+    "missing-quotes": {
+      "prompt": "What happens if you type the word North in the formula without quotation marks?",
+      "options": [
+        "The formula works as it is",
+        "The error `#NAME?` appears",
+        "It returns 0",
+        "It adds up all the sales"
+      ]
+    }
+  }
+}

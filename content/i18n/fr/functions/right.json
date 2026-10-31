@@ -1,0 +1,22 @@
+{
+  "slug": "right",
+  "title": "La fonction RIGHT : les derniers caractères",
+  "summary": "RIGHT renvoie un nombre de caractères pris à la fin d'un texte.",
+  "intro": "`RIGHT` extrait les derniers caractères d'un texte, comme la lettre de catégorie à la fin d'un code.",
+  "localName": "DROITE",
+  "args": [
+    "Le texte, ou une référence à une cellule qui contient du texte.",
+    "Le nombre de caractères ; 1 par défaut."
+  ],
+  "examples": ["Le dernier caractère du deuxième code d'expédition."],
+  "errors": ["Le nombre de caractères est négatif."],
+  "faq": [
+    {
+      "q": "Et si je demande plus de caractères que le texte n'en contient ?",
+      "a": "`RIGHT` renvoie le texte entier, sans erreur."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Code d'expédition"
+  }
+}

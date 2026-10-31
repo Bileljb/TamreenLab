@@ -1,0 +1,55 @@
+{
+  "slug": "if-with-conditions",
+  "title": "Practice: order discounts",
+  "summary": "Combine IF with AND, OR and NOT to decide the discount and delivery for each order.",
+  "intro": "In this practice you combine `IF` with `AND`, `OR` and `NOT` to decide the discount and delivery for a small shop's orders.\n\nPut `AND` or `OR` where the condition goes in `IF`, such as `=IF(AND(B2>=10,C2),\"Discount\",\"No discount\")`, and try reading the formula out loud before you type it.",
+  "faq": [
+    {
+      "q": "Can I put `AND` inside `IF`?",
+      "a": "Yes, and it is common: `AND` returns `TRUE` or `FALSE`, so it works as the condition of `IF`."
+    },
+    {
+      "q": "What does `NOT` do?",
+      "a": "It flips a logical value: `TRUE` becomes `FALSE` and the other way round."
+    }
+  ],
+  "strings": {
+    "الطلب": "Order",
+    "الكمية": "Quantity",
+    "عميل دائم": "Regular customer",
+    "الخصم": "Discount",
+    "التوصيل": "Delivery",
+    "عميل جديد": "New customer",
+    "الطلب 101": "Order 101",
+    "الطلب 102": "Order 102",
+    "الطلب 103": "Order 103",
+    "الطلب 104": "Order 104",
+    "خصم": "Discount",
+    "بدون خصم": "No discount",
+    "مجاني": "Free",
+    "مدفوع": "Paid"
+  },
+  "steps": {
+    "discount-if-and": {
+      "prompt": "An order gets a discount if the quantity is 10 or more and the customer is a regular. In `D2`, write a formula that returns \"Discount\" or \"No discount\" using `IF` and `AND`.",
+      "hint": "Put `AND(B2>=10,C2)` where the condition goes in `IF`."
+    },
+    "discount-second-order": {
+      "prompt": "In `D3`, write the same formula for order 102."
+    },
+    "delivery-if-or": {
+      "prompt": "Delivery is free if the quantity is 20 or more or the customer is a regular. In `E2`, write a formula that returns \"Free\" or \"Paid\"."
+    },
+    "delivery-big-order": {
+      "prompt": "In `E4`, write the same delivery formula for order 103."
+    },
+    "not-function": {
+      "prompt": "`NOT` flips a value: `TRUE` becomes `FALSE` and the other way round. In `F2`, write a formula that returns `TRUE` if the customer is not a regular: `=NOT(C2)`."
+    },
+    "discount-check": {
+      "prompt": "An order has a quantity of 15 and its customer is not a regular. What does the discount formula from the first step return for it?",
+      "hint": "`AND` needs both conditions to be met.",
+      "options": ["Discount", "No discount", "`TRUE`", "`#VALUE!`"]
+    }
+  }
+}

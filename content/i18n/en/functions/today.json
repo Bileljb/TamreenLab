@@ -1,0 +1,19 @@
+{
+  "slug": "today",
+  "title": "The TODAY function: today's date",
+  "summary": "TODAY returns today's date, which updates whenever the file opens or recalculates.",
+  "intro": "`TODAY` takes no arguments and returns today's date. Excel stores dates as serial numbers, so you can subtract another date from it to get the number of days between them.",
+  "args": ["It takes no arguments, but the brackets are required."],
+  "examples": ["The result changes every day.", "With `DATEDIF`: the age in years up to today."],
+  "errors": [],
+  "faq": [
+    {
+      "q": "Why does the result of TODAY change?",
+      "a": "Because it returns the date of the day the file is opened. To fix a date, type it yourself instead of using the function."
+    }
+  ],
+  "strings": {
+    "تاريخ اليوم": "Today's date",
+    "عدد السنوات منذ 2000": "Years since 2000"
+  }
+}

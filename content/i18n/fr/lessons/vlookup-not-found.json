@@ -1,0 +1,61 @@
+{
+  "slug": "vlookup-not-found",
+  "title": "Quand la valeur est introuvable : IFERROR",
+  "summary": "Comprenez l'erreur #N/A de VLOOKUP et affichez à la place un message clair avec IFERROR.",
+  "intro": "Si `VLOOKUP` ne trouve pas la valeur, elle renvoie l'erreur `#N/A` (#N/A aussi en français), qui signifie que la valeur n'est pas disponible dans le tableau.\n\nPour afficher un message clair au lieu de l'erreur, placez la formule dans `IFERROR` (SIERREUR dans Excel en français) : `=IFERROR(VLOOKUP(F3,A2:D5,2,FALSE),\"Introuvable\")`.",
+  "faq": [
+    {
+      "q": "Pourquoi `#N/A` apparaît-elle alors que la valeur semble présente ?",
+      "a": "Souvent à cause d'une espace en trop ou d'une différence d'écriture, ou parce que le nombre est stocké comme texte dans l'une des cellules."
+    },
+    {
+      "q": "`IFERROR` masque-t-elle toutes les erreurs ?",
+      "a": "Oui, elle renvoie la valeur de remplacement pour toute erreur : vérifiez donc d'abord que la formule elle-même est juste."
+    }
+  ],
+  "strings": {
+    "الرقم": "Matricule",
+    "الاسم": "Nom",
+    "القسم": "Service",
+    "الهاتف الداخلي": "Poste",
+    "الرقم المطلوب": "Matricule cherché",
+    "الهاتف": "Téléphone",
+    "سلمى": "Salma",
+    "المبيعات": "Ventes",
+    "يوسف": "Youssef",
+    "المحاسبة": "Comptabilité",
+    "مريم": "Maryam",
+    "الموارد البشرية": "Ressources humaines",
+    "كريم": "Karim",
+    "غير موجود": "Introuvable"
+  },
+  "steps": {
+    "find-an-employee": {
+      "prompt": "Voici l'annuaire téléphonique interne d'une petite entreprise. Dans `G2`, écrivez une formule qui renvoie le nom de l'employé dont le matricule est dans `F2`."
+    },
+    "what-is-na": {
+      "prompt": "Si l'on tape dans `F2` un matricule absent du tableau, comme 1009, que renvoie `VLOOKUP` avec `FALSE` ?",
+      "explain": "`#N/A` signifie que la valeur cherchée n'est pas disponible dans le tableau.",
+      "options": ["0", "`#N/A`", "Une cellule vide", "Le dernier nom du tableau"]
+    },
+    "iferror-worked-example": {
+      "prompt": "`IFERROR` renvoie une valeur de remplacement en cas d'erreur. Dans `G3`, tapez la formule `=IFERROR(VLOOKUP(F3,A2:D5,2,FALSE),\"Introuvable\")`."
+    },
+    "iferror-yourself": {
+      "prompt": "Dans `G2`, écrivez une formule qui renvoie le nom correspondant au matricule de `F2`, ou « Introuvable » s'il n'est pas dans le tableau."
+    },
+    "iferror-number": {
+      "prompt": "Dans `H2`, écrivez une formule qui renvoie le poste téléphonique correspondant au matricule de `F2`, ou 0 s'il est introuvable.",
+      "hint": "Le poste est dans la quatrième colonne."
+    },
+    "why-na": {
+      "prompt": "Pourquoi `VLOOKUP` peut-elle renvoyer `#N/A` alors que le nom semble présent dans le tableau ?",
+      "options": [
+        "Parce que le tableau est long",
+        "Parce que la cellule contient une espace en trop ou une différence d'écriture",
+        "Parce que le numéro de colonne est petit",
+        "Parce que `FALSE` accepte toute valeur proche"
+      ]
+    }
+  }
+}

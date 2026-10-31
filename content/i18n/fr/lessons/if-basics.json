@@ -1,0 +1,59 @@
+{
+  "slug": "if-basics",
+  "title": "Choisir selon une condition : IF",
+  "summary": "Faites choisir à une formule entre deux résultats selon une condition, et découvrez les valeurs TRUE et FALSE.",
+  "intro": "La fonction `IF` (SI dans Excel en français) choisit entre deux valeurs selon une condition : `=IF(B2>=50,\"Admis\",\"Refusé\")` signifie : si la note vaut 50 ou plus, afficher « Admis », sinon afficher « Refusé ».\n\nUne condition seule renvoie `TRUE` (VRAI) ou `FALSE` (FAUX), et `IF` peut renvoyer du texte entre guillemets ou des nombres sans guillemets.",
+  "faq": [
+    {
+      "q": "Pourquoi mettre le texte entre guillemets ?",
+      "a": "Sans guillemets, Excel prend le mot pour un nom et affiche l'erreur `#NAME?`."
+    },
+    {
+      "q": "Quelle différence entre `>` et `>=` ?",
+      "a": "`>` signifie « strictement supérieur à », alors que `>=` signifie « supérieur ou égal à »."
+    }
+  ],
+  "strings": {
+    "الطالب": "Élève",
+    "الدرجة": "Note",
+    "النتيجة": "Résultat",
+    "ناجح؟": "Admis ?",
+    "المكافأة": "Bonus",
+    "ريم": "Reem",
+    "فادي": "Fadi",
+    "سارة": "Sara",
+    "أنس": "Anas",
+    "جود": "Joud",
+    "ناجح": "Admis",
+    "راسب": "Refusé"
+  },
+  "steps": {
+    "if-worked-example": {
+      "prompt": "La note de passage est 50. La fonction `IF` choisit entre deux valeurs selon une condition. Dans `C2`, tapez la formule `=IF(B2>=50,\"Admis\",\"Refusé\")`.",
+      "hint": "Attention aux guillemets autour de « Admis » et « Refusé »."
+    },
+    "if-next-student": {
+      "prompt": "Dans `C3`, tapez la même formule pour Fadi, en changeant la référence en `B3`."
+    },
+    "condition-alone": {
+      "prompt": "Une condition seule renvoie `TRUE` ou `FALSE`. Dans `D2`, tapez la formule `=B2>=50`."
+    },
+    "if-returns-numbers": {
+      "prompt": "`IF` peut aussi renvoyer des nombres. Dans `E2`, écrivez une formule qui donne 10 points de bonus si la note de Reem vaut 50 ou plus, et 0 sinon.",
+      "hint": "Les nombres n'ont pas besoin de guillemets."
+    },
+    "if-result": {
+      "prompt": "Quel est le résultat de `=IF(5>3,\"Oui\",\"Non\")` ?",
+      "options": ["Oui", "Non", "`TRUE`", "5"]
+    },
+    "if-parts": {
+      "prompt": "Dans `=IF(B2>=50,\"Admis\",\"Refusé\")`, que représente la partie `B2>=50` ?",
+      "options": [
+        "La condition",
+        "La valeur si la condition est remplie",
+        "La valeur si la condition n'est pas remplie",
+        "Le nom de la fonction"
+      ]
+    }
+  }
+}

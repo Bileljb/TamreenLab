@@ -1,0 +1,65 @@
+{
+  "slug": "sumif-basics",
+  "title": "Additionner selon une condition : SUMIF",
+  "summary": "Additionnez les ventes qui remplissent une condition, écrite dans la formule ou dans une cellule.",
+  "intro": "`SUMIF` (SOMME.SI dans Excel en français) additionne les valeurs qui remplissent une condition. Elle prend trois arguments : la plage où la condition est vérifiée, la condition elle-même et la plage des valeurs à additionner.\n\nVous pouvez écrire la condition comme un texte entre guillemets, par exemple `\"Nord\"`, ou en faire une référence à une cellule : le résultat change alors avec cette cellule.",
+  "faq": [
+    {
+      "q": "Dans quel ordre se placent les arguments de `SUMIF` ?",
+      "a": "La plage de la condition, puis la condition, puis la plage à additionner : `=SUMIF(B2:B7,\"Nord\",C2:C7)`."
+    },
+    {
+      "q": "Les majuscules comptent-elles dans la condition ?",
+      "a": "Non, la comparaison ne distingue pas les majuscules des minuscules."
+    }
+  ],
+  "strings": {
+    "المندوب": "Commercial",
+    "المنطقة": "Région",
+    "المبيعات": "Ventes",
+    "المجموع": "Total",
+    "سلمى": "Salma",
+    "الشمال": "Nord",
+    "يوسف": "Youssef",
+    "الجنوب": "Sud",
+    "مريم": "Maryam",
+    "كريم": "Karim",
+    "الوسط": "Centre",
+    "هدى": "Huda",
+    "طارق": "Tariq"
+  },
+  "steps": {
+    "sumif-worked-example": {
+      "prompt": "`SUMIF` additionne les valeurs qui remplissent une condition. Dans `F2`, tapez la formule `=SUMIF(B2:B7,\"Nord\",C2:C7)` pour additionner les ventes de la région Nord.",
+      "explain": "La condition est vérifiée dans `B2:B7`, et les valeurs correspondantes sont additionnées depuis `C2:C7`."
+    },
+    "sumif-south": {
+      "prompt": "Dans `F3`, écrivez une formule qui additionne les ventes de la région Sud."
+    },
+    "criterion-in-a-cell": {
+      "prompt": "Au lieu d'écrire le nom de la région dans la formule, la condition peut être une référence à une cellule. Dans `F2`, tapez la formule `=SUMIF(B2:B7,E2,C2:C7)`."
+    },
+    "criterion-in-e4": {
+      "prompt": "Dans `F4`, écrivez une formule qui additionne les ventes de la région écrite dans `E4`.",
+      "hint": "Utilisez `E4` comme condition."
+    },
+    "sum-range-role": {
+      "prompt": "Dans `=SUMIF(B2:B7,\"Nord\",C2:C7)`, quel est le rôle de `C2:C7` ?",
+      "options": [
+        "La plage où la condition est vérifiée",
+        "La plage dont les valeurs sont additionnées",
+        "La condition",
+        "L'emplacement du résultat"
+      ]
+    },
+    "missing-quotes": {
+      "prompt": "Que se passe-t-il si vous tapez le mot Nord dans la formule sans guillemets ?",
+      "options": [
+        "La formule fonctionne telle quelle",
+        "L'erreur `#NAME?` apparaît",
+        "Elle renvoie 0",
+        "Elle additionne toutes les ventes"
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "slug": "aggregation-review",
+  "title": "Révision : fonctions de synthèse",
+  "summary": "Résumez les résultats d'un examen en cinq formules : le nombre de notes, la moyenne, la meilleure, la plus faible et le nombre d'élèves.",
+  "intro": "Cette révision reprend les cinq fonctions de synthèse, `COUNT`, `AVERAGE`, `MAX`, `MIN` et `COUNTA`, sur les notes d'une classe où un élève était absent.\n\nObservez l'effet de la cellule vide dans chaque fonction : elle n'est comptée ni dans le nombre ni dans la moyenne.",
+  "faq": [
+    {
+      "q": "Pourquoi `COUNT` et `COUNTA` donnent-elles des résultats différents dans ce tableau ?",
+      "a": "Parce que l'élève absent a un nom dans la colonne A, mais sa cellule de note est vide."
+    },
+    {
+      "q": "Faut-il taper 0 pour l'élève absent ?",
+      "a": "Non, sauf si 0 est vraiment sa note, car un zéro compte dans la moyenne et la fait baisser."
+    }
+  ],
+  "strings": {
+    "الطالب": "Élève",
+    "الدرجة": "Note",
+    "المؤشر": "Indicateur",
+    "القيمة": "Valeur",
+    "ريم": "Reem",
+    "عدد الدرجات": "Nombre de notes",
+    "فادي": "Fadi",
+    "المتوسط": "Moyenne",
+    "سارة": "Sara",
+    "الأعلى": "Maximum",
+    "أنس": "Anas",
+    "الأدنى": "Minimum",
+    "جود": "Joud",
+    "عدد الطلاب": "Nombre d'élèves",
+    "ماهر": "Maher"
+  },
+  "steps": {
+    "review-count": {
+      "prompt": "Voici les notes d'un examen ; Maher était absent. Dans `D2`, écrivez le nombre d'élèves qui ont une note."
+    },
+    "review-average": {
+      "prompt": "Dans `D3`, écrivez la moyenne des notes."
+    },
+    "review-max": {
+      "prompt": "Dans `D4`, écrivez la meilleure note."
+    },
+    "review-min": {
+      "prompt": "Dans `D5`, écrivez la note la plus faible."
+    },
+    "review-counta": {
+      "prompt": "Dans `D6`, écrivez le nombre d'élèves de toute la liste, absent compris.",
+      "hint": "Comptez les noms de la colonne A."
+    },
+    "review-zero-vs-blank": {
+      "prompt": "Si l'on tapait 0 pour Maher au lieu de laisser sa cellule vide, que deviendrait la moyenne des notes ?",
+      "hint": "Le zéro est un nombre qui compte dans le calcul ; une cellule vide, non.",
+      "options": ["Elle monte", "Elle baisse", "Elle ne change pas", "Une erreur apparaît"]
+    }
+  }
+}

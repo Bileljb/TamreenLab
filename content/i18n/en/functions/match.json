@@ -1,0 +1,27 @@
+{
+  "slug": "match",
+  "title": "The MATCH function: the position of a value",
+  "summary": "MATCH returns the position number of a value inside a range, not the value itself.",
+  "intro": "`MATCH` answers the question \"in which position?\": it returns the number of the cell that holds the value inside the range. Use 0 as the third argument for an exact match.",
+  "args": [
+    "What you are looking for.",
+    "A single row or a single column.",
+    "0 for an exact match, 1 (the default) for the largest value that does not exceed it in a sorted list."
+  ],
+  "examples": ["\"Ruler\" is the third item in the range."],
+  "errors": ["The value is not in the range."],
+  "faq": [
+    {
+      "q": "Does MATCH return the row number on the sheet?",
+      "a": "No, it returns the position inside the range: the first cell of the range is number 1."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Product",
+    "السعر": "Price",
+    "قلم": "Pen",
+    "دفتر": "Notebook",
+    "مسطرة": "Ruler"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "slug": "sum",
+  "title": "La fonction SUM : additionner des nombres",
+  "summary": "SUM additionne les nombres d'une ou plusieurs plages et ignore le texte et les cellules vides de la plage.",
+  "intro": "`SUM` est la fonction la plus utilisée d'Excel : elle additionne les nombres d'une ou plusieurs plages. Au lieu de taper `=C2+C3+C4+C5+C6`, vous tapez `=SUM(C2:C6)`, et le résultat reste juste si une valeur change.",
+  "localName": "SOMME",
+  "args": [
+    "Le premier nombre, référence ou plage à additionner.",
+    "D'autres nombres ou plages, jusqu'à 255 arguments."
+  ],
+  "examples": [
+    "Additionne les ventes de tous les produits.",
+    "Une plage et une cellule isolée dans une même formule."
+  ],
+  "errors": [
+    "Vous avez tapé du texte directement comme argument, par exemple `=SUM(\"abc\")`. Le texte situé dans une plage, lui, est ignoré."
+  ],
+  "faq": [
+    {
+      "q": "SUM additionne-t-elle les cellules qui contiennent du texte ?",
+      "a": "Non, elle ignore le texte et les cellules vides de la plage et n'additionne que les nombres."
+    },
+    {
+      "q": "Peut-on additionner des colonnes non voisines ?",
+      "a": "Oui, séparez les plages par une virgule, comme `=SUM(B2:B6,D2:D6)`."
+    }
+  ],
+  "strings": {
+    "المنتج": "Produit",
+    "المنطقة": "Région",
+    "المبيعات": "Ventes",
+    "قلم": "Stylo",
+    "الشمال": "Nord",
+    "دفتر": "Cahier",
+    "الجنوب": "Sud",
+    "مسطرة": "Règle"
+  }
+}

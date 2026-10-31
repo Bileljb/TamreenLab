@@ -1,0 +1,18 @@
+{
+  "slug": "right",
+  "title": "The RIGHT function: the last characters",
+  "summary": "RIGHT returns a number of characters from the end of a text.",
+  "intro": "`RIGHT` takes the last characters of a text, such as the category letter at the end of a code.",
+  "args": ["The text, or a reference to a cell holding text.", "How many characters; the default is 1."],
+  "examples": ["The last character of the second shipment code."],
+  "errors": ["The number of characters is negative."],
+  "faq": [
+    {
+      "q": "What if I ask for more characters than the text has?",
+      "a": "`RIGHT` returns the whole text, without an error."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Shipment code"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "if",
+  "title": "La fonction IF : choisir selon une condition",
+  "summary": "IF teste une condition et renvoie une valeur si elle est vraie, une autre si elle est fausse.",
+  "intro": "`IF` permet à une formule de prendre une décision : si la condition est remplie, elle renvoie la première valeur, sinon la seconde. Les deux valeurs peuvent être du texte entre guillemets, des nombres ou d'autres formules.",
+  "localName": "SI",
+  "args": [
+    "La condition, par exemple `C2>=100`.",
+    "Ce qu'il faut renvoyer si la condition est remplie.",
+    "Ce qu'il faut renvoyer sinon. S'il est omis, IF renvoie `FALSE`."
+  ],
+  "examples": [
+    "Les ventes de la ligne 2 valent 120 : la condition est vraie.",
+    "Les ventes de la ligne 3 valent 80 : la condition est fausse."
+  ],
+  "errors": ["Du texte tapé sans guillemets, comme `=IF(C2>100,Élevé,Normal)`."],
+  "faq": [
+    {
+      "q": "Comment tester plusieurs conditions ?",
+      "a": "Placez `AND` ou `OR` à la place de la condition, comme `=IF(AND(C2>50,B2=\"Nord\"),\"Oui\",\"Non\")`."
+    },
+    {
+      "q": "IF peut-elle renvoyer une cellule vide ?",
+      "a": "Oui, utilisez `\"\"` comme valeur, par exemple `=IF(C2>100,\"Élevé\",\"\")`."
+    }
+  ],
+  "strings": {
+    "المنتج": "Produit",
+    "المنطقة": "Région",
+    "المبيعات": "Ventes",
+    "قلم": "Stylo",
+    "الشمال": "Nord",
+    "دفتر": "Cahier",
+    "الجنوب": "Sud",
+    "مسطرة": "Règle",
+    "مرتفع": "Élevé",
+    "عادي": "Normal"
+  }
+}

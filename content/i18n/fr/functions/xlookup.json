@@ -1,0 +1,34 @@
+{
+  "slug": "xlookup",
+  "title": "La fonction XLOOKUP : recherche souple",
+  "summary": "XLOOKUP cherche une valeur dans une plage et renvoie la valeur correspondante d'une autre, dans tous les sens, avec une valeur de repli si rien n'est trouvé.",
+  "intro": "`XLOOKUP` est plus récente et plus souple que `VLOOKUP` : vous indiquez séparément la plage de recherche et la plage de résultat, la colonne de recherche n'a donc pas à être la première, et vous choisissez quoi renvoyer si la valeur est introuvable. Elle est disponible dans les versions récentes d'Excel.",
+  "localName": "RECHERCHEX",
+  "args": [
+    "Ce que vous cherchez.",
+    "La plage où chercher.",
+    "La plage d'où renvoyer le résultat, de même taille que la plage de recherche.",
+    "Ce qu'il faut renvoyer si la valeur est introuvable.",
+    "0 pour une correspondance exacte (par défaut), -1 ou 1 pour la valeur immédiatement inférieure ou supérieure, 2 pour les caractères génériques."
+  ],
+  "examples": [
+    "Chercher dans la colonne des noms, qui n'est pas la première.",
+    "La valeur de repli à la place de l'erreur `#N/A`."
+  ],
+  "errors": ["La plage de recherche et la plage de résultat n'ont pas la même taille."],
+  "faq": [
+    {
+      "q": "XLOOKUP remplace-t-elle VLOOKUP ?",
+      "a": "Dans les versions récentes, en grande partie oui, mais `VLOOKUP` reste courante dans les anciens fichiers et les tests de recrutement."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Produit",
+    "السعر": "Prix",
+    "قلم": "Stylo",
+    "دفتر": "Cahier",
+    "مسطرة": "Règle",
+    "غير موجود": "Introuvable"
+  }
+}

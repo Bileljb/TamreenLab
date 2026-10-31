@@ -1,0 +1,38 @@
+{
+  "slug": "if",
+  "title": "The IF function: choosing with a condition",
+  "summary": "IF tests a condition and returns one value if it is true and another if it is false.",
+  "intro": "`IF` lets a formula make a decision: if the condition is met it returns the first value, otherwise the second. Both values can be text between quotation marks, numbers or other formulas.",
+  "args": [
+    "The condition, such as `C2>=100`.",
+    "What to return if the condition is met.",
+    "What to return if it is not. If you leave it out, IF returns `FALSE`."
+  ],
+  "examples": [
+    "Row 2 sales are 120, so the condition is true.",
+    "Row 3 sales are 80, so the condition is false."
+  ],
+  "errors": ["Text typed without quotation marks, such as `=IF(C2>100,High,Normal)`."],
+  "faq": [
+    {
+      "q": "How do I test more than one condition?",
+      "a": "Put `AND` or `OR` where the condition goes, such as `=IF(AND(C2>50,B2=\"North\"),\"Yes\",\"No\")`."
+    },
+    {
+      "q": "Can IF return an empty cell?",
+      "a": "Yes, use `\"\"` as the value, such as `=IF(C2>100,\"High\",\"\")`."
+    }
+  ],
+  "strings": {
+    "المنتج": "Product",
+    "المنطقة": "Region",
+    "المبيعات": "Sales",
+    "قلم": "Pen",
+    "الشمال": "North",
+    "دفتر": "Notebook",
+    "الجنوب": "South",
+    "مسطرة": "Ruler",
+    "مرتفع": "High",
+    "عادي": "Normal"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "match",
+  "title": "La fonction MATCH : la position d'une valeur",
+  "summary": "MATCH renvoie le numéro de position d'une valeur dans une plage, pas la valeur elle-même.",
+  "intro": "`MATCH` répond à la question « à quelle position ? » : elle renvoie le numéro de la cellule qui contient la valeur dans la plage. Utilisez 0 comme troisième argument pour une correspondance exacte.",
+  "localName": "EQUIV",
+  "args": [
+    "Ce que vous cherchez.",
+    "Une seule ligne ou une seule colonne.",
+    "0 pour une correspondance exacte, 1 (par défaut) pour la plus grande valeur qui ne la dépasse pas dans une liste triée."
+  ],
+  "examples": ["« Règle » est le troisième élément de la plage."],
+  "errors": ["La valeur n'est pas dans la plage."],
+  "faq": [
+    {
+      "q": "MATCH renvoie-t-elle le numéro de ligne de la feuille ?",
+      "a": "Non, elle renvoie la position dans la plage : la première cellule de la plage porte le numéro 1."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Produit",
+    "السعر": "Prix",
+    "قلم": "Stylo",
+    "دفتر": "Cahier",
+    "مسطرة": "Règle"
+  }
+}

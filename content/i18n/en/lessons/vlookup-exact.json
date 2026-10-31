@@ -1,0 +1,64 @@
+{
+  "slug": "vlookup-exact",
+  "title": "Looking up a table: VLOOKUP",
+  "summary": "Look up a product code in a table and bring back its name, price or stock with VLOOKUP.",
+  "intro": "`VLOOKUP` looks for a value in the first column of a table, then returns a value from the same row in the column you give by its number.\n\nIt takes four arguments: what you are looking for, the table, the column number inside the table, and `FALSE` to ask for an exact match. The column number counts from the start of the range, not from column A.",
+  "faq": [
+    {
+      "q": "Does the table have to start in column A?",
+      "a": "No. What matters is that the value you look for is in the first column of the range you write."
+    },
+    {
+      "q": "Why write `FALSE` at the end?",
+      "a": "To ask for an exact match. Without it, `VLOOKUP` does an approximate search that can return a wrong result."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Product",
+    "السعر": "Price",
+    "المخزون": "Stock",
+    "الرمز المطلوب": "Code wanted",
+    "النتيجة": "Result",
+    "قلم أزرق": "Blue pen",
+    "دفتر كبير": "Large notebook",
+    "مسطرة": "Ruler",
+    "حقيبة": "Bag",
+    "آلة حاسبة": "Calculator"
+  },
+  "steps": {
+    "vlookup-worked-example": {
+      "prompt": "`VLOOKUP` looks for a value in the first column of a table and returns a value from the column you choose, in the same row. In `G2`, type the formula `=VLOOKUP(F2,A2:D6,2,FALSE)` to find the name of the product whose code is in `F2`.",
+      "explain": "The arguments, in order: what we look for, the table, the column number inside the table, and `FALSE` for an exact match."
+    },
+    "vlookup-price": {
+      "prompt": "Change the column number to bring back the price instead of the name: in `G2`, write a formula that returns the price of the product whose code is in `F2`.",
+      "hint": "The price is the third column of `A2:D6`."
+    },
+    "vlookup-literal": {
+      "prompt": "You can type what you look for directly between quotation marks. In `G3`, write a formula that returns the stock of product `P-105`."
+    },
+    "vlookup-from-column-b": {
+      "prompt": "The table does not have to start in column A. In `G4`, write a formula that looks for \"Bag\" in the range `B2:C6` and returns its price.",
+      "hint": "The price is the second column of `B2:C6`."
+    },
+    "column-number-meaning": {
+      "prompt": "In `=VLOOKUP(F2,A2:D6,3,FALSE)`, what does the number 3 mean?",
+      "options": [
+        "The third row of the table",
+        "The third column of the range `A2:D6`",
+        "Column C of the sheet, whatever the range",
+        "The number of results"
+      ]
+    },
+    "where-to-search": {
+      "prompt": "Where must the value that `VLOOKUP` looks for be?",
+      "options": [
+        "In any column of the table",
+        "In the first column of the range",
+        "In the last column of the range",
+        "In the first row"
+      ]
+    }
+  }
+}

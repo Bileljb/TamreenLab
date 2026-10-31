@@ -1,0 +1,68 @@
+{
+  "slug": "mixed-review",
+  "title": "Révision générale : le bilan d'une formation",
+  "summary": "Réunissez IF, COUNTIF, AVERAGE, SUMIF, COUNTIFS et VLOOKUP dans un seul bilan.",
+  "intro": "Dans cette révision générale, vous rédigez le bilan d'une formation en utilisant presque tout ce que vous avez appris : `IF`, `COUNTIF`, `AVERAGE`, `SUMIF`, `COUNTIFS`, et `VLOOKUP` avec `IFERROR`.\n\nLisez bien chaque question et choisissez la bonne fonction avant de taper : s'agit-il de compter, d'additionner ou de chercher ?",
+  "faq": [
+    {
+      "q": "Comment choisir entre `COUNTIF` et `COUNTIFS` ?",
+      "a": "Utilisez `COUNTIF` pour une seule condition, et `COUNTIFS` quand une ligne doit remplir plusieurs conditions."
+    },
+    {
+      "q": "Et si j'oublie l'ordre des arguments d'une fonction ?",
+      "a": "Ouvrez la page de la fonction dans le guide des fonctions : elle montre comment l'écrire, avec des exemples corrigés."
+    }
+  ],
+  "strings": {
+    "المتدرب": "Stagiaire",
+    "المدينة": "Ville",
+    "أيام الحضور": "Jours de présence",
+    "الاختبار": "Test",
+    "النتيجة": "Résultat",
+    "السؤال": "Question",
+    "الجواب": "Réponse",
+    "أمل": "Amal",
+    "الرياض": "Riyad",
+    "خالد": "Khaled",
+    "القاهرة": "Le Caire",
+    "ريم": "Reem",
+    "فيصل": "Fayçal",
+    "تونس": "Tunis",
+    "نورة": "Noura",
+    "بدر": "Badr",
+    "من الرياض": "De Riyad",
+    "متوسط الاختبار": "Moyenne du test",
+    "حضور الرياض": "Présence de Riyad",
+    "حضروا ونجحوا": "Présents et admis",
+    "درجة المتدرب:": "Note du stagiaire :",
+    "ناجح": "Admis",
+    "راسب": "Refusé",
+    "غير موجود": "Introuvable",
+    "سامي": "Sami"
+  },
+  "steps": {
+    "review-if": {
+      "prompt": "Voici les résultats d'une formation. Dans `E2`, écrivez le résultat « Admis » si la note d'Amal au test vaut 60 ou plus, et « Refusé » sinon."
+    },
+    "review-countif": {
+      "prompt": "Dans `G2`, écrivez le nombre de stagiaires venant de Riyad."
+    },
+    "review-average-test": {
+      "prompt": "Dans `G3`, écrivez la moyenne des notes du test."
+    },
+    "review-sumif": {
+      "prompt": "Dans `G4`, écrivez le total des jours de présence des stagiaires de Riyad."
+    },
+    "review-countifs": {
+      "prompt": "Dans `G5`, écrivez combien de stagiaires ont été présents 7 jours ou plus et ont obtenu 60 ou plus au test."
+    },
+    "review-lookup": {
+      "prompt": "Dans `G6`, écrivez la note du stagiaire dont le nom est dans `F7`, ou « Introuvable » s'il n'est pas dans la liste.",
+      "hint": "La note est dans la quatrième colonne de `A2:D7`."
+    },
+    "review-which-function": {
+      "prompt": "Quelle fonction convient à la question « Combien de stagiaires du Caire ont été présents plus de 5 jours ? »",
+      "options": ["`SUMIF`", "`COUNTIFS`", "`VLOOKUP`", "`AVERAGE`"]
+    }
+  }
+}

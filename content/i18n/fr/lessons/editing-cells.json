@@ -1,0 +1,52 @@
+{
+  "slug": "editing-cells",
+  "title": "Saisir et modifier des données",
+  "summary": "Remplacez le contenu d'une cellule, modifiez-le depuis la barre de formule et ajoutez une ligne à un petit tableau.",
+  "intro": "Taper dans une cellule sélectionnée remplace tout son contenu. Pour n'en changer qu'une partie, cliquez dans la barre de formule au-dessus du tableau ou appuyez sur F2, faites la modification, puis validez avec Entrée.\n\nExcel distingue le texte et les nombres : les nombres se calculent et s'additionnent, le texte s'affiche tel quel. Dans TamreenLab, les décimales s'écrivent avec un point, comme 1.5.",
+  "faq": [
+    {
+      "q": "Comment modifier une cellule sans effacer son contenu ?",
+      "a": "Sélectionnez la cellule, puis cliquez dans la barre de formule ou appuyez sur F2 : le contenu devient modifiable."
+    },
+    {
+      "q": "Comment annuler ce que j'ai tapé avant de valider ?",
+      "a": "Appuyez sur Échap avant Entrée : la cellule retrouve son contenu précédent."
+    }
+  ],
+  "strings": {
+    "الأداة": "Article",
+    "العدد": "Quantité",
+    "السعر": "Prix",
+    "أقلام": "Stylos",
+    "دفاتر": "Cahiers",
+    "مساطر": "Règles",
+    "أقلام رصاص": "Crayons",
+    "مساطر خشبية": "Règles en bois",
+    "ألوان": "Peintures"
+  },
+  "steps": {
+    "replace-a-number": {
+      "prompt": "Voici l'inventaire des fournitures d'une classe. Quand vous sélectionnez une cellule et tapez, ce que vous tapez remplace l'ancien contenu. De nouveaux cahiers sont arrivés, il y en a maintenant 25 : sélectionnez `B3`, tapez 25, puis appuyez sur Entrée.",
+      "hint": "Inutile d'effacer l'ancien nombre : commencez directement à taper."
+    },
+    "edit-in-the-formula-bar": {
+      "prompt": "Pour modifier une partie d'une cellule sans tout retaper, sélectionnez-la puis cliquez dans la barre de formule au-dessus du tableau, ou appuyez sur F2. Remplacez « Règles » dans `A4` par « Règles en bois », puis appuyez sur Entrée.",
+      "hint": "Placez le curseur après « Règles » dans la barre de formule et tapez « en bois » précédé d'une espace."
+    },
+    "add-a-row": {
+      "prompt": "L'école a acheté des boîtes de peinture. Ajoutez-les sur une nouvelle ligne : tapez « Peintures » dans la cellule `A6`."
+    },
+    "add-its-count": {
+      "prompt": "Il y a 16 boîtes de peinture. Tapez ce nombre dans `B6`, à côté du nom."
+    },
+    "decimal-number": {
+      "prompt": "Ici, les décimales s'écrivent avec un point. Un stylo coûte 1.5 : tapez ce nombre dans `C2`.",
+      "hint": "Tapez 1, puis un point, puis 5."
+    },
+    "what-happens-on-typing": {
+      "prompt": "Vous sélectionnez une cellule qui contient 24, vous tapez 30 et appuyez sur Entrée. Que contient-elle maintenant ?",
+      "hint": "Taper dans une cellule sélectionnée remplace son contenu.",
+      "options": ["30", "2430", "54", "Elle garde 24"]
+    }
+  }
+}

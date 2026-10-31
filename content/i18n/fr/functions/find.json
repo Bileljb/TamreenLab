@@ -1,0 +1,23 @@
+{
+  "slug": "find",
+  "title": "La fonction FIND : la position d'un texte dans un texte",
+  "summary": "FIND renvoie la position de la première apparition d'un texte dans un autre, en distinguant majuscules et minuscules.",
+  "intro": "`FIND` cherche un texte court dans un texte plus long et renvoie sa position. Elle distingue les majuscules des minuscules, contrairement à `SEARCH` (CHERCHE).",
+  "localName": "TROUVE",
+  "args": [
+    "Ce que vous cherchez.",
+    "Le texte dans lequel chercher.",
+    "La position de départ de la recherche ; 1 par défaut."
+  ],
+  "examples": ["Le premier tiret est le quatrième caractère."],
+  "errors": ["Le texte est absent, ou sa casse diffère."],
+  "faq": [
+    {
+      "q": "Quelle différence entre FIND et SEARCH ?",
+      "a": "`FIND` distingue majuscules et minuscules et n'accepte pas l'astérisque ; `SEARCH` ignore la casse."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Code d'expédition"
+  }
+}

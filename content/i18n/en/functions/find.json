@@ -1,0 +1,22 @@
+{
+  "slug": "find",
+  "title": "The FIND function: the position of text inside text",
+  "summary": "FIND returns the position where a text first appears inside another, and tells upper case from lower case.",
+  "intro": "`FIND` looks for a short text inside a longer one and returns its position. It tells upper case from lower case; `SEARCH` does not.",
+  "args": [
+    "What you are looking for.",
+    "The text to search in.",
+    "The position to start searching from; the default is 1."
+  ],
+  "examples": ["The first dash is the fourth character."],
+  "errors": ["The text is not there, or its letter case differs."],
+  "faq": [
+    {
+      "q": "What is the difference between FIND and SEARCH?",
+      "a": "`FIND` tells upper case from lower case and does not accept the asterisk; `SEARCH` ignores case."
+    }
+  ],
+  "strings": {
+    "رمز الشحنة": "Shipment code"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "datedif",
+  "title": "La fonction DATEDIF : l'écart entre deux dates",
+  "summary": "DATEDIF calcule l'écart entre deux dates en années, en mois ou en jours.",
+  "intro": "`DATEDIF` calcule la durée entre une date de début et une date de fin dans l'unité choisie : `\"y\"` pour les années entières, `\"m\"` pour les mois et `\"d\"` pour les jours. La date de début doit précéder la date de fin.",
+  "localName": "DATEDIF",
+  "args": [
+    "La date de début.",
+    "La date de fin.",
+    "L'unité : `\"y\"`, `\"m\"` ou `\"d\"`, ou `\"ym\"` et `\"md\"` pour le reste après les années ou les mois."
+  ],
+  "examples": ["Trois années entières.", "Trois mois entiers."],
+  "errors": ["La date de début est postérieure à la date de fin, ou l'unité est inconnue."],
+  "faq": [
+    {
+      "q": "Pourquoi DATEDIF n'apparaît-elle pas dans la liste des fonctions ?",
+      "a": "C'est une ancienne fonction qu'Excel prend en charge sans la proposer pendant la saisie, mais elle fonctionne si on la tape en entier."
+    }
+  ],
+  "strings": {}
+}

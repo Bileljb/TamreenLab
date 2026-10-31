@@ -1,0 +1,62 @@
+{
+  "slug": "cells-and-selection",
+  "title": "Cells and selection",
+  "summary": "Learn what a cell is and how it is named, select a range of cells, and type your first data into a worksheet.",
+  "intro": "Everything you type in Excel is stored in a cell. Cells sit in columns labelled with letters (A, B, C…) and rows numbered 1, 2, 3… So a cell's name is its column letter followed by its row number, such as `C3`.\n\nIn this lesson you pick a cell by clicking or with the arrow keys, jump to a cell by typing its name in the Name Box, select a range of neighbouring cells, and type your first data.",
+  "faq": [
+    {
+      "q": "What is the difference between a cell and a range?",
+      "a": "A cell is a single box such as `B2`. A range is a block of neighbouring cells, written as the first and last cell with a colon between them, such as `A2:A5`."
+    },
+    {
+      "q": "Why is a cell name a letter and then a number?",
+      "a": "The letter gives the column and the number gives the row, so the name points to exactly one place on the worksheet."
+    }
+  ],
+  "strings": {
+    "الموظف": "Employee",
+    "القسم": "Department",
+    "المدينة": "City",
+    "سنوات الخبرة": "Years of experience",
+    "سلمى": "Salma",
+    "المبيعات": "Sales",
+    "عمّان": "Amman",
+    "يوسف": "Youssef",
+    "المحاسبة": "Accounting",
+    "تونس": "Tunis",
+    "مريم": "Maryam",
+    "الموارد البشرية": "Human resources",
+    "الدار البيضاء": "Casablanca",
+    "كريم": "Karim",
+    "القاهرة": "Cairo",
+    "هدى": "Huda"
+  },
+  "steps": {
+    "click-a-cell": {
+      "prompt": "Each box on an Excel worksheet is a cell. A cell's name is its column letter followed by its row number. Click cell `C3`, which holds Youssef's city, then press Enter or Check.",
+      "hint": "Find the letter C at the top of the columns, then go down to row 3.",
+      "explain": "Cell `C3` is in column C and row 3."
+    },
+    "use-the-name-box": {
+      "prompt": "The Name Box shows the name of the selected cell, and you can type in it to jump somewhere. Type `D5` in the Name Box and press Enter, then press Enter again to check.",
+      "hint": "The Name Box is the small box above column A, to the left of the formula bar."
+    },
+    "select-a-range": {
+      "prompt": "A block of neighbouring cells is a range, written as the first and last cell with a colon between them: `A2:A5`. Select all the employee names by dragging, or by holding Shift and using the arrow keys, then press Enter.",
+      "hint": "Start at `A2` and drag down to `A5`. The Name Box should show `A2:A5`."
+    },
+    "type-a-name": {
+      "prompt": "A new employee called Huda has joined the team. Select cell `A6`, type the name Huda, then press Enter.",
+      "hint": "Typing into a selected cell replaces what was there. Press Enter to confirm."
+    },
+    "type-a-number": {
+      "prompt": "Huda has 3 years of experience. Type the number 3 in cell `D6`, then press Enter.",
+      "hint": "Type the digit 3, then press Enter to confirm."
+    },
+    "name-that-cell": {
+      "prompt": "What is the name of the cell in column B and row 4?",
+      "hint": "The column letter comes first, then the row number.",
+      "options": ["4B", "B4", "D2", "A4"]
+    }
+  }
+}

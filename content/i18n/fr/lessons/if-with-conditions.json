@@ -1,0 +1,55 @@
+{
+  "slug": "if-with-conditions",
+  "title": "Exercice : remises sur les commandes",
+  "summary": "Combinez IF avec AND, OR et NOT pour décider de la remise et de la livraison de chaque commande.",
+  "intro": "Dans cet exercice, vous combinez `IF` avec `AND` (ET), `OR` (OU) et `NOT` (NON) pour décider de la remise et de la livraison des commandes d'une petite boutique.\n\nPlacez `AND` ou `OR` à la place de la condition de `IF`, comme `=IF(AND(B2>=10,C2),\"Remise\",\"Sans remise\")`, et lisez la formule à voix haute avant de la taper.",
+  "faq": [
+    {
+      "q": "Peut-on mettre `AND` dans `IF` ?",
+      "a": "Oui, c'est courant : `AND` renvoie `TRUE` ou `FALSE`, ce qui en fait une condition valable pour `IF`."
+    },
+    {
+      "q": "Que fait `NOT` ?",
+      "a": "Elle inverse une valeur logique : `TRUE` devient `FALSE` et inversement."
+    }
+  ],
+  "strings": {
+    "الطلب": "Commande",
+    "الكمية": "Quantité",
+    "عميل دائم": "Client fidèle",
+    "الخصم": "Remise",
+    "التوصيل": "Livraison",
+    "عميل جديد": "Nouveau client",
+    "الطلب 101": "Commande 101",
+    "الطلب 102": "Commande 102",
+    "الطلب 103": "Commande 103",
+    "الطلب 104": "Commande 104",
+    "خصم": "Remise",
+    "بدون خصم": "Sans remise",
+    "مجاني": "Gratuite",
+    "مدفوع": "Payante"
+  },
+  "steps": {
+    "discount-if-and": {
+      "prompt": "Une commande a droit à une remise si la quantité vaut 10 ou plus et si le client est fidèle. Dans `D2`, écrivez une formule qui renvoie « Remise » ou « Sans remise » avec `IF` et `AND`.",
+      "hint": "Placez `AND(B2>=10,C2)` à la place de la condition de `IF`."
+    },
+    "discount-second-order": {
+      "prompt": "Dans `D3`, écrivez la même formule pour la commande 102."
+    },
+    "delivery-if-or": {
+      "prompt": "La livraison est gratuite si la quantité vaut 20 ou plus ou si le client est fidèle. Dans `E2`, écrivez une formule qui renvoie « Gratuite » ou « Payante »."
+    },
+    "delivery-big-order": {
+      "prompt": "Dans `E4`, écrivez la même formule de livraison pour la commande 103."
+    },
+    "not-function": {
+      "prompt": "`NOT` inverse une valeur : `TRUE` devient `FALSE` et inversement. Dans `F2`, écrivez une formule qui renvoie `TRUE` si le client n'est pas fidèle : `=NOT(C2)`."
+    },
+    "discount-check": {
+      "prompt": "Une commande a une quantité de 15 et son client n'est pas fidèle. Que renvoie pour elle la formule de remise de la première étape ?",
+      "hint": "`AND` exige que les deux conditions soient remplies.",
+      "options": ["Remise", "Sans remise", "`TRUE`", "`#VALUE!`"]
+    }
+  }
+}

@@ -55,6 +55,24 @@ New lessons are `"status": "DRAFT"`. A lesson becomes `"PUBLISHED"` only after a
 
 Exception (ADR 008): the developer published the first 20 lessons on 2026-10-31 without that review. They are logged below as not yet reviewed. When a native speaker reviews one, replace its row with the reviewer and date.
 
+## English and French translations
+
+Arabic is the source of every lesson and function page. English and French live in `content/i18n/<en|fr>/` (ADR 009):
+
+- `lessons/<slug>.json`: `title`, `summary`, `intro`, `faq` (same count as the source), and `steps` keyed by step slug with `prompt`, `hint` and `explain` where the source has them, and `options` for multiple-choice steps (same order).
+- `functions/<slug>.json`: the same page texts, plus `args`, `examples` and `errors` as lists in source order, and `localName` (French only, the function's name in French Excel, such as `SOMME`).
+- `tracks.json`: track titles by slug.
+- `strings`: every Arabic text that appears in a sheet or a check (column headers, names, SUMIF criteria, expected text) with its translation. A cell equal to a key is replaced, and so is a quoted literal inside a formula. Keep translations distinct where the source is distinct, or a SUMIF or COUNTIF result can change; lint catches this by re-checking every translated step with the engine.
+
+Rules:
+
+- Write natural English or French, not word-for-word translation. Transliterate people's names (سلمى → Salma) and use the usual spelling of cities.
+- Formulas keep English function names and commas in every language. French pages mention the French Excel name once, such as "SUM (SOMME dans Excel en français)".
+- No `{{…}}` glossary markup and no Arabic script in translations; lint rejects both.
+- `pnpm content:lint` must pass in all three languages, then `pnpm content:sync` stores each language's sheet and check so the API scores answers in the learner's language.
+
+The English and French texts were written by Claude Code on 2026-10-31 and have not been reviewed by a native speaker yet.
+
 ## Review log
 
 One row per reviewed lesson. Write the slug in backticks.

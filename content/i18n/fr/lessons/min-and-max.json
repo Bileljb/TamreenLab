@@ -1,0 +1,53 @@
+{
+  "slug": "min-and-max",
+  "title": "Plus petite et plus grande valeur : MIN et MAX",
+  "summary": "Trouvez la plus grande et la plus petite valeur d'une plage, et calculez l'écart entre elles en une seule formule.",
+  "intro": "`MAX` renvoie la plus grande valeur d'une plage et `MIN` la plus petite. Elles servent par exemple à trouver la meilleure note d'un examen ou les ventes les plus faibles du mois.\n\nUne fonction peut recevoir plusieurs arguments séparés par des virgules, comme `=MAX(B2,B4)`, et vous pouvez combiner deux fonctions dans une même formule, comme `=MAX(B2:B6)-MIN(B2:B6)`.",
+  "faq": [
+    {
+      "q": "`MIN` et `MAX` ignorent-elles le texte ?",
+      "a": "Oui. Dans une plage, elles ignorent le texte et les cellules vides et ne comparent que les nombres."
+    },
+    {
+      "q": "Comment calculer l'écart entre la plus grande et la plus petite valeur ?",
+      "a": "Soustrayez la plus petite de la plus grande dans une seule formule : `=MAX(B2:B6)-MIN(B2:B6)`."
+    }
+  ],
+  "strings": {
+    "المندوب": "Commercial",
+    "عدد العملاء": "Clients",
+    "أكبر الاثنين": "Le plus grand des deux",
+    "سلمى": "Salma",
+    "يوسف": "Youssef",
+    "مريم": "Maryam",
+    "كريم": "Karim",
+    "هدى": "Huda",
+    "الأعلى": "Maximum",
+    "الأدنى": "Minimum",
+    "الفرق": "Écart"
+  },
+  "steps": {
+    "max-function": {
+      "prompt": "Voici le nombre de clients visités par chaque commercial. `MAX` renvoie la plus grande valeur de la plage. Dans `B7`, tapez la formule `=MAX(B2:B6)`."
+    },
+    "min-function": {
+      "prompt": "La fonction `MIN` renvoie la plus petite valeur. Dans `B8`, écrivez une formule qui renvoie le plus petit nombre de clients.",
+      "hint": "Comme à l'étape précédente, mais avec la fonction `MIN`."
+    },
+    "max-minus-min": {
+      "prompt": "Dans `B9`, calculez l'écart entre le plus grand et le plus petit nombre avec une seule formule qui utilise `MAX` et `MIN`.",
+      "hint": "Soustrayez le résultat de `MIN(B2:B6)` de celui de `MAX(B2:B6)`."
+    },
+    "separate-arguments": {
+      "prompt": "Une fonction peut recevoir plusieurs arguments, séparés par des virgules. Dans `D2`, tapez la formule `=MAX(B2,B4)` pour comparer seulement Salma et Maryam."
+    },
+    "min-of-three": {
+      "prompt": "Quel est le résultat de `=MIN(7,3,9)` ?",
+      "options": ["3", "7", "9", "19"]
+    },
+    "which-for-top-score": {
+      "prompt": "Quelle fonction utilisez-vous pour trouver la meilleure note d'un examen ?",
+      "options": ["`MIN`", "`MAX`", "`AVERAGE`", "`COUNT`"]
+    }
+  }
+}

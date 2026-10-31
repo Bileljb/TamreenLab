@@ -1,0 +1,68 @@
+{
+  "slug": "mixed-review",
+  "title": "Full review: a training course report",
+  "summary": "Bring together IF, COUNTIF, AVERAGE, SUMIF, COUNTIFS and VLOOKUP in one report.",
+  "intro": "In this full review you write a report on a training course using most of what you have learned: `IF`, `COUNTIF`, `AVERAGE`, `SUMIF`, `COUNTIFS`, and `VLOOKUP` with `IFERROR`.\n\nRead each question carefully and choose the right function before you type: are you counting, adding or looking something up?",
+  "faq": [
+    {
+      "q": "How do I choose between `COUNTIF` and `COUNTIFS`?",
+      "a": "Use `COUNTIF` for one condition, and `COUNTIFS` when a row has to meet more than one condition."
+    },
+    {
+      "q": "What if I forget the order of a function's arguments?",
+      "a": "Open the function's page in the function guide: it shows how to write the function, with worked examples."
+    }
+  ],
+  "strings": {
+    "المتدرب": "Trainee",
+    "المدينة": "City",
+    "أيام الحضور": "Days attended",
+    "الاختبار": "Test",
+    "النتيجة": "Result",
+    "السؤال": "Question",
+    "الجواب": "Answer",
+    "أمل": "Amal",
+    "الرياض": "Riyadh",
+    "خالد": "Khaled",
+    "القاهرة": "Cairo",
+    "ريم": "Reem",
+    "فيصل": "Faisal",
+    "تونس": "Tunis",
+    "نورة": "Noura",
+    "بدر": "Badr",
+    "من الرياض": "From Riyadh",
+    "متوسط الاختبار": "Test average",
+    "حضور الرياض": "Riyadh attendance",
+    "حضروا ونجحوا": "Attended and passed",
+    "درجة المتدرب:": "Trainee's score:",
+    "ناجح": "Pass",
+    "راسب": "Fail",
+    "غير موجود": "Not found",
+    "سامي": "Sami"
+  },
+  "steps": {
+    "review-if": {
+      "prompt": "These are the results of a training course. In `E2`, write the result \"Pass\" if Amal's test score is 60 or more, and \"Fail\" otherwise."
+    },
+    "review-countif": {
+      "prompt": "In `G2`, write the number of trainees from Riyadh."
+    },
+    "review-average-test": {
+      "prompt": "In `G3`, write the average test score."
+    },
+    "review-sumif": {
+      "prompt": "In `G4`, write the total days attended by the trainees from Riyadh."
+    },
+    "review-countifs": {
+      "prompt": "In `G5`, write how many trainees attended 7 days or more and scored 60 or more in the test."
+    },
+    "review-lookup": {
+      "prompt": "In `G6`, write the score of the trainee whose name is in `F7`, or \"Not found\" if they are not on the list.",
+      "hint": "The score is in the fourth column of `A2:D7`."
+    },
+    "review-which-function": {
+      "prompt": "Which function fits the question \"How many trainees from Cairo attended more than 5 days?\"",
+      "options": ["`SUMIF`", "`COUNTIFS`", "`VLOOKUP`", "`AVERAGE`"]
+    }
+  }
+}

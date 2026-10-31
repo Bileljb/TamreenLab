@@ -1,0 +1,64 @@
+{
+  "slug": "vlookup-exact",
+  "title": "Chercher dans un tableau : VLOOKUP",
+  "summary": "Cherchez un code produit dans un tableau et ramenez son nom, son prix ou son stock avec VLOOKUP.",
+  "intro": "`VLOOKUP` (RECHERCHEV dans Excel en français) cherche une valeur dans la première colonne d'un tableau, puis renvoie une valeur de la même ligne dans la colonne indiquée par son numéro.\n\nElle prend quatre arguments : ce que vous cherchez, le tableau, le numéro de colonne dans le tableau et `FALSE` pour exiger une correspondance exacte. Le numéro de colonne se compte depuis le début de la plage, pas depuis la colonne A.",
+  "faq": [
+    {
+      "q": "Le tableau doit-il commencer à la colonne A ?",
+      "a": "Non. L'important est que la valeur cherchée se trouve dans la première colonne de la plage indiquée."
+    },
+    {
+      "q": "Pourquoi écrire `FALSE` à la fin ?",
+      "a": "Pour exiger une correspondance exacte. Sans lui, `VLOOKUP` fait une recherche approximative qui peut renvoyer un mauvais résultat."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Produit",
+    "السعر": "Prix",
+    "المخزون": "Stock",
+    "الرمز المطلوب": "Code cherché",
+    "النتيجة": "Résultat",
+    "قلم أزرق": "Stylo bleu",
+    "دفتر كبير": "Grand cahier",
+    "مسطرة": "Règle",
+    "حقيبة": "Sac",
+    "آلة حاسبة": "Calculatrice"
+  },
+  "steps": {
+    "vlookup-worked-example": {
+      "prompt": "`VLOOKUP` cherche une valeur dans la première colonne d'un tableau et renvoie une valeur de la colonne choisie, sur la même ligne. Dans `G2`, tapez la formule `=VLOOKUP(F2,A2:D6,2,FALSE)` pour trouver le nom du produit dont le code est dans `F2`.",
+      "explain": "Les arguments, dans l'ordre : ce que l'on cherche, le tableau, le numéro de colonne dans le tableau et `FALSE` pour une correspondance exacte."
+    },
+    "vlookup-price": {
+      "prompt": "Changez le numéro de colonne pour ramener le prix au lieu du nom : dans `G2`, écrivez une formule qui renvoie le prix du produit dont le code est dans `F2`.",
+      "hint": "Le prix est la troisième colonne de `A2:D6`."
+    },
+    "vlookup-literal": {
+      "prompt": "Vous pouvez écrire directement la valeur cherchée entre guillemets. Dans `G3`, écrivez une formule qui renvoie le stock du produit `P-105`."
+    },
+    "vlookup-from-column-b": {
+      "prompt": "Le tableau n'a pas besoin de commencer à la colonne A. Dans `G4`, écrivez une formule qui cherche « Sac » dans la plage `B2:C6` et renvoie son prix.",
+      "hint": "Le prix est la deuxième colonne de `B2:C6`."
+    },
+    "column-number-meaning": {
+      "prompt": "Dans `=VLOOKUP(F2,A2:D6,3,FALSE)`, que signifie le nombre 3 ?",
+      "options": [
+        "La troisième ligne du tableau",
+        "La troisième colonne de la plage `A2:D6`",
+        "La colonne C de la feuille, quelle que soit la plage",
+        "Le nombre de résultats"
+      ]
+    },
+    "where-to-search": {
+      "prompt": "Où doit se trouver la valeur cherchée par `VLOOKUP` ?",
+      "options": [
+        "Dans n'importe quelle colonne du tableau",
+        "Dans la première colonne de la plage",
+        "Dans la dernière colonne de la plage",
+        "Dans la première ligne"
+      ]
+    }
+  }
+}

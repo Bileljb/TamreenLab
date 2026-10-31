@@ -1,0 +1,54 @@
+{
+  "slug": "ranges-and-references",
+  "title": "Ranges and references",
+  "summary": "Select ranges that span several columns, and use cell names inside formulas so results update by themselves.",
+  "intro": "A range can span several columns and rows at once, such as `B2:D5`. Functions use ranges to refer to a whole group of values in one go.\n\nWhen you type a cell name inside a formula, it is a reference to that cell. The power of references is that the result updates by itself whenever the values change, without retyping anything.",
+  "faq": [
+    {
+      "q": "How many cells are in the range `B2:D5`?",
+      "a": "Three columns (B, C and D) by four rows (2 to 5), so 12 cells."
+    },
+    {
+      "q": "Why type `=B2` instead of the number itself?",
+      "a": "A reference follows the cell: if its value changes, the result changes automatically. A typed number stays fixed."
+    }
+  ],
+  "strings": {
+    "الطالب": "Student",
+    "الأحد": "Sunday",
+    "الاثنين": "Monday",
+    "الثلاثاء": "Tuesday",
+    "المجموع": "Total",
+    "نسخة": "Copy",
+    "ليلى": "Layla",
+    "عمر": "Omar",
+    "نور": "Nour",
+    "سامي": "Sami"
+  },
+  "steps": {
+    "select-a-block": {
+      "prompt": "These are the study hours of four students. A range can span several columns and rows. Select Layla's and Omar's hours for the three days: the range `B2:D3`.",
+      "hint": "Start at `B2` and drag to `D3`, or use Shift with the arrow keys."
+    },
+    "select-all-numbers": {
+      "prompt": "Select all the hours in the table. The first cell of this range is `B2` and the last is `D5`."
+    },
+    "first-reference": {
+      "prompt": "When you type a cell name inside a formula, it is a reference to that cell. In `F2`, type the formula `=B2` to show Layla's hours on Sunday.",
+      "hint": "Start with `=`, then type `B2`. Don't type the number 2 yourself.",
+      "explain": "If the value in `B2` changes, the result in `F2` changes automatically."
+    },
+    "add-with-references": {
+      "prompt": "In `E2`, type a formula that adds Layla's hours for the three days: `=B2+C2+D2`."
+    },
+    "same-for-omar": {
+      "prompt": "In `E3`, type a formula the same way to add Omar's hours.",
+      "hint": "Omar's hours are in row 3."
+    },
+    "cells-in-a-range": {
+      "prompt": "How many cells are in the range `B2:C4`?",
+      "hint": "Two columns (B and C) by three rows (2, 3 and 4).",
+      "options": ["4", "6", "8", "3"]
+    }
+  }
+}

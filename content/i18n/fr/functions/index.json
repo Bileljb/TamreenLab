@@ -1,0 +1,32 @@
+{
+  "slug": "index",
+  "title": "La fonction INDEX : la valeur à une position",
+  "summary": "INDEX renvoie la valeur située à une ligne et une colonne données dans une plage.",
+  "intro": "`INDEX` renvoie le contenu d'une cellule donnée d'une plage : la deuxième ligne, ou la troisième ligne et la deuxième colonne. Elle devient très puissante avec `MATCH`, qui lui fournit le numéro de ligne.",
+  "localName": "INDEX",
+  "args": [
+    "La plage.",
+    "Le numéro de ligne dans la plage.",
+    "Le numéro de colonne dans la plage, si elle a plusieurs colonnes."
+  ],
+  "examples": [
+    "Le deuxième élément de la colonne des noms.",
+    "La troisième ligne et la troisième colonne du tableau.",
+    "Avec `MATCH` : le prix de « Stylo », où qu'il se trouve."
+  ],
+  "errors": ["Le numéro de ligne ou de colonne sort de la plage."],
+  "faq": [
+    {
+      "q": "Pourquoi combiner INDEX et MATCH ?",
+      "a": "Parce que `MATCH` trouve le numéro de ligne et `INDEX` renvoie la valeur de cette ligne : on peut ainsi chercher dans n'importe quelle colonne et renvoyer depuis n'importe quelle colonne."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Produit",
+    "السعر": "Prix",
+    "قلم": "Stylo",
+    "دفتر": "Cahier",
+    "مسطرة": "Règle"
+  }
+}

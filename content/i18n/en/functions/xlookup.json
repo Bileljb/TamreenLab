@@ -1,0 +1,33 @@
+{
+  "slug": "xlookup",
+  "title": "The XLOOKUP function: flexible lookup",
+  "summary": "XLOOKUP looks for a value in one range and returns the matching value from another, in any direction, with a fallback when nothing is found.",
+  "intro": "`XLOOKUP` is newer and more flexible than `VLOOKUP`: you give the search range and the result range separately, so the search column does not have to come first, and you can choose what to return when the value is not found. It is available in recent versions of Excel.",
+  "args": [
+    "What you are looking for.",
+    "The range to search.",
+    "The range to return from, the same size as the search range.",
+    "What to return if the value is not found.",
+    "0 for an exact match (the default), -1 or 1 for the next smaller or larger value, 2 for wildcards."
+  ],
+  "examples": [
+    "Searching the names column, which is not the first column.",
+    "The fallback value instead of the `#N/A` error."
+  ],
+  "errors": ["The search range and the result range have different sizes."],
+  "faq": [
+    {
+      "q": "Does XLOOKUP replace VLOOKUP?",
+      "a": "In recent versions, mostly yes, but `VLOOKUP` is still common in older files and in job tests."
+    }
+  ],
+  "strings": {
+    "الرمز": "Code",
+    "المنتج": "Product",
+    "السعر": "Price",
+    "قلم": "Pen",
+    "دفتر": "Notebook",
+    "مسطرة": "Ruler",
+    "غير موجود": "Not found"
+  }
+}

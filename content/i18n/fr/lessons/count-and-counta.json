@@ -1,0 +1,68 @@
+{
+  "slug": "count-and-counta",
+  "title": "Compter : COUNT et COUNTA",
+  "summary": "Comprenez la différence entre compter les nombres et compter toutes les cellules non vides, et combinez les deux dans une formule.",
+  "intro": "`COUNT` (NB dans Excel en français) compte seulement les cellules qui contiennent des nombres, tandis que `COUNTA` (NBVAL) compte toutes les cellules non vides, texte ou nombre.\n\nLa différence aide à repérer les données manquantes : le nombre de noms obtenu avec `COUNTA` moins le nombre d'âges obtenu avec `COUNT` indique qui n'a pas saisi son âge en chiffres.",
+  "faq": [
+    {
+      "q": "`COUNT` compte-t-elle une cellule qui contient un mot ?",
+      "a": "Non, `COUNT` ne compte que les nombres. Utilisez `COUNTA` pour compter aussi le texte."
+    },
+    {
+      "q": "`COUNTA` compte-t-elle les cellules vides ?",
+      "a": "Non, elle ne compte que les cellules non vides."
+    }
+  ],
+  "strings": {
+    "المشارك": "Participant",
+    "العمر": "Âge",
+    "المدينة": "Ville",
+    "أمل": "Amal",
+    "عمّان": "Amman",
+    "طارق": "Tariq",
+    "بيروت": "Beyrouth",
+    "رنا": "Rana",
+    "زياد": "Ziad",
+    "غير معروف": "inconnu",
+    "الرباط": "Rabat",
+    "لينا": "Lina",
+    "الدوحة": "Doha",
+    "عدد الأعمار": "Âges saisis",
+    "عدد المشاركين": "Participants",
+    "دون عمر رقمي": "Sans âge chiffré",
+    "جدة": "Djeddah"
+  },
+  "steps": {
+    "count-numbers": {
+      "prompt": "Voici la liste d'inscription à un atelier. `COUNT` compte seulement les cellules qui contiennent des nombres. Dans `B8`, tapez la formule `=COUNT(B2:B6)` pour savoir combien de participants ont saisi leur âge en chiffres."
+    },
+    "counta-names": {
+      "prompt": "`COUNTA` compte toutes les cellules non vides, texte ou nombre. Dans `B9`, écrivez une formule qui compte les participants de la plage `A2:A6`."
+    },
+    "counta-cities": {
+      "prompt": "Combien de villes ont été saisies ? Dans `C9`, écrivez une formule qui compte les cellules non vides de `C2:C6`.",
+      "hint": "La cellule de la ville de Rana est vide."
+    },
+    "count-the-gap": {
+      "prompt": "Combien de participants n'ont pas saisi leur âge en chiffres ? Dans `B10`, écrivez une formule qui soustrait le nombre d'âges (`COUNT` sur `B2:B6`) du nombre de participants (`COUNTA` sur `A2:A6`)."
+    },
+    "text-is-not-counted": {
+      "prompt": "Une cellule contient le texte « vingt ». `COUNT` la compte-t-elle ?",
+      "options": [
+        "Oui, car elle n'est pas vide",
+        "Non, car elle ne contient pas de nombre",
+        "Oui, car le texte désigne un nombre",
+        "Non, car `COUNT` ne compte que le texte"
+      ]
+    },
+    "count-vs-counta": {
+      "prompt": "Quelle est la différence entre `COUNT` et `COUNTA` ?",
+      "options": [
+        "Il n'y a aucune différence",
+        "`COUNT` compte seulement les nombres, et `COUNTA` toutes les cellules non vides",
+        "`COUNT` additionne les valeurs, et `COUNTA` les compte",
+        "`COUNTA` compte les cellules vides"
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "slug": "criteria-operators",
+  "title": "Critères de comparaison et astérisque",
+  "summary": "Utilisez supérieur à, inférieur à et différent de, ainsi que l'astérisque pour une partie de texte, dans les critères de COUNTIF et SUMIF.",
+  "intro": "Le critère de `COUNTIF` et `SUMIF` peut être une comparaison écrite entre guillemets : `\"<20\"` signifie inférieur à 20, `\">=20\"` signifie 20 ou plus, et `\"<>Pain\"` signifie différent de « Pain ».\n\nL'astérisque `*` signifie « n'importe quel texte » : le critère `\"T*\"` correspond à tous les mots qui commencent par T.",
+  "faq": [
+    {
+      "q": "Comment écrire « supérieur ou égal à » ?",
+      "a": "Tapez `\">=\"` puis le nombre, comme `\">=100\"`, le signe supérieur avant le signe égal."
+    },
+    {
+      "q": "Que signifie l'astérisque dans un critère ?",
+      "a": "Il remplace n'importe quel nombre de caractères : `\"T*\"` correspond à « Thé » et à « Tahini »."
+    }
+  ],
+  "strings": {
+    "المنتج": "Produit",
+    "المخزون": "Stock",
+    "السعر": "Prix",
+    "السؤال": "Question",
+    "الجواب": "Réponse",
+    "حليب": "Lait",
+    "خبز": "Pain",
+    "أرز": "Riz",
+    "زيت": "Huile",
+    "شوفان": "Tahini",
+    "شاي": "Thé",
+    "مخزون منخفض": "Stock faible",
+    "مخزون كبير": "Stock élevé",
+    "غير الخبز": "Hors pain",
+    "أسعار فوق 4": "Prix au-dessus de 4",
+    "تبدأ بحرف ش": "Commence par T",
+    "<>خبز": "<>Pain",
+    "ش*": "T*",
+    "شعير": "Teff"
+  },
+  "steps": {
+    "less-than": {
+      "prompt": "Un critère peut être une comparaison entre guillemets. Dans `F2`, tapez la formule `=COUNTIF(B2:B7,\"<20\")` pour compter les produits dont le stock est inférieur à 20."
+    },
+    "greater-or-equal": {
+      "prompt": "Dans `F3`, écrivez une formule qui additionne le stock des produits dont le stock vaut 20 ou plus.",
+      "hint": "Si la plage à additionner est la même que la plage du critère, le troisième argument est inutile."
+    },
+    "not-equal": {
+      "prompt": "Le signe `<>` signifie « différent de ». Dans `F4`, écrivez une formule qui compte les produits qui ne sont pas « Pain »."
+    },
+    "greater-than-prices": {
+      "prompt": "Dans `F5`, écrivez une formule qui additionne les prix des produits qui coûtent plus de 4."
+    },
+    "wildcard": {
+      "prompt": "Dans un critère, l'astérisque `*` signifie « n'importe quel texte ». Dans `F6`, écrivez une formule qui compte les produits dont le nom commence par « T » : `=COUNTIF(A2:A7,\"T*\")`."
+    },
+    "which-criterion": {
+      "prompt": "Quel critère compte les valeurs supérieures ou égales à 100 ?",
+      "options": ["`\">100\"`", "`\">=100\"`", "`\"=>100\"`", "`\"100+\"`"]
+    }
+  }
+}

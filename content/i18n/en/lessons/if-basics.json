@@ -1,0 +1,59 @@
+{
+  "slug": "if-basics",
+  "title": "Choosing with a condition: IF",
+  "summary": "Make a formula choose between two results depending on a condition, and meet the values TRUE and FALSE.",
+  "intro": "The `IF` function chooses between two values depending on a condition: `=IF(B2>=50,\"Pass\",\"Fail\")` means: if the score is 50 or more, show \"Pass\", otherwise show \"Fail\".\n\nA condition on its own returns `TRUE` or `FALSE`, and `IF` can return text between quotation marks or numbers without them.",
+  "faq": [
+    {
+      "q": "Why put text between quotation marks?",
+      "a": "Without them Excel reads the word as a name and shows the error `#NAME?`."
+    },
+    {
+      "q": "What is the difference between `>` and `>=`?",
+      "a": "`>` means \"greater than\" only, while `>=` means \"greater than or equal to\"."
+    }
+  ],
+  "strings": {
+    "الطالب": "Student",
+    "الدرجة": "Score",
+    "النتيجة": "Result",
+    "ناجح؟": "Passed?",
+    "المكافأة": "Bonus",
+    "ريم": "Reem",
+    "فادي": "Fadi",
+    "سارة": "Sara",
+    "أنس": "Anas",
+    "جود": "Joud",
+    "ناجح": "Pass",
+    "راسب": "Fail"
+  },
+  "steps": {
+    "if-worked-example": {
+      "prompt": "The pass mark is 50. The `IF` function chooses between two values depending on a condition. In `C2`, type the formula `=IF(B2>=50,\"Pass\",\"Fail\")`.",
+      "hint": "Mind the quotation marks around \"Pass\" and \"Fail\"."
+    },
+    "if-next-student": {
+      "prompt": "In `C3`, type the same formula for Fadi, changing the reference to `B3`."
+    },
+    "condition-alone": {
+      "prompt": "A condition on its own returns `TRUE` or `FALSE`. In `D2`, type the formula `=B2>=50`."
+    },
+    "if-returns-numbers": {
+      "prompt": "`IF` can return numbers too. In `E2`, write a formula that gives 10 bonus points if Reem's score is 50 or more, and 0 otherwise.",
+      "hint": "Numbers don't need quotation marks."
+    },
+    "if-result": {
+      "prompt": "What is the result of `=IF(5>3,\"Yes\",\"No\")`?",
+      "options": ["Yes", "No", "`TRUE`", "5"]
+    },
+    "if-parts": {
+      "prompt": "In `=IF(B2>=50,\"Pass\",\"Fail\")`, what is the part `B2>=50`?",
+      "options": [
+        "The condition",
+        "The value if the condition is met",
+        "The value if the condition is not met",
+        "The function name"
+      ]
+    }
+  }
+}
