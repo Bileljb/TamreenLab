@@ -1,27 +1,30 @@
 import type { MetadataRoute } from 'next';
-import { DEFAULT_LOCALE } from '@tamreen/shared';
+import { DEFAULT_LOCALE, LOCALES } from '@tamreen/shared';
 import { functionHref, lessonHref, listFunctions, listLessons } from '@/lib/content';
-import { absoluteUrl } from '@/lib/seo';
+import { absoluteUrl, inLocale, languageAlternates } from '@/lib/seo';
 
-/** Every public, indexable page. Sign-in pages are left out (they are noindex). */
+/** Every public, indexable page in every language. Sign-in pages are left out (noindex). */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const locale = DEFAULT_LOCALE;
-  const [lessons, functions] = await Promise.all([listLessons(), listFunctions()]);
-  const entry = (path: string, priority: number): MetadataRoute.Sitemap[number] => ({
-    url: absoluteUrl(path),
-    changeFrequency: 'weekly',
-    priority,
-    alternates: { languages: { ar: absoluteUrl(path) } },
-  });
-  return [
-    entry(`/${locale}`, 1),
-    entry(`/${locale}/lessons`, 0.9),
-    entry(`/${locale}/functions`, 0.8),
-    ...lessons.map((l) => entry(lessonHref(locale, l), 0.8)),
-    ...functions.map((f) => entry(functionHref(locale, f), 0.7)),
-    entry(`/${locale}/shortcuts`, 0.5),
-    ...(['about', 'privacy', 'terms', 'contact'] as const).map((p) =>
-      entry(`/${locale}/${p}`, 0.3),
-    ),
+  const base = DEFAULT_LOCALE;
+  const [lessons, functions] = await Promise.all([listLessons(base), listFunctions(base)]);
+  const pages: [string, number][] = [
+    [`/${base}`, 1],
+    [`/${base}/lessons`, 0.9],
+    [`/${base}/functions`, 0.8],
+    ...lessons.map((l): [string, number] => [lessonHref(base, l), 0.8]),
+    ...functions.map((f): [string, number] => [functionHref(base, f), 0.7]),
+    [`/${base}/shortcuts`, 0.5],
+    ...(['about', 'privacy', 'terms', 'contact'] as const).map((p): [string, number] => [
+      `/${base}/${p}`,
+      0.3,
+    ]),
   ];
+  return pages.flatMap(([path, priority]) =>
+    LOCALES.map((locale) => ({
+      url: absoluteUrl(inLocale(path, locale)),
+      changeFrequency: 'weekly' as const,
+      priority,
+      alternates: { languages: languageAlternates(path) },
+    })),
+  );
 }

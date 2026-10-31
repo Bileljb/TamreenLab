@@ -61,13 +61,13 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
   }
 
   const input =
-    'w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:outline-2 focus:outline-emerald-600';
+    'w-full rounded-xl border border-line-strong bg-canvas px-3.5 py-2.5 transition outline-none focus:border-brand focus:bg-raised focus:shadow-glow';
 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
       {mode === 'signUp' ? (
         <label className="flex flex-col gap-1">
-          <span className="font-medium">{t('displayName')}</span>
+          <span className="text-sm font-semibold text-ink-soft">{t('displayName')}</span>
           <input
             name="displayName"
             required
@@ -76,11 +76,11 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
             autoComplete="nickname"
             className={input}
           />
-          <span className="text-xs text-slate-500">{t('displayNameHint')}</span>
+          <span className="text-xs text-muted">{t('displayNameHint')}</span>
         </label>
       ) : null}
       <label className="flex flex-col gap-1">
-        <span className="font-medium">{t('email')}</span>
+        <span className="text-sm font-semibold text-ink-soft">{t('email')}</span>
         <input
           name="email"
           type="email"
@@ -91,7 +91,7 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
         />
       </label>
       <label className="flex flex-col gap-1">
-        <span className="font-medium">{t('password')}</span>
+        <span className="text-sm font-semibold text-ink-soft">{t('password')}</span>
         <input
           name="password"
           type="password"
@@ -102,22 +102,22 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
           className={input}
         />
         {mode === 'signUp' ? (
-          <span className="text-xs text-slate-500">{t('passwordHint')}</span>
+          <span className="text-xs text-muted">{t('passwordHint')}</span>
         ) : null}
       </label>
-      <div role="alert" aria-live="assertive" className="min-h-6 text-sm text-rose-800">
+      <div role="alert" aria-live="assertive" className="min-h-6 text-sm text-bad">
         {error ? t(`errors.${error}`) : null}
       </div>
       <button
         type="submit"
         disabled={busy}
-        className="rounded-lg bg-emerald-700 px-4 py-2 font-medium text-white hover:bg-emerald-800 disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+        className="rounded-full bg-brand px-4 py-3 font-semibold text-brand-ink shadow-glow transition hover:-translate-y-px hover:bg-brand-strong disabled:opacity-60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
         {busy ? t('working') : t(mode === 'signUp' ? 'submitSignUp' : 'submitSignIn')}
       </button>
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-muted">
         {t(mode === 'signUp' ? 'haveAccount' : 'noAccount')}{' '}
-        <a href={switchHref} className="font-medium text-emerald-800 underline underline-offset-4">
+        <a href={switchHref} className="font-medium text-brand-strong underline underline-offset-4">
           {t(mode === 'signUp' ? 'submitSignIn' : 'submitSignUp')}
         </a>
       </p>

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { PageHero } from '@/components/PageHero';
 import { pageMetadata } from '@/lib/seo';
 
 export type StaticPageName = 'about' | 'privacy' | 'terms' | 'contact';
@@ -29,21 +30,25 @@ export async function StaticPage({
   const t = await getTranslations(`pages.${page}`);
   const draft = t.has('draft') ? t('draft') : null;
   return (
-    <main className="mx-auto flex max-w-2xl flex-col gap-5 px-4 py-10">
-      <h1 className="text-3xl font-bold">{t('title')}</h1>
-      {draft ? (
-        <p role="note" className="rounded-lg bg-amber-50 px-4 py-2 text-sm text-amber-900">
-          {draft}
-        </p>
-      ) : null}
-      {t('body')
-        .split(/\n{2,}/)
-        .map((paragraph, i) => (
-          <p key={i} className="leading-8 text-slate-700">
-            {paragraph}
+    <main className="flex flex-col">
+      <PageHero title={t('title')} intro={t('description')} />
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-10">
+        {draft ? (
+          <p role="note" className="rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-medium text-warn">
+            {draft}
           </p>
-        ))}
-      {children}
+        ) : null}
+        <div className="flex flex-col gap-5 rounded-[var(--radius-card)] border border-line bg-raised p-6 shadow-soft sm:p-8">
+          {t('body')
+            .split(/\n{2,}/)
+            .map((paragraph, i) => (
+              <p key={i} className="text-lg leading-8 text-ink-soft">
+                {paragraph}
+              </p>
+            ))}
+        </div>
+        {children}
+      </div>
     </main>
   );
 }

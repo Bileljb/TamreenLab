@@ -12,6 +12,7 @@ import {
 } from '@tamreen/engine';
 import {
   ARABIC_SCRIPT,
+  FRENCH_EXCEL_NAMES,
   FunctionFileSchema,
   FunctionTranslationSchema,
   GlossarySchema,
@@ -346,6 +347,8 @@ function lintTranslation(
       continue;
     }
     fnTranslated.add(tr.slug);
+    if (tr.localName && locale === 'fr' && tr.localName !== FRENCH_EXCEL_NAMES[fn.name])
+      add(`localName ${tr.localName} differs from FRENCH_EXCEL_NAMES.${fn.name}`);
     let out: FunctionFile;
     try {
       out = localizeFunction(fn, tr);

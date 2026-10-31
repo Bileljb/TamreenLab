@@ -24,7 +24,7 @@ export function AdSlot({ name, size = 'inline' }: Props) {
     <aside
       aria-label={t('label')}
       data-ad-slot={name}
-      className={`${AD_SIZES[size]} flex w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-slate-300 bg-slate-100 text-xs text-slate-600`}
+      className={`${AD_SIZES[size]} flex w-full items-center justify-center overflow-hidden rounded-[var(--radius-card,1.25rem)] border border-dashed border-line-strong bg-sunken/60 text-xs text-faint`}
     >
       {t('placeholder')}
     </aside>

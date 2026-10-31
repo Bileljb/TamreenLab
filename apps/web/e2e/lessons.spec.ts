@@ -215,6 +215,8 @@ test.describe('mobile, touch', () => {
     };
     /** Drags across cells with pointer events (Playwright has no touch-move API). */
     const drag = async (from: string, to: string) => {
+      // Both ends must be on screen: centre the start cell first.
+      await cell(page, from).evaluate((el) => el.scrollIntoView({ block: 'center' }));
       const a = (await cell(page, from).boundingBox())!;
       const b = (await cell(page, to).boundingBox())!;
       await page.mouse.move(a.x + a.width / 2, a.y + a.height / 2);

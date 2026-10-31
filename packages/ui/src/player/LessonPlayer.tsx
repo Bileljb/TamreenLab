@@ -15,6 +15,7 @@ import { api, announcePoints } from '../api/client';
 import { useSession } from '../api/session';
 import { Formula } from '../Formula';
 import { SpreadsheetGrid, useGrid } from '../grid/SpreadsheetGrid';
+import { Confetti } from './Confetti';
 import { addressOf, selectionLabel, type GridState } from '../grid/state';
 import { Prompt, firstUses } from '../prompt/Prompt';
 import { useLessonProgress } from './guestProgress';
@@ -120,13 +121,40 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
   const totals = lessonTotals(state);
   const total = lesson.steps.length;
 
+  // A floating "+300" when the lesson's points go up.
+  const lastPoints = useRef(totals.points);
+  const [gained, setGained] = useState<{ key: number; points: number } | null>(null);
+  useEffect(() => {
+    if (totals.points > lastPoints.current) {
+      setGained({ key: Date.now(), points: totals.points - lastPoints.current });
+    }
+    lastPoints.current = totals.points;
+  }, [totals.points]);
+
   return (
-    <section className="flex flex-col gap-4" aria-label={lesson.titleAr}>
-      <header className="flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-3 text-sm text-slate-600">
-          <span>{t('progress', { current: Math.min(state.index + 1, total), total })}</span>
-          <span className="font-semibold text-emerald-800" data-testid="lesson-points">
-            {t('points', { points: totals.points })}
+    <section
+      className="flex flex-col gap-5 rounded-[var(--radius-card,1.25rem)] border border-line bg-raised p-4 shadow-soft sm:p-6"
+      aria-label={lesson.titleAr}
+    >
+      <header className="flex flex-col gap-3">
+        <div className="flex items-center justify-between gap-3 text-sm">
+          <span className="font-medium text-muted">
+            {t('progress', { current: Math.min(state.index + 1, total), total })}
+          </span>
+          <span className="relative inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-3 py-1 font-semibold text-accent">
+            <svg viewBox="0 0 20 20" className="size-4" fill="currentColor" aria-hidden>
+              <path d="m10 1.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.5 7.7l5.9-.9z" />
+            </svg>
+            <span data-testid="lesson-points">{t('points', { points: totals.points })}</span>
+            {gained ? (
+              <span
+                key={gained.key}
+                aria-hidden
+                className="pointer-events-none absolute -top-2 end-1 animate-rise text-sm font-extrabold text-accent"
+              >
+                +{gained.points}
+              </span>
+            ) : null}
           </span>
         </div>
         <div
@@ -135,14 +163,18 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
           aria-valuemin={0}
           aria-valuemax={total}
           aria-valuenow={totals.settled}
-          className="h-2 overflow-hidden rounded-full bg-slate-200"
+          className="flex gap-1.5"
         >
-          <div
-            className="h-full rounded-full bg-emerald-600 transition-[width] duration-300"
-            style={{ width: `${(totals.settled / total) * 100}%` }}
-          />
+          {state.steps.map((run, i) => (
+            <span
+              key={i}
+              className={`h-2 flex-1 rounded-full transition-all duration-500 ${STEP_TONE[run.status]} ${
+                i === state.index && !state.finished ? 'ring-2 ring-accent/50 ring-offset-2 ring-offset-raised' : ''
+              }`}
+            />
+          ))}
         </div>
-        {resumed ? <p className="text-sm text-slate-500">{t('resumed')}</p> : null}
+        {resumed ? <p className="text-sm text-muted">{t('resumed')}</p> : null}
       </header>
 
       {state.finished ? (
@@ -205,6 +237,16 @@ type StepViewProps = {
 };
 
 const EMPTY_SHEET = { visible: 'A1:A1', cells: {} };
+
+/** The colour of each step's dot in the progress bar. */
+const STEP_TONE: Record<StepRun['status'], string> = {
+  idle: 'bg-line',
+  incorrect: 'bg-bad/50',
+  correct: 'bg-brand',
+  done: 'bg-brand/60',
+  revealed: 'bg-warn/60',
+  skipped: 'bg-line-strong',
+};
 
 /** The learner's answer from the grid or the choice list; null when there is nothing to check. */
 function buildAnswer(step: StepSpec, grid: GridState, choice: number | null): unknown {
@@ -310,10 +352,12 @@ function StepView(props: StepViewProps) {
   }, []);
 
   const button =
-    'rounded-lg border px-4 py-2 text-sm font-medium transition-colors disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+    'rounded-full border px-4 py-2 text-sm font-semibold transition disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+  const primaryButton = `${button} border-brand bg-brand px-6 text-brand-ink shadow-glow hover:-translate-y-px hover:bg-brand-strong`;
+  const ghostButton = `${button} border-transparent text-muted hover:bg-sunken hover:text-ink`;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex animate-fade-up flex-col gap-4">
       <Prompt text={step.promptAr} glossary={glossary} introduce={introduce} />
 
       <div ref={body} className="flex flex-col gap-3">
@@ -341,14 +385,16 @@ function StepView(props: StepViewProps) {
             {step.check.options.map((option, i) => (
               <label
                 key={i}
-                className={`flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 ${
-                  choice === i ? 'border-emerald-600 bg-emerald-50' : 'border-slate-300 bg-white'
+                className={`flex cursor-pointer items-center gap-3 rounded-2xl border-2 px-4 py-3 transition ${
+                  choice === i
+                    ? 'border-brand bg-brand-soft shadow-glow'
+                    : 'border-line bg-raised hover:-translate-y-px hover:border-line-strong'
                 }`}
               >
                 <input
                   type="radio"
                   name={`choice-${step.slug}`}
-                  className="size-4 accent-emerald-700"
+                  className="size-4 accent-brand"
                   checked={choice === i}
                   disabled={settled}
                   onChange={() => setChoice(i)}
@@ -360,24 +406,27 @@ function StepView(props: StepViewProps) {
         ) : null}
 
         {step.type === 'SHORTCUT' ? (
-          <p className="rounded-lg bg-amber-50 px-4 py-3 text-amber-900">{t('shortcutSoon')}</p>
+          <p className="rounded-2xl bg-warn-soft px-4 py-3 text-warn">{t('shortcutSoon')}</p>
         ) : null}
       </div>
 
       <Feedback step={step} run={run} notice={notice} t={t} tf={tf} />
 
       {run.hintShown && step.hintAr ? (
-        <aside className="rounded-lg border border-sky-200 bg-sky-50 px-4 py-3 text-sky-900">
+        <aside className="flex animate-fade-up gap-3 rounded-2xl border border-info/30 bg-info-soft px-4 py-3 text-info">
+          <svg viewBox="0 0 24 24" className="mt-1.5 size-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+            <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" />
+          </svg>
           <Prompt text={step.hintAr} glossary={glossary} introduce={new Set()} />
         </aside>
       ) : null}
 
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2 border-t border-line pt-4">
         {settled ? (
           <button
             ref={continueButton}
             type="button"
-            className={`${button} border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800`}
+            className={primaryButton}
             onClick={props.onNext}
           >
             {t('continue')}
@@ -385,19 +434,19 @@ function StepView(props: StepViewProps) {
         ) : (
           <button
             type="button"
-            className={`${button} border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800`}
+            className={primaryButton}
             onClick={check}
             disabled={step.type === 'SHORTCUT'}
           >
             {t('check')}
           </button>
         )}
-        <span className="text-xs text-slate-500">{t('enterKeyHint')}</span>
-        <span className="ms-auto flex flex-wrap gap-2">
+        <span className="text-xs text-muted max-sm:hidden">{t('enterKeyHint')}</span>
+        <span className="ms-auto flex flex-wrap gap-1">
           {step.hintAr && !run.hintShown && !settled ? (
             <button
               type="button"
-              className={`${button} border-slate-300 bg-white`}
+              className={ghostButton}
               onClick={props.onHint}
             >
               {t('hint')}
@@ -406,7 +455,7 @@ function StepView(props: StepViewProps) {
           {!settled && step.type !== 'SHORTCUT' ? (
             <button
               type="button"
-              className={`${button} border-slate-300 bg-white`}
+              className={ghostButton}
               onClick={props.onReveal}
             >
               {t('showAnswer')}
@@ -414,7 +463,7 @@ function StepView(props: StepViewProps) {
           ) : null}
           <button
             type="button"
-            className={`${button} border-slate-300 bg-white`}
+            className={ghostButton}
             onClick={props.onPrevious}
             disabled={!props.canGoBack}
           >
@@ -423,7 +472,7 @@ function StepView(props: StepViewProps) {
           {!settled ? (
             <button
               type="button"
-              className={`${button} border-slate-300 bg-white`}
+              className={ghostButton}
               onClick={props.onSkip}
             >
               {t('skip')}
@@ -485,15 +534,21 @@ function Feedback({
   tf: TranslateFeedback;
 }) {
   let tone = '';
+  let icon: ReactNode = null;
+  let motion = 'animate-fade-up';
   let content: ReactNode = null;
   if (notice) {
-    tone = 'border-slate-300 bg-slate-50 text-slate-800';
+    tone = 'border-line-strong bg-canvas text-ink';
     content = t(notice);
   } else if (run.status === 'correct') {
-    tone = 'border-emerald-300 bg-emerald-50 text-emerald-900';
+    tone = 'border-brand/40 bg-brand-soft text-brand-strong';
+    icon = <FeedbackIcon path="m5 12.5 4.5 4.5L19 7.5" className="bg-brand text-brand-ink" />;
+    motion = 'animate-pop';
     content = run.points > 0 ? t('correct', { points: run.points }) : t('correctNoPoints');
   } else if (run.status === 'incorrect' && run.code) {
-    tone = 'border-rose-300 bg-rose-50 text-rose-900';
+    tone = 'border-bad/40 bg-bad-soft text-bad';
+    icon = <FeedbackIcon path="M7 7l10 10M17 7 7 17" className="bg-bad text-raised" />;
+    motion = 'animate-shake';
     content =
       step.type === 'MULTIPLE_CHOICE'
         ? t('wrongChoice')
@@ -501,7 +556,7 @@ function Feedback({
             f: (chunks) => <Formula>{chunks}</Formula>,
           });
   } else if (run.status === 'revealed') {
-    tone = 'border-amber-300 bg-amber-50 text-amber-900';
+    tone = 'border-warn/40 bg-warn-soft text-warn';
     content = (
       <>
         <span className="font-semibold">{t('answer')}</span> {answerText(step)}
@@ -509,16 +564,34 @@ function Feedback({
       </>
     );
   } else if (run.status === 'done') {
-    tone = 'border-slate-300 bg-slate-50 text-slate-700';
+    tone = 'border-line-strong bg-canvas text-ink-soft';
     content = t('doneBefore');
   } else if (run.status === 'skipped') {
-    tone = 'border-slate-300 bg-slate-50 text-slate-700';
+    tone = 'border-line-strong bg-canvas text-ink-soft';
     content = t('skipped');
   }
   return (
     <div role="status" aria-live="polite" className="min-h-14" data-feedback={run.status}>
-      {content ? <div className={`rounded-lg border px-4 py-3 ${tone}`}>{content}</div> : null}
+      {content ? (
+        <div
+          key={`${run.status}-${run.attempts}-${notice}`}
+          className={`flex items-start gap-3 rounded-2xl border px-4 py-3 font-medium ${tone} ${motion}`}
+        >
+          {icon}
+          <div className="flex-1">{content}</div>
+        </div>
+      ) : null}
     </div>
+  );
+}
+
+function FeedbackIcon({ path, className }: { path: string; className: string }) {
+  return (
+    <span aria-hidden className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full ${className}`}>
+      <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+        <path d={path} />
+      </svg>
+    </span>
   );
 }
 
@@ -534,42 +607,62 @@ function Completion(props: {
   const t = useTranslations('player');
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => heading.current?.focus(), []);
+  const rate = props.total ? props.firstTry / props.total : 0;
+  const stars = rate >= 0.8 ? 3 : rate >= 0.5 ? 2 : 1;
   const link =
-    'rounded-lg border px-4 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+    'rounded-full border px-5 py-2.5 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+  const tiles = [
+    { label: t('statCorrect'), value: `${props.correct}/${props.total}` },
+    { label: t('statFirstTry'), value: String(props.firstTry) },
+    { label: t('statPoints'), value: String(props.points) },
+  ];
   return (
-    <div className="flex flex-col gap-4 rounded-xl border border-emerald-200 bg-white p-6 text-center shadow-sm">
-      <h2
-        ref={heading}
-        tabIndex={-1}
-        className="text-2xl font-bold text-emerald-800 focus:outline-none"
-      >
+    <div className="relative flex animate-pop flex-col items-center gap-5 overflow-hidden rounded-2xl bg-brand-soft px-4 py-8 text-center">
+      <Confetti />
+      <div className="flex gap-1" role="img" aria-label={t('stars', { count: stars })}>
+        {[1, 2, 3].map((n) => (
+          <svg
+            key={n}
+            viewBox="0 0 24 24"
+            className={`size-10 drop-shadow-sm ${n <= stars ? 'animate-pop text-amber-400' : 'text-line-strong'}`}
+            style={{ animationDelay: `${n * 140}ms` }}
+            fill="currentColor"
+            aria-hidden
+          >
+            <path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" />
+          </svg>
+        ))}
+      </div>
+      <h2 ref={heading} tabIndex={-1} className="text-3xl font-extrabold text-brand-strong focus:outline-none">
         {t('completeTitle')}
       </h2>
-      <p>
-        {t('completeSummary', {
-          correct: props.correct,
-          total: props.total,
-          firstTry: props.firstTry,
-        })}
+      <p className="text-muted">
+        {t('completeSummary', { correct: props.correct, total: props.total, firstTry: props.firstTry })}
       </p>
-      <p className="text-lg font-semibold">{t('completePoints', { points: props.points })}</p>
+      <p className="sr-only">{t('completePoints', { points: props.points })}</p>
+      <dl className="grid w-full max-w-md grid-cols-3 gap-3" aria-hidden>
+        {tiles.map((tile) => (
+          <div key={tile.label} className="flex flex-col rounded-2xl bg-raised px-2 py-3 shadow-soft">
+            <dd className="text-2xl font-extrabold tabular-nums text-ink" dir="ltr">
+              {tile.value}
+            </dd>
+            <dt className="text-xs text-muted">{tile.label}</dt>
+          </div>
+        ))}
+      </dl>
       <div className="flex flex-wrap justify-center gap-2">
         {props.nextLessonHref ? (
           <a
             href={props.nextLessonHref}
-            className={`${link} border-emerald-700 bg-emerald-700 text-white`}
+            className={`${link} border-brand bg-brand text-brand-ink shadow-glow hover:-translate-y-px hover:bg-brand-strong`}
           >
             {t('nextLesson')}
           </a>
         ) : null}
-        <button
-          type="button"
-          className={`${link} border-slate-300 bg-white`}
-          onClick={props.onRestart}
-        >
+        <button type="button" className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`} onClick={props.onRestart}>
           {t('restart')}
         </button>
-        <a href={props.lessonsHref} className={`${link} border-slate-300 bg-white`}>
+        <a href={props.lessonsHref} className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}>
           {t('backToLessons')}
         </a>
       </div>

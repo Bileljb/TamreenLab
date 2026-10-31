@@ -2,10 +2,240 @@
 /* Workspace packages live outside this app, so Tailwind must be told to scan them. */
 @source '../../../../packages/ui/src';
 
-@theme {
-  --font-sans: var(--font-cairo), ui-sans-serif, system-ui, sans-serif;
+/* Dark mode follows [data-theme="dark"] on <html>, set before paint by the theme script (ADR 009). */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * Semantic colours. Components use these names (bg-raised, text-muted, border-line, bg-brand …),
+ * never raw palette colours, so both themes stay consistent.
+ */
+:root {
+  --canvas: #f6f8fb;
+  --raised: #ffffff;
+  --sunken: #eef2f7;
+  --ink: #0f172a;
+  --ink-soft: #334155;
+  --muted: #526075;
+  --faint: #64748b;
+  --line: #e3e8ef;
+  --line-strong: #cbd5e1;
+  --brand: #059669;
+  --brand-strong: #047857;
+  --brand-ink: #ffffff;
+  --brand-soft: #e8faf2;
+  --accent: #7c3aed;
+  --accent-soft: #f3efff;
+  --good: #047857;
+  --good-soft: #e8faf2;
+  --bad: #be123c;
+  --bad-soft: #fff1f3;
+  --warn: #92400e;
+  --warn-soft: #fff8e6;
+  --info: #075985;
+  --info-soft: #eef8ff;
+  --glow: 16 185 129;
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --canvas: #0a101c;
+  --raised: #111a2b;
+  --sunken: #0d1524;
+  --ink: #e8eef8;
+  --ink-soft: #c7d2e2;
+  --muted: #9aa9bf;
+  --faint: #8a9ab2;
+  --line: #1e2a3e;
+  --line-strong: #2b3a55;
+  --brand: #34d399;
+  --brand-strong: #6ee7b7;
+  --brand-ink: #04281b;
+  --brand-soft: rgb(52 211 153 / 0.12);
+  --accent: #a78bfa;
+  --accent-soft: rgb(167 139 250 / 0.14);
+  --good: #6ee7b7;
+  --good-soft: rgb(52 211 153 / 0.12);
+  --bad: #fda4af;
+  --bad-soft: rgb(251 113 133 / 0.13);
+  --warn: #fcd34d;
+  --warn-soft: rgb(251 191 36 / 0.12);
+  --info: #7dd3fc;
+  --info-soft: rgb(56 189 248 / 0.12);
+  --glow: 52 211 153;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: var(--font-latin), var(--font-arabic), ui-sans-serif, system-ui, sans-serif;
+  --color-canvas: var(--canvas);
+  --color-raised: var(--raised);
+  --color-sunken: var(--sunken);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --color-bad: var(--bad);
+  --color-bad-soft: var(--bad-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --radius-card: 1.25rem;
+  --shadow-soft: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(15 23 42 / 0.05), 0 18px 40px -18px rgb(15 23 42 / 0.25);
+  --shadow-glow: 0 10px 40px -10px rgb(var(--glow) / 0.45);
+  --animate-pop: pop 380ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-shake: shake 420ms ease-in-out;
+  --animate-rise: rise 900ms ease-out forwards;
+  --animate-fade-up: fade-up 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-blink: blink 1s steps(1) infinite;
+}
+
+/* Arabic pages read best with Cairo for Latin text too. */
+html[lang='ar'] {
+  --font-latin: var(--font-arabic);
+}
+
+/* Scrolling to an anchor, a focused cell or a search result keeps it clear of the sticky header. */
+html {
+  scroll-padding-top: 5rem;
 }
 
 body {
-  @apply bg-slate-50 font-sans text-slate-900 antialiased;
+  @apply bg-canvas font-sans text-ink antialiased;
+  transition:
+    background-color 200ms,
+    color 200ms;
+}
+
+::selection {
+  background: rgb(var(--glow) / 0.25);
+}
+
+/* A soft grid pattern, like a worksheet, used behind heroes. */
+.sheet-pattern {
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 48px 32px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.brand-gradient {
+  background-image: linear-gradient(120deg, #10b981 0%, #14b8a6 45%, #0ea5e9 100%);
+}
+
+.text-gradient {
+  background-image: linear-gradient(120deg, var(--brand) 0%, #14b8a6 50%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px);
+    opacity: 0;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Scroll reveal (see Reveal): hidden only once scripting has marked the page. */
+html.js [data-reveal]:not([data-shown]) {
+  opacity: 0;
+  transform: translateY(16px);
+}
+[data-reveal] {
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  html.js [data-reveal]:not([data-shown]) {
+    opacity: 1;
+    transform: none;
+  }
 }

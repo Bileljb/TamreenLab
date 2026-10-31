@@ -42,6 +42,9 @@ test('a guest plays, signs up, and keeps progress and points', async ({ page }) 
   // 4. Signed in, the server checks the answer and awards the points.
   await page.getByRole('textbox', { name: 'مربع الاسم' }).fill('D5');
   await page.keyboard.press('Enter');
+  // Under load the second Enter can arrive before the selection moves; wait for it.
+  await expect(cell(page, 'D5')).toHaveAttribute('data-active', 'true');
+  await expect(cell(page, 'D5')).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(feedback(page)).toHaveText(correct);
   await expect

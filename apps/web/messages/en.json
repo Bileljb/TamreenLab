@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "title": "TamreenLab: learn Excel by doing",
+    "description": "Interactive Excel practice in your browser: cells, ranges and functions such as SUM, IF, SUMIF and VLOOKUP, with instant feedback and no sign-up."
+  },
+  "home": {
+    "title": "Learn Excel <hl>by doing</hl>",
+    "tagline": "Short steps in a real spreadsheet, instant feedback on every formula, and no sign-up.",
+    "lessonsTitle": "Start practising",
+    "minutes": "{minutes, plural, one {# minute} other {# minutes}}",
+    "start": "Start the first lesson",
+    "browse": "Browse lessons",
+    "featuresTitle": "Why TamreenLab?",
+    "features": {
+      "practice": {
+        "title": "Learn by doing",
+        "text": "Every step is a small task you do yourself, in a worksheet right in your browser."
+      },
+      "feedback": {
+        "title": "Instant feedback",
+        "text": "Know at once whether your formula is right, and why if it isn't."
+      },
+      "arabic": {
+        "title": "In your language",
+        "text": "Clear explanations in Arabic, English or French, with Excel's English names for every function."
+      },
+      "mobile": {
+        "title": "On your phone too",
+        "text": "Special buttons for typing formulas and picking cells by touch."
+      }
+    },
+    "tracksTitle": "Learning tracks",
+    "lessonCount": "{count, plural, one {# lesson} other {# lessons}}",
+    "functionsTitle": "Function guide",
+    "functionsText": "Short explanations of the most used Excel functions, with worked examples and links to practise.",
+    "functionsLink": "Open the function guide",
+    "badge": "Free · No sign-up · Arabic, English & French",
+    "stats": {
+      "lessons": "{count, plural, one {interactive lesson} other {interactive lessons}}",
+      "steps": "{count, plural, one {hands-on step} other {hands-on steps}}",
+      "functions": "{count, plural, one {function explained} other {functions explained}}"
+    },
+    "demo": {
+      "title": "Try-it sheet",
+      "hint": "Type a formula in the bar and press Enter, or pick a suggestion.",
+      "item": "Item",
+      "qty": "Quantity",
+      "total": "Total",
+      "tryThese": "Try:",
+      "formulaBar": "Formula bar of the try-it sheet",
+      "error": "Unfinished formula",
+      "rows": {
+        "0": "Bread",
+        "1": "Cakes",
+        "2": "Pies"
+      }
+    },
+    "how": {
+      "title": "How you learn here",
+      "read": {
+        "title": "Read the idea",
+        "text": "A short, clear explanation of each concept, with an everyday example."
+      },
+      "practise": {
+        "title": "Practise in a real sheet",
+        "text": "You type the formula yourself in an interactive grid that works just like Excel."
+      },
+      "check": {
+        "title": "Get instant feedback",
+        "text": "See what went wrong and why, and collect points for every correct step."
+      }
+    },
+    "trackProgress": "{done} of {total} lessons complete",
+    "cta": {
+      "title": "Ready for your first formula?",
+      "text": "The first lesson takes four minutes and needs no account."
+    }
+  },
+  "lesson": {
+    "breadcrumb": "Breadcrumb",
+    "home": "Home",
+    "lessons": "Lessons",
+    "explanationTitle": "The idea",
+    "practiceTitle": "Practise now",
+    "faqTitle": "Frequently asked questions",
+    "relatedFunctions": "Functions in this lesson",
+    "nextLesson": "Next lesson: {title}",
+    "loading": "Loading the exercise…",
+    "frenchExcelNote": "TamreenLab formulas use the English function names and commas."
+  },
+  "header": {
+    "brand": "TamreenLab",
+    "nav": "Account",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out",
+    "greeting": "Hi, {name}",
+    "language": "Language",
+    "menu": "Menu",
+    "themeSystem": "Theme: match device",
+    "themeLight": "Theme: light",
+    "themeDark": "Theme: dark"
+  },
+  "deleteAccount": {
+    "title": "Delete account",
+    "explain": "Permanently deletes your account with your answers, points, progress and streak, and removes your name from the leaderboard.",
+    "start": "Delete my account",
+    "warning": "Deleting cannot be undone. Are you sure?",
+    "confirm": "Yes, delete my account for good",
+    "cancel": "Cancel",
+    "working": "Deleting…",
+    "done": "Your account and all its data have been deleted.",
+    "failed": "Couldn't delete the account. Please try again shortly."
+  },
+  "auth": {
+    "signInTitle": "Sign in",
+    "signUpTitle": "Create an account",
+    "signUpIntro": "Save your progress and points, and get your name on the leaderboard. Exercises stay free without an account.",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters.",
+    "displayName": "Display name",
+    "displayNameHint": "Shown on the leaderboard, 2 to 30 characters.",
+    "submitSignIn": "Sign in",
+    "submitSignUp": "Create account",
+    "working": "One moment…",
+    "haveAccount": "Already have an account?",
+    "noAccount": "No account yet?",
+    "errors": {
+      "EMAIL_TAKEN": "There is already an account with this email. Sign in instead.",
+      "INVALID_CREDENTIALS": "The email or password is incorrect.",
+      "DISPLAY_NAME_NOT_ALLOWED": "This name is not allowed. Please choose another.",
+      "VALIDATION_ERROR": "Check your details: a valid email, a password of at least 8 characters, and a name of at least 2 characters.",
+      "RATE_LIMITED": "Too many attempts. Wait a little and try again.",
+      "NETWORK": "Couldn't reach the server. Check your connection and try again.",
+      "other": "Something unexpected went wrong. Please try again."
+    }
+  },
+  "panels": {
+    "statsTitle": "Your progress",
+    "pointsToday": "Points today",
+    "pointsTotal": "Total points",
+    "streak": "Day streak",
+    "accuracy": "First-try accuracy",
+    "statsGuest": "<link>Sign in</link> to save your points and join the leaderboard.",
+    "leaderboardTitle": "Today's leaderboard",
+    "leaderboardEmpty": "No points yet today. Be the first!",
+    "you": "You",
+    "pointsShort": "{points} pts"
+  },
+  "grid": {
+    "label": "Worksheet",
+    "nameBox": "Name Box",
+    "formulaBar": "Formula bar",
+    "cellEditor": "Edit cell {address}",
+    "helperBar": "Formula input buttons",
+    "insertKey": "Insert {key}",
+    "insertFunction": "Insert the {name} function"
+  },
+  "player": {
+    "progress": "Step {current} of {total}",
+    "points": "{points} points",
+    "check": "Check",
+    "continue": "Continue",
+    "skip": "Skip",
+    "previous": "Previous",
+    "hint": "Hint",
+    "showAnswer": "Show answer",
+    "enterKeyHint": "or press Enter",
+    "answer": "Answer:",
+    "correct": "Correct! +{points} points",
+    "correctNoPoints": "Correct!",
+    "revealed": "This is the answer. Try to remember it, then press Continue.",
+    "doneBefore": "You completed this step before.",
+    "skipped": "You skipped this step.",
+    "enterFirst": "Type your answer in a cell, then press Enter.",
+    "chooseFirst": "Choose an answer first.",
+    "wrongChoice": "That's not the right answer. Try again.",
+    "choices": "Choices",
+    "shortcutSoon": "Keyboard shortcut exercises are coming soon. You can skip this step.",
+    "resumed": "We picked up where you left off.",
+    "completeTitle": "Well done! Lesson complete",
+    "completeSummary": "{correct} of {total} steps correct, {firstTry} on the first try.",
+    "completePoints": "Points from this lesson: {points}",
+    "restart": "Restart lesson",
+    "backToLessons": "Back to lessons",
+    "nextLesson": "Next lesson",
+    "stars": "{count, plural, one {# star of 3} other {# stars of 3}}",
+    "statCorrect": "steps correct",
+    "statFirstTry": "first try",
+    "statPoints": "points"
+  },
+  "feedback": {
+    "WRONG_VALUE": "The result isn't right. Check the cells you used and try again.",
+    "WRONG_CELL": "That's not the cell we're after. Look at the Name Box and try again.",
+    "MISSING_FUNCTION": "Use the function this step asks for.",
+    "FORBIDDEN_FUNCTION": "That function isn't allowed in this step. Try another way.",
+    "HARDCODED_VALUE": "You typed the result directly. Write a formula that reads the cells, so the result changes when the data does.",
+    "SYNTAX_ERROR": "There's a typing mistake in the formula. Check the brackets and quotation marks.",
+    "REF_ERROR": "The formula points to a cell that doesn't exist <f>#REF!</f>.",
+    "NAME_ERROR": "The formula has an unknown name <f>#NAME?</f>. Check the function name, and put text between quotation marks.",
+    "NA_ERROR": "The value you're looking for isn't there <f>#N/A</f>.",
+    "DIV0": "The formula divides by zero <f>#DIV/0!</f>.",
+    "TIMEOUT": "The formula is too large. Try a smaller range."
+  },
+  "nav": {
+    "label": "Main navigation",
+    "lessons": "Lessons",
+    "functions": "Functions",
+    "shortcuts": "Shortcuts"
+  },
+  "footer": {
+    "label": "Site links",
+    "about": "About TamreenLab",
+    "privacy": "Privacy",
+    "terms": "Terms of use",
+    "contact": "Contact us",
+    "note": "TamreenLab is an independent learning site and is not affiliated with Microsoft."
+  },
+  "curriculum": {
+    "title": "All lessons",
+    "description": "Interactive Excel lessons in order: from cells and ranges to SUM, IF, SUMIF and VLOOKUP.",
+    "intro": "Start with the first lesson and go in order, or pick the topic you need. Each lesson has 5 to 8 short steps.",
+    "kind": {
+      "CONCEPT": "Explain and practise",
+      "PRACTICE": "Practice",
+      "SUMMARY": "Review",
+      "CASE_STUDY": "Case study"
+    },
+    "jump": "Jump to a track",
+    "continueTitle": "Continue where you left off",
+    "continueCta": "Continue",
+    "done": "Done",
+    "inProgress": "In progress",
+    "stepCount": "{count, plural, one {# step} other {# steps}}"
+  },
+  "functions": {
+    "title": "Excel function guide",
+    "description": "The most used Excel functions explained: syntax, arguments, worked examples and common errors.",
+    "intro": "Pick a function to see how to write it, its arguments and worked examples, then practise it in an interactive lesson.",
+    "categories": {
+      "aggregation": "Totals and statistics",
+      "logic": "Logical conditions",
+      "conditional": "Conditional sums and counts",
+      "lookup": "Lookup",
+      "text": "Text",
+      "date": "Dates"
+    },
+    "syntax": "Syntax",
+    "args": "Arguments",
+    "optional": "optional",
+    "examples": "Examples",
+    "formula": "Formula",
+    "result": "Result",
+    "errors": "Common errors",
+    "practice": "Practise it",
+    "practiceSoon": "There is no interactive lesson for this function yet. Start with the available lessons meanwhile.",
+    "faqTitle": "Frequently asked questions",
+    "unverified": "The result depends on today's date.",
+    "search": "Search a function, like SUM or lookup",
+    "noResults": "No function with that name yet.",
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "shortcuts": {
+    "title": "Excel keyboard shortcuts",
+    "description": "The most useful Excel shortcuts for moving, selecting and editing, on Windows and Mac.",
+    "intro": "These are the shortcuts that help most in everyday work. Interactive shortcut exercises are coming soon.",
+    "action": "Action",
+    "windows": "Windows",
+    "mac": "Mac",
+    "groups": {
+      "navigation": "Moving around",
+      "selection": "Selecting",
+      "editing": "Typing and editing",
+      "formulas": "Formulas"
+    },
+    "items": {
+      "nextCell": "Move to the next cell in the row",
+      "edge": "Jump to the last cell with data",
+      "home": "Go back to cell A1",
+      "selectRange": "Extend the selection one cell at a time",
+      "selectEdge": "Select up to the last cell with data",
+      "selectAll": "Select the whole table",
+      "edit": "Edit the current cell",
+      "cancel": "Cancel typing before confirming",
+      "undo": "Undo the last action",
+      "fillDown": "Copy the cell above into the selection",
+      "autoSum": "Insert SUM automatically",
+      "absolute": "Switch between relative and absolute references"
+    }
+  },
+  "pages": {
+    "about": {
+      "title": "About TamreenLab",
+      "description": "TamreenLab is a site for learning Excel by doing, right in your browser.",
+      "body": "TamreenLab teaches Excel through practice: instead of watching a long video, you work through short steps in a real worksheet in your browser and find out straight away whether your answer is right.\n\nThe lessons are made for students, new employees and anyone preparing for a job test. They start with cells and ranges and go up to functions such as SUMIF and VLOOKUP, and they work on computers and phones. You can learn in Arabic, English or French.\n\nThe exercises are free and need no account. An account is optional: it saves your progress and points and puts you on the leaderboard."
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "How TamreenLab handles your data.",
+      "draft": "Draft: this page needs a legal review before launch.",
+      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
+    },
+    "terms": {
+      "title": "Terms of use",
+      "description": "Terms of use of the TamreenLab website.",
+      "draft": "Draft: this page needs a legal review before launch.",
+      "body": "By using TamreenLab you agree to use it for personal learning and in a way that does not harm the site or other users.\n\nThe lessons, examples and data are our own work and may not be copied or published without permission.\n\nThe display name you choose is shown publicly on the leaderboard, so do not use a name that is offensive or belongs to someone else. We may edit or remove any name that breaks this rule.\n\nWe provide the site as it is. We aim for accurate content but cannot guarantee it is free of errors."
+    },
+    "contact": {
+      "title": "Contact us",
+      "description": "For questions, suggestions and reporting a mistake in a lesson.",
+      "body": "We'd love to hear what you think of the lessons, a topic you'd like to see, or a mistake in a step or explanation.\n\nThe contact address will be added at launch."
+    }
+  },
+  "ads": {
+    "label": "Advertisement",
+    "placeholder": "Ad space"
+  },
+  "consent": {
+    "label": "Privacy choices",
+    "text": "We use anonymous statistics to improve the lessons, and we may show ads. Choose what suits you; details are in the <link>privacy policy</link>.",
+    "analytics": "Anonymous usage statistics",
+    "ads": "Ads tailored to my interests",
+    "acceptAll": "Accept all",
+    "choose": "Let me choose",
+    "save": "Save my choice",
+    "rejectAll": "Reject optional"
+  }
+}

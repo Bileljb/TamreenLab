@@ -36,17 +36,24 @@ export function Faq({
 }) {
   return (
     <section aria-labelledby="faq-title" className="flex flex-col gap-3">
-      <h2 id="faq-title" className="text-xl font-bold">
+      <h2 id="faq-title" className="mb-1 text-xl font-bold">
         {title}
       </h2>
       {items.map((item, i) => (
-        <details key={i} className="rounded-lg border border-slate-200 bg-white p-4" open={i === 0}>
-          <summary className="cursor-pointer font-semibold">
+        <details
+          key={i}
+          className="group rounded-2xl border border-line bg-raised px-5 py-4 shadow-soft transition open:border-brand/40"
+          open={i === 0}
+        >
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-3 font-semibold [&::-webkit-details-marker]:hidden">
             <span className="inline [&>p]:inline [&>p]:text-base">
               <Prompt text={item.qAr} glossary={glossary} introduce={new Set()} />
             </span>
+            <span aria-hidden className="grid size-7 shrink-0 place-items-center rounded-full bg-sunken text-muted transition group-open:rotate-180 group-open:bg-brand-soft group-open:text-brand-strong">
+              <svg viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="m5 8 5 5 5-5" /></svg>
+            </span>
           </summary>
-          <div className="mt-2 text-slate-700 [&>p]:text-base [&>p]:leading-8">
+          <div className="mt-3 text-ink-soft [&>p]:text-base [&>p]:leading-8">
             <Prompt text={item.aAr} glossary={glossary} introduce={new Set()} />
           </div>
         </details>

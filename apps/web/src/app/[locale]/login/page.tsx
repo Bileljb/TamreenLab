@@ -15,9 +15,13 @@ export default async function LoginPage({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations('auth');
   return (
-    <main className="mx-auto flex w-full max-w-md flex-col gap-6 px-4 py-10">
-      <h1 className="text-2xl font-bold">{t('signInTitle')}</h1>
-      <AuthForm mode="signIn" fallbackNext={`/${locale}`} switchHref={`/${locale}/register`} />
+    <main className="relative isolate flex flex-1 items-start justify-center overflow-hidden px-4 py-14">
+      <div aria-hidden className="sheet-pattern absolute inset-0 -z-10 opacity-60" />
+      <div aria-hidden className="brand-gradient absolute top-0 start-1/2 -z-10 size-96 -translate-x-1/2 rounded-full opacity-20 blur-3xl rtl:translate-x-1/2" />
+      <div className="flex w-full max-w-md animate-fade-up flex-col gap-6 rounded-[var(--radius-card)] border border-line bg-raised p-6 shadow-lift sm:p-8">
+        <h1 className="text-3xl font-extrabold tracking-tight">{t('signInTitle')}</h1>
+        <AuthForm mode="signIn" fallbackNext={`/${locale}`} switchHref={`/${locale}/register`} />
+      </div>
     </main>
   );
 }

@@ -12,9 +12,9 @@ function Loading() {
   const t = useTranslations('lesson');
   const preview = useContext(PreviewContext);
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-5 rounded-[var(--radius-card)] border border-line bg-raised p-4 shadow-soft sm:p-6">
       {preview}
-      <div className="flex flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500">
+      <div className="flex flex-1 animate-pulse items-center justify-center rounded-xl border border-line bg-sunken text-muted">
         {t('loading')}
       </div>
     </div>

@@ -254,10 +254,10 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
 
   return (
     <div ref={container} dir="ltr" className="flex w-full max-w-full flex-col gap-2 text-start">
-      <div className="flex items-stretch gap-2">
+      <div className="flex items-stretch gap-2 rounded-xl border border-line bg-sunken/70 p-1.5">
         <input
           aria-label={t('nameBox')}
-          className="w-24 shrink-0 rounded-md border border-slate-300 bg-white px-2 py-1.5 font-mono text-sm focus:outline-2 focus:outline-emerald-600"
+          className="w-20 shrink-0 rounded-lg border border-line bg-raised px-2 py-1.5 text-center font-mono text-sm font-semibold text-ink-soft focus:outline-2 focus:outline-brand"
           value={nameBox ?? selectionLabel(state)}
           spellCheck={false}
           autoCapitalize="characters"
@@ -269,14 +269,14 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
           onChange={(e) => setNameBox(e.target.value)}
           onKeyDown={onNameBoxKeyDown}
         />
-        <span aria-hidden className="flex items-center font-serif text-sm italic text-slate-500">
+        <span aria-hidden className="flex items-center px-0.5 font-serif text-sm italic text-faint">
           fx
         </span>
         <input
           ref={barInput}
           aria-label={t('formulaBar')}
           dir={barIsFormula ? 'ltr' : 'auto'}
-          className={`min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm focus:outline-2 focus:outline-emerald-600 ${
+          className={`min-w-0 flex-1 rounded-lg border border-line bg-raised px-2.5 py-1.5 text-sm focus:outline-2 focus:outline-brand ${
             barIsFormula ? 'font-mono' : ''
           }`}
           value={barValue}
@@ -311,7 +311,7 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
 
       <FormulaHelperBar functions={functions} dispatch={dispatch} />
 
-      <div className="max-w-full overflow-x-auto rounded-md border border-slate-300 bg-white">
+      <div className="w-fit max-w-full overflow-x-auto rounded-xl border border-line-strong bg-raised shadow-soft">
         <table
           ref={table}
           role="grid"
@@ -334,16 +334,16 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
         >
           <thead>
             <tr role="row">
-              <th className="w-10 border-b border-e border-slate-300 bg-slate-100" aria-hidden />
+              <th className="w-10 border-b border-e border-line bg-sunken" aria-hidden />
               {cols.map((c) => (
                 <th
                   key={c}
                   role="columnheader"
                   scope="col"
-                  className={`min-w-16 border-b border-e border-slate-300 px-2 py-1 font-medium ${
+                  className={`min-w-16 border-b border-e border-line px-2 py-1 text-xs font-semibold transition-colors ${
                     c >= start.col && c <= end.col
-                      ? 'bg-emerald-100 text-emerald-900'
-                      : 'bg-slate-100 text-slate-600'
+                      ? 'bg-brand-soft text-brand-strong shadow-[inset_0_-2px_0_var(--brand)]'
+                      : 'bg-sunken text-faint'
                   }`}
                 >
                   {indexToColumn(c)}
@@ -357,10 +357,10 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
                 <th
                   role="rowheader"
                   scope="row"
-                  className={`border-b border-e border-slate-300 px-2 font-medium ${
+                  className={`border-b border-e border-line px-2 text-xs font-semibold transition-colors ${
                     r >= start.row && r <= end.row
-                      ? 'bg-emerald-100 text-emerald-900'
-                      : 'bg-slate-100 text-slate-600'
+                      ? 'bg-brand-soft text-brand-strong shadow-[inset_-2px_0_0_var(--brand)]'
+                      : 'bg-sunken text-faint'
                   }`}
                 >
                   {r + 1}
@@ -387,18 +387,20 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
                       data-col={c}
                       data-address={address}
                       data-active={active}
-                      className={`relative h-9 min-w-16 max-w-48 truncate border-b border-e border-slate-200 px-2 ${
+                      className={`relative h-9 min-w-16 max-w-48 truncate border-b border-e border-line px-2 ${
                         numeric ? 'text-end' : 'text-start'
-                      } ${selected ? 'bg-emerald-50' : ''} ${
-                        active ? 'outline-2 -outline-offset-2 outline-emerald-600' : ''
-                      } focus:outline-none focus-visible:outline-2 focus-visible:outline-emerald-700`}
+                      } ${selected ? 'bg-brand-soft' : ''} ${
+                        active
+                          ? 'z-10 outline-2 -outline-offset-2 outline-brand shadow-glow after:absolute after:end-0.5 after:bottom-0.5 after:size-1.5 after:rounded-[1px] after:bg-brand after:ring-2 after:ring-raised'
+                          : ''
+                      } focus:outline-none focus-visible:outline-2 focus-visible:outline-brand`}
                     >
                       {active && edit?.source === 'cell' ? (
                         <input
                           ref={cellInput}
                           aria-label={t('cellEditor', { address })}
                           dir={edit.text.trimStart().startsWith('=') ? 'ltr' : 'auto'}
-                          className={`absolute inset-0 w-full bg-white px-2 outline-2 -outline-offset-2 outline-emerald-600 ${
+                          className={`absolute inset-0 w-full bg-raised px-2 outline-2 -outline-offset-2 outline-brand ${
                             edit.text.trimStart().startsWith('=') ? 'font-mono' : ''
                           }`}
                           value={edit.text}

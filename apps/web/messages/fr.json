@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "title": "TamreenLab : apprendre Excel en pratiquant",
+    "description": "Des exercices Excel interactifs dans votre navigateur : cellules, plages et fonctions comme SUM, IF, SUMIF et VLOOKUP, avec correction immédiate et sans inscription."
+  },
+  "home": {
+    "title": "Apprendre Excel <hl>en pratiquant</hl>",
+    "tagline": "De courtes étapes dans un vrai tableur, une correction immédiate de chaque formule, et sans inscription.",
+    "lessonsTitle": "Commencer à pratiquer",
+    "minutes": "{minutes, plural, one {# minute} other {# minutes}}",
+    "start": "Commencer la première leçon",
+    "browse": "Parcourir les leçons",
+    "featuresTitle": "Pourquoi TamreenLab ?",
+    "features": {
+      "practice": {
+        "title": "Apprendre en faisant",
+        "text": "Chaque étape est une petite tâche que vous réalisez vous-même, dans une feuille de calcul en plein navigateur."
+      },
+      "feedback": {
+        "title": "Correction immédiate",
+        "text": "Sachez tout de suite si votre formule est juste, et pourquoi elle ne l'est pas."
+      },
+      "arabic": {
+        "title": "Dans votre langue",
+        "text": "Des explications claires en arabe, en anglais ou en français, avec les noms anglais d'Excel pour chaque fonction."
+      },
+      "mobile": {
+        "title": "Aussi sur téléphone",
+        "text": "Des boutons dédiés pour taper les formules et choisir les cellules au toucher."
+      }
+    },
+    "tracksTitle": "Parcours d'apprentissage",
+    "lessonCount": "{count, plural, one {# leçon} other {# leçons}}",
+    "functionsTitle": "Guide des fonctions",
+    "functionsText": "Les fonctions Excel les plus utilisées expliquées simplement, avec des exemples corrigés et des liens pour s'entraîner.",
+    "functionsLink": "Ouvrir le guide des fonctions",
+    "badge": "Gratuit · Sans inscription · Arabe, anglais et français",
+    "stats": {
+      "lessons": "{count, plural, one {leçon interactive} other {leçons interactives}}",
+      "steps": "{count, plural, one {étape pratique} other {étapes pratiques}}",
+      "functions": "{count, plural, one {fonction expliquée} other {fonctions expliquées}}"
+    },
+    "demo": {
+      "title": "Feuille d'essai",
+      "hint": "Tapez une formule dans la barre et appuyez sur Entrée, ou choisissez une suggestion.",
+      "item": "Article",
+      "qty": "Quantité",
+      "total": "Total",
+      "tryThese": "Essayez :",
+      "formulaBar": "Barre de formule de la feuille d'essai",
+      "error": "Formule incomplète",
+      "rows": {
+        "0": "Pain",
+        "1": "Gâteaux",
+        "2": "Tartes"
+      }
+    },
+    "how": {
+      "title": "Comment on apprend ici",
+      "read": {
+        "title": "Lisez l'idée",
+        "text": "Une explication courte et claire de chaque notion, avec un exemple du quotidien."
+      },
+      "practise": {
+        "title": "Pratiquez dans une vraie feuille",
+        "text": "Vous tapez la formule vous-même dans une grille interactive qui fonctionne comme Excel."
+      },
+      "check": {
+        "title": "Correction immédiate",
+        "text": "Voyez ce qui ne va pas et pourquoi, et gagnez des points à chaque étape réussie."
+      }
+    },
+    "trackProgress": "{done} leçons terminées sur {total}",
+    "cta": {
+      "title": "Prêt pour votre première formule ?",
+      "text": "La première leçon prend quatre minutes et ne demande aucun compte."
+    }
+  },
+  "lesson": {
+    "breadcrumb": "Fil d'Ariane",
+    "home": "Accueil",
+    "lessons": "Leçons",
+    "explanationTitle": "L'idée",
+    "practiceTitle": "À vous de jouer",
+    "faqTitle": "Questions fréquentes",
+    "relatedFunctions": "Fonctions de cette leçon",
+    "nextLesson": "Leçon suivante : {title}",
+    "loading": "Chargement de l'exercice…",
+    "frenchExcelNote": "Dans TamreenLab, les formules utilisent les noms anglais des fonctions et la virgule comme séparateur. Dans Excel en français, ces fonctions s'appellent :"
+  },
+  "header": {
+    "brand": "TamreenLab",
+    "nav": "Compte",
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter",
+    "greeting": "Bonjour, {name}",
+    "language": "Langue",
+    "menu": "Menu",
+    "themeSystem": "Thème : comme l'appareil",
+    "themeLight": "Thème : clair",
+    "themeDark": "Thème : sombre"
+  },
+  "deleteAccount": {
+    "title": "Supprimer le compte",
+    "explain": "Supprime définitivement votre compte avec vos réponses, vos points, votre progression et votre série, et retire votre nom du classement.",
+    "start": "Supprimer mon compte",
+    "warning": "La suppression est irréversible. Êtes-vous sûr ?",
+    "confirm": "Oui, supprimer définitivement mon compte",
+    "cancel": "Annuler",
+    "working": "Suppression…",
+    "done": "Votre compte et toutes ses données ont été supprimés.",
+    "failed": "Impossible de supprimer le compte. Réessayez dans un instant."
+  },
+  "auth": {
+    "signInTitle": "Se connecter",
+    "signUpTitle": "Créer un compte",
+    "signUpIntro": "Enregistrez votre progression et vos points, et apparaissez au classement. Les exercices restent gratuits sans compte.",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "passwordHint": "Au moins 8 caractères.",
+    "displayName": "Nom affiché",
+    "displayNameHint": "Visible dans le classement, de 2 à 30 caractères.",
+    "submitSignIn": "Se connecter",
+    "submitSignUp": "Créer le compte",
+    "working": "Un instant…",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "noAccount": "Pas encore de compte ?",
+    "errors": {
+      "EMAIL_TAKEN": "Un compte existe déjà avec cet e-mail. Connectez-vous plutôt.",
+      "INVALID_CREDENTIALS": "L'e-mail ou le mot de passe est incorrect.",
+      "DISPLAY_NAME_NOT_ALLOWED": "Ce nom n'est pas autorisé. Choisissez-en un autre.",
+      "VALIDATION_ERROR": "Vérifiez vos informations : un e-mail valide, un mot de passe d'au moins 8 caractères et un nom d'au moins 2 caractères.",
+      "RATE_LIMITED": "Trop de tentatives. Patientez un peu, puis réessayez.",
+      "NETWORK": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
+      "other": "Une erreur inattendue s'est produite. Réessayez."
+    }
+  },
+  "panels": {
+    "statsTitle": "Votre progression",
+    "pointsToday": "Points du jour",
+    "pointsTotal": "Total des points",
+    "streak": "Jours d'affilée",
+    "accuracy": "Réussite du premier coup",
+    "statsGuest": "<link>Connectez-vous</link> pour enregistrer vos points et entrer au classement.",
+    "leaderboardTitle": "Classement du jour",
+    "leaderboardEmpty": "Aucun point aujourd'hui pour l'instant. Soyez le premier !",
+    "you": "Vous",
+    "pointsShort": "{points} pts"
+  },
+  "grid": {
+    "label": "Feuille de calcul",
+    "nameBox": "Zone Nom",
+    "formulaBar": "Barre de formule",
+    "cellEditor": "Modifier la cellule {address}",
+    "helperBar": "Boutons de saisie de formule",
+    "insertKey": "Insérer {key}",
+    "insertFunction": "Insérer la fonction {name}"
+  },
+  "player": {
+    "progress": "Étape {current} sur {total}",
+    "points": "{points} points",
+    "check": "Vérifier",
+    "continue": "Continuer",
+    "skip": "Passer",
+    "previous": "Précédent",
+    "hint": "Indice",
+    "showAnswer": "Voir la réponse",
+    "enterKeyHint": "ou appuyez sur Entrée",
+    "answer": "Réponse :",
+    "correct": "Bravo ! +{points} points",
+    "correctNoPoints": "Bravo !",
+    "revealed": "Voici la réponse. Essayez de la retenir, puis appuyez sur Continuer.",
+    "doneBefore": "Vous avez déjà réussi cette étape.",
+    "skipped": "Vous avez passé cette étape.",
+    "enterFirst": "Tapez votre réponse dans une cellule, puis appuyez sur Entrée.",
+    "chooseFirst": "Choisissez d'abord une réponse.",
+    "wrongChoice": "Ce n'est pas la bonne réponse. Réessayez.",
+    "choices": "Choix",
+    "shortcutSoon": "Les exercices de raccourcis clavier arrivent bientôt. Vous pouvez passer cette étape.",
+    "resumed": "Nous avons repris là où vous en étiez.",
+    "completeTitle": "Bravo ! Leçon terminée",
+    "completeSummary": "{correct} étapes réussies sur {total}, dont {firstTry} du premier coup.",
+    "completePoints": "Points de cette leçon : {points}",
+    "restart": "Recommencer la leçon",
+    "backToLessons": "Retour aux leçons",
+    "nextLesson": "Leçon suivante",
+    "stars": "{count, plural, one {# étoile sur 3} other {# étoiles sur 3}}",
+    "statCorrect": "étapes réussies",
+    "statFirstTry": "du premier coup",
+    "statPoints": "points"
+  },
+  "feedback": {
+    "WRONG_VALUE": "Le résultat n'est pas juste. Vérifiez les cellules utilisées et réessayez.",
+    "WRONG_CELL": "Ce n'est pas la cellule attendue. Regardez la zone Nom et réessayez.",
+    "MISSING_FUNCTION": "Utilisez la fonction demandée à cette étape.",
+    "FORBIDDEN_FUNCTION": "Cette fonction n'est pas autorisée à cette étape. Essayez autrement.",
+    "HARDCODED_VALUE": "Vous avez tapé le résultat directement. Écrivez une formule qui lit les cellules, pour que le résultat change avec les données.",
+    "SYNTAX_ERROR": "La formule contient une faute de saisie. Vérifiez les parenthèses et les guillemets.",
+    "REF_ERROR": "La formule désigne une cellule qui n'existe pas <f>#REF!</f>.",
+    "NAME_ERROR": "La formule contient un nom inconnu <f>#NAME?</f>. Vérifiez le nom de la fonction et mettez le texte entre guillemets.",
+    "NA_ERROR": "La valeur cherchée est introuvable <f>#N/A</f>.",
+    "DIV0": "La formule divise par zéro <f>#DIV/0!</f>.",
+    "TIMEOUT": "La formule est trop grande. Essayez une plage plus petite."
+  },
+  "nav": {
+    "label": "Navigation principale",
+    "lessons": "Leçons",
+    "functions": "Fonctions",
+    "shortcuts": "Raccourcis"
+  },
+  "footer": {
+    "label": "Liens du site",
+    "about": "À propos de TamreenLab",
+    "privacy": "Confidentialité",
+    "terms": "Conditions d'utilisation",
+    "contact": "Nous contacter",
+    "note": "TamreenLab est un site d'apprentissage indépendant, sans lien avec Microsoft."
+  },
+  "curriculum": {
+    "title": "Toutes les leçons",
+    "description": "Des leçons Excel interactives dans l'ordre : des cellules et des plages jusqu'à SUM, IF, SUMIF et VLOOKUP.",
+    "intro": "Commencez par la première leçon et avancez dans l'ordre, ou choisissez le sujet dont vous avez besoin. Chaque leçon compte de 5 à 8 courtes étapes.",
+    "kind": {
+      "CONCEPT": "Explication et pratique",
+      "PRACTICE": "Exercice",
+      "SUMMARY": "Révision",
+      "CASE_STUDY": "Cas pratique"
+    },
+    "jump": "Aller à un parcours",
+    "continueTitle": "Reprenez là où vous en étiez",
+    "continueCta": "Continuer",
+    "done": "Terminée",
+    "inProgress": "En cours",
+    "stepCount": "{count, plural, one {# étape} other {# étapes}}"
+  },
+  "functions": {
+    "title": "Guide des fonctions Excel",
+    "description": "Les fonctions Excel les plus utilisées : syntaxe, arguments, exemples corrigés et erreurs fréquentes.",
+    "intro": "Choisissez une fonction pour voir comment l'écrire, ses arguments et des exemples corrigés, puis entraînez-vous dans une leçon interactive.",
+    "categories": {
+      "aggregation": "Totaux et statistiques",
+      "logic": "Conditions logiques",
+      "conditional": "Sommes et comptages conditionnels",
+      "lookup": "Recherche",
+      "text": "Texte",
+      "date": "Dates"
+    },
+    "syntax": "Syntaxe",
+    "args": "Arguments",
+    "optional": "facultatif",
+    "examples": "Exemples",
+    "formula": "Formule",
+    "result": "Résultat",
+    "errors": "Erreurs fréquentes",
+    "practice": "S'entraîner",
+    "practiceSoon": "Il n'y a pas encore de leçon interactive pour cette fonction. Commencez par les leçons disponibles en attendant.",
+    "faqTitle": "Questions fréquentes",
+    "unverified": "Le résultat dépend de la date du jour.",
+    "search": "Cherchez une fonction, comme SUM ou recherche",
+    "noResults": "Aucune fonction de ce nom pour l'instant.",
+    "copy": "Copier",
+    "copied": "Copié"
+  },
+  "shortcuts": {
+    "title": "Raccourcis clavier Excel",
+    "description": "Les raccourcis Excel les plus utiles pour se déplacer, sélectionner et modifier, sous Windows et Mac.",
+    "intro": "Voici les raccourcis les plus utiles au quotidien. Les exercices interactifs de raccourcis arrivent bientôt.",
+    "action": "Action",
+    "windows": "Windows",
+    "mac": "Mac",
+    "groups": {
+      "navigation": "Se déplacer",
+      "selection": "Sélectionner",
+      "editing": "Saisir et modifier",
+      "formulas": "Formules"
+    },
+    "items": {
+      "nextCell": "Aller à la cellule suivante de la ligne",
+      "edge": "Sauter à la dernière cellule remplie",
+      "home": "Revenir à la cellule A1",
+      "selectRange": "Étendre la sélection cellule par cellule",
+      "selectEdge": "Sélectionner jusqu'à la dernière cellule remplie",
+      "selectAll": "Sélectionner tout le tableau",
+      "edit": "Modifier la cellule active",
+      "cancel": "Annuler la saisie avant de la valider",
+      "undo": "Annuler la dernière action",
+      "fillDown": "Recopier la cellule du dessus dans la sélection",
+      "autoSum": "Insérer SUM automatiquement",
+      "absolute": "Basculer entre référence relative et absolue"
+    }
+  },
+  "pages": {
+    "about": {
+      "title": "À propos de TamreenLab",
+      "description": "TamreenLab est un site pour apprendre Excel en pratiquant, directement dans le navigateur.",
+      "body": "TamreenLab enseigne Excel par la pratique : au lieu de regarder une longue vidéo, vous réalisez de courtes étapes dans une vraie feuille de calcul, dans votre navigateur, et vous savez tout de suite si votre réponse est juste.\n\nLes leçons s'adressent aux étudiants, aux nouveaux salariés et à toute personne qui prépare un test de recrutement. Elles partent des cellules et des plages pour aller jusqu'à des fonctions comme SUMIF et VLOOKUP, et fonctionnent sur ordinateur comme sur téléphone. Vous pouvez apprendre en arabe, en anglais ou en français.\n\nLes exercices sont gratuits et ne demandent aucun compte. Le compte est facultatif : il enregistre votre progression et vos points et vous fait apparaître au classement."
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "description": "Comment TamreenLab traite vos données.",
+      "draft": "Brouillon : cette page doit être relue par un juriste avant le lancement.",
+      "body": "Nous collectons le moins de données possible.\n\nSi vous vous entraînez sans compte, votre progression est stockée uniquement dans votre navigateur. Si vous créez un compte, nous enregistrons votre e-mail, votre nom affiché et votre mot de passe, chiffré de façon irréversible, ainsi que vos réponses et vos points pour afficher votre progression et le classement.\n\nNous enregistrons des statistiques d'utilisation anonymes, comme le début ou la fin d'une leçon, avec un identifiant aléatoire qui n'est lié ni à votre nom ni à votre e-mail, afin d'améliorer les leçons. Vous pouvez les désactiver dans la fenêtre de consentement.\n\nDes publicités peuvent s'afficher sur les pages d'explication. Les publicités personnalisées ne sont autorisées qu'avec votre accord.\n\nVous pouvez supprimer votre compte et toutes ses données à tout moment en bas de cette page, une fois connecté, ou nous écrire via la page de contact."
+    },
+    "terms": {
+      "title": "Conditions d'utilisation",
+      "description": "Conditions d'utilisation du site TamreenLab.",
+      "draft": "Brouillon : cette page doit être relue par un juriste avant le lancement.",
+      "body": "En utilisant TamreenLab, vous acceptez de l'utiliser pour votre apprentissage personnel et sans nuire au site ni aux autres utilisateurs.\n\nLes leçons, les exemples et leurs données sont notre création et ne peuvent être copiés ni publiés sans autorisation.\n\nLe nom affiché que vous choisissez est visible publiquement dans le classement : n'utilisez pas de nom injurieux ou appartenant à quelqu'un d'autre. Nous pouvons modifier ou supprimer tout nom qui enfreint cette règle.\n\nNous fournissons le site tel quel. Nous visons l'exactitude du contenu sans pouvoir garantir l'absence d'erreurs."
+    },
+    "contact": {
+      "title": "Nous contacter",
+      "description": "Pour vos questions, suggestions ou pour signaler une erreur dans une leçon.",
+      "body": "Nous serions ravis de connaître votre avis sur les leçons, un sujet que vous aimeriez voir, ou une erreur dans une étape ou une explication.\n\nL'adresse de contact sera ajoutée au lancement."
+    }
+  },
+  "ads": {
+    "label": "Publicité",
+    "placeholder": "Espace publicitaire"
+  },
+  "consent": {
+    "label": "Choix de confidentialité",
+    "text": "Nous utilisons des statistiques anonymes pour améliorer les leçons et nous pouvons afficher des publicités. Choisissez ce qui vous convient ; les détails sont dans la <link>politique de confidentialité</link>.",
+    "analytics": "Statistiques d'utilisation anonymes",
+    "ads": "Publicités adaptées à mes centres d'intérêt",
+    "acceptAll": "Tout accepter",
+    "choose": "Choisir moi-même",
+    "save": "Enregistrer mon choix",
+    "rejectAll": "Refuser l'optionnel"
+  }
+}

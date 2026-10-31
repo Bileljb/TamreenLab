@@ -68,3 +68,42 @@ export type TracksTranslation = z.infer<typeof TracksTranslationSchema>;
 
 /** Arabic script, to find text a translation left untranslated. */
 export const ARABIC_SCRIPT = /\p{Script=Arabic}/u;
+
+/**
+ * Function names in French Excel. TamreenLab always uses the English names (and commas); French
+ * pages show these in a note so learners with French Excel can follow (ADR 009).
+ */
+export const FRENCH_EXCEL_NAMES: Record<string, string> = {
+  AND: 'ET',
+  AVERAGE: 'MOYENNE',
+  CONCAT: 'CONCAT',
+  COUNT: 'NB',
+  COUNTA: 'NBVAL',
+  COUNTIF: 'NB.SI',
+  COUNTIFS: 'NB.SI.ENS',
+  DATE: 'DATE',
+  DATEDIF: 'DATEDIF',
+  FIND: 'TROUVE',
+  IF: 'SI',
+  IFERROR: 'SIERREUR',
+  INDEX: 'INDEX',
+  LEFT: 'GAUCHE',
+  LEN: 'NBCAR',
+  LOWER: 'MINUSCULE',
+  MATCH: 'EQUIV',
+  MAX: 'MAX',
+  MID: 'STXT',
+  MIN: 'MIN',
+  NOT: 'NON',
+  OR: 'OU',
+  RIGHT: 'DROITE',
+  ROUND: 'ARRONDI',
+  SEARCH: 'CHERCHE',
+  SUM: 'SOMME',
+  SUMIF: 'SOMME.SI',
+  SUMIFS: 'SOMME.SI.ENS',
+  TODAY: 'AUJOURDHUI',
+  UPPER: 'MAJUSCULE',
+  VLOOKUP: 'RECHERCHEV',
+  XLOOKUP: 'RECHERCHEX',
+};

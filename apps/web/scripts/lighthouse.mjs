@@ -12,6 +12,10 @@ const PAGES = [
   '/ar/lessons/basics/cells-and-selection',
   '/ar/lessons/aggregation/sum-basics',
   '/ar/functions/vlookup',
+  '/en',
+  '/en/lessons/conditional/sumif-basics',
+  '/fr/lessons/aggregation/sum-basics',
+  '/fr/functions/vlookup',
 ];
 const BUDGET = { accessibility: 90, seo: 95, performance: 85, lcpMs: 2500, cls: 0.1 };
 

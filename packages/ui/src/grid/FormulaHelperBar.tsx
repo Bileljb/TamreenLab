@@ -20,7 +20,7 @@ export function FormulaHelperBar({ functions, dispatch }: Props) {
   const t = useTranslations('grid');
   const names = [...new Set([...functions, ...COMMON_FUNCTIONS])];
   const button =
-    'h-9 min-w-9 shrink-0 rounded-md border border-slate-300 bg-white px-2 font-mono text-sm active:bg-emerald-100';
+    'h-9 min-w-9 shrink-0 rounded-lg border border-line bg-raised px-2.5 font-mono text-sm shadow-soft transition active:scale-95 active:bg-brand-soft';
 
   return (
     <div
@@ -45,7 +45,7 @@ export function FormulaHelperBar({ functions, dispatch }: Props) {
         <button
           key={name}
           type="button"
-          className={`${button} text-emerald-800`}
+          className={`${button} text-brand-strong`}
           aria-label={t('insertFunction', { name })}
           onPointerDown={(e) => e.preventDefault()}
           onClick={() => dispatch({ type: 'insertText', text: `${name}(` })}

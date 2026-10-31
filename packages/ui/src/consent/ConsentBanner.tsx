@@ -18,20 +18,20 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
   if (consent !== null) return null; // undecided only (undefined = not read yet)
 
   const button =
-    'rounded-lg px-4 py-2 text-sm font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+    'rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
   return (
     <div
       role="region"
       aria-label={t('label')}
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 p-4 shadow-lg backdrop-blur"
+      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl animate-fade-up rounded-[var(--radius-card,1.25rem)] border border-line bg-raised/95 p-5 shadow-lift backdrop-blur-xl"
     >
-      <div className="mx-auto flex max-w-3xl flex-col gap-3">
-        <p className="text-sm leading-7 text-slate-700">
+      <div className="flex flex-col gap-3">
+        <p className="text-sm leading-7 text-ink-soft">
           {t.rich('text', {
             link: (chunks) => (
               <a
                 href={privacyHref}
-                className="font-medium text-emerald-800 underline underline-offset-4"
+                className="font-medium text-brand-strong underline underline-offset-4"
               >
                 {chunks}
               </a>
@@ -43,6 +43,7 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
             <legend className="sr-only">{t('label')}</legend>
             <label className="flex items-center gap-2">
               <input
+                className="size-4 accent-brand"
                 type="checkbox"
                 checked={analytics}
                 onChange={(e) => setAnalytics(e.target.checked)}
@@ -50,7 +51,7 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
               {t('analytics')}
             </label>
             <label className="flex items-center gap-2">
-              <input type="checkbox" checked={ads} onChange={(e) => setAds(e.target.checked)} />
+              <input className="size-4 accent-brand" type="checkbox" checked={ads} onChange={(e) => setAds(e.target.checked)} />
               {t('ads')}
             </label>
           </fieldset>
@@ -58,7 +59,7 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
-            className={`${button} bg-emerald-700 text-white`}
+            className={`${button} bg-brand text-brand-ink shadow-glow hover:bg-brand-strong`}
             onClick={() => writeConsent({ analytics: true, personalisedAds: true })}
           >
             {t('acceptAll')}
@@ -66,7 +67,7 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
           {details ? (
             <button
               type="button"
-              className={`${button} border border-slate-300 bg-white`}
+              className={`${button} border border-line-strong bg-raised text-ink hover:bg-sunken`}
               onClick={() => writeConsent({ analytics, personalisedAds: ads })}
             >
               {t('save')}
@@ -74,7 +75,7 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
           ) : (
             <button
               type="button"
-              className={`${button} border border-slate-300 bg-white`}
+              className={`${button} border border-line-strong bg-raised text-ink hover:bg-sunken`}
               onClick={() => setDetails(true)}
             >
               {t('choose')}
@@ -82,7 +83,7 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
           )}
           <button
             type="button"
-            className={`${button} text-slate-700`}
+            className={`${button} text-muted hover:bg-sunken hover:text-ink`}
             onClick={() => writeConsent({ analytics: false, personalisedAds: false })}
           >
             {t('rejectAll')}

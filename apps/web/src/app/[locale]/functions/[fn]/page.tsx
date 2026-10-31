@@ -1,3 +1,4 @@
+import type { Locale } from '@tamreen/shared';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -5,6 +6,9 @@ import { indexToColumn, parseAddress } from '@tamreen/engine';
 import type { SheetSpec } from '@tamreen/shared';
 import { Formula, Prompt, formatValue } from '@tamreen/ui';
 import { Ad } from '@/components/Ad';
+import { CopyButton } from '@/components/CopyButton';
+import { FrenchExcelNote } from '@/components/FrenchExcelNote';
+import { PageHero } from '@/components/PageHero';
 import { JsonLd } from '@/components/JsonLd';
 import { Faq, RichText } from '@/components/RichText';
 import {
@@ -22,12 +26,12 @@ type Props = { params: Promise<{ locale: string; fn: string }> };
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  return (await listFunctions()).map((f) => ({ fn: f.slug }));
+  return (await listFunctions('ar')).map((f) => ({ fn: f.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, fn } = await params;
-  const page = await getFunction(fn);
+  const page = await getFunction(locale as Locale, fn);
   if (!page) return {};
   return pageMetadata({
     path: functionHref(locale, page),
@@ -43,16 +47,16 @@ function SheetTable({ sheet }: { sheet: SheetSpec }) {
   const rows = Array.from({ length: b!.row - a!.row + 1 }, (_, i) => a!.row + i);
   const cols = Array.from({ length: b!.col - a!.col + 1 }, (_, i) => a!.col + i);
   return (
-    <div dir="ltr" className="max-w-full overflow-x-auto">
+    <div dir="ltr" className="max-w-full overflow-x-auto rounded-xl border border-line">
       <table className="border-collapse text-sm">
         <thead>
           <tr>
-            <th className="w-8 border border-slate-200 bg-slate-100" aria-hidden />
+            <th className="w-8 border border-line bg-sunken" aria-hidden />
             {cols.map((c) => (
               <th
                 key={c}
                 scope="col"
-                className="min-w-16 border border-slate-200 bg-slate-100 px-2 font-medium text-slate-600"
+                className="min-w-16 border border-line bg-sunken px-2 font-medium text-muted"
               >
                 {indexToColumn(c)}
               </th>
@@ -64,7 +68,7 @@ function SheetTable({ sheet }: { sheet: SheetSpec }) {
             <tr key={r}>
               <th
                 scope="row"
-                className="border border-slate-200 bg-slate-100 px-2 font-medium text-slate-600"
+                className="border border-line bg-sunken px-2 font-medium text-muted"
               >
                 {r + 1}
               </th>
@@ -72,7 +76,7 @@ function SheetTable({ sheet }: { sheet: SheetSpec }) {
                 const value = sheet.cells[`${indexToColumn(c)}${r + 1}`];
                 const text = value === undefined ? '' : formatValue(value);
                 return (
-                  <td key={c} className="border border-slate-200 px-2 py-1">
+                  <td key={c} className="border border-line px-2 py-1">
                     <span dir="auto" className="block">
                       {text}
                     </span>
@@ -91,9 +95,9 @@ export default async function FunctionPage({ params }: Props) {
   const { locale, fn } = await params;
   setRequestLocale(locale);
   const [page, glossary, lessons, t, tl] = await Promise.all([
-    getFunction(fn),
+    getFunction(locale as Locale, fn),
     getGlossary(),
-    listLessons(),
+    listLessons(locale as Locale),
     getTranslations('functions'),
     getTranslations('lesson'),
   ]);
@@ -103,9 +107,12 @@ export default async function FunctionPage({ params }: Props) {
     .map((slug) => lessons.find((l) => l.slug === slug))
     .filter((l) => l !== undefined);
   const noPrompt = new Set<string>();
+  const section = 'flex flex-col gap-4';
+  const heading = 'text-xl font-bold';
+  const arrow = 'size-4 shrink-0 text-brand transition group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1';
 
   return (
-    <main className="mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 py-8">
+    <main className="flex flex-col">
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -113,7 +120,7 @@ export default async function FunctionPage({ params }: Props) {
           headline: page.titleAr,
           description: page.summaryAr,
           url: absoluteUrl(path),
-          inLanguage: 'ar',
+          inLanguage: locale,
           about: `Excel ${page.name} function`,
         }}
       />
@@ -126,142 +133,153 @@ export default async function FunctionPage({ params }: Props) {
       />
       <JsonLd data={faqJsonLd(page.faq)} />
 
-      <div className="flex flex-col gap-3">
-        <nav aria-label={tl('breadcrumb')} className="text-sm text-slate-500">
-          <a href={`/${locale}`} className="underline-offset-4 hover:underline">
-            {tl('home')}
-          </a>
-          <span aria-hidden className="mx-2">
-            ‹
-          </span>
-          <a href={`/${locale}/functions`} className="underline-offset-4 hover:underline">
-            {t('title')}
-          </a>
-          <span aria-hidden className="mx-2">
-            ‹
-          </span>
-          <span aria-current="page" dir="ltr">
-            {page.name}
-          </span>
-        </nav>
-        <h1 className="text-2xl font-bold sm:text-3xl">{page.titleAr}</h1>
-        <p className="text-lg text-slate-600">{page.summaryAr}</p>
-      </div>
-
-      <RichText text={page.introAr} glossary={glossary} />
-
-      <section aria-labelledby="syntax" className="flex flex-col gap-3">
-        <h2 id="syntax" className="text-xl font-bold">
-          {t('syntax')}
-        </h2>
-        <Formula className="block rounded-lg bg-slate-900 px-4 py-3 font-mono text-emerald-100">
-          {`=${page.syntax}`}
-        </Formula>
-        <h3 className="font-semibold">{t('args')}</h3>
-        <dl className="flex flex-col gap-2">
-          {page.args.map((arg) => (
-            <div key={arg.name} className="rounded-lg border border-slate-200 bg-white p-3">
-              <dt className="font-mono text-sm font-semibold">
-                <bdi dir="ltr">{arg.name}</bdi>
-                {arg.optional ? (
-                  <span className="ms-2 font-sans text-xs text-slate-500">({t('optional')})</span>
-                ) : null}
-              </dt>
-              <dd className="[&>p]:text-base [&>p]:leading-7">
-                <Prompt text={arg.descAr} glossary={glossary} introduce={noPrompt} />
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </section>
-
-      <section aria-labelledby="examples" className="flex flex-col gap-4">
-        <h2 id="examples" className="text-xl font-bold">
-          {t('examples')}
-        </h2>
-        {page.examples.map((example, i) => (
-          <figure
-            key={i}
-            className="flex flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4"
-          >
-            {example.sheet ? <SheetTable sheet={example.sheet} /> : null}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
-              <span>
-                {t('formula')}:{' '}
-                <Formula className="rounded bg-slate-100 px-1.5 py-0.5 font-mono">
-                  {example.formula}
-                </Formula>
-              </span>
-              <span>
-                {t('result')}: <bdi className="font-semibold">{formatValue(example.result)}</bdi>
-              </span>
-            </div>
-            <figcaption className="[&>p]:text-base [&>p]:leading-7">
-              <Prompt text={example.explainAr} glossary={glossary} introduce={noPrompt} />
-              {example.verified ? null : (
-                <span className="text-sm text-slate-500">{t('unverified')}</span>
-              )}
-            </figcaption>
-          </figure>
-        ))}
-      </section>
-
-      {page.errors.length ? (
-        <section aria-labelledby="errors" className="flex flex-col gap-2">
-          <h2 id="errors" className="text-xl font-bold">
-            {t('errors')}
-          </h2>
-          <ul className="flex flex-col gap-2">
-            {page.errors.map((e) => (
-              <li key={e.code} className="flex flex-wrap items-baseline gap-2">
-                <Formula className="rounded bg-rose-50 px-1.5 py-0.5 font-mono text-rose-800">
-                  {e.code}
-                </Formula>
-                <span className="[&>p]:inline [&>p]:text-base">
-                  <Prompt text={e.causeAr} glossary={glossary} introduce={noPrompt} />
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-
-      <section
-        aria-labelledby="practice"
-        className="flex flex-col gap-2 rounded-xl bg-emerald-50 p-4"
-      >
-        <h2 id="practice" className="text-xl font-bold">
-          {t('practice')}
-        </h2>
-        {practice.length ? (
-          <ul className="flex flex-col gap-1">
-            {practice.map((l) => (
-              <li key={l.slug}>
-                <a
-                  href={lessonHref(locale, l)}
-                  className="font-medium text-emerald-800 underline underline-offset-4"
-                >
-                  {l.titleAr}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-slate-700">
-            {t('practiceSoon')}{' '}
-            <a
-              href={`/${locale}/lessons`}
-              className="font-medium text-emerald-800 underline underline-offset-4"
-            >
-              {tl('lessons')}
+      <PageHero
+        eyebrow={
+          <nav aria-label={tl('breadcrumb')} className="flex flex-wrap items-center gap-1.5 font-normal text-muted">
+            <a href={`/${locale}`} className="hover:text-ink">
+              {tl('home')}
             </a>
-          </p>
-        )}
-      </section>
+            <span aria-hidden className="rtl:-scale-x-100">›</span>
+            <a href={`/${locale}/functions`} className="hover:text-ink">
+              {t('title')}
+            </a>
+            <span aria-hidden className="rtl:-scale-x-100">›</span>
+            <span aria-current="page" dir="ltr" className="font-mono text-ink-soft">
+              {page.name}
+            </span>
+          </nav>
+        }
+        title={page.titleAr}
+        intro={page.summaryAr}
+      />
 
-      <Ad name="function-after-practice" />
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-4 py-10">
+        <div className="rounded-[var(--radius-card)] border border-line bg-raised p-6 shadow-soft">
+          <RichText text={page.introAr} glossary={glossary} />
+        </div>
 
-      <Faq items={page.faq} title={t('faqTitle')} glossary={glossary} />
+        {locale === 'fr' ? (
+          <FrenchExcelNote names={[page.name]} text={tl.raw('frenchExcelNote') as string} />
+        ) : null}
+
+        <section aria-labelledby="syntax" className={section}>
+          <h2 id="syntax" className={heading}>
+            {t('syntax')}
+          </h2>
+          <div className="overflow-hidden rounded-[var(--radius-card)] bg-[#0b1220] shadow-lift">
+            <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2">
+              <span className="font-mono text-xs text-white/50">fx</span>
+              <CopyButton text={`=${page.syntax}`} labels={{ copy: t('copy'), copied: t('copied') }} />
+            </div>
+            <Formula className="block overflow-x-auto px-5 py-4 font-mono text-lg text-emerald-200">
+              {`=${page.syntax}`}
+            </Formula>
+          </div>
+          <h3 className="mt-2 font-semibold">{t('args')}</h3>
+          <dl className="grid gap-3 sm:grid-cols-2">
+            {page.args.map((arg, i) => (
+              <div key={arg.name} className="flex flex-col gap-1 rounded-2xl border border-line bg-raised p-4 shadow-soft">
+                  <dt className="flex items-center gap-2 font-mono text-sm font-bold">
+                    <span aria-hidden className="grid size-6 shrink-0 place-items-center rounded-lg bg-accent-soft font-sans text-xs font-bold text-accent">
+                      {i + 1}
+                    </span>
+                    <bdi dir="ltr">{arg.name}</bdi>
+                    {arg.optional ? (
+                      <span className="ms-2 rounded-full bg-sunken px-2 py-0.5 font-sans text-xs font-medium text-muted">
+                        {t('optional')}
+                      </span>
+                    ) : null}
+                  </dt>
+                  <dd className="text-ink-soft [&>p]:text-base [&>p]:leading-7">
+                    <Prompt text={arg.descAr} glossary={glossary} introduce={noPrompt} />
+                  </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section aria-labelledby="examples" className={section}>
+          <h2 id="examples" className={heading}>
+            {t('examples')}
+          </h2>
+          {page.examples.map((example, i) => (
+            <figure
+              key={i}
+              className="flex flex-col gap-4 rounded-[var(--radius-card)] border border-line bg-raised p-5 shadow-soft"
+            >
+              {example.sheet ? <SheetTable sheet={example.sheet} /> : null}
+              <div className="flex flex-wrap items-center gap-3 text-sm" dir="ltr">
+                <Formula className="rounded-lg bg-sunken px-3 py-1.5 font-mono font-semibold">{example.formula}</Formula>
+                <svg viewBox="0 0 20 20" className="size-4 text-faint" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M4 10h12m-5-5 5 5-5 5" />
+                </svg>
+                <bdi className="rounded-lg bg-brand-soft px-3 py-1.5 font-bold text-brand-strong">
+                  {formatValue(example.result)}
+                </bdi>
+              </div>
+              <figcaption className="text-ink-soft [&>p]:text-base [&>p]:leading-7">
+                <Prompt text={example.explainAr} glossary={glossary} introduce={noPrompt} />
+                {example.verified ? null : <span className="text-sm text-muted">{t('unverified')}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </section>
+
+        {page.errors.length ? (
+          <section aria-labelledby="errors" className={section}>
+            <h2 id="errors" className={heading}>
+              {t('errors')}
+            </h2>
+            <ul className="flex flex-col gap-3">
+              {page.errors.map((e) => (
+                <li key={e.code} className="flex flex-wrap items-baseline gap-3 rounded-2xl border border-bad/20 bg-bad-soft/50 p-4">
+                  <Formula className="rounded-lg bg-bad-soft px-2 py-0.5 font-mono font-bold text-bad">{e.code}</Formula>
+                  <span className="flex-1 text-ink-soft [&>p]:inline [&>p]:text-base">
+                    <Prompt text={e.causeAr} glossary={glossary} introduce={noPrompt} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        <section
+          aria-labelledby="practice"
+          className="flex flex-col gap-4 rounded-[var(--radius-card)] border border-brand/30 bg-brand-soft p-6"
+        >
+          <h2 id="practice" className={heading}>
+            {t('practice')}
+          </h2>
+          {practice.length ? (
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {practice.map((l) => (
+                <li key={l.slug}>
+                  <a
+                    href={lessonHref(locale, l)}
+                    className="group flex h-full items-center justify-between gap-3 rounded-2xl bg-raised p-4 font-semibold text-ink shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift"
+                  >
+                    {l.titleAr}
+                    <svg viewBox="0 0 20 20" className={arrow} fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                      <path d="M4 10h12m-5-5 5 5-5 5" />
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-ink-soft">
+              {t('practiceSoon')}{' '}
+              <a href={`/${locale}/lessons`} className="font-semibold text-brand-strong underline underline-offset-4">
+                {tl('lessons')}
+              </a>
+            </p>
+          )}
+        </section>
+
+        <Ad name="function-after-practice" />
+
+        <Faq items={page.faq} title={t('faqTitle')} glossary={glossary} />
+      </div>
     </main>
   );
 }

@@ -45,10 +45,10 @@ describe('Prompt', () => {
       />,
     );
     expect(html).toContain(
-      '<dfn class="font-semibold not-italic text-emerald-800" title="cell">خلية</dfn> (<bdi dir="ltr" lang="en">cell</bdi>)',
+      '<dfn class="font-semibold not-italic text-brand-strong" title="cell">خلية</dfn> (<bdi dir="ltr" lang="en">cell</bdi>)',
     );
     expect(html).toContain(
-      '<bdi dir="ltr" class="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.9em]" data-formula=""><code>=SUM(A1:A3)</code></bdi>',
+      '<bdi dir="ltr" class="rounded bg-sunken px-1.5 py-0.5 font-mono text-[0.9em]" data-formula=""><code>=SUM(A1:A3)</code></bdi>',
     );
   });
 

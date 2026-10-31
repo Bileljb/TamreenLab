@@ -19,7 +19,7 @@ export function DeleteAccount() {
   if (session.status !== 'user' && stage !== 'deleted') return null;
 
   const button =
-    'rounded-lg border px-4 py-2 text-sm font-medium disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700';
+    'rounded-lg border px-4 py-2 text-sm font-medium disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
 
   async function remove() {
     setStage('working');
@@ -34,18 +34,18 @@ export function DeleteAccount() {
   return (
     <section
       aria-labelledby="delete-account"
-      className="flex flex-col gap-3 rounded-xl border border-red-200 bg-white p-5"
+      className="flex flex-col gap-3 rounded-xl border border-bad/30 bg-raised p-5"
     >
       <h2 id="delete-account" className="text-lg font-bold">
         {t('title')}
       </h2>
-      {stage === 'deleted' ? null : <p className="leading-7 text-slate-700">{t('explain')}</p>}
+      {stage === 'deleted' ? null : <p className="leading-7 text-ink-soft">{t('explain')}</p>}
 
       {stage === 'idle' || stage === 'failed' ? (
         <div>
           <button
             type="button"
-            className={`${button} border-red-300 text-red-800`}
+            className={`${button} border-bad/40 text-bad`}
             onClick={() => setStage('confirm')}
           >
             {t('start')}
@@ -55,11 +55,11 @@ export function DeleteAccount() {
 
       {stage === 'confirm' || stage === 'working' ? (
         <div className="flex flex-col gap-3">
-          <p className="font-medium text-red-800">{t('warning')}</p>
+          <p className="font-medium text-bad">{t('warning')}</p>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              className={`${button} border-red-700 bg-red-700 text-white`}
+              className={`${button} border-bad bg-bad text-raised`}
               disabled={stage === 'working'}
               onClick={() => void remove()}
             >
@@ -67,7 +67,7 @@ export function DeleteAccount() {
             </button>
             <button
               type="button"
-              className={`${button} border-slate-300 bg-white`}
+              className={`${button} border-line-strong bg-raised`}
               disabled={stage === 'working'}
               onClick={() => setStage('idle')}
             >

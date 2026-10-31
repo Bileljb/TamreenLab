@@ -62,7 +62,7 @@ export function Prompt({ text, glossary, introduce }: Props) {
         return <strong key={i}>{token.text}</strong>;
       case 'code':
         return (
-          <Formula key={i} className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[0.9em]">
+          <Formula key={i} className="rounded bg-sunken px-1.5 py-0.5 font-mono text-[0.9em]">
             {token.text}
           </Formula>
         );
@@ -71,7 +71,7 @@ export function Prompt({ text, glossary, introduce }: Props) {
         const english = glossary[token.text] ?? glossary[key];
         return (
           <span key={i}>
-            <dfn className="font-semibold not-italic text-emerald-800" title={english}>
+            <dfn className="font-semibold not-italic text-brand-strong" title={english}>
               {token.text}
             </dfn>
             {english && introduce.has(key) ? (
