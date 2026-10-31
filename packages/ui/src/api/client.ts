@@ -11,6 +11,7 @@ import type {
   User,
   GuestProgress,
 } from '@tamreen/shared';
+import { pageLocale } from '../locale';
 
 /** An API error with the server's code (`EMAIL_TAKEN`, `INVALID_CREDENTIALS`, ...), or NETWORK. */
 export class ApiError extends Error {
@@ -82,7 +83,7 @@ export const api = {
     timeMs: number;
     hintUsed: boolean;
     answerShown: boolean;
-  }) => call<AttemptResponse>('/attempts', post(body)),
+  }) => call<AttemptResponse>('/attempts', post({ ...body, locale: pageLocale() })),
   syncProgress: (guestProgress: GuestProgress) =>
     call<ProgressSyncResponse>('/progress/sync', post({ guestProgress })),
   progress: () => call<LessonProgressDto[]>('/me/progress'),

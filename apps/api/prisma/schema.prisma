@@ -88,6 +88,8 @@ model Step {
   hintAr     String?
   explainAr  String?
   basePoints Int       @default(300)
+  /// The sheet and check in each translated language: {en: {sheet, check}, fr: ...} (ADR 009).
+  localesJson Json     @default("{}")
   attempts   Attempt[]
 
   @@unique([lessonId, order])
@@ -167,6 +169,8 @@ model AnalyticsEvent {
   sessionId  String
   lessonSlug String?
   stepSlug   String?
+  /// The page language (ar, en, fr); null for events recorded before languages existed.
+  locale     String?
   day        DateTime @db.Date
   createdAt  DateTime @default(now())
 

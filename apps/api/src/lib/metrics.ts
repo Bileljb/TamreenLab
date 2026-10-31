@@ -7,12 +7,16 @@ export type EventRow = {
   lessonSlug: string | null;
   stepSlug: string | null;
   day: DayKey;
+  /** The page language; null on events recorded before languages existed. */
+  locale: string | null;
 };
 
 export type LessonOutline = { slug: string; steps: string[] };
 
 export type Metrics = {
   visitors: number;
+  /** Visitors by the language of their latest event (`unknown` before languages existed). */
+  visitorsByLocale: Record<string, number>;
   /** Visitors who completed the first lesson, as a share of visitors who started any lesson. */
   activation: { activated: number; starters: number; rate: number | null };
   /** Of visitors first seen at least 7 days ago, the share seen again within 7 days. */
@@ -75,6 +79,15 @@ export function computeMetrics(
     if (sorted.some((d) => d > firstDay && d <= last)) returned++;
   }
 
+  // Events arrive in time order; the latest day wins.
+  const lastLocale = new Map<string, { day: DayKey; locale: string }>();
+  for (const e of events) {
+    const seen = lastLocale.get(e.anonId);
+    if (!seen || e.day >= seen.day) lastLocale.set(e.anonId, { day: e.day, locale: e.locale ?? 'unknown' });
+  }
+  const visitorsByLocale: Record<string, number> = {};
+  for (const { locale } of lastLocale.values()) visitorsByLocale[locale] = (visitorsByLocale[locale] ?? 0) + 1;
+
   const stepsPerSession = new Map<string, number>();
   for (const e of events) {
     if (!stepsPerSession.has(e.sessionId)) stepsPerSession.set(e.sessionId, 0);
@@ -107,6 +120,7 @@ export function computeMetrics(
 
   return {
     visitors: visitors.size,
+    visitorsByLocale,
     activation: {
       activated: activated.size,
       starters: starters.size,

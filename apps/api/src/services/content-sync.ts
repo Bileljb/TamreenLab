@@ -1,4 +1,5 @@
 import {
+  curriculumIn,
   desiredState,
   loadCurriculum,
   planSync,
@@ -6,6 +7,7 @@ import {
   type DbState,
   type SyncPlan,
 } from '@tamreen/content';
+import type { TranslatedLocale } from '@tamreen/shared';
 import { Prisma, type PrismaClient } from '../generated/prisma/client';
 
 type Db = PrismaClient;
@@ -49,6 +51,7 @@ async function readState(db: Db): Promise<DbState> {
       hintAr: s.hintAr,
       explainAr: s.explainAr,
       basePoints: s.basePoints,
+      localesJson: s.localesJson,
       attempts: s._count.attempts,
     })),
     lessonsInUse: [...inUse],
@@ -110,6 +113,7 @@ async function apply(tx: Tx, plan: SyncPlan, desired: ReturnType<typeof desiredS
         basePoints,
         sheetJson: json(row.sheetJson),
         checkJson: json(row.checkJson),
+        localesJson: json(row.localesJson),
       };
       await tx.step.upsert({
         where: { lessonId_slug: { lessonId, slug } },
@@ -133,7 +137,13 @@ export async function syncContent(
   { dryRun = false } = {},
 ): Promise<SyncResult> {
   const curriculum = await loadCurriculum(contentDir);
-  const desired = desiredState(curriculum.tracks, curriculum.lessons);
+  const localized = Object.fromEntries(
+    Object.keys(curriculum.translations).map((locale) => [
+      locale,
+      curriculumIn(curriculum, locale as TranslatedLocale).lessons,
+    ]),
+  );
+  const desired = desiredState(curriculum.tracks, curriculum.lessons, localized);
   const plan = planSync(desired, await readState(db));
   const counts = Object.entries(summarize(plan)).filter(([, n]) => n > 0);
   if (plan.errors.length || counts.length === 0 || dryRun) return { plan, counts, applied: false };

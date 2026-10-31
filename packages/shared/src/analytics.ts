@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { CONTENT_LOCALES } from './i18n';
 
 /** Usage events (PLAN Phase 5). Anonymous: a random browser id and a per-tab session id, no user. */
 export const ANALYTICS_EVENTS = [
@@ -23,6 +24,7 @@ export const AnalyticsEventSchema = z
     sessionId: id,
     lessonSlug: slug.optional(),
     stepSlug: slug.optional(),
+    locale: z.enum(CONTENT_LOCALES).optional(),
   })
   .strict();
 export type AnalyticsEvent = z.infer<typeof AnalyticsEventSchema>;

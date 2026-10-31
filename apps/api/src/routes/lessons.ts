@@ -64,7 +64,7 @@ export function lessonsRouter(ctx: Ctx) {
       titleAr: lesson.titleAr,
       summaryAr: lesson.summaryAr,
       minutes: lesson.minutes,
-      steps: lesson.steps.map(stepFromRow),
+      steps: lesson.steps.map((row) => stepFromRow(row)),
     });
   });
 

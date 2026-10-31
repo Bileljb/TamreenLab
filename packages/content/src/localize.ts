@@ -32,7 +32,7 @@ export function translateString(value: string, strings: Strings): string {
 }
 
 /** Every string inside a sheet or check, translated; numbers, booleans and keys are kept. */
-function translateDeep<T>(value: T, strings: Strings): T {
+export function translateDeep<T>(value: T, strings: Strings): T {
   if (typeof value === 'string') return translateString(value, strings) as T;
   if (Array.isArray(value)) return value.map((v) => translateDeep(v, strings)) as T;
   if (value && typeof value === 'object') {

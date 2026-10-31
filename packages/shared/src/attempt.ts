@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { FEEDBACK_CODES } from './feedback';
+import { CONTENT_LOCALES } from './i18n';
 import { CellAddressSchema, RangeRefSchema } from './step';
 
 const MAX_INPUT = 2000;
@@ -80,6 +81,8 @@ export const AttemptRequestSchema = z
     timeMs: z.number().int().nonnegative().max(86_400_000),
     hintUsed: z.boolean().default(false),
     answerShown: z.boolean().default(false),
+    /** The page language; the answer is checked against the step in that language (ADR 009). */
+    locale: z.enum(CONTENT_LOCALES).default('ar'),
   })
   .strict();
 export type AttemptRequest = z.infer<typeof AttemptRequestSchema>;

@@ -13,7 +13,8 @@ const ev = (
   day: string,
   lessonSlug: string | null = null,
   stepSlug: string | null = null,
-): EventRow => ({ name, anonId, sessionId, day, lessonSlug, stepSlug });
+  locale: string | null = null,
+): EventRow => ({ name, anonId, sessionId, day, lessonSlug, stepSlug, locale });
 
 const events: EventRow[] = [
   // Visitor 1: finishes the first lesson on day 1, comes back on day 4.
@@ -30,11 +31,16 @@ const events: EventRow[] = [
   ev('step_incorrect', 'v2', 's3', '2026-10-01', 'cells', 'b'),
   ev('lesson_start', 'v2', 's4', '2026-10-11', 'cells'),
   // Visitor 3: signs up only, too recent for the 7-day return metric.
-  ev('signup', 'v3', 's5', '2026-10-28'),
+  ev('signup', 'v3', 's5', '2026-10-28', null, null, 'fr'),
+  ev('signup', 'v3', 's5', '2026-10-29', null, null, 'en'),
 ];
 
 describe('computeMetrics', () => {
   const m = computeMetrics(events, lessons, '2026-10-30');
+
+  it('counts visitors by the language they used last; older events count as unknown', () => {
+    expect(m.visitorsByLocale).toEqual({ unknown: 2, en: 1 });
+  });
 
   it('counts visitors and activation on the first lesson', () => {
     expect(m.visitors).toBe(3);

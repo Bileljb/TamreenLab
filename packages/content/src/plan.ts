@@ -1,4 +1,4 @@
-import type { LessonFile, StepSpec, TracksFile } from '@tamreen/shared';
+import type { LessonFile, StepSpec, TracksFile, TranslatedLocale } from '@tamreen/shared';
 
 /** Rows as they are (or should be) in Postgres, keyed by slugs instead of ids. */
 export type TrackRow = { slug: string; titleAr: string; order: number };
@@ -24,6 +24,8 @@ export type StepRow = {
   hintAr: string | null;
   explainAr: string | null;
   basePoints: number;
+  /** The sheet and check in each translated language, so the API scores in the learner's language. */
+  localesJson: unknown;
 };
 
 export type DbState = {
@@ -69,9 +71,22 @@ function withoutAttempts(step: StepRow & { attempts: number }): StepRow {
 export function desiredState(
   tracks: TracksFile,
   lessons: LessonFile[],
+  /** The same lessons in each translated language (see curriculumIn). */
+  localized: Partial<Record<TranslatedLocale, LessonFile[]>> = {},
 ): Omit<DbState, 'steps'> & {
   steps: StepRow[];
 } {
+  const translatedStep = new Map<string, Record<string, unknown>>();
+  for (const [locale, list] of Object.entries(localized)) {
+    for (const l of list) {
+      for (const s of l.steps) {
+        const key = `${l.slug}/${s.slug}`;
+        const entry = translatedStep.get(key) ?? {};
+        entry[locale] = { ...(s.sheet ? { sheet: s.sheet } : {}), check: s.check };
+        translatedStep.set(key, entry);
+      }
+    }
+  }
   return {
     tracks: tracks.map(({ slug, titleAr, order }) => ({ slug, titleAr, order })),
     lessons: lessons.map((l) => ({
@@ -97,6 +112,7 @@ export function desiredState(
         hintAr: s.hintAr ?? null,
         explainAr: s.explainAr ?? null,
         basePoints: s.basePoints,
+        localesJson: translatedStep.get(`${l.slug}/${s.slug}`) ?? {},
       })),
     ),
   };

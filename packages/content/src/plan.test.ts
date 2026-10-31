@@ -110,3 +110,47 @@ describe('planSync', () => {
     });
   });
 });
+
+describe('translated steps', () => {
+  const sheetLesson = LessonFileSchema.parse({
+    ...lessonInput,
+    steps: [
+      {
+        slug: 'a',
+        type: 'ENTER_VALUE',
+        promptAr: 'اكتب اسم المنطقة',
+        sheet: { visible: 'A1:A2', cells: { A1: 'المنطقة' } },
+        check: { target: 'A2', expected: 'الشمال' },
+      },
+    ],
+  });
+  const enWith = (expected: string) =>
+    LessonFileSchema.parse({
+      ...lessonInput,
+      steps: [
+        {
+          slug: 'a',
+          type: 'ENTER_VALUE',
+          promptAr: 'Type the region',
+          sheet: { visible: 'A1:A2', cells: { A1: 'Region' } },
+          check: { target: 'A2', expected },
+        },
+      ],
+    });
+  const en = enWith('North');
+
+  it('stores the sheet and check of each language with the step', () => {
+    const [step] = desiredState(tracks, [sheetLesson], { en: [en] }).steps;
+    expect(step!.localesJson).toEqual({
+      en: { sheet: { visible: 'A1:A2', cells: { A1: 'Region' } }, check: { target: 'A2', expected: 'North' } },
+    });
+    expect(desiredState(tracks, [sheetLesson]).steps[0]!.localesJson).toEqual({});
+  });
+
+  it('updates a step when only its translation changes', () => {
+    const before = desiredState(tracks, [sheetLesson], { en: [en] });
+    const db: DbState = { ...before, steps: before.steps.map((s) => ({ ...s, attempts: 0 })) };
+    const ops = planSync(desiredState(tracks, [sheetLesson], { en: [enWith('South')] }), db).ops;
+    expect(ops.map((o) => o.kind)).toEqual(['updateStep']);
+  });
+});

@@ -16,7 +16,7 @@ const pct = (r: number | null) => (r === null ? '—' : `${(r * 100).toFixed(1)}
 const db = createPrisma();
 try {
   const [rows, curriculum] = await Promise.all([
-    db.analyticsEvent.findMany({ where: { createdAt: { gte: since } } }),
+    db.analyticsEvent.findMany({ where: { createdAt: { gte: since } }, orderBy: { createdAt: 'asc' } }),
     loadCurriculum(path.resolve(import.meta.dirname, '../../../content')),
   ]);
   const lessons = curriculum.lessons.map((l) => ({
@@ -31,6 +31,8 @@ try {
 
   console.log(`metrics:report — last ${days} days up to ${today} (${rows.length} events)\n`);
   console.log(`Visitors:                    ${m.visitors}`);
+  const byLocale = Object.entries(m.visitorsByLocale).map(([l, n]) => `${l} ${n}`);
+  console.log(`  by language:               ${byLocale.join(', ') || '-'}`);
   console.log(
     `Activation (first lesson):   ${pct(m.activation.rate)}  (${m.activation.activated} of ${m.activation.starters} who started a lesson)`,
   );

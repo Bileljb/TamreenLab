@@ -1,5 +1,6 @@
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import request from 'supertest';
+import { translateDeep } from '@tamreen/content';
 import { clock, cookieValue, db, makeApp, resetDatabase, signUp } from '../test/harness';
 
 const STEP = { lessonSlug: 'sum-basics', stepSlug: 'sum-function' };
@@ -173,8 +174,17 @@ describe('content', () => {
 
   it('hides draft lessons when drafts are off', async () => {
     const app = makeApp({ includeDrafts: false });
-    expect((await request(app).get('/api/lessons')).body).toEqual([]);
-    expect((await request(app).get('/api/lessons/sum-basics')).status).toBe(404);
+    await db.lesson.update({ where: { slug: 'sum-basics' }, data: { status: 'DRAFT' } });
+    try {
+      const slugs = (await request(app).get('/api/lessons')).body.map(
+        (l: { slug: string }) => l.slug,
+      );
+      expect(slugs).toContain('cells-and-selection');
+      expect(slugs).not.toContain('sum-basics');
+      expect((await request(app).get('/api/lessons/sum-basics')).status).toBe(404);
+    } finally {
+      await db.lesson.update({ where: { slug: 'sum-basics' }, data: { status: 'PUBLISHED' } });
+    }
   });
 });
 
@@ -249,6 +259,66 @@ describe('POST /attempts', () => {
     const paid = results.map((r) => r.body.pointsAwarded).filter((p: number) => p > 0);
     expect(paid).toHaveLength(1);
     expect(await db.pointEvent.count()).toBe(1);
+  });
+});
+
+describe('POST /attempts in other languages', () => {
+  // The SUMIF criterion is text, so an English learner types "North" where Arabic uses "الشمال".
+  const SUMIF = { lessonSlug: 'sumif-basics', stepSlug: 'sumif-worked-example' };
+  const english = { cell: 'F2', formula: '=SUMIF(B2:B7,"North",C2:C7)' };
+  const arabic = { cell: 'F2', formula: '=SUMIF(B2:B7,"الشمال",C2:C7)' };
+  const send = (answer: unknown, locale?: string) => ({
+    ...SUMIF,
+    answer,
+    timeMs: 60_000,
+    ...(locale ? { locale } : {}),
+  });
+
+  beforeEach(async () => {
+    const row = await db.step.findFirstOrThrow({
+      where: { slug: SUMIF.stepSlug, lesson: { slug: SUMIF.lessonSlug } },
+    });
+    const of = (strings: Record<string, string>) => ({
+      sheet: translateDeep(row.sheetJson, strings),
+      check: translateDeep(row.checkJson, strings),
+    });
+    await db.step.update({
+      where: { id: row.id },
+      data: {
+        localesJson: {
+          en: of({ الشمال: 'North', الجنوب: 'South', الوسط: 'Centre' }),
+          fr: of({ الشمال: 'Nord', الجنوب: 'Sud', الوسط: 'Centre' }),
+        },
+      },
+    });
+  });
+
+  it("scores against the step in the learner's language", async () => {
+    const { agent } = await signUp();
+    const wrongLanguage = await agent.post('/api/attempts').send(send(english));
+    expect(wrongLanguage.body).toMatchObject({ correct: false, pointsAwarded: 0 });
+    const right = await agent.post('/api/attempts').send(send(english, 'en'));
+    expect(right.body).toMatchObject({ correct: true, code: 'OK' });
+    expect(right.body.pointsAwarded).toBeGreaterThan(0);
+
+    const other = await signUp();
+    const ar = await other.agent.post('/api/attempts').send(send(arabic, 'ar'));
+    expect(ar.body).toMatchObject({ correct: true, code: 'OK' });
+  });
+
+  it('pays a step once whatever the language', async () => {
+    const { agent } = await signUp();
+    await agent.post('/api/attempts').send(send(english, 'en'));
+    const french = { cell: 'F2', formula: '=SUMIF(B2:B7,"Nord",C2:C7)' };
+    const again = await agent.post('/api/attempts').send(send(french, 'fr'));
+    expect(again.body).toMatchObject({ correct: true, pointsAwarded: 0 });
+    expect(await db.pointEvent.count()).toBe(1);
+  });
+
+  it('rejects an unknown language', async () => {
+    const { agent } = await signUp();
+    const res = await agent.post('/api/attempts').send(send(english, 'de'));
+    expect([res.status, res.body.error.code]).toEqual([400, 'VALIDATION_ERROR']);
   });
 });
 
@@ -402,7 +472,7 @@ describe('GET /docs', () => {
     expect(res.body.openapi).toBe('3.1.0');
     const attempts = res.body.paths['/api/attempts'].post;
     expect(Object.keys(attempts.requestBody.content['application/json'].schema.properties)).toEqual(
-      ['lessonSlug', 'stepSlug', 'answer', 'timeMs', 'hintUsed', 'answerShown'],
+      ['lessonSlug', 'stepSlug', 'answer', 'timeMs', 'hintUsed', 'answerShown', 'locale'],
     );
   });
 });
@@ -413,6 +483,7 @@ describe('POST /events', () => {
     anonId: 'anon-12345678',
     sessionId: 'session-1234',
     lessonSlug: 'sum-basics',
+    locale: 'en',
   };
 
   it('stores an anonymous event with the day and nothing about the person', async () => {
@@ -424,6 +495,7 @@ describe('POST /events', () => {
       name: 'lesson_start',
       lessonSlug: 'sum-basics',
       stepSlug: null,
+      locale: 'en',
     });
     expect(rows[0]!.day.toISOString().slice(0, 10)).toBe('2026-10-30');
     expect(Object.keys(rows[0]!)).not.toContain('userId');

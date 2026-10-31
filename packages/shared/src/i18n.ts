@@ -4,6 +4,10 @@ import { z } from 'zod';
 export const TRANSLATED_LOCALES = ['en', 'fr'] as const;
 export type TranslatedLocale = (typeof TRANSLATED_LOCALES)[number];
 
+/** Every language the content exists in; Arabic first, as the source. */
+export const CONTENT_LOCALES = ['ar', ...TRANSLATED_LOCALES] as const;
+export type ContentLocale = (typeof CONTENT_LOCALES)[number];
+
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'Expected a kebab-case slug');
 const text = z.string().trim().min(1);
 

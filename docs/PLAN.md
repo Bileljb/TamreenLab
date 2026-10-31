@@ -400,7 +400,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 **Goal:** a modern, interactive site that learners can use in Arabic, English or French. English UI moved here from §8 at the developer's request (ADR 009).
 **Tasks**
 - [x] Content translation model: `content/i18n/<en|fr>/` files for lessons, function pages and tracks; `localizeLesson`/`localizeFunction` translate text, sheet cells and quoted formula literals; lint proves every translated step and example again with the engine and rejects leftover Arabic.
-- [ ] API scores an attempt against the step in the learner's language (`Step.localesJson`, `locale` on attempts); a step is still paid once whatever the language. Analytics events record the language.
+- [x] API scores an attempt against the step in the learner's language (`Step.localesJson`, `locale` on attempts); a step is still paid once whatever the language. Analytics events record the language.
 - [ ] Locales ar, en, fr: browser-language detection on `/`, a header language switcher, `en.json`/`fr.json` with key parity, hreflang for all three, sitemap for all three, Inter for Latin text.
 - [ ] Translate all 20 lessons, 15 function pages and tracks into English and French. French pages explain that formulas use English function names (SUM = SOMME).
 - [ ] Design system: semantic colour tokens, light and dark themes with a toggle and no flash, sticky glass header, CSS-only motion that respects reduced motion.

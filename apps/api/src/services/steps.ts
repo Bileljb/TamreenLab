@@ -1,4 +1,4 @@
-import { StepSpecSchema, type StepSpec } from '@tamreen/shared';
+import { StepSpecSchema, type ContentLocale, type StepSpec } from '@tamreen/shared';
 import type { Step } from '../generated/prisma/client';
 import type { Ctx } from '../context';
 import { HttpError } from '../lib/errors';
@@ -8,14 +8,26 @@ function sheetOf(json: unknown) {
   return json && typeof json === 'object' && 'visible' in json ? json : undefined;
 }
 
-/** The step as authored, rebuilt from its row and validated again before any check runs. */
-export function stepFromRow(row: Step): StepSpec {
+/** The sheet and check stored for one translated language, if any (ADR 009). */
+function translated(row: Step, locale: ContentLocale): { sheet?: unknown; check: unknown } | null {
+  if (locale === 'ar') return null;
+  const all = row.localesJson as Record<string, { sheet?: unknown; check: unknown }> | null;
+  return all?.[locale] ?? null;
+}
+
+/**
+ * The step as authored, rebuilt from its row and validated again before any check runs. In
+ * another language the sheet and check are that language's (translated cell text and criteria);
+ * a step without that translation falls back to Arabic.
+ */
+export function stepFromRow(row: Step, locale: ContentLocale = 'ar'): StepSpec {
+  const local = translated(row, locale);
   return StepSpecSchema.parse({
     slug: row.slug,
     type: row.type,
     promptAr: row.promptAr,
-    sheet: sheetOf(row.sheetJson),
-    check: row.checkJson,
+    sheet: sheetOf(local ? local.sheet : row.sheetJson),
+    check: local ? local.check : row.checkJson,
     hintAr: row.hintAr ?? undefined,
     explainAr: row.explainAr ?? undefined,
     basePoints: row.basePoints,

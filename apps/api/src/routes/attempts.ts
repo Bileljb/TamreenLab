@@ -19,7 +19,7 @@ export function attemptsRouter(ctx: Ctx) {
     const uid = userId(req);
     const body = AttemptRequestSchema.parse(req.body);
     const row = await findStep(ctx, body.lessonSlug, body.stepSlug);
-    const step = stepFromRow(row);
+    const step = stepFromRow(row, body.locale);
 
     let result: CheckResult;
     try {

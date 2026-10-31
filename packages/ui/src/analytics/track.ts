@@ -2,6 +2,7 @@
 
 import type { AnalyticsEventName } from '@tamreen/shared';
 import { analyticsAllowed } from '../consent/consent';
+import { pageLocale } from '../locale';
 
 const ANON_KEY = 'tamreen.aid';
 const SESSION_KEY = 'tamreen.sid';
@@ -40,6 +41,7 @@ export function track(
     anonId: storedId(globalThis.localStorage, ANON_KEY),
     sessionId: storedId(globalThis.sessionStorage, SESSION_KEY),
     ...props,
+    locale: pageLocale(),
   });
   try {
     void fetch('/api/events', {
