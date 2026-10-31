@@ -11,8 +11,13 @@ import {
   type CellValue,
 } from '@tamreen/engine';
 import {
+  ARABIC_SCRIPT,
   FunctionFileSchema,
+  FunctionTranslationSchema,
   GlossarySchema,
+  LessonTranslationSchema,
+  TracksTranslationSchema,
+  type FunctionFile,
   LessonFileSchema,
   StyleFileSchema,
   TracksFileSchema,
@@ -21,8 +26,17 @@ import {
   type LessonFile,
   type StepSpec,
   type StyleFile,
+  type TracksFile,
 } from '@tamreen/shared';
-import { functionPath, lessonPath, type RawContent, type RawFile } from './load';
+import {
+  functionPath,
+  lessonPath,
+  translationPath,
+  type RawContent,
+  type RawFile,
+  type RawTranslation,
+} from './load';
+import { localizeFunction, localizeLesson, localizeTracks } from './localize';
 
 export type LintIssue = { file: string; step?: string; message: string };
 
@@ -108,7 +122,8 @@ function texts(step: StepSpec): string[] {
   return out;
 }
 
-function lintStep(step: StepSpec, glossary: Glossary, style: StyleFile): string[] {
+/** Solvability and sheet rules for one step; text rules are separate (they differ by language). */
+function lintStepLogic(step: StepSpec): string[] {
   const problems: string[] = [];
 
   // Solvable: the reference answer passes the step's own check.
@@ -154,6 +169,11 @@ function lintStep(step: StepSpec, glossary: Glossary, style: StyleFile): string[
     }
   }
 
+  return problems;
+}
+
+function lintStep(step: StepSpec, glossary: Glossary, style: StyleFile): string[] {
+  const problems = lintStepLogic(step);
   for (const text of texts(step)) problems.push(...textIssues(text, glossary, style));
   return problems;
 }
@@ -218,8 +238,142 @@ export function lintContent(raw: RawContent, options: Options = {}): LintIssue[]
     }
   }
 
-  lintFunctions(raw.functions ?? [], new Set(slugs.keys()), glossary, style, issues);
+  const functions = lintFunctions(raw.functions ?? [], new Set(slugs.keys()), glossary, style, issues);
+  for (const translation of raw.translations ?? []) {
+    lintTranslation(
+      translation,
+      lessons.map((l) => l.lesson),
+      functions,
+      tracks ?? [],
+      issues,
+    );
+  }
   return issues;
+}
+
+/** Text a learner reads in a translated lesson or page must not keep Arabic or glossary markup. */
+function translatedTextIssues(texts: string[]): string[] {
+  const problems = new Set<string>();
+  for (const text of texts) {
+    if (ARABIC_SCRIPT.test(text)) problems.add(`Arabic text left: "${text.slice(0, 60)}"`);
+    if (/{{.+?}}/.test(text)) problems.add(`{{…}} markup is for Arabic only: "${text.slice(0, 60)}"`);
+  }
+  return [...problems];
+}
+
+/** Every string inside a value (sheet cells, check fields), to look for untranslated text. */
+function allStrings(value: unknown): string[] {
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value)) return value.flatMap(allStrings);
+  if (value && typeof value === "object") return Object.values(value).flatMap(allStrings);
+  return [];
+}
+
+/**
+ * One language: a complete set of files, nothing left in Arabic, and every translated step and
+ * example proved again by the engine, because translated sheet text can change a result.
+ */
+function lintTranslation(
+  raw: RawTranslation,
+  lessons: LessonFile[],
+  functions: FunctionFile[],
+  tracks: TracksFile,
+  issues: LintIssue[],
+) {
+  const { locale } = raw;
+  const trackFile = parse(raw.tracks, TracksTranslationSchema, issues);
+  if (trackFile) {
+    try {
+      const out = localizeTracks(tracks, trackFile);
+      for (const p of translatedTextIssues(out.map((t) => t.titleAr)))
+        issues.push({ file: raw.tracks.path, message: p });
+    } catch (e) {
+      issues.push({ file: raw.tracks.path, message: e instanceof Error ? e.message : String(e) });
+    }
+  }
+
+  const bySlug = new Map(lessons.map((l) => [l.slug, l]));
+  const translated = new Set<string>();
+  for (const file of raw.lessons) {
+    const tr = parse(file, LessonTranslationSchema, issues);
+    if (!tr) continue;
+    const add = (message: string, step?: string) => issues.push({ file: file.path, step, message });
+    const lesson = bySlug.get(tr.slug);
+    if (!lesson) {
+      add(`no lesson "${tr.slug}" to translate`);
+      continue;
+    }
+    if (translationPath(locale, "lessons", tr.slug) !== file.path)
+      add(`must live at ${translationPath(locale, "lessons", tr.slug)}`);
+    translated.add(tr.slug);
+    let out: LessonFile;
+    try {
+      out = localizeLesson(lesson, tr);
+    } catch (e) {
+      add(e instanceof Error ? e.message : String(e));
+      continue;
+    }
+    const known = new Set(lesson.steps.map((s) => s.slug));
+    for (const slug of Object.keys(tr.steps)) if (!known.has(slug)) add(`unknown step "${slug}"`);
+    const pageTexts = [
+      out.titleAr,
+      out.summaryAr,
+      out.introAr ?? "",
+      ...(out.faq ?? []).flatMap((f) => [f.qAr, f.aAr]),
+    ];
+    for (const p of translatedTextIssues(pageTexts)) add(p);
+    for (const step of out.steps) {
+      const stepTexts = [...texts(step), ...allStrings(step.sheet), ...allStrings(step.check)];
+      for (const p of [...lintStepLogic(step), ...translatedTextIssues(stepTexts)]) add(p, step.slug);
+    }
+  }
+  for (const lesson of lessons) {
+    if (!translated.has(lesson.slug)) {
+      const where = translationPath(locale, "lessons", lesson.slug);
+      issues.push({ file: where, message: `no ${locale} translation (${where})` });
+    }
+  }
+
+  const fnBySlug = new Map(functions.map((f) => [f.slug, f]));
+  const fnTranslated = new Set<string>();
+  for (const file of raw.functions) {
+    const tr = parse(file, FunctionTranslationSchema, issues);
+    if (!tr) continue;
+    const add = (message: string, step?: string) => issues.push({ file: file.path, step, message });
+    const fn = fnBySlug.get(tr.slug);
+    if (!fn) {
+      add(`no function page "${tr.slug}" to translate`);
+      continue;
+    }
+    fnTranslated.add(tr.slug);
+    let out: FunctionFile;
+    try {
+      out = localizeFunction(fn, tr);
+    } catch (e) {
+      add(e instanceof Error ? e.message : String(e));
+      continue;
+    }
+    out.examples.forEach((example, i) => {
+      const problem = exampleIssue(fn.name, example);
+      if (problem) add(problem, `example-${i + 1}`);
+    });
+    const pageTexts = [
+      out.titleAr,
+      out.summaryAr,
+      out.introAr,
+      ...out.args.map((a) => a.descAr),
+      ...out.examples.flatMap((e) => [e.explainAr, ...allStrings(e)]),
+      ...out.errors.map((e) => e.causeAr),
+      ...out.faq.flatMap((f) => [f.qAr, f.aAr]),
+    ];
+    for (const p of translatedTextIssues(pageTexts)) add(p);
+  }
+  for (const fn of functions) {
+    if (!fnTranslated.has(fn.slug)) {
+      const where = translationPath(locale, "functions", fn.slug);
+      issues.push({ file: where, message: `no ${locale} translation (${where})` });
+    }
+  }
 }
 
 /** Function reference pages: valid, unique, linked to real lessons, and every example verified. */
@@ -229,11 +383,13 @@ function lintFunctions(
   glossary: Glossary,
   style: StyleFile,
   issues: LintIssue[],
-) {
+): FunctionFile[] {
   const seen = new Map<string, string>();
+  const parsed: FunctionFile[] = [];
   for (const file of files) {
     const fn = parse(file, FunctionFileSchema, issues);
     if (!fn) continue;
+    parsed.push(fn);
     const add = (message: string, step?: string) => issues.push({ file: file.path, step, message });
     if (functionPath(fn) !== file.path) add(`must live at ${functionPath(fn)}`);
     for (const key of [`slug:${fn.slug}`, `name:${fn.name}`, `order:${fn.order}`]) {
@@ -244,22 +400,8 @@ function lintFunctions(
       if (!lessonSlugs.has(lesson)) add(`links to unknown lesson "${lesson}"`);
     }
     fn.examples.forEach((example, i) => {
-      const where = `example-${i + 1}`;
-      const used = customEngine.functionsUsed(example.formula);
-      if (!used) return add(`formula ${example.formula} does not parse`, where);
-      if (!used.includes(fn.name)) add(`formula ${example.formula} does not use ${fn.name}`, where);
-      if (!example.verified) return;
-      const actual = new Sheet(example.sheet?.cells ?? {}).evaluate(example.formula);
-      const expected = example.result;
-      const ok =
-        typeof expected === 'number' && typeof actual === 'number'
-          ? Math.abs(actual - expected) < 1e-9
-          : actual === expected;
-      if (!ok)
-        add(
-          `formula ${example.formula} gives ${JSON.stringify(actual)}, not ${JSON.stringify(expected)}`,
-          where,
-        );
+      const problem = exampleIssue(fn.name, example);
+      if (problem) add(problem, `example-${i + 1}`);
     });
     const texts = [
       fn.titleAr,
@@ -272,6 +414,24 @@ function lintFunctions(
     ];
     for (const problem of texts.flatMap((t) => textIssues(t, glossary, style))) add(problem);
   }
+  return parsed;
+}
+
+/** An example must use its function and, unless marked unverified, give the stated result. */
+function exampleIssue(name: string, example: FunctionFile['examples'][number]): string | null {
+  const used = customEngine.functionsUsed(example.formula);
+  if (!used) return `formula ${example.formula} does not parse`;
+  if (!used.includes(name)) return `formula ${example.formula} does not use ${name}`;
+  if (!example.verified) return null;
+  const actual = new Sheet(example.sheet?.cells ?? {}).evaluate(example.formula);
+  const expected = example.result;
+  const ok =
+    typeof expected === 'number' && typeof actual === 'number'
+      ? Math.abs(actual - expected) < 1e-9
+      : actual === expected;
+  return ok
+    ? null
+    : `formula ${example.formula} gives ${JSON.stringify(actual)}, not ${JSON.stringify(expected)}`;
 }
 
 /** Glossary terms that do not resolve, and discouraged words, in one learner-facing text. */

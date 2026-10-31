@@ -396,6 +396,21 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 
 > **Launch gate (after Phase 5):** the developer publishes to one country's communities and reviews real metrics for several weeks (section 5) before deciding what to build next. Do not start Phase 6 until the developer says so.
 
+### Phase 5b — Modern redesign and English/French (requested by the developer, 2026-10-31)
+**Goal:** a modern, interactive site that learners can use in Arabic, English or French. English UI moved here from §8 at the developer's request (ADR 009).
+**Tasks**
+- [x] Content translation model: `content/i18n/<en|fr>/` files for lessons, function pages and tracks; `localizeLesson`/`localizeFunction` translate text, sheet cells and quoted formula literals; lint proves every translated step and example again with the engine and rejects leftover Arabic.
+- [ ] API scores an attempt against the step in the learner's language (`Step.localesJson`, `locale` on attempts); a step is still paid once whatever the language. Analytics events record the language.
+- [ ] Locales ar, en, fr: browser-language detection on `/`, a header language switcher, `en.json`/`fr.json` with key parity, hreflang for all three, sitemap for all three, Inter for Latin text.
+- [ ] Translate all 20 lessons, 15 function pages and tracks into English and French. French pages explain that formulas use English function names (SUM = SOMME).
+- [ ] Design system: semantic colour tokens, light and dark themes with a toggle and no flash, sticky glass header, CSS-only motion that respects reduced motion.
+- [ ] Redesigned home (interactive mini-sheet in the hero, progress rings on tracks), lessons page, lesson player (animated progress, XP chip, feedback motion, celebration on completion), function pages, panels, forms and static pages.
+**Acceptance**
+- [ ] typecheck, lint, tests, content:lint (3 languages) and build pass; an English and a French SUMIF step are scored correct by the API.
+- [ ] Every page in all three languages returns 200, is indexable and carries hreflang alternates; `/` follows the browser language.
+- [ ] Lighthouse on ar, en and fr lesson and function pages: accessibility ≥ 90, SEO ≥ 95, mobile performance ≥ 85, LCP < 2.5 s, CLS < 0.1.
+**Report:** screenshots at 390 and 1280 px in each language in `docs/screenshots/phase-5b/`.
+
 ### Phase 6 — Shortcut drills (about 1 week)
 **Goal:** keyboard-shortcut practice that fails gracefully.
 **Tasks**
@@ -464,7 +479,7 @@ You instrument and report; the developer sets targets and makes the go/no-go cal
 - Free vs paid tiers, premium lessons, server-side entitlement checks, an ad-free paid option, and a pricing page.
 - Completion certificates and a public certificate verification page.
 - Team and B2B accounts.
-- Social sign-in, and an English UI.
+- Social sign-in. (An English UI moved to Phase 5b at the developer's request, together with French.)
 - Pivot-table and formatting simulations.
 
 When these are requested, add them with new migrations and new phases; do not leave placeholder tables or fields for them now.

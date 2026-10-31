@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import type { LessonFileInput, StepSpecInput } from '@tamreen/shared';
 import { formatIssue, lintContent, reviewedSlugs, type LintIssue } from './lint';
@@ -312,11 +313,93 @@ describe('function pages', () => {
   });
 });
 
+describe('translations', () => {
+  const strings = { الصنف: 'Item', الكمية: 'Quantity', قلم: 'Pen', دفتر: 'Notebook' };
+  const choice = { prompt: 'Pick the right answer.', options: ['A', 'B'] };
+  const enLesson = (overrides: Record<string, unknown> = {}) => ({
+    slug: 'sum-basics',
+    title: 'Sums',
+    summary: 'Lesson summary',
+    intro: 'A short explanation.',
+    faq: [
+      { q: 'First question?', a: 'First answer.' },
+      { q: 'Second question?', a: 'Second answer.' },
+    ],
+    strings,
+    steps: {
+      s1: { prompt: 'Write the sum in C2 (s1).' },
+      s2: { prompt: 'Write the sum in C2 (s2).' },
+      s3: choice,
+      s4: choice,
+      s5: choice,
+    },
+    ...overrides,
+  });
+  const lintEn = (
+    lessons: Record<string, unknown>[],
+    base: LessonFileInput[] = [goodLesson()],
+    tracks: unknown = { aggregation: 'Sums' },
+  ) =>
+    messages(
+      lintContent(
+        content(base, {
+          translations: [
+            {
+              locale: 'en',
+              lessons: lessons.map((l) => ({ path: `i18n/en/lessons/${l.slug}.json`, json: l })),
+              functions: [],
+              tracks: { path: 'i18n/en/tracks.json', json: tracks },
+            },
+          ],
+        }),
+      ),
+    );
+
+  it('passes a complete translation', () => {
+    expect(lintEn([enLesson()])).toEqual([]);
+  });
+
+  it('requires every lesson and track in each translated language', () => {
+    expect(lintEn([])).toContain('no en translation (i18n/en/lessons/sum-basics.json)');
+    expect(lintEn([enLesson()], undefined, {})).toEqual(
+      expect.arrayContaining([expect.stringMatching(/track "aggregation"/)]),
+    );
+  });
+
+  it.each<[string, Record<string, unknown>, RegExp]>([
+    ['Arabic left untranslated', { strings: { ...strings, دفتر: undefined } }, /Arabic text left/],
+    ['glossary markup', { title: 'The {{cell}}' }, /\{\{…\}\} markup/],
+    ['a missing step', { steps: { s1: { prompt: 'x' } } }, /no translation for step "s2"/],
+    ['an unknown lesson', { slug: 'nope' }, /no lesson "nope"/],
+  ])('rejects %s', (_name, overrides, pattern) => {
+    const lesson = JSON.parse(JSON.stringify(enLesson(overrides)));
+    const issues = lintEn([lesson]);
+    expect(issues.some((m) => pattern.test(m)), issues.join('\n')).toBe(true);
+  });
+
+  it('proves the translated steps are still solvable', () => {
+    // Two products translated to the same word change the SUMIF result.
+    const sumif = goodLesson({
+      steps: [
+        formulaStep('s1', { expected: { value: 15 }, solution: '=SUMIF(A2:A4,"قلم",B2:B4)' }),
+        formulaStep('s2'),
+        choiceStep('s3'),
+        choiceStep('s4'),
+        choiceStep('s5'),
+      ],
+    });
+    const issues = lintEn([enLesson({ strings: { ...strings, دفتر: 'Pen' } })], [sumif]);
+    expect(issues.some((m) => /does not verify/.test(m)), issues.join('\n')).toBe(true);
+  });
+});
+
 describe('the real curriculum', () => {
   const dir = path.resolve(import.meta.dirname, '../../../content');
 
   it('passes content:lint', async () => {
-    expect(lintContent(await readContent(dir)).map(formatIssue)).toEqual([]);
+    const guide = await readFile(path.resolve(dir, '../docs/CONTENT.md'), 'utf8');
+    const issues = lintContent(await readContent(dir), { contentGuide: guide });
+    expect(issues.map(formatIssue)).toEqual([]);
   });
 
   it('loads in curriculum order', async () => {

@@ -17,6 +17,6 @@ const steps = raw.lessons.reduce(
 
 for (const issue of issues) console.error(formatIssue(issue));
 console.log(
-  `content:lint: ${raw.lessons.length} lessons, ${steps} steps, ${raw.functions?.length ?? 0} functions, ${issues.length} errors`,
+  `content:lint: ${raw.lessons.length} lessons, ${steps} steps, ${raw.functions?.length ?? 0} functions, languages ar${(raw.translations ?? []).map((t) => `, ${t.locale}`).join('')}, ${issues.length} errors`,
 );
 process.exit(issues.length ? 1 : 0);
