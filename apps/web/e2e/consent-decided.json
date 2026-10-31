@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:3000",
+      "localStorage": [
+        {
+          "name": "tamreen.consent.v1",
+          "value": "{\"analytics\":true,\"personalisedAds\":false,\"decidedAt\":\"2026-10-30T00:00:00.000Z\"}"
+        }
+      ]
+    }
+  ]
+}

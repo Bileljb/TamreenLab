@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "test": "vitest run",
     "e2e": "playwright test",
-    "a11y": "node scripts/a11y.mjs"
+    "lighthouse": "node scripts/lighthouse.mjs"
   },
   "dependencies": {
     "@tamreen/content": "workspace:*",

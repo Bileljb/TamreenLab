@@ -152,7 +152,7 @@ test.describe('desktop, keyboard only', () => {
     await expectCorrectThenContinue(page);
 
     await expect(page.getByRole('heading', { name: 'أحسنت! أكملت الدرس' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'الدرس التالي' })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: 'الدرس التالي', exact: true })).toHaveAttribute(
       'href',
       '/ar/lessons/aggregation/average',
     );

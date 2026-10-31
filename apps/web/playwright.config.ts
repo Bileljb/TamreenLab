@@ -9,6 +9,8 @@ export default defineConfig({
   reporter: isCI ? 'github' : 'list',
   use: {
     baseURL: 'http://localhost:3000',
+    // Consent already decided, so the fixed banner never covers buttons; e2e/seo.spec.ts tests it.
+    storageState: 'e2e/consent-decided.json',
     trace: 'on-first-retry',
   },
   projects: [
