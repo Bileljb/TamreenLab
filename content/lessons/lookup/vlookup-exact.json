@@ -3,7 +3,7 @@
   "track": "lookup",
   "order": 17,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "البحث في جدول: VLOOKUP",
   "summaryAr": "ابحث عن رمز منتج في جدول، واجلب اسمه أو سعره أو مخزونه بالدالة VLOOKUP.",
   "minutes": 6,

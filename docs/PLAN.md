@@ -452,8 +452,8 @@ You instrument and report; the developer sets targets and makes the go/no-go cal
 
 ## 7. Decisions that belong to the developer (record each as an ADR in `docs/adr/`)
 
-- **D1** Brand name and domain.
-- **D2** First target country, and a dialect-neutral writing style.
+- **D1** Brand name and domain. *Brand decided: TamreenLab (ADR 008); domain open.*
+- **D2** First target country, and a dialect-neutral writing style. *Decided (ADR 008): no country named on the site; Gulf audience hoped for; Modern Standard Arabic.*
 - **D3** Hosting regions and providers.
 - **D4** Formula engine and, if HyperFormula, whether to buy its commercial license.
 - **D5** Ad network and consent approach.

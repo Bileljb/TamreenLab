@@ -3,7 +3,7 @@
   "track": "aggregation",
   "order": 5,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "المتوسط بالدالة AVERAGE",
   "summaryAr": "احسب المتوسط بالجمع والقسمة، ثم بالدالة AVERAGE، وتعرّف على ما تفعله بالخلايا الفارغة.",
   "minutes": 5,

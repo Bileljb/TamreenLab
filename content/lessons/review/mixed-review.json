@@ -3,7 +3,7 @@
   "track": "review",
   "order": 20,
   "kind": "SUMMARY",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "مراجعة شاملة: تقرير دورة تدريبية",
   "summaryAr": "اجمع ما تعلمته من IF وCOUNTIF وAVERAGE وSUMIF وCOUNTIFS وVLOOKUP في تقرير واحد.",
   "minutes": 8,

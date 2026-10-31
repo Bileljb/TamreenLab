@@ -3,7 +3,7 @@
   "track": "lookup",
   "order": 18,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "عندما لا يوجد ما تبحث عنه: IFERROR",
   "summaryAr": "افهم الخطأ #N/A في VLOOKUP، واعرض بدلًا منه رسالة واضحة بالدالة IFERROR.",
   "minutes": 5,

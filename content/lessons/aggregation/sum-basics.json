@@ -3,6 +3,7 @@
   "track": "aggregation",
   "order": 4,
   "kind": "CONCEPT",
+  "status": "PUBLISHED",
   "titleAr": "الجمع بالدالة SUM",
   "summaryAr": "اكتب أول معادلة جمع، ثم استخدم الدالة SUM مع نطاق، واجعل النتيجة تتحدث وحدها عندما تتغير البيانات.",
   "minutes": 5,

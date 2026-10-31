@@ -3,7 +3,7 @@
   "track": "conditional",
   "order": 15,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "شروط المقارنة والنجمة",
   "summaryAr": "استخدم أكبر من وأصغر من ولا يساوي، والنجمة لمطابقة جزء من النص، داخل شروط COUNTIF وSUMIF.",
   "minutes": 6,

@@ -46,12 +46,14 @@ Every `{{term}}` must exist in `content/glossary.json`. Put formulas, cell refer
 
 - All data must be original. Never copy tables, names or text from other sites or books.
 - Use names from across the Arab world (سلمى، يوسف، مريم، كريم، هدى …) and familiar settings: a bakery, a stationery shop, a school, a small office.
-- Do not use currency symbols or a specific country's currency until decision D2 is made. Use plain numbers, or units such as quantities and hours.
+- The site is for every Arabic reader and never names a target country, though most of the audience is expected from the Gulf (D2, ADR 008). Use Modern Standard Arabic, avoid any one country's dialect, currency or institutions, and use plain numbers or units such as quantities and hours.
 - Keep sheets small (the visible range is at most about 30 rows by 12 columns) and label every column in row 1.
 
 ## Publishing
 
 New lessons are `"status": "DRAFT"`. A lesson becomes `"PUBLISHED"` only after a native Arabic speaker has reviewed it and an entry has been added to the review log below. Lint rejects a published lesson that is not in the log.
+
+Exception (ADR 008): the developer published the first 20 lessons on 2026-10-31 without that review. They are logged below as not yet reviewed. When a native speaker reviews one, replace its row with the reviewer and date.
 
 ## Review log
 
@@ -59,3 +61,23 @@ One row per reviewed lesson. Write the slug in backticks.
 
 | Lesson | Reviewer | Date | Notes |
 | ------ | -------- | ---- | ----- |
+| `aggregation-practice` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `aggregation-review` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `and-or` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `average` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `cells-and-selection` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `count-and-counta` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `countif-basics` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `criteria-operators` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `editing-cells` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `if-basics` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `if-with-conditions` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `min-and-max` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `mixed-review` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `ranges-and-references` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `sum-basics` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `sumif-basics` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `sumifs-countifs` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `vlookup-approximate` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `vlookup-exact` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `vlookup-not-found` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |

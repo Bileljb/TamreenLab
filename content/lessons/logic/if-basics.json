@@ -3,7 +3,7 @@
   "track": "logic",
   "order": 10,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "الاختيار بشرط: الدالة IF",
   "summaryAr": "اجعل المعادلة تختار بين نتيجتين حسب شرط، وتعرّف على القيمتين TRUE وFALSE.",
   "minutes": 5,

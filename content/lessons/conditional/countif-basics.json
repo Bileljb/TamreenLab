@@ -3,7 +3,7 @@
   "track": "conditional",
   "order": 14,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "العدّ بشرط: COUNTIF",
   "summaryAr": "عدّ الكتب حسب تصنيفها وحالتها في مكتبة مدرسية بالدالة COUNTIF.",
   "minutes": 5,

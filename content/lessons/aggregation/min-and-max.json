@@ -3,7 +3,7 @@
   "track": "aggregation",
   "order": 6,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "أصغر قيمة وأكبرها: MIN وMAX",
   "summaryAr": "أوجد أكبر قيمة وأصغرها في نطاق، واحسب الفرق بينهما بمعادلة واحدة.",
   "minutes": 4,

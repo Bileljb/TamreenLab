@@ -3,7 +3,7 @@
   "track": "logic",
   "order": 11,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "أكثر من شرط: AND وOR",
   "summaryAr": "تحقق من عدة شروط معًا بالدالة AND، أو من شرط واحد على الأقل بالدالة OR.",
   "minutes": 5,

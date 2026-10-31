@@ -4,10 +4,9 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
 
 ## 1. Blocking: do these before going live
 
-- [ ] **Decide D1, D2, D3 and D5** and record each as an ADR in `docs/adr/`: brand and domain, first target country, hosting, and ad network plus consent approach.
-- [ ] **Native Arabic review of the 20 lessons.** All lessons are still `DRAFT`. A lesson becomes `PUBLISHED` after review, with an entry in the review log in `docs/CONTENT.md`.
-  - **Why it blocks:** in production the API excludes drafts by default (`CONTENT_INCLUDE_DRAFTS` defaults to off). Draft lessons still render on the site, but their attempts are not scored.
-  - **If you must launch before review:** set `CONTENT_INCLUDE_DRAFTS=true` on the API, deliberately.
+- [x] **D1 brand and D2 audience** are decided (ADR 008): TamreenLab, no country named on the site, Gulf audience hoped for.
+- [ ] **Decide the domain (rest of D1), D3 and D5** and record each as an ADR in `docs/adr/`: hosting, and ad network plus consent approach.
+- [x] **Lessons published.** All 20 are `PUBLISHED` by developer decision, without native review yet (ADR 008). A native review later is still recommended; replace each review-log row in `docs/CONTENT.md` as lessons are reviewed.
 - [ ] **Production environment**
   - Web:
     - `SITE_URL` is the public origin, with no trailing slash. It drives canonical URLs, the sitemap and structured data.
@@ -17,12 +16,10 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
     - `DATABASE_URL`.
     - `JWT_SECRET`: a long random value. The API refuses to start in production without it.
     - `NODE_ENV=production`. This also makes cookies `Secure`.
-    - `DAY_UTC_OFFSET_MINUTES` if the target country is not UTC+3.
+    - `DAY_UTC_OFFSET_MINUTES` stays at the default UTC+3 (ADR 008).
   - Database and content: run `pnpm db:migrate`, then `pnpm content:sync` against the production database.
 - [ ] **Contact address.** The contact page says the address is "added at launch" (`pages.contact.body` in `apps/web/messages/ar.json`). Add a real address.
-- [ ] **Account deletion.** The privacy page promises learners can delete their account. The API supports it (`DELETE /api/me`), but the site has no button for it yet.
-  - **Option 1:** ask for a small task to add one.
-  - **Option 2:** soften the privacy text until Phase 9.
+- [x] **Account deletion.** Signed-in learners can delete their account from the bottom of the privacy page, with a confirmation step (`DELETE /api/me`).
 
 ## 2. Search Console
 
@@ -60,7 +57,7 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
 
 ## 5. Consent text
 
-- [ ] **Have the banner and privacy page reviewed for the target country.** The text is in `apps/web/messages/ar.json`, under `consent` and `pages.privacy`.
+- [ ] **Have the banner and privacy page reviewed for the Gulf countries you expect most learners from** (Saudi Arabia's PDPL and the UAE's PDPL are the main ones). The text is in `apps/web/messages/ar.json`, under `consent` and `pages.privacy`.
   - **Current behaviour:** anonymous analytics are on until the learner refuses them (opt-out), and personalised ads are off until they accept (opt-in).
   - If the target country, or the ad network's terms, require opt-in for analytics, change the default in `analyticsAllowed` (`packages/ui/src/consent/consent.ts`). This is a one-line change.
 - [ ] **Name the operator** (a person or company) and add a contact for privacy requests on the privacy page.

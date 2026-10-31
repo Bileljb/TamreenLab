@@ -3,7 +3,7 @@
   "track": "aggregation",
   "order": 8,
   "kind": "PRACTICE",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "تمرين: مبيعات كشك العصير",
   "summaryAr": "طبّق SUM وAVERAGE وMAX وCOUNTA على جدول مبيعات أسبوع واحد.",
   "minutes": 5,

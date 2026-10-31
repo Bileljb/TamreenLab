@@ -3,6 +3,7 @@
   "track": "basics",
   "order": 1,
   "kind": "CONCEPT",
+  "status": "PUBLISHED",
   "titleAr": "الخلايا والتحديد",
   "summaryAr": "تعرّف على الخلية واسمها، وحدّد نطاقًا من الخلايا، واكتب أول بياناتك في ورقة العمل.",
   "minutes": 4,

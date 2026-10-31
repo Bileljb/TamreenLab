@@ -3,7 +3,7 @@
   "track": "lookup",
   "order": 19,
   "kind": "CONCEPT",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "البحث في الشرائح: VLOOKUP التقريبي",
   "summaryAr": "استخدم VLOOKUP مع TRUE لتجد الشريحة المناسبة في جدول نسب، ثم احسب العمولة.",
   "minutes": 6,

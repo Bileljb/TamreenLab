@@ -3,7 +3,7 @@
   "track": "logic",
   "order": 12,
   "kind": "PRACTICE",
-  "status": "DRAFT",
+  "status": "PUBLISHED",
   "titleAr": "تمرين: خصومات الطلبات",
   "summaryAr": "اجمع IF مع AND وOR وNOT لتقرر الخصم والتوصيل لكل طلب.",
   "minutes": 6,
