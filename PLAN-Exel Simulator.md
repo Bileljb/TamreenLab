@@ -309,92 +309,107 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 ### Phase 0 — Foundations and decisions (2–3 days)
 **Goal:** a clean monorepo, working local dev, and the decisions that are expensive to change later.
 **Tasks**
-- [ ] Scaffold the pnpm + Turborepo workspace per 3.1; TypeScript strict; ESLint, Prettier; Vitest; Playwright with an empty smoke test.
-- [ ] Create `CLAUDE.md` at the repo root from section 9, and copy this file to `docs/PLAN.md`.
-- [ ] `docker-compose.yml` with Postgres; Prisma initialised with the schema in 3.4; first migration; seed script stub.
-- [ ] `apps/web`: Next.js + Tailwind + next-intl, `dir="rtl"`, Arabic font, a placeholder RTL home page, and a Next rewrite from `/api/*` to Express.
-- [ ] `apps/api`: Express + zod + helmet + a health route + error middleware.
-- [ ] CI (GitHub Actions): install, typecheck, lint, test, build.
-- [ ] **Spike:** implement the same 15 test formulas (SUM, IF, SUMIF, COUNTIFS, VLOOKUP, XLOOKUP, INDEX/MATCH, LEFT/MID/FIND, DATEDIF) with HyperFormula and with a small custom evaluator; compare function coverage, bundle size, correctness and license; write `docs/adr/001-formula-engine.md`.
+- [x] Scaffold the pnpm + Turborepo workspace per 3.1; TypeScript strict; ESLint, Prettier; Vitest; Playwright with an empty smoke test.
+- [x] Create `CLAUDE.md` at the repo root from section 9, and copy this file to `docs/PLAN.md`.
+- [x] `docker-compose.yml` with Postgres; Prisma initialised with the schema in 3.4; first migration; seed script stub.
+- [x] `apps/web`: Next.js + Tailwind + next-intl, `dir="rtl"`, Arabic font, a placeholder RTL home page, and a Next rewrite from `/api/*` to Express.
+- [x] `apps/api`: Express + zod + helmet + a health route + error middleware.
+- [x] CI (GitHub Actions): install, typecheck, lint, test, build.
+- [x] **Spike:** implement the same 15 test formulas (SUM, IF, SUMIF, COUNTIFS, VLOOKUP, XLOOKUP, INDEX/MATCH, LEFT/MID/FIND, DATEDIF) with HyperFormula and with a small custom evaluator; compare function coverage, bundle size, correctness and license; write `docs/adr/001-formula-engine.md`.
 **Acceptance**
-- [ ] `pnpm dev` starts web, api and db; `pnpm test` and `pnpm build` pass in CI.
-- [ ] The Arabic RTL home page renders, and a formula inside Arabic text stays LTR.
-- [ ] ADR 001 exists with a clear recommendation and a license note.
+- [x] `pnpm dev` starts web, api and db; `pnpm test` and `pnpm build` pass in CI.
+- [x] The Arabic RTL home page renders, and a formula inside Arabic text stays LTR.
+- [x] ADR 001 exists with a clear recommendation and a license note.
 **Stop and ask:** present the spike results to the developer before choosing the formula engine (decision D4).
 
 ### Phase 1 — Exercise engine (1–2 weeks) — the riskiest phase
 **Goal:** a framework-free package that loads a step spec and decides whether an answer is correct, with useful feedback codes.
 **Tasks**
-- [ ] `packages/shared`: zod schemas for the step spec and attempt payloads. Write these first.
-- [ ] `packages/engine`: `Sheet` model (A1 parsing, ranges, typed cell values), the `FormulaEngine` adapter from ADR 001, and normalisation (leading `=`, whitespace, case, `,` vs `;`, equivalent absolute/relative references when `acceptEquivalentRefs`).
-- [ ] Checkers: `SELECT_CELL`, `SELECT_RANGE`, `ENTER_VALUE` (with tolerance), `ENTER_FORMULA` (expected value, must/must-not-use functions, variant datasets), `MULTIPLE_CHOICE`, `SHORTCUT` (key-combo matching only; browser capture is Phase 6).
-- [ ] The feedback codes from 3.5, and a function that extracts the functions used in a formula.
-- [ ] Table-driven tests, at least 120 cases: correct answers, equivalent answers, hard-coded answers, wrong ranges, syntax errors, `#N/A`, separators, Arabic text in cells.
+- [x] `packages/shared`: zod schemas for the step spec and attempt payloads. Write these first.
+- [x] `packages/engine`: `Sheet` model (A1 parsing, ranges, typed cell values), the `FormulaEngine` adapter from ADR 001, and normalisation (leading `=`, whitespace, case, `,` vs `;`, equivalent absolute/relative references when `acceptEquivalentRefs`).
+- [x] Checkers: `SELECT_CELL`, `SELECT_RANGE`, `ENTER_VALUE` (with tolerance), `ENTER_FORMULA` (expected value, must/must-not-use functions, variant datasets), `MULTIPLE_CHOICE`, `SHORTCUT` (key-combo matching only; browser capture is Phase 6).
+- [x] The feedback codes from 3.5, and a function that extracts the functions used in a formula.
+- [x] Table-driven tests, at least 120 cases: correct answers, equivalent answers, hard-coded answers, wrong ranges, syntax errors, `#N/A`, separators, Arabic text in cells.
 **Acceptance**
-- [ ] All tests pass; coverage on `packages/engine` is at least 90%.
-- [ ] The package runs in Node and in a browser bundle with no Node-only imports.
-- [ ] A hard-coded `=450` fails a SUMIF step through the variant check.
+- [x] All tests pass; coverage on `packages/engine` is at least 90%.
+- [x] The package runs in Node and in a browser bundle with no Node-only imports.
+- [x] A hard-coded `=450` fails a SUMIF step through the variant check.
 **Report:** coverage, and any function the engine cannot support.
 
 ### Phase 2 — Grid and lesson player (1–2 weeks)
 **Goal:** a complete lesson playable in the browser with guest progress, no API calls yet.
 **Tasks**
-- [ ] `SpreadsheetGrid` in `packages/ui`: column and row headers, name box, formula bar, cell selection, range selection (drag and shift+arrows), arrow/Tab/Enter navigation, edit mode, copy/paste of values, accessible roles, touch support.
-- [ ] Mobile formula helper bar: on-screen `=  (  )  ,  :  $  "` keys and quick insert of function names.
-- [ ] `LessonPlayer`: progress bar, prompt with glossary highlighting, Check / Continue (Enter), Skip, Previous, hint, Show Answer, feedback bar with points, step transitions, keyboard-first flow.
-- [ ] A lesson state reducer; guest progress in localStorage under a versioned key.
-- [ ] Two hand-written lessons (cells and selection; SUM) loaded from `/content/lessons`.
-- [ ] Playwright e2e: complete both lessons by keyboard; complete one on a mobile viewport.
+- [x] `SpreadsheetGrid` in `packages/ui`: column and row headers, name box, formula bar, cell selection, range selection (drag and shift+arrows), arrow/Tab/Enter navigation, edit mode, copy/paste of values, accessible roles, touch support.
+- [x] Mobile formula helper bar: on-screen `=  (  )  ,  :  $  "` keys and quick insert of function names.
+- [x] `LessonPlayer`: progress bar, prompt with glossary highlighting, Check / Continue (Enter), Skip, Previous, hint, Show Answer, feedback bar with points, step transitions, keyboard-first flow.
+- [x] A lesson state reducer; guest progress in localStorage under a versioned key.
+- [x] Two hand-written lessons (cells and selection; SUM) loaded from `/content/lessons`.
+- [x] Playwright e2e: complete both lessons by keyboard; complete one on a mobile viewport.
 **Acceptance**
-- [ ] Both lessons complete end to end with correct and incorrect feedback, with the API not running.
-- [ ] The layout is correct in RTL on desktop and on a 390px-wide phone, with no horizontal scroll.
-- [ ] Lighthouse accessibility score is at least 90 on the lesson page.
+- [x] Both lessons complete end to end with correct and incorrect feedback, with the API not running.
+- [x] The layout is correct in RTL on desktop and on a 390px-wide phone, with no horizontal scroll.
+- [x] Lighthouse accessibility score is at least 90 on the lesson page.
 **Report:** save Playwright screenshots at 390px, 768px and 1280px to `docs/screenshots/phase-2/` for the developer to review.
 
 ### Phase 3 — Content pipeline and first curriculum (1–2 weeks; can overlap Phase 4)
 **Goal:** author lessons as files, validate them, load them into Postgres.
 **Tasks**
-- [ ] Content format (JSON or YAML) = the step spec from 3.5 plus lesson metadata. `pnpm content:lint` validates with zod, runs a reference solution for every step through the engine, checks glossary terms, and rejects empty or duplicated step prompts.
-- [ ] `pnpm content:sync` upserts tracks, lessons and steps into Postgres, idempotently.
-- [ ] `docs/CONTENT.md`: step-writing rules (one idea per step, 5–8 steps per lesson, worked example first), Arabic style (neutral Modern Standard Arabic, short sentences, English term in brackets on first use), dataset rules (original data, local currencies and names).
-- [ ] Author the first 20 lessons: cells and selection (3), SUM/AVERAGE/MIN/MAX/COUNT (5), IF/AND/OR (3), SUMIF/COUNTIF (4), VLOOKUP (3), two summary lessons.
+- [x] Content format (JSON or YAML) = the step spec from 3.5 plus lesson metadata. `pnpm content:lint` validates with zod, runs a reference solution for every step through the engine, checks glossary terms, and rejects empty or duplicated step prompts.
+- [x] `pnpm content:sync` upserts tracks, lessons and steps into Postgres, idempotently.
+- [x] `docs/CONTENT.md`: step-writing rules (one idea per step, 5–8 steps per lesson, worked example first), Arabic style (neutral Modern Standard Arabic, short sentences, English term in brackets on first use), dataset rules (original data, local currencies and names).
+- [x] Author the first 20 lessons: cells and selection (3), SUM/AVERAGE/MIN/MAX/COUNT (5), IF/AND/OR (3), SUMIF/COUNTIF (4), VLOOKUP (3), two summary lessons.
 **Acceptance**
-- [ ] `content:lint` passes with 0 errors and every step has a verified reference solution.
-- [ ] Running `content:sync` twice produces no diff.
+- [x] `content:lint` passes with 0 errors and every step has a verified reference solution.
+- [x] Running `content:sync` twice produces no diff.
 **Stop and ask:** the developer arranges the native-Arabic review of the 20 lessons. Record reviewer and date in `docs/CONTENT.md` before they are published.
 
 ### Phase 4 — Backend: auth, attempts, progress, scoring (1–2 weeks)
 **Goal:** accounts, server-verified attempts, points, streaks, a daily leaderboard.
 **Tasks**
-- [ ] Auth endpoints (T5): hashing, refresh rotation, logout, account deletion.
-- [ ] `GET /lessons` and `GET /lessons/:slug`. `POST /attempts` re-verifies with `packages/engine`, records the attempt, writes a `PointEvent`, and updates `LessonProgress` and `Streak`. Decide and document how a "day" is defined for streaks (for example a fixed UTC+3, or the user's timezone) in an ADR.
-- [ ] `POST /progress/sync`: idempotent, ignores steps already completed, caps points per merge.
-- [ ] `GET /leaderboard/daily` (aggregate over `PointEvent`), display-name rules, basic moderation (length, blocked-word list).
-- [ ] Rate limiting, validation, error shape, OpenAPI at `/api/docs`.
-- [ ] Wire the web app to the API: login and register pages, progress, stats, leaderboard panel.
-- [ ] supertest integration tests for every route, including a test proving a forged "correct" claim from the client earns no points.
+- [x] Auth endpoints (T5): hashing, refresh rotation, logout, account deletion.
+- [x] `GET /lessons` and `GET /lessons/:slug`. `POST /attempts` re-verifies with `packages/engine`, records the attempt, writes a `PointEvent`, and updates `LessonProgress` and `Streak`. Decide and document how a "day" is defined for streaks (for example a fixed UTC+3, or the user's timezone) in an ADR.
+- [x] `POST /progress/sync`: idempotent, ignores steps already completed, caps points per merge.
+- [x] `GET /leaderboard/daily` (aggregate over `PointEvent`), display-name rules, basic moderation (length, blocked-word list).
+- [x] Rate limiting, validation, error shape, OpenAPI at `/api/docs`.
+- [x] Wire the web app to the API: login and register pages, progress, stats, leaderboard panel.
+- [x] supertest integration tests for every route, including a test proving a forged "correct" claim from the client earns no points.
 **Acceptance**
-- [ ] A new user can play as a guest, register, and keep their progress.
-- [ ] Resubmitting the same correct step does not award points twice.
-- [ ] Integration tests are green.
+- [x] A new user can play as a guest, register, and keep their progress.
+- [x] Resubmitting the same correct step does not award points twice.
+- [x] Integration tests are green.
 
 ### Phase 5 — Public site, SEO, ads, metrics (1–2 weeks)
 **Goal:** every lesson and function is an indexable Arabic page, the site is fast, ad slots are in place, and usage can be measured.
 **Tasks**
-- [ ] Landing page, curriculum page, lesson pages (SSR/ISR: Arabic explanation, example, FAQ; the player loads as a client island via `dynamic(..., { ssr: false })`), function pages from `/content/functions` (MDX), shortcut pages, about/privacy/terms/contact.
-- [ ] Metadata per page, canonical, hreflang, JSON-LD (`Course` or `LearningResource` for lessons, `FAQPage` where there is an FAQ), `sitemap.xml`, `robots.txt`, OG images via `next/og`.
-- [ ] Performance budget on the lesson page, on a mid-range phone profile: LCP under 2.5s and CLS under 0.1. The grid code is lazy-loaded.
-- [ ] Analytics with events `lesson_start`, `step_correct`, `step_incorrect`, `lesson_complete`, `signup`.
-- [ ] `pnpm metrics:report`: prints activation (visitors who complete the first lesson), 7-day return rate, median steps per session, and per-lesson step drop-off.
-- [ ] Ads: a consent banner and a provider-agnostic `<AdSlot>` component with reserved space (no layout shift), used on explanation and summary areas and between lessons. Never place an ad inside or beside the exercise grid. The ad network is chosen later (decision D5).
-- [ ] Write 15 function pages (SUM, IF, SUMIF, COUNTIF, VLOOKUP, XLOOKUP, INDEX, MATCH, LEFT, RIGHT, MID, FIND, TODAY, DATEDIF, IFERROR), each with a "Practice this" link.
+- [x] Landing page, curriculum page, lesson pages (SSR/ISR: Arabic explanation, example, FAQ; the player loads as a client island via `dynamic(..., { ssr: false })`), function pages from `/content/functions` (MDX), shortcut pages, about/privacy/terms/contact.
+- [x] Metadata per page, canonical, hreflang, JSON-LD (`Course` or `LearningResource` for lessons, `FAQPage` where there is an FAQ), `sitemap.xml`, `robots.txt`, OG images via `next/og`.
+- [x] Performance budget on the lesson page, on a mid-range phone profile: LCP under 2.5s and CLS under 0.1. The grid code is lazy-loaded.
+- [x] Analytics with events `lesson_start`, `step_correct`, `step_incorrect`, `lesson_complete`, `signup`.
+- [x] `pnpm metrics:report`: prints activation (visitors who complete the first lesson), 7-day return rate, median steps per session, and per-lesson step drop-off.
+- [x] Ads: a consent banner and a provider-agnostic `<AdSlot>` component with reserved space (no layout shift), used on explanation and summary areas and between lessons. Never place an ad inside or beside the exercise grid. The ad network is chosen later (decision D5).
+- [x] Write 15 function pages (SUM, IF, SUMIF, COUNTIF, VLOOKUP, XLOOKUP, INDEX, MATCH, LEFT, RIGHT, MID, FIND, TODAY, DATEDIF, IFERROR), each with a "Practice this" link.
 **Acceptance**
-- [ ] All pages return 200 and are indexable (no `noindex`); the sitemap is valid.
-- [ ] Lighthouse SEO is at least 95 and mobile performance at least 85 on lesson and function pages.
-- [ ] No ad slot appears inside the exercise area, and CLS stays under 0.1 with ad slots enabled.
+- [x] All pages return 200 and are indexable (no `noindex`); the sitemap is valid.
+- [x] Lighthouse SEO is at least 95 and mobile performance at least 85 on lesson and function pages.
+- [x] No ad slot appears inside the exercise area, and CLS stays under 0.1 with ad slots enabled.
 **Report:** a launch checklist for the developer (Search Console, ad account, analytics, consent text).
 
 > **Launch gate (after Phase 5):** the developer publishes to one country's communities and reviews real metrics for several weeks (section 5) before deciding what to build next. Do not start Phase 6 until the developer says so.
+
+### Phase 5b — Modern redesign and English/French (requested by the developer, 2026-10-31)
+**Goal:** a modern, interactive site that learners can use in Arabic, English or French. English UI moved here from §8 at the developer's request (ADR 009).
+**Tasks**
+- [x] Content translation model: `content/i18n/<en|fr>/` files for lessons, function pages and tracks; `localizeLesson`/`localizeFunction` translate text, sheet cells and quoted formula literals; lint proves every translated step and example again with the engine and rejects leftover Arabic.
+- [x] API scores an attempt against the step in the learner's language (`Step.localesJson`, `locale` on attempts); a step is still paid once whatever the language. Analytics events record the language.
+- [x] Locales ar, en, fr: browser-language detection on `/`, a header language switcher, `en.json`/`fr.json` with key parity, hreflang for all three, sitemap for all three, Inter for Latin text.
+- [x] Translate all 20 lessons, 15 function pages and tracks into English and French. French pages explain that formulas use English function names (SUM = SOMME).
+- [x] Design system: semantic colour tokens, light and dark themes with a toggle and no flash, sticky glass header, CSS-only motion that respects reduced motion.
+- [x] Redesigned home (interactive mini-sheet in the hero, progress rings on tracks), lessons page, lesson player (animated progress, XP chip, feedback motion, celebration on completion), function pages, panels, forms and static pages.
+**Acceptance**
+- [x] typecheck, lint, tests, content:lint (3 languages) and build pass; an English and a French SUMIF step are scored correct by the API.
+- [x] Every page in all three languages returns 200, is indexable and carries hreflang alternates; `/` follows the browser language.
+- [x] Lighthouse on ar, en and fr lesson and function pages: accessibility ≥ 90, SEO ≥ 95, mobile performance ≥ 85, LCP < 2.5 s, CLS < 0.1.
+**Report:** screenshots at 390 and 1280 px in each language in `docs/screenshots/phase-5b/`.
 
 ### Phase 6 — Shortcut drills (about 1 week)
 **Goal:** keyboard-shortcut practice that fails gracefully.
@@ -452,8 +467,8 @@ You instrument and report; the developer sets targets and makes the go/no-go cal
 
 ## 7. Decisions that belong to the developer (record each as an ADR in `docs/adr/`)
 
-- **D1** Brand name and domain.
-- **D2** First target country, and a dialect-neutral writing style.
+- **D1** Brand name and domain. *Brand decided: TamreenLab (ADR 008); domain open.*
+- **D2** First target country, and a dialect-neutral writing style. *Decided (ADR 008): no country named on the site; Gulf audience hoped for; Modern Standard Arabic.*
 - **D3** Hosting regions and providers.
 - **D4** Formula engine and, if HyperFormula, whether to buy its commercial license.
 - **D5** Ad network and consent approach.
@@ -464,7 +479,7 @@ You instrument and report; the developer sets targets and makes the go/no-go cal
 - Free vs paid tiers, premium lessons, server-side entitlement checks, an ad-free paid option, and a pricing page.
 - Completion certificates and a public certificate verification page.
 - Team and B2B accounts.
-- Social sign-in, and an English UI.
+- Social sign-in. (An English UI moved to Phase 5b at the developer's request, together with French.)
 - Pivot-table and formatting simulations.
 
 When these are requested, add them with new migrations and new phases; do not leave placeholder tables or fields for them now.
