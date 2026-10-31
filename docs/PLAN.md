@@ -401,14 +401,14 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 **Tasks**
 - [x] Content translation model: `content/i18n/<en|fr>/` files for lessons, function pages and tracks; `localizeLesson`/`localizeFunction` translate text, sheet cells and quoted formula literals; lint proves every translated step and example again with the engine and rejects leftover Arabic.
 - [x] API scores an attempt against the step in the learner's language (`Step.localesJson`, `locale` on attempts); a step is still paid once whatever the language. Analytics events record the language.
-- [ ] Locales ar, en, fr: browser-language detection on `/`, a header language switcher, `en.json`/`fr.json` with key parity, hreflang for all three, sitemap for all three, Inter for Latin text.
-- [ ] Translate all 20 lessons, 15 function pages and tracks into English and French. French pages explain that formulas use English function names (SUM = SOMME).
-- [ ] Design system: semantic colour tokens, light and dark themes with a toggle and no flash, sticky glass header, CSS-only motion that respects reduced motion.
-- [ ] Redesigned home (interactive mini-sheet in the hero, progress rings on tracks), lessons page, lesson player (animated progress, XP chip, feedback motion, celebration on completion), function pages, panels, forms and static pages.
+- [x] Locales ar, en, fr: browser-language detection on `/`, a header language switcher, `en.json`/`fr.json` with key parity, hreflang for all three, sitemap for all three, Inter for Latin text.
+- [x] Translate all 20 lessons, 15 function pages and tracks into English and French. French pages explain that formulas use English function names (SUM = SOMME).
+- [x] Design system: semantic colour tokens, light and dark themes with a toggle and no flash, sticky glass header, CSS-only motion that respects reduced motion.
+- [x] Redesigned home (interactive mini-sheet in the hero, progress rings on tracks), lessons page, lesson player (animated progress, XP chip, feedback motion, celebration on completion), function pages, panels, forms and static pages.
 **Acceptance**
-- [ ] typecheck, lint, tests, content:lint (3 languages) and build pass; an English and a French SUMIF step are scored correct by the API.
-- [ ] Every page in all three languages returns 200, is indexable and carries hreflang alternates; `/` follows the browser language.
-- [ ] Lighthouse on ar, en and fr lesson and function pages: accessibility ≥ 90, SEO ≥ 95, mobile performance ≥ 85, LCP < 2.5 s, CLS < 0.1.
+- [x] typecheck, lint, tests, content:lint (3 languages) and build pass; an English and a French SUMIF step are scored correct by the API.
+- [x] Every page in all three languages returns 200, is indexable and carries hreflang alternates; `/` follows the browser language.
+- [x] Lighthouse on ar, en and fr lesson and function pages: accessibility ≥ 90, SEO ≥ 95, mobile performance ≥ 85, LCP < 2.5 s, CLS < 0.1.
 **Report:** screenshots at 390 and 1280 px in each language in `docs/screenshots/phase-5b/`.
 
 ### Phase 6 — Shortcut drills (about 1 week)

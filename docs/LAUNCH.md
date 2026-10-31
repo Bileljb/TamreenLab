@@ -25,7 +25,7 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
 
 - [ ] **Verify the domain** in Google Search Console with a DNS TXT record (works for all subdomains).
   - Optional: also verify in Bing Webmaster Tools. It can import the Google property.
-- [ ] **Submit `https://<domain>/sitemap.xml`.** It lists 43 URLs: 8 site pages, 20 lessons and 15 function pages. Sign-in pages are excluded and `noindex`.
+- [ ] **Submit `https://<domain>/sitemap.xml`.** It lists 129 URLs: 8 site pages, 20 lessons and 15 function pages in Arabic, English and French, with hreflang alternates. Sign-in pages are excluded and `noindex`. Watch indexing per language (`/ar/`, `/en/`, `/fr/`).
 - [ ] **Inspect a few URLs and request indexing:** one lesson, one function page and the home page.
 - [ ] **Check the Enhancements reports after a few days.** Lessons publish `FAQPage` and `BreadcrumbList` structured data.
 - [ ] **Track weekly** (PLAN §6, risk 3): indexed pages, plus impressions and clicks by page type (`/ar/lessons/…` vs `/ar/functions/…`).
