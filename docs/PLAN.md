@@ -419,7 +419,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 - [x] On mobile, replace shortcut drills with "pick the right command" steps.
 - [x] 6–8 shortcut lessons: selection, fill, AutoSum, formatting, navigation.
 **Acceptance**
-- [ ] Every shortcut step is either capturable in Chrome and Firefox on Windows, or automatically downgraded to multiple choice.
+- [x] Every shortcut step is either capturable in Chrome and Firefox on Windows, or automatically downgraded to multiple choice.
 
 ### Phase 7 — Engagement (about 1 week)
 **Tasks**
