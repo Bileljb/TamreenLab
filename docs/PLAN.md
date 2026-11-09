@@ -414,9 +414,9 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 ### Phase 6 — Shortcut drills (about 1 week)
 **Goal:** keyboard-shortcut practice that fails gracefully.
 **Tasks**
-- [ ] Capture `keydown` combos with `preventDefault` where the browser allows it. Keep a `blockedInBrowser` list of combos the browser reserves (for example new-tab and close-tab keys); those steps become multiple choice automatically.
-- [ ] Windows and Mac variants, with platform auto-detection and a manual switch.
-- [ ] On mobile, replace shortcut drills with "pick the right command" steps.
+- [x] Capture `keydown` combos with `preventDefault` where the browser allows it. Keep a `blockedInBrowser` list of combos the browser reserves (for example new-tab and close-tab keys); those steps become multiple choice automatically.
+- [x] Windows and Mac variants, with platform auto-detection and a manual switch.
+- [x] On mobile, replace shortcut drills with "pick the right command" steps.
 - [ ] 6–8 shortcut lessons: selection, fill, AutoSum, formatting, navigation.
 **Acceptance**
 - [ ] Every shortcut step is either capturable in Chrome and Firefox on Windows, or automatically downgraded to multiple choice.

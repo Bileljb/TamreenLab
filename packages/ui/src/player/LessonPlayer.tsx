@@ -7,9 +7,10 @@ import {
   checkAnswer,
   parseAddress,
   referenceAnswer,
+  shortcutMode,
   type CheckResult,
 } from '@tamreen/engine';
-import type { FeedbackCode, Glossary, LessonFile, StepSpec } from '@tamreen/shared';
+import type { FeedbackCode, Glossary, LessonFile, Platform, StepSpec } from '@tamreen/shared';
 import { track } from '../analytics/track';
 import { api, announcePoints } from '../api/client';
 import { useSession } from '../api/session';
@@ -19,6 +20,8 @@ import { Confetti } from './Confetti';
 import { addressOf, selectionLabel, type GridState } from '../grid/state';
 import { Prompt, firstUses } from '../prompt/Prompt';
 import { useLessonProgress } from './guestProgress';
+import { usePlatform } from './platform';
+import { Keycaps, ShortcutStep } from './ShortcutStep';
 import {
   createLessonState,
   isSettled,
@@ -169,7 +172,9 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
             <span
               key={i}
               className={`h-2 flex-1 rounded-full transition-all duration-500 ${STEP_TONE[run.status]} ${
-                i === state.index && !state.finished ? 'ring-2 ring-accent/50 ring-offset-2 ring-offset-raised' : ''
+                i === state.index && !state.finished
+                  ? 'ring-2 ring-accent/50 ring-offset-2 ring-offset-raised'
+                  : ''
               }`}
             />
           ))}
@@ -248,8 +253,15 @@ const STEP_TONE: Record<StepRun['status'], string> = {
   skipped: 'bg-line-strong',
 };
 
+type Notice = 'enterFirst' | 'chooseFirst' | 'pressFirst';
+
 /** The learner's answer from the grid or the choice list; null when there is nothing to check. */
-function buildAnswer(step: StepSpec, grid: GridState, choice: number | null): unknown {
+function buildAnswer(
+  step: StepSpec,
+  grid: GridState,
+  choice: number | null,
+  picked: { combo: string | null; platform: Platform },
+): unknown {
   switch (step.type) {
     case 'SELECT_CELL':
       return { cell: addressOf(grid.active) };
@@ -268,8 +280,17 @@ function buildAnswer(step: StepSpec, grid: GridState, choice: number | null): un
     case 'MULTIPLE_CHOICE':
       return choice === null ? null : { choice };
     case 'SHORTCUT':
-      return null;
+      // A key press is checked as it happens; this is the multiple-choice fallback.
+      return picked.combo === null ? null : { combo: picked.combo, platform: picked.platform };
   }
+}
+
+function missingNotice(step: StepSpec, platform: Platform, touch: boolean): Notice {
+  if (step.type === 'MULTIPLE_CHOICE') return 'chooseFirst';
+  if (step.type === 'SHORTCUT') {
+    return shortcutMode(step, platform, { touch }) === 'choice' ? 'chooseFirst' : 'pressFirst';
+  }
+  return 'enterFirst';
 }
 
 function StepView(props: StepViewProps) {
@@ -279,18 +300,20 @@ function StepView(props: StepViewProps) {
   const sheet = step.sheet ?? EMPTY_SHEET;
   const [grid, gridDispatch] = useGrid(sheet);
   const [choice, setChoice] = useState<number | null>(null);
-  const [notice, setNotice] = useState<'enterFirst' | 'chooseFirst' | null>(null);
+  const [picked, setPicked] = useState<string | null>(null);
+  const { platform, setPlatform, touch } = usePlatform();
+  const [notice, setNotice] = useState<Notice | null>(null);
   const continueButton = useRef<HTMLButtonElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const settled = isSettled(run);
   const usesGrid =
     step.type !== 'MULTIPLE_CHOICE' && step.type !== 'SHORTCUT' ? true : !!step.sheet;
 
-  function check() {
+  function check(given?: unknown) {
     if (settled) return;
-    const answer = buildAnswer(step, grid, choice);
+    const answer = given ?? buildAnswer(step, grid, choice, { combo: picked, platform });
     if (answer === null) {
-      setNotice(step.type === 'MULTIPLE_CHOICE' ? 'chooseFirst' : 'enterFirst');
+      setNotice(missingNotice(step, platform, touch));
       return;
     }
     setNotice(null);
@@ -319,6 +342,13 @@ function StepView(props: StepViewProps) {
   // Show Answer applies the reference answer to the grid or the choices.
   useEffect(() => {
     if (run.status !== 'revealed') return;
+    if (step.type === 'SHORTCUT') {
+      // The feedback shows the keys; in choice mode the right option is also selected.
+      if (shortcutMode(step, platform, { touch }) === 'choice') {
+        setPicked(step.check.combos[0]![platform]);
+      }
+      return;
+    }
     const answer = referenceAnswer(step);
     if ('cell' in answer && 'formula' in answer) {
       lastSeq.current += 1; // not a learner entry: do not check it
@@ -334,7 +364,7 @@ function StepView(props: StepViewProps) {
     } else if ('choice' in answer) {
       setChoice(answer.choice);
     }
-  }, [run.status, step, gridDispatch]);
+  }, [run.status, step, gridDispatch, platform, touch]);
 
   // Keyboard-first: after a result, Continue takes focus so Enter moves on.
   useEffect(() => {
@@ -346,7 +376,11 @@ function StepView(props: StepViewProps) {
     if (!props.autoFocus) return;
     // A choice step answers with the options, even when it shows a sheet for reference.
     const target = body.current?.querySelector<HTMLElement>(
-      step.type === 'MULTIPLE_CHOICE' ? 'input[type="radio"]' : '[data-active="true"]',
+      step.type === 'MULTIPLE_CHOICE'
+        ? 'input[type="radio"]'
+        : step.type === 'SHORTCUT'
+          ? '[data-shortcut-capture], input[type="radio"]'
+          : '[data-active="true"]',
     );
     target?.focus({ preventScroll: false });
   }, []);
@@ -406,15 +440,36 @@ function StepView(props: StepViewProps) {
         ) : null}
 
         {step.type === 'SHORTCUT' ? (
-          <p className="rounded-2xl bg-warn-soft px-4 py-3 text-warn">{t('shortcutSoon')}</p>
+          <ShortcutStep
+            step={step}
+            platform={platform}
+            touch={touch}
+            settled={settled}
+            picked={picked}
+            onPlatform={(p) => {
+              setPicked(null);
+              setPlatform(p);
+            }}
+            onPick={setPicked}
+            onPress={(answer) => check(answer)}
+            onEnter={primary}
+          />
         ) : null}
       </div>
 
-      <Feedback step={step} run={run} notice={notice} t={t} tf={tf} />
+      <Feedback step={step} run={run} notice={notice} platform={platform} t={t} tf={tf} />
 
       {run.hintShown && step.hintAr ? (
         <aside className="flex animate-fade-up gap-3 rounded-2xl border border-info/30 bg-info-soft px-4 py-3 text-info">
-          <svg viewBox="0 0 24 24" className="mt-1.5 size-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+          <svg
+            viewBox="0 0 24 24"
+            className="mt-1.5 size-5 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            aria-hidden
+          >
             <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" />
           </svg>
           <Prompt text={step.hintAr} glossary={glossary} introduce={new Set()} />
@@ -432,32 +487,19 @@ function StepView(props: StepViewProps) {
             {t('continue')}
           </button>
         ) : (
-          <button
-            type="button"
-            className={primaryButton}
-            onClick={check}
-            disabled={step.type === 'SHORTCUT'}
-          >
+          <button type="button" className={primaryButton} onClick={() => check()}>
             {t('check')}
           </button>
         )}
         <span className="text-xs text-muted max-sm:hidden">{t('enterKeyHint')}</span>
         <span className="ms-auto flex flex-wrap gap-1">
           {step.hintAr && !run.hintShown && !settled ? (
-            <button
-              type="button"
-              className={ghostButton}
-              onClick={props.onHint}
-            >
+            <button type="button" className={ghostButton} onClick={props.onHint}>
               {t('hint')}
             </button>
           ) : null}
-          {!settled && step.type !== 'SHORTCUT' ? (
-            <button
-              type="button"
-              className={ghostButton}
-              onClick={props.onReveal}
-            >
+          {!settled ? (
+            <button type="button" className={ghostButton} onClick={props.onReveal}>
               {t('showAnswer')}
             </button>
           ) : null}
@@ -470,11 +512,7 @@ function StepView(props: StepViewProps) {
             {t('previous')}
           </button>
           {!settled ? (
-            <button
-              type="button"
-              className={ghostButton}
-              onClick={props.onSkip}
-            >
+            <button type="button" className={ghostButton} onClick={props.onSkip}>
               {t('skip')}
             </button>
           ) : null}
@@ -487,7 +525,7 @@ function StepView(props: StepViewProps) {
 type Translate = ReturnType<typeof useTranslations<'player'>>;
 type TranslateFeedback = ReturnType<typeof useTranslations<'feedback'>>;
 
-function answerText(step: StepSpec): ReactNode {
+function answerText(step: StepSpec, platform: Platform): ReactNode {
   switch (step.type) {
     case 'SELECT_CELL':
     case 'SELECT_RANGE':
@@ -516,7 +554,7 @@ function answerText(step: StepSpec): ReactNode {
         </span>
       );
     case 'SHORTCUT':
-      return <Formula>{step.check.combos[0]!.win}</Formula>;
+      return <Keycaps combo={step.check.combos[0]![platform]} platform={platform} />;
   }
 }
 
@@ -524,12 +562,14 @@ function Feedback({
   step,
   run,
   notice,
+  platform,
   t,
   tf,
 }: {
   step: StepSpec;
   run: StepRun;
-  notice: 'enterFirst' | 'chooseFirst' | null;
+  notice: Notice | null;
+  platform: Platform;
   t: Translate;
   tf: TranslateFeedback;
 }) {
@@ -552,14 +592,16 @@ function Feedback({
     content =
       step.type === 'MULTIPLE_CHOICE'
         ? t('wrongChoice')
-        : tf.rich(run.code as Exclude<FeedbackCode, 'OK'>, {
-            f: (chunks) => <Formula>{chunks}</Formula>,
-          });
+        : step.type === 'SHORTCUT'
+          ? t('shortcutWrong')
+          : tf.rich(run.code as Exclude<FeedbackCode, 'OK'>, {
+              f: (chunks) => <Formula>{chunks}</Formula>,
+            });
   } else if (run.status === 'revealed') {
     tone = 'border-warn/40 bg-warn-soft text-warn';
     content = (
       <>
-        <span className="font-semibold">{t('answer')}</span> {answerText(step)}
+        <span className="font-semibold">{t('answer')}</span> {answerText(step, platform)}
         <span className="block text-sm">{t('revealed')}</span>
       </>
     );
@@ -587,8 +629,19 @@ function Feedback({
 
 function FeedbackIcon({ path, className }: { path: string; className: string }) {
   return (
-    <span aria-hidden className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full ${className}`}>
-      <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+    <span
+      aria-hidden
+      className={`mt-0.5 grid size-6 shrink-0 place-items-center rounded-full ${className}`}
+    >
+      <svg
+        viewBox="0 0 24 24"
+        className="size-4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
         <path d={path} />
       </svg>
     </span>
@@ -633,16 +686,27 @@ function Completion(props: {
           </svg>
         ))}
       </div>
-      <h2 ref={heading} tabIndex={-1} className="text-3xl font-extrabold text-brand-strong focus:outline-none">
+      <h2
+        ref={heading}
+        tabIndex={-1}
+        className="text-3xl font-extrabold text-brand-strong focus:outline-none"
+      >
         {t('completeTitle')}
       </h2>
       <p className="text-muted">
-        {t('completeSummary', { correct: props.correct, total: props.total, firstTry: props.firstTry })}
+        {t('completeSummary', {
+          correct: props.correct,
+          total: props.total,
+          firstTry: props.firstTry,
+        })}
       </p>
       <p className="sr-only">{t('completePoints', { points: props.points })}</p>
       <dl className="grid w-full max-w-md grid-cols-3 gap-3" aria-hidden>
         {tiles.map((tile) => (
-          <div key={tile.label} className="flex flex-col rounded-2xl bg-raised px-2 py-3 shadow-soft">
+          <div
+            key={tile.label}
+            className="flex flex-col rounded-2xl bg-raised px-2 py-3 shadow-soft"
+          >
             <dd className="text-2xl font-extrabold tabular-nums text-ink" dir="ltr">
               {tile.value}
             </dd>
@@ -659,10 +723,17 @@ function Completion(props: {
             {t('nextLesson')}
           </a>
         ) : null}
-        <button type="button" className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`} onClick={props.onRestart}>
+        <button
+          type="button"
+          className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}
+          onClick={props.onRestart}
+        >
           {t('restart')}
         </button>
-        <a href={props.lessonsHref} className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}>
+        <a
+          href={props.lessonsHref}
+          className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}
+        >
           {t('backToLessons')}
         </a>
       </div>
