@@ -1,0 +1,46 @@
+{
+  "slug": "shortcuts-review",
+  "title": "Révision des raccourcis",
+  "summary": "Entraînez-vous aux principaux raccourcis de déplacement, de sélection, de recopie et de mise en forme, sans qu'on vous donne les touches.",
+  "intro": "Dans cette révision, nous décrivons seulement la tâche : à vous de retrouver le raccourci. Si vous en oubliez un, demandez un indice ou revenez à la page des raccourcis.\n\nC'est la répétition qui transforme un raccourci en habitude : après quelques jours d'usage, vous l'utiliserez sans y penser.",
+  "faq": [
+    {
+      "q": "Quelle est la meilleure façon d'apprendre les raccourcis ?",
+      "a": "Utilisez-en deux ou trois chaque jour dans votre vrai travail, plutôt que d'apprendre une longue liste d'un coup. Ajoutez-en d'autres quand les premiers sont devenus des habitudes."
+    },
+    {
+      "q": "Ces raccourcis fonctionnent-ils dans Excel en français ?",
+      "a": "La plupart, oui : ils sont les mêmes quelle que soit la langue. Quelques raccourcis de police utilisent d'autres lettres dans la version française, comme Ctrl+G pour le gras."
+    }
+  ],
+  "steps": {
+    "review-back-to-top": {
+      "prompt": "Vous êtes à la ligne 800 du tableau. Revenez à la cellule `A1` avec un seul raccourci.",
+      "hint": "Ctrl avec la touche qui veut dire le début."
+    },
+    "review-select-row-to-end": {
+      "prompt": "Sélectionnez de la cellule active jusqu'à la dernière cellule remplie de la ligne, vers la colonne Z.",
+      "hint": "La touche de sélection, la touche de saut et la flèche."
+    },
+    "review-fill-down": {
+      "prompt": "Recopiez la formule de la première cellule de la sélection dans les cellules du dessous."
+    },
+    "review-autosum": {
+      "prompt": "Insérez la somme automatique dans la cellule sous la colonne de nombres.",
+      "hint": "Sous Windows : Alt avec le signe égal."
+    },
+    "review-bold": {
+      "prompt": "Mettez en gras les en-têtes de colonnes sélectionnés."
+    },
+    "review-undo": {
+      "prompt": "Vous avez collé au mauvais endroit. Annulez la dernière action."
+    },
+    "review-select-row": {
+      "prompt": "Sélectionnez toute la ligne de la cellule active pour la mettre en forme.",
+      "hint": "Maj avec la barre d'espace."
+    },
+    "review-lock-reference": {
+      "prompt": "Le curseur est sur la référence `E1` dans une formule. Figez-la pour qu'elle devienne `$E$1`."
+    }
+  }
+}

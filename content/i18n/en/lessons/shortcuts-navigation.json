@@ -1,0 +1,45 @@
+{
+  "slug": "shortcuts-navigation",
+  "title": "Moving around a sheet quickly",
+  "summary": "Jump to the edge of your data, to the start and end of the sheet, and move between cells and sheets without the mouse.",
+  "intro": "In a table with hundreds of rows, scrolling with the mouse wastes time. Keyboard shortcuts take you to the end of your data, or back to the top of the sheet, in an instant.\n\nIn each step, press the shortcut inside the box. If you use a Mac, pick Mac on the switch above the box: `⌘` (Command) takes the place of `Ctrl` in most shortcuts.",
+  "faq": [
+    {
+      "q": "Where does Excel stop when I press Ctrl with an arrow?",
+      "a": "It stops at the last filled cell before the first empty cell in that direction. If the next cell is empty, it jumps to the next filled cell after the gap, or to the edge of the sheet."
+    },
+    {
+      "q": "Why do some steps show options instead of the key box?",
+      "a": "The browser keeps some shortcuts for itself, such as moving between tabs, so the key press never reaches the page. In those steps, and on phones, you pick the shortcut from a list."
+    }
+  ],
+  "steps": {
+    "jump-down": {
+      "prompt": "To jump from the top of a data column to its last filled cell, press `Ctrl+↓` (on Mac: `⌘+↓`). Press it now.",
+      "hint": "Hold Ctrl and press the down arrow."
+    },
+    "jump-right": {
+      "prompt": "The same idea works in every direction. Go to the last filled cell in this row, towards column Z: press `Ctrl+→` (on Mac: `⌘+→`).",
+      "hint": "Ctrl or ⌘ with the arrow that points towards column Z."
+    },
+    "go-to-a1": {
+      "prompt": "To get back to cell `A1` from anywhere in the sheet, press `Ctrl+Home` (on Mac: `Ctrl+Home`, or `Fn+Ctrl+←` on compact keyboards).",
+      "hint": "The Home key, with Ctrl."
+    },
+    "go-to-last-cell": {
+      "prompt": "To go to the last used cell in the sheet (the last row and column that hold data), press `Ctrl+End`.",
+      "hint": "The opposite of Ctrl+Home."
+    },
+    "confirm-and-move-right": {
+      "prompt": "When you type a row of data, the `Tab` key confirms your entry and moves to the next cell in the same row. Press it now.",
+      "hint": "The key above Caps Lock."
+    },
+    "move-back-one-cell": {
+      "prompt": "You typed in the wrong cell and want to go back one cell along the row. Add `Shift` to the previous key: `Shift+Tab`."
+    },
+    "next-sheet": {
+      "prompt": "To move to the next sheet in the workbook, Excel uses `Ctrl+PageDown` on Windows and `Option+→` on Mac. On Windows the browser uses this shortcut to switch tabs, so there you pick it from a list.",
+      "hint": "Page Down means the next page."
+    }
+  }
+}

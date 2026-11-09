@@ -1,0 +1,42 @@
+{
+  "slug": "shortcuts-fill",
+  "title": "Filling cells quickly",
+  "summary": "Copy a cell to the cells below it or beside it, type the same value into several cells at once, and add a new line inside a cell.",
+  "intro": "Instead of dragging the fill handle with the mouse, select the range and press one shortcut: Excel copies the first cell into the rest. If that first cell holds a formula, its references adjust on every row.\n\nYou will also learn to type the same value into several selected cells at once, and to start a new line inside a single cell.",
+  "faq": [
+    {
+      "q": "Does Ctrl+D work with formulas?",
+      "a": "Yes. It copies the formula from the top cell into the selected cells below, and relative references change on each row, just as if you had dragged the fill handle."
+    },
+    {
+      "q": "Why doesn't Enter start a new line inside the cell?",
+      "a": "Because Enter confirms your entry and moves to the next cell. For a new line inside the cell, press Alt+Enter, or Option+Return on a Mac."
+    }
+  ],
+  "steps": {
+    "fill-down": {
+      "prompt": "`B2` holds a formula and you have selected `B2:B10`. To copy it into the cells below, press `Ctrl+D` (on Mac: `⌘+D`).",
+      "hint": "D for Down."
+    },
+    "fill-right": {
+      "prompt": "Now you want to copy cell `B2` into the next cells of the same row, `B2:F2`. Press `Ctrl+R` (on Mac: `⌘+R`).",
+      "hint": "R for Right, towards the next columns."
+    },
+    "what-fill-down-copies": {
+      "prompt": "You selected `C2:C6`, and `C2` holds the formula `=A2*B2`. What does `C6` hold after `Ctrl+D`?",
+      "options": ["`=A6*B6`", "`=A2*B2`", "The result of `C2` as a fixed number", "It stays empty"],
+      "explain": "Relative references change with each row, so the formula on row 6 is `=A6*B6`."
+    },
+    "fill-the-selection": {
+      "prompt": "Select several cells, type a value, then press `Ctrl+Enter` instead of Enter: the value goes into every selected cell. On Mac, press `Ctrl+Return`. Try it now."
+    },
+    "new-line-in-a-cell": {
+      "prompt": "You are typing a two-line heading in one cell. To start the second line without leaving the cell, press `Alt+Enter` (on Mac: `Option+Return`).",
+      "hint": "Alt with Enter; on Mac, Option with Return."
+    },
+    "fill-down-again": {
+      "prompt": "Practice: `D2` holds the total formula and you have selected `D2:D30`. Copy it down with a single shortcut.",
+      "hint": "The first letter of the word Down."
+    }
+  }
+}

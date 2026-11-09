@@ -4,5 +4,6 @@
   { "slug": "logic", "titleAr": "الشروط المنطقية", "order": 3 },
   { "slug": "conditional", "titleAr": "الجمع والعد بشرط", "order": 4 },
   { "slug": "lookup", "titleAr": "البحث عن البيانات", "order": 5 },
-  { "slug": "review", "titleAr": "المراجعة", "order": 6 }
+  { "slug": "review", "titleAr": "المراجعة", "order": 6 },
+  { "slug": "shortcuts", "titleAr": "اختصارات لوحة المفاتيح", "order": 7 }
 ]

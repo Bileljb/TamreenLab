@@ -1,0 +1,127 @@
+{
+  "slug": "shortcuts-editing",
+  "track": "shortcuts",
+  "order": 23,
+  "kind": "CONCEPT",
+  "status": "PUBLISHED",
+  "titleAr": "التعديل والتراجع والنسخ",
+  "summaryAr": "عدّل خلية وألغِ الكتابة وامسح المحتوى، ثم تراجع وأعد ما تراجعت عنه، وانسخ والصق بلوحة المفاتيح.",
+  "minutes": 5,
+  "introAr": "أكثر الاختصارات استعمالًا في إكسل هي اختصارات التعديل: الدخول إلى {{الخلية}} لتعديلها، وإلغاء الكتابة، والتراجع عن خطأ، والنسخ واللصق.\n\nاختصارات النسخ واللصق والتراجع نفسها تعمل في أغلب البرامج، فما تتعلمه هنا تستخدمه في كل مكان.",
+  "faq": [
+    {
+      "qAr": "ما الفرق بين Delete وEsc؟",
+      "aAr": "Delete يمسح محتوى الخلية المحددة. أما Esc فيلغي ما تكتبه الآن قبل تأكيده، فتبقى الخلية كما كانت."
+    },
+    {
+      "qAr": "كم خطوة يمكنني التراجع عنها؟",
+      "aAr": "يحفظ إكسل عادة آخر مئة إجراء، فتستطيع الضغط على Ctrl+Z عدة مرات. لكن بعض الإجراءات، مثل حفظ الملف وإغلاقه، تمسح هذا السجل."
+    }
+  ],
+  "steps": [
+    {
+      "slug": "edit-a-cell",
+      "type": "SHORTCUT",
+      "promptAr": "لتعديل محتوى الخلية المحددة دون مسحه، اضغط `F2`، فيظهر المؤشر في آخر النص. على Mac الاختصار هو `Ctrl+U`.",
+      "check": {
+        "combos": [
+          { "win": "F2", "mac": "Ctrl+U" },
+          { "win": "F2", "mac": "F2" }
+        ],
+        "distractors": [
+          { "win": "F4", "mac": "Cmd+T" },
+          { "win": "F1", "mac": "F1" },
+          { "win": "Ctrl+E", "mac": "Cmd+E" }
+        ]
+      },
+      "hintAr": "المفتاح الثاني في صف مفاتيح F أعلى لوحة المفاتيح."
+    },
+    {
+      "slug": "cancel-typing",
+      "type": "SHORTCUT",
+      "promptAr": "بدأت الكتابة في خلية ثم غيّرت رأيك قبل التأكيد. اضغط `Esc` لإلغاء ما كتبته وإعادة الخلية كما كانت.",
+      "check": {
+        "combos": [{ "win": "Esc", "mac": "Esc" }],
+        "distractors": [
+          { "win": "Delete", "mac": "Backspace" },
+          { "win": "Ctrl+Z", "mac": "Cmd+Z" },
+          { "win": "Enter", "mac": "Return" }
+        ]
+      }
+    },
+    {
+      "slug": "clear-a-cell",
+      "type": "SHORTCUT",
+      "promptAr": "لمسح محتوى الخلية المحددة، اضغط `Delete`. على Mac اضغط المفتاح المكتوب عليه delete.",
+      "check": {
+        "combos": [
+          { "win": "Delete", "mac": "Backspace" },
+          { "win": "Delete", "mac": "Delete" }
+        ],
+        "distractors": [
+          { "win": "Esc", "mac": "Esc" },
+          { "win": "Ctrl+X", "mac": "Cmd+X" },
+          { "win": "Space", "mac": "Space" }
+        ]
+      }
+    },
+    {
+      "slug": "undo",
+      "type": "SHORTCUT",
+      "promptAr": "مسحت الخلية الخطأ! اضغط `Ctrl+Z` (على Mac: `⌘+Z`) للتراجع عن آخر إجراء.",
+      "check": {
+        "combos": [{ "win": "Ctrl+Z", "mac": "Cmd+Z" }],
+        "distractors": [
+          { "win": "Ctrl+Y", "mac": "Cmd+Y" },
+          { "win": "Ctrl+X", "mac": "Cmd+X" },
+          { "win": "Esc", "mac": "Esc" }
+        ]
+      },
+      "hintAr": "Z هو المفتاح بجانب Shift الأيسر."
+    },
+    {
+      "slug": "redo",
+      "type": "SHORTCUT",
+      "promptAr": "تراجعت أكثر مما يلزم. لإعادة ما تراجعت عنه، اضغط `Ctrl+Y` (على Mac: `⌘+Y`).",
+      "check": {
+        "combos": [
+          { "win": "Ctrl+Y", "mac": "Cmd+Y" },
+          { "win": "Ctrl+Y", "mac": "Cmd+Shift+Z" }
+        ],
+        "distractors": [
+          { "win": "Ctrl+Z", "mac": "Cmd+Z" },
+          { "win": "Ctrl+R", "mac": "Cmd+R" },
+          { "win": "Ctrl+U", "mac": "Cmd+U" }
+        ]
+      }
+    },
+    {
+      "slug": "copy",
+      "type": "SHORTCUT",
+      "promptAr": "لنسخ الخلايا المحددة، اضغط `Ctrl+C` (على Mac: `⌘+C`). يظهر حولها إطار متحرك حتى تلصقها.",
+      "check": {
+        "combos": [{ "win": "Ctrl+C", "mac": "Cmd+C" }],
+        "distractors": [
+          { "win": "Ctrl+X", "mac": "Cmd+X" },
+          { "win": "Ctrl+V", "mac": "Cmd+V" },
+          { "win": "Ctrl+D", "mac": "Cmd+D" }
+        ]
+      },
+      "hintAr": "C من كلمة Copy."
+    },
+    {
+      "slug": "paste",
+      "type": "SHORTCUT",
+      "promptAr": "اختر خلية الوجهة، ثم اضغط `Ctrl+V` (على Mac: `⌘+V`) للصق ما نسخته.",
+      "check": {
+        "combos": [{ "win": "Ctrl+V", "mac": "Cmd+V" }],
+        "distractors": [
+          { "win": "Ctrl+C", "mac": "Cmd+C" },
+          { "win": "Ctrl+P", "mac": "Cmd+P" },
+          { "win": "Ctrl+B", "mac": "Cmd+B" }
+        ]
+      },
+      "hintAr": "المفتاح بجانب C."
+    }
+  ]
+}

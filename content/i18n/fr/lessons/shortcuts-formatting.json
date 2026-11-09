@@ -1,0 +1,42 @@
+{
+  "slug": "shortcuts-formatting",
+  "title": "Mettre en forme au clavier",
+  "summary": "Mettez du texte en gras, en italique ou souligné, affichez des nombres en monétaire ou en pourcentage, et ouvrez la fenêtre Format de cellule.",
+  "intro": "La mise en forme ne change pas la valeur stockée dans une cellule, seulement son affichage. Le nombre 0.25 reste 0.25 même affiché 25%.\n\nLes raccourcis de police (gras, italique, souligné) sont les mêmes dans la plupart des logiciels. Les raccourcis de format de nombre utilisent Ctrl et Maj avec le symbole du format : `$` pour le monétaire et `%` pour le pourcentage.",
+  "faq": [
+    {
+      "q": "Comment enlever le gras ?",
+      "a": "Appuyez à nouveau sur le même raccourci. Gras, italique et souligné s'activent et se désactivent tour à tour."
+    },
+    {
+      "q": "Quelle devise le raccourci monétaire utilise-t-il ?",
+      "a": "Celle des réglages de votre ordinateur. Pour en choisir une autre, ouvrez la fenêtre Format de cellule et choisissez la devise dans la partie Nombre."
+    }
+  ],
+  "steps": {
+    "bold": {
+      "prompt": "Vous avez sélectionné les en-têtes du tableau. Pour les mettre en gras, appuyez sur `Ctrl+B` (sur Mac : `⌘+B`). Dans Excel en français, le gras est souvent Ctrl+G ; ici, nous utilisons le raccourci de la version anglaise.",
+      "hint": "B comme Bold (gras), en anglais."
+    },
+    "italic": {
+      "prompt": "Pour écrire une remarque en italique, appuyez sur `Ctrl+I` (sur Mac : `⌘+I`).",
+      "hint": "I comme Italique."
+    },
+    "underline": {
+      "prompt": "Pour souligner le texte, appuyez sur `Ctrl+U` (sur Mac : `⌘+U`).",
+      "hint": "U comme Underline (souligné), en anglais."
+    },
+    "currency-format": {
+      "prompt": "Vous avez sélectionné la colonne des prix. Pour l'afficher au format monétaire, appuyez sur `Ctrl+Shift+$` (sur un clavier QWERTY, la touche 4 avec Maj).",
+      "hint": "Le symbole dollar $ est au-dessus du 4 sur un clavier QWERTY."
+    },
+    "percent-format": {
+      "prompt": "La colonne suivante contient des taux comme 0.25. Pour les afficher en 25%, appuyez sur `Ctrl+Shift+%`.",
+      "hint": "Ctrl, Maj et la touche du symbole %."
+    },
+    "format-cells-dialog": {
+      "prompt": "Pour retrouver toutes les options de mise en forme au même endroit, ouvrez la fenêtre Format de cellule avec `Ctrl+1` (sur Mac : `⌘+1`). Le navigateur utilise ce raccourci pour changer d'onglet : choisissez-le dans la liste.",
+      "hint": "Ctrl avec le chiffre 1."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "slug": "shortcuts-formulas",
+  "title": "Somme automatique et raccourcis de formules",
+  "summary": "Insérez SUM (SOMME) d'un seul raccourci, figez les références avec F4, affichez les formules et saisissez la date du jour.",
+  "intro": "La somme automatique écrit pour vous une formule `=SUM(...)` et propose la plage au-dessus de la cellule ou à sa gauche ; il suffit d'appuyer sur Entrée pour valider.\n\nQuand vous écrivez une formule à recopier, la touche `F4` ajoute des `$` à une référence pour la figer. Vous apprendrez aussi à afficher toutes les formules de la feuille et à saisir la date du jour.",
+  "faq": [
+    {
+      "q": "Quelle plage la somme automatique choisit-elle ?",
+      "a": "Elle prend les nombres juste au-dessus de la cellule, ou à défaut à sa gauche. Vérifiez la plage proposée avant d'appuyer sur Entrée ; vous pouvez la modifier à la souris ou avec les flèches."
+    },
+    {
+      "q": "La date saisie avec Ctrl+; change-t-elle chaque jour ?",
+      "a": "Non. Elle tape la date du jour comme valeur fixe. Pour une date qui se met à jour chaque jour, utilisez la fonction TODAY (AUJOURDHUI)."
+    }
+  ],
+  "steps": {
+    "autosum": {
+      "prompt": "Vous êtes dans la cellule sous une colonne de nombres. Appuyez sur `Alt+=` pour insérer la somme automatique. Sur Mac, le raccourci est `⌘+Shift+T`, que le navigateur utilise pour rouvrir un onglet : vous le choisirez donc dans une liste.",
+      "hint": "Alt avec le signe égal, comme pour commencer une formule."
+    },
+    "lock-a-reference": {
+      "prompt": "Vous tapez `=B2*E1`, le curseur sur `E1`, et `E1` doit rester fixe quand vous recopiez la formule. Appuyez sur `F4` pour obtenir `$E$1`. Sur Mac, le raccourci est `⌘+T` ; vous le choisirez dans une liste, car le navigateur ouvre un nouvel onglet avec.",
+      "hint": "La quatrième touche de la rangée des touches F."
+    },
+    "f4-cycle": {
+      "prompt": "Chaque appui sur `F4` passe à la forme suivante de la référence. Vous avez tapé `A1` puis appuyé deux fois sur `F4`. Qu'obtenez-vous ?",
+      "options": ["`A$1`", "`$A$1`", "`$A1`", "`A1`"],
+      "explain": "L'ordre est `$A$1`, puis `A$1`, puis `$A1`, puis retour à `A1`. Le deuxième appui fige seulement la ligne."
+    },
+    "show-formulas": {
+      "prompt": "Pour afficher les formules elles-mêmes dans les cellules au lieu de leurs résultats, appuyez sur `Ctrl` avec la petite touche de l'accent grave, sous Échap. Appuyez à nouveau pour revenir aux résultats.",
+      "hint": "Ctrl avec la touche au-dessus de Tab."
+    },
+    "insert-today": {
+      "prompt": "Pour taper la date du jour dans la cellule comme valeur fixe, appuyez sur `Ctrl+;` (point-virgule).",
+      "hint": "La touche du point-virgule, près de la touche Entrée."
+    }
+  }
+}

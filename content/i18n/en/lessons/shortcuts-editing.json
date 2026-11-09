@@ -1,0 +1,43 @@
+{
+  "slug": "shortcuts-editing",
+  "title": "Editing, undo and copy",
+  "summary": "Edit a cell, cancel your typing and clear content, then undo, redo, copy and paste from the keyboard.",
+  "intro": "The shortcuts you will use most in Excel are the editing ones: getting into a cell to change it, cancelling what you typed, undoing a mistake, and copying and pasting.\n\nCopy, paste and undo work the same way in most programs, so what you learn here you can use everywhere.",
+  "faq": [
+    {
+      "q": "What is the difference between Delete and Esc?",
+      "a": "Delete clears the content of the selected cell. Esc cancels what you are typing before you confirm it, so the cell stays as it was."
+    },
+    {
+      "q": "How many steps can I undo?",
+      "a": "Excel usually keeps your last hundred actions, so you can press Ctrl+Z several times. Some actions, such as saving and closing the file, clear that history."
+    }
+  ],
+  "steps": {
+    "edit-a-cell": {
+      "prompt": "To edit the selected cell without erasing it, press `F2`; the cursor appears at the end of the text. On Mac the shortcut is `Ctrl+U`.",
+      "hint": "The second key in the row of F keys at the top of the keyboard."
+    },
+    "cancel-typing": {
+      "prompt": "You started typing in a cell, then changed your mind before confirming. Press `Esc` to cancel and put the cell back as it was."
+    },
+    "clear-a-cell": {
+      "prompt": "To clear the content of the selected cell, press `Delete`. On a Mac, press the key labelled delete."
+    },
+    "undo": {
+      "prompt": "You cleared the wrong cell! Press `Ctrl+Z` (on Mac: `⌘+Z`) to undo your last action.",
+      "hint": "Z is the key next to the left Shift."
+    },
+    "redo": {
+      "prompt": "You undid one step too many. To redo it, press `Ctrl+Y` (on Mac: `⌘+Y`)."
+    },
+    "copy": {
+      "prompt": "To copy the selected cells, press `Ctrl+C` (on Mac: `⌘+C`). A moving border stays around them until you paste.",
+      "hint": "C for Copy."
+    },
+    "paste": {
+      "prompt": "Select the destination cell, then press `Ctrl+V` (on Mac: `⌘+V`) to paste what you copied.",
+      "hint": "The key next to C."
+    }
+  }
+}

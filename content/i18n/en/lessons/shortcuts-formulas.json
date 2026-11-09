@@ -1,0 +1,39 @@
+{
+  "slug": "shortcuts-formulas",
+  "title": "AutoSum and formula shortcuts",
+  "summary": "Insert SUM with one shortcut, lock references with F4, show the formulas in a sheet, and enter today's date.",
+  "intro": "AutoSum writes a `=SUM(...)` formula for you and suggests the range above the cell or to its left; you only press Enter to confirm it.\n\nWhen you write a formula you plan to copy, the `F4` key adds `$` signs to a reference so it stays fixed. You will also learn to show every formula in the sheet, and to enter today's date.",
+  "faq": [
+    {
+      "q": "Which range does AutoSum choose?",
+      "a": "It picks the numbers directly above the cell, or failing that, to its left. Check the suggested range before you press Enter; you can change it with the mouse or the arrow keys."
+    },
+    {
+      "q": "Does the date from Ctrl+; change every day?",
+      "a": "No. It types today's date as a fixed value. For a date that updates every day, use the TODAY function."
+    }
+  ],
+  "steps": {
+    "autosum": {
+      "prompt": "You are in the cell below a column of numbers. Press `Alt+=` to insert AutoSum. On Mac the shortcut is `⌘+Shift+T`, which the browser uses to reopen a tab, so there you pick it from a list.",
+      "hint": "Alt with the equals sign, as if you were starting a formula."
+    },
+    "lock-a-reference": {
+      "prompt": "You are typing `=B2*E1` with the cursor on `E1`, and `E1` must stay fixed when you copy the formula. Press `F4` to turn it into `$E$1`. On Mac the shortcut is `⌘+T`; you pick it from a list there, because the browser opens a new tab with it.",
+      "hint": "The fourth key in the row of F keys."
+    },
+    "f4-cycle": {
+      "prompt": "Each press of `F4` moves to the next form of the reference. You typed `A1` and pressed `F4` twice. What do you get?",
+      "options": ["`A$1`", "`$A$1`", "`$A1`", "`A1`"],
+      "explain": "The order is `$A$1`, then `A$1`, then `$A1`, then back to `A1`. The second press locks the row only."
+    },
+    "show-formulas": {
+      "prompt": "To show the formulas themselves in the cells instead of their results, press `Ctrl` with the small grave-accent key under Esc. Press it again to go back to the results.",
+      "hint": "Ctrl with the key above Tab."
+    },
+    "insert-today": {
+      "prompt": "To type today's date into the cell as a fixed value, press `Ctrl+;` (semicolon).",
+      "hint": "On a US keyboard it is the key to the right of L."
+    }
+  }
+}

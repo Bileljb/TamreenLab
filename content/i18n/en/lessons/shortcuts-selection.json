@@ -1,0 +1,46 @@
+{
+  "slug": "shortcuts-selection",
+  "title": "Selecting cells with the keyboard",
+  "summary": "Extend a selection one cell at a time or to the end of the data, and select a column, a row or the whole sheet.",
+  "intro": "`Shift` is the selection key: any move you make while holding it selects the cells you pass over instead of just moving. So `Ctrl+↓` with `Shift` becomes a selection down to the end of the data.\n\nYou will also learn to select a whole column, a whole row or every cell, before you copy or format them.",
+  "faq": [
+    {
+      "q": "What is the difference between Ctrl+↓ and Ctrl+Shift+↓?",
+      "a": "The first only moves you to the last filled cell. The second selects every cell from where you are down to that cell."
+    },
+    {
+      "q": "Why does selecting a column show options on a Mac?",
+      "a": "macOS uses Ctrl+Space to switch the keyboard language, so the browser never receives it. On a Mac you pick it from a list instead."
+    }
+  ],
+  "steps": {
+    "extend-one-cell": {
+      "prompt": "To extend the selection by one cell towards the next column, press `Shift+→`. Each press adds a cell to the selected range."
+    },
+    "extend-to-the-end": {
+      "prompt": "Combine the two ideas: `Ctrl+Shift+↓` (on Mac: `⌘+Shift+↓`) selects from the current cell down to the last filled cell in the column. Press it now.",
+      "hint": "Three keys: Ctrl, Shift and the down arrow."
+    },
+    "select-a-column": {
+      "prompt": "To select the whole column of the current cell, press `Ctrl+Space` (the space bar).",
+      "hint": "Ctrl with the longest key on the keyboard."
+    },
+    "select-a-row": {
+      "prompt": "To select the whole row, swap `Ctrl` for `Shift`: press `Shift+Space`."
+    },
+    "select-everything": {
+      "prompt": "To select every cell in the sheet, press `Ctrl+A` (on Mac: `⌘+A`). Inside a table of data, the first press selects the table and the second the whole sheet.",
+      "hint": "A for All."
+    },
+    "which-selects-to-the-end": {
+      "prompt": "You are in `A2`, at the top of a column of 500 names with no empty cells. What does `Ctrl+Shift+↓` do?",
+      "options": [
+        "Selects the range `A2:A501`",
+        "Moves you to `A501` without selecting",
+        "Selects the whole of column A",
+        "Selects cell `A3` only"
+      ],
+      "explain": "With Shift, the jump becomes a selection: from `A2` down to the last filled cell, `A501`."
+    }
+  }
+}

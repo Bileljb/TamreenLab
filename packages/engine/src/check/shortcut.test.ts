@@ -163,5 +163,9 @@ describe('formatCombo', () => {
   it('uses the Mac symbols in the Mac order', () => {
     expect(formatCombo('Cmd+Shift+T', 'mac')).toEqual(['⇧', '⌘', 'T']);
     expect(formatCombo('Ctrl+Option+Return', 'mac')).toEqual(['⌃', '⌥', 'Return']);
+    // The Mac key printed "delete" sends Backspace; forward delete is ⌦.
+    expect(formatCombo('Backspace', 'mac')).toEqual(['Delete']);
+    expect(formatCombo('Delete', 'mac')).toEqual(['⌦']);
+    expect(formatCombo('Delete', 'win')).toEqual(['Delete']);
   });
 });

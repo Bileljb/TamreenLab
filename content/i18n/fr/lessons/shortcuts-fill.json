@@ -1,0 +1,42 @@
+{
+  "slug": "shortcuts-fill",
+  "title": "Recopier rapidement",
+  "summary": "Recopiez une cellule vers le bas ou vers la droite, tapez la même valeur dans plusieurs cellules d'un coup, et ajoutez un retour à la ligne dans une cellule.",
+  "intro": "Au lieu de tirer la poignée de recopie avec la souris, sélectionnez la plage et appuyez sur un seul raccourci : Excel recopie la première cellule dans les autres. Si cette cellule contient une formule, ses références s'adaptent à chaque ligne.\n\nVous apprendrez aussi à taper la même valeur dans plusieurs cellules sélectionnées d'un coup, et à commencer une nouvelle ligne dans une même cellule.",
+  "faq": [
+    {
+      "q": "Ctrl+D fonctionne-t-il avec les formules ?",
+      "a": "Oui. Il recopie la formule de la cellule du haut dans les cellules sélectionnées en dessous, et les références relatives changent à chaque ligne, comme avec la poignée de recopie."
+    },
+    {
+      "q": "Pourquoi Entrée ne crée-t-il pas de nouvelle ligne dans la cellule ?",
+      "a": "Parce qu'Entrée valide la saisie et passe à la cellule suivante. Pour un retour à la ligne dans la cellule, appuyez sur Alt+Entrée, ou Option+Retour sur Mac."
+    }
+  ],
+  "steps": {
+    "fill-down": {
+      "prompt": "`B2` contient une formule et vous avez sélectionné `B2:B10`. Pour la recopier dans les cellules du dessous, appuyez sur `Ctrl+D` (sur Mac : `⌘+D`).",
+      "hint": "D comme Down (vers le bas), en anglais."
+    },
+    "fill-right": {
+      "prompt": "Vous voulez maintenant recopier la cellule `B2` dans les cellules suivantes de la même ligne, `B2:F2`. Appuyez sur `Ctrl+R` (sur Mac : `⌘+R`).",
+      "hint": "R comme Right (vers la droite), en anglais."
+    },
+    "what-fill-down-copies": {
+      "prompt": "Vous avez sélectionné `C2:C6`, et `C2` contient la formule `=A2*B2`. Que contient `C6` après `Ctrl+D` ?",
+      "options": ["`=A6*B6`", "`=A2*B2`", "Le résultat de `C2` en nombre fixe", "Elle reste vide"],
+      "explain": "Les références relatives changent à chaque ligne : sur la ligne 6, la formule devient `=A6*B6`."
+    },
+    "fill-the-selection": {
+      "prompt": "Sélectionnez plusieurs cellules, tapez une valeur, puis appuyez sur `Ctrl+Enter` (Ctrl+Entrée) au lieu d'Entrée : la valeur va dans toutes les cellules sélectionnées. Sur Mac, appuyez sur `Ctrl+Return`. Essayez maintenant."
+    },
+    "new-line-in-a-cell": {
+      "prompt": "Vous tapez un titre sur deux lignes dans une seule cellule. Pour commencer la deuxième ligne sans quitter la cellule, appuyez sur `Alt+Enter` (sur Mac : `Option+Return`).",
+      "hint": "Alt avec Entrée ; sur Mac, Option avec Retour."
+    },
+    "fill-down-again": {
+      "prompt": "Entraînement : `D2` contient la formule du total et vous avez sélectionné `D2:D30`. Recopiez-la vers le bas avec un seul raccourci.",
+      "hint": "La première lettre du mot anglais Down."
+    }
+  }
+}

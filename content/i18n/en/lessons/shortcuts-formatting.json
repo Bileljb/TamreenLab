@@ -1,0 +1,42 @@
+{
+  "slug": "shortcuts-formatting",
+  "title": "Formatting cells with the keyboard",
+  "summary": "Make text bold, italic or underlined, show numbers as currency or percentages, and open the Format Cells window.",
+  "intro": "Formatting does not change the value stored in a cell, only the way it is shown. The number 0.25 is still 0.25 even when you show it as 25%.\n\nThe font shortcuts (bold, italic, underline) are the same in most programs. The number-format shortcuts use Ctrl and Shift with the format's own symbol: `$` for currency and `%` for percent.",
+  "faq": [
+    {
+      "q": "How do I turn bold off?",
+      "a": "Press the same shortcut again. Bold, italic and underline each switch on and off."
+    },
+    {
+      "q": "Which currency does the currency shortcut use?",
+      "a": "The currency of your computer's settings. To choose another one, open the Format Cells window and pick the currency in the Number section."
+    }
+  ],
+  "steps": {
+    "bold": {
+      "prompt": "You selected the table headings. To make them bold, press `Ctrl+B` (on Mac: `⌘+B`).",
+      "hint": "B for Bold."
+    },
+    "italic": {
+      "prompt": "To write a note in italics, press `Ctrl+I` (on Mac: `⌘+I`).",
+      "hint": "I for Italic."
+    },
+    "underline": {
+      "prompt": "To underline the text, press `Ctrl+U` (on Mac: `⌘+U`).",
+      "hint": "U for Underline."
+    },
+    "currency-format": {
+      "prompt": "You selected the price column. To show it in currency format, press `Ctrl+Shift+$` (the 4 key with Shift).",
+      "hint": "The dollar sign $ is above the 4."
+    },
+    "percent-format": {
+      "prompt": "The next column holds rates such as 0.25. To show them as 25%, press `Ctrl+Shift+%` (the 5 key with Shift).",
+      "hint": "The percent sign % is above the 5."
+    },
+    "format-cells-dialog": {
+      "prompt": "For every formatting option in one place, open the Format Cells window with `Ctrl+1` (on Mac: `⌘+1`). The browser uses this shortcut to switch tabs, so pick it from the list.",
+      "hint": "Ctrl with the number 1."
+    }
+  }
+}

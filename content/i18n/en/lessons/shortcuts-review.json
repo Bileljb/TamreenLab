@@ -1,0 +1,46 @@
+{
+  "slug": "shortcuts-review",
+  "title": "Shortcut review",
+  "summary": "Practise the key navigation, selection, fill and formatting shortcuts without being told the keys.",
+  "intro": "In this review we only describe the task, and you have to remember the shortcut. If you forget one, ask for a hint or go back to the shortcuts page.\n\nRepetition turns a shortcut into a habit: after a few days of use you will press it without thinking.",
+  "faq": [
+    {
+      "q": "What is the best way to learn shortcuts?",
+      "a": "Use two or three in your real work every day, rather than memorising a long list at once. Add more once the first ones have become habits."
+    },
+    {
+      "q": "Do these shortcuts work in Excel in other languages?",
+      "a": "Yes. Shortcuts follow the position of the keys, so they work whatever language your keyboard is set to. On a right-to-left sheet, only the arrows are mirrored."
+    }
+  ],
+  "steps": {
+    "review-back-to-top": {
+      "prompt": "You are on row 800 of the table. Go back to cell `A1` with a single shortcut.",
+      "hint": "Ctrl with the key that means the start."
+    },
+    "review-select-row-to-end": {
+      "prompt": "Select from the current cell to the last filled cell in the row, towards column Z.",
+      "hint": "The selection key, the jump key and the arrow."
+    },
+    "review-fill-down": {
+      "prompt": "Copy the formula from the first cell of the selection into the cells below it."
+    },
+    "review-autosum": {
+      "prompt": "Insert AutoSum in the cell below the column of numbers.",
+      "hint": "On Windows: Alt with the equals sign."
+    },
+    "review-bold": {
+      "prompt": "Make the selected column headings bold."
+    },
+    "review-undo": {
+      "prompt": "You pasted in the wrong place. Undo your last action."
+    },
+    "review-select-row": {
+      "prompt": "Select the whole row of the current cell so you can format it.",
+      "hint": "Shift with the space bar."
+    },
+    "review-lock-reference": {
+      "prompt": "The cursor is on the reference `E1` inside a formula. Lock it so it becomes `$E$1`."
+    }
+  }
+}

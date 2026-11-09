@@ -1,0 +1,120 @@
+{
+  "slug": "shortcuts-navigation",
+  "track": "shortcuts",
+  "order": 21,
+  "kind": "CONCEPT",
+  "status": "PUBLISHED",
+  "titleAr": "التنقل السريع في ورقة العمل",
+  "summaryAr": "انتقل إلى طرف البيانات وإلى أول الورقة وآخرها، وتحرك بين الخلايا والأوراق دون الفأرة.",
+  "minutes": 4,
+  "introAr": "في جدول من مئات الصفوف يضيع الوقت في التمرير بالفأرة. اختصارات لوحة المفاتيح تنقلك في لحظة إلى آخر البيانات أو إلى أول الورقة.\n\nفي كل خطوة اضغط الاختصار المطلوب داخل المربع. إذا كنت تستخدم Mac فاختر Mac من المفتاح أعلى المربع: يحل `⌘` (Command) محل `Ctrl` في أغلب الاختصارات.",
+  "faq": [
+    {
+      "qAr": "أين يتوقف إكسل عند الضغط على Ctrl مع سهم؟",
+      "aAr": "يتوقف عند آخر خلية فيها بيانات قبل أول خلية فارغة في ذلك الاتجاه. إذا كانت الخلية التالية فارغة، يقفز إلى أول خلية فيها بيانات بعدها، أو إلى طرف الورقة."
+    },
+    {
+      "qAr": "لماذا تظهر بعض الخطوات خيارات بدل مربع الضغط؟",
+      "aAr": "بعض الاختصارات يحتفظ بها المتصفح لنفسه، مثل التنقل بين التبويبات، فلا يصل الضغط إلى الصفحة. في هذه الخطوات تختار الاختصار من قائمة، وكذلك على الهاتف."
+    }
+  ],
+  "steps": [
+    {
+      "slug": "jump-down",
+      "type": "SHORTCUT",
+      "promptAr": "للقفز من أول {{عمود}} البيانات إلى آخر خلية مملوءة فيه، اضغط `Ctrl+↓` (على Mac: `⌘+↓`). اضغطه الآن.",
+      "check": {
+        "combos": [{ "win": "Ctrl+Down", "mac": "Cmd+Down" }],
+        "distractors": [
+          { "win": "Shift+Down", "mac": "Shift+Down" },
+          { "win": "Ctrl+End", "mac": "Ctrl+End" },
+          { "win": "Alt+Down", "mac": "Option+Down" }
+        ]
+      },
+      "hintAr": "اضغط Ctrl مع السهم المتجه إلى الأسفل."
+    },
+    {
+      "slug": "jump-right",
+      "type": "SHORTCUT",
+      "promptAr": "الفكرة نفسها تعمل في كل اتجاه. انتقل إلى آخر خلية مملوءة في هذا {{الصف}} باتجاه العمود Z: اضغط `Ctrl+→` (على Mac: `⌘+→`).",
+      "check": {
+        "combos": [{ "win": "Ctrl+Right", "mac": "Cmd+Right" }],
+        "distractors": [
+          { "win": "Shift+Right", "mac": "Shift+Right" },
+          { "win": "Ctrl+Shift+Right", "mac": "Cmd+Shift+Right" },
+          { "win": "Tab", "mac": "Tab" }
+        ]
+      },
+      "hintAr": "Ctrl أو ⌘ مع السهم المتجه نحو العمود Z."
+    },
+    {
+      "slug": "go-to-a1",
+      "type": "SHORTCUT",
+      "promptAr": "للعودة إلى الخلية `A1` من أي مكان في الورقة، اضغط `Ctrl+Home` (على Mac: `Ctrl+Home`، أو `Fn+Ctrl+←` في لوحات المفاتيح الصغيرة).",
+      "check": {
+        "combos": [{ "win": "Ctrl+Home", "mac": "Ctrl+Home" }],
+        "distractors": [
+          { "win": "Home", "mac": "Home" },
+          { "win": "Ctrl+End", "mac": "Ctrl+End" },
+          { "win": "Ctrl+Up", "mac": "Cmd+Up" }
+        ]
+      },
+      "hintAr": "المفتاح Home مع Ctrl."
+    },
+    {
+      "slug": "go-to-last-cell",
+      "type": "SHORTCUT",
+      "promptAr": "وللانتقال إلى آخر خلية مستخدمة في الورقة (آخر صف وآخر عمود فيهما بيانات)، اضغط `Ctrl+End`.",
+      "check": {
+        "combos": [{ "win": "Ctrl+End", "mac": "Ctrl+End" }],
+        "distractors": [
+          { "win": "End", "mac": "End" },
+          { "win": "Ctrl+Home", "mac": "Ctrl+Home" },
+          { "win": "Ctrl+Down", "mac": "Cmd+Down" }
+        ]
+      },
+      "hintAr": "عكس Ctrl+Home."
+    },
+    {
+      "slug": "confirm-and-move-right",
+      "type": "SHORTCUT",
+      "promptAr": "عند إدخال صف من البيانات، يؤكد المفتاح `Tab` ما كتبته وينقلك إلى الخلية التالية في الصف نفسه. اضغطه الآن.",
+      "check": {
+        "combos": [{ "win": "Tab", "mac": "Tab" }],
+        "distractors": [
+          { "win": "Enter", "mac": "Return" },
+          { "win": "Shift+Tab", "mac": "Shift+Tab" },
+          { "win": "Shift+Enter", "mac": "Shift+Return" }
+        ]
+      },
+      "hintAr": "المفتاح الموجود فوق Caps Lock."
+    },
+    {
+      "slug": "move-back-one-cell",
+      "type": "SHORTCUT",
+      "promptAr": "كتبت في الخلية الخطأ وتريد الرجوع خلية واحدة في الصف. أضف `Shift` إلى المفتاح السابق: `Shift+Tab`.",
+      "check": {
+        "combos": [{ "win": "Shift+Tab", "mac": "Shift+Tab" }],
+        "distractors": [
+          { "win": "Tab", "mac": "Tab" },
+          { "win": "Shift+Enter", "mac": "Shift+Return" },
+          { "win": "Ctrl+Left", "mac": "Cmd+Left" }
+        ]
+      }
+    },
+    {
+      "slug": "next-sheet",
+      "type": "SHORTCUT",
+      "promptAr": "للانتقال إلى الورقة التالية في {{المصنف}}، يستخدم إكسل في Windows الاختصار `Ctrl+PageDown`، وفي Mac `Option+→`. في Windows يستخدم المتصفح هذا الاختصار للتنقل بين التبويبات، لذلك ستختاره هناك من قائمة.",
+      "check": {
+        "combos": [{ "win": "Ctrl+PageDown", "mac": "Option+Right" }],
+        "distractors": [
+          { "win": "Ctrl+PageUp", "mac": "Option+Left" },
+          { "win": "Ctrl+Right", "mac": "Cmd+Right" },
+          { "win": "Alt+PageDown", "mac": "Option+Down" }
+        ]
+      },
+      "hintAr": "Page Down تعني الصفحة التالية."
+    }
+  ]
+}

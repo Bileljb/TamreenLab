@@ -1,0 +1,43 @@
+{
+  "slug": "shortcuts-editing",
+  "title": "Modifier, annuler et copier",
+  "summary": "Modifiez une cellule, annulez la saisie et effacez le contenu, puis annulez, rétablissez, copiez et collez au clavier.",
+  "intro": "Les raccourcis que vous utiliserez le plus dans Excel sont ceux de la modification : entrer dans une cellule pour la changer, annuler ce que vous tapez, revenir sur une erreur, copier et coller.\n\nCopier, coller et annuler fonctionnent de la même façon dans la plupart des logiciels : ce que vous apprenez ici vous servira partout.",
+  "faq": [
+    {
+      "q": "Quelle différence entre Suppr et Échap ?",
+      "a": "Suppr efface le contenu de la cellule sélectionnée. Échap annule ce que vous êtes en train de taper avant validation : la cellule reste comme avant."
+    },
+    {
+      "q": "Combien d'actions puis-je annuler ?",
+      "a": "Excel garde en général vos cent dernières actions : vous pouvez appuyer plusieurs fois sur Ctrl+Z. Certaines actions, comme enregistrer puis fermer le fichier, effacent cet historique."
+    }
+  ],
+  "steps": {
+    "edit-a-cell": {
+      "prompt": "Pour modifier la cellule sélectionnée sans l'effacer, appuyez sur `F2` : le curseur apparaît à la fin du texte. Sur Mac, le raccourci est `Ctrl+U`.",
+      "hint": "La deuxième touche de la rangée des touches F, en haut du clavier."
+    },
+    "cancel-typing": {
+      "prompt": "Vous avez commencé à taper dans une cellule, puis changé d'avis avant de valider. Appuyez sur `Esc` (Échap) pour annuler et rendre à la cellule son contenu."
+    },
+    "clear-a-cell": {
+      "prompt": "Pour effacer le contenu de la cellule sélectionnée, appuyez sur `Delete` (Suppr). Sur Mac, appuyez sur la touche marquée delete."
+    },
+    "undo": {
+      "prompt": "Vous avez effacé la mauvaise cellule ! Appuyez sur `Ctrl+Z` (sur Mac : `⌘+Z`) pour annuler la dernière action.",
+      "hint": "Sur un clavier AZERTY, Z est sous le 2 ; sur un clavier QWERTY, à côté de Maj gauche."
+    },
+    "redo": {
+      "prompt": "Vous avez annulé une étape de trop. Pour la rétablir, appuyez sur `Ctrl+Y` (sur Mac : `⌘+Y`)."
+    },
+    "copy": {
+      "prompt": "Pour copier les cellules sélectionnées, appuyez sur `Ctrl+C` (sur Mac : `⌘+C`). Une bordure animée les entoure jusqu'au collage.",
+      "hint": "C comme Copier."
+    },
+    "paste": {
+      "prompt": "Sélectionnez la cellule de destination, puis appuyez sur `Ctrl+V` (sur Mac : `⌘+V`) pour coller ce que vous avez copié.",
+      "hint": "La touche à côté du C."
+    }
+  }
+}

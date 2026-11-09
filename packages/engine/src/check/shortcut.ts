@@ -209,6 +209,13 @@ const KEY_LABELS: Record<string, string> = {
   PAGEDOWN: 'PgDn',
 };
 
+// Mac keyboards print "return", and "delete" on the key that sends Backspace.
+const MAC_KEY_LABELS: Record<string, string> = {
+  ENTER: 'Return',
+  BACKSPACE: 'Delete',
+  DELETE: '⌦',
+};
+
 const MODIFIER_LABELS: Record<Platform, [Modifier, string][]> = {
   win: [
     ['ctrl', 'Ctrl'],
@@ -230,7 +237,7 @@ export function formatCombo(text: string, platform: Platform): string[] {
   const combo = parseCombo(text);
   const mods = MODIFIER_LABELS[platform].filter(([m]) => combo.modifiers.has(m)).map(([, l]) => l);
   let key = KEY_LABELS[combo.key] ?? combo.key;
-  if (platform === 'mac' && combo.key === 'ENTER') key = 'Return';
+  if (platform === 'mac') key = MAC_KEY_LABELS[combo.key] ?? key;
   return [...mods, key];
 }
 

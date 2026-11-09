@@ -1,0 +1,134 @@
+{
+  "slug": "shortcuts-review",
+  "track": "shortcuts",
+  "order": 27,
+  "kind": "SUMMARY",
+  "status": "PUBLISHED",
+  "titleAr": "مراجعة الاختصارات",
+  "summaryAr": "تدرّب على أهم اختصارات التنقل والتحديد والتعبئة والتنسيق دون أن نذكر لك المفاتيح.",
+  "minutes": 4,
+  "introAr": "في هذه المراجعة نصف لك المهمة فقط، وعليك أن تتذكر الاختصار. إذا نسيت أحدها فاطلب تلميحًا، أو ارجع إلى صفحة الاختصارات.\n\nالتكرار هو ما يجعل الاختصار عادة: بعد أيام من الاستعمال ستضغطه دون تفكير.",
+  "faq": [
+    {
+      "qAr": "ما أفضل طريقة لحفظ الاختصارات؟",
+      "aAr": "استعمل اختصارين أو ثلاثة في عملك الحقيقي كل يوم، بدل حفظ قائمة طويلة مرة واحدة. ثم أضف غيرها حين تصبح الأولى عادة."
+    },
+    {
+      "qAr": "هل تعمل هذه الاختصارات في إكسل بالعربية؟",
+      "aAr": "نعم. الاختصارات مرتبطة بمكان المفاتيح، فتعمل حتى لو كانت لوحة المفاتيح على العربية. في الورقة من اليمين إلى اليسار تنعكس الأسهم فقط."
+    }
+  ],
+  "steps": [
+    {
+      "slug": "review-back-to-top",
+      "type": "SHORTCUT",
+      "promptAr": "أنت في الصف 800 من الجدول. ارجع إلى الخلية `A1` باختصار واحد.",
+      "check": {
+        "combos": [{ "win": "Ctrl+Home", "mac": "Ctrl+Home" }],
+        "distractors": [
+          { "win": "Home", "mac": "Home" },
+          { "win": "Ctrl+Up", "mac": "Cmd+Up" },
+          { "win": "Ctrl+End", "mac": "Ctrl+End" }
+        ]
+      },
+      "hintAr": "Ctrl مع المفتاح الذي يعني البداية."
+    },
+    {
+      "slug": "review-select-row-to-end",
+      "type": "SHORTCUT",
+      "promptAr": "حدد من الخلية الحالية حتى آخر خلية مملوءة في الصف، باتجاه العمود Z.",
+      "check": {
+        "combos": [{ "win": "Ctrl+Shift+Right", "mac": "Cmd+Shift+Right" }],
+        "distractors": [
+          { "win": "Ctrl+Right", "mac": "Cmd+Right" },
+          { "win": "Shift+Right", "mac": "Shift+Right" },
+          { "win": "Shift+Space", "mac": "Shift+Space" }
+        ]
+      },
+      "hintAr": "مفتاح التحديد مع مفتاح القفز ومع السهم."
+    },
+    {
+      "slug": "review-fill-down",
+      "type": "SHORTCUT",
+      "promptAr": "انسخ المعادلة من أول خلية في التحديد إلى بقية الخلايا تحتها.",
+      "check": {
+        "combos": [
+          { "win": "Ctrl+D", "mac": "Cmd+D" },
+          { "win": "Ctrl+D", "mac": "Ctrl+D" }
+        ],
+        "distractors": [
+          { "win": "Ctrl+R", "mac": "Cmd+R" },
+          { "win": "Ctrl+V", "mac": "Cmd+V" },
+          { "win": "Ctrl+Enter", "mac": "Ctrl+Return" }
+        ]
+      }
+    },
+    {
+      "slug": "review-autosum",
+      "type": "SHORTCUT",
+      "promptAr": "أدرج الجمع التلقائي في الخلية تحت عمود الأرقام.",
+      "check": {
+        "combos": [{ "win": "Alt+=", "mac": "Cmd+Shift+T" }],
+        "distractors": [
+          { "win": "Ctrl+=", "mac": "Cmd+=" },
+          { "win": "Ctrl+Shift+S", "mac": "Cmd+Shift+S" },
+          { "win": "Alt+S", "mac": "Option+S" }
+        ]
+      },
+      "hintAr": "في Windows: Alt مع علامة المساواة."
+    },
+    {
+      "slug": "review-bold",
+      "type": "SHORTCUT",
+      "promptAr": "اجعل عناوين الأعمدة المحددة بخط عريض.",
+      "check": {
+        "combos": [{ "win": "Ctrl+B", "mac": "Cmd+B" }],
+        "distractors": [
+          { "win": "Ctrl+U", "mac": "Cmd+U" },
+          { "win": "Ctrl+I", "mac": "Cmd+I" },
+          { "win": "Ctrl+1", "mac": "Cmd+1" }
+        ]
+      }
+    },
+    {
+      "slug": "review-undo",
+      "type": "SHORTCUT",
+      "promptAr": "لصقت في المكان الخطأ. تراجع عن آخر إجراء.",
+      "check": {
+        "combos": [{ "win": "Ctrl+Z", "mac": "Cmd+Z" }],
+        "distractors": [
+          { "win": "Ctrl+Y", "mac": "Cmd+Y" },
+          { "win": "Esc", "mac": "Esc" },
+          { "win": "Delete", "mac": "Backspace" }
+        ]
+      }
+    },
+    {
+      "slug": "review-select-row",
+      "type": "SHORTCUT",
+      "promptAr": "حدد الصف كاملًا الذي فيه الخلية الحالية لتنسيقه.",
+      "check": {
+        "combos": [{ "win": "Shift+Space", "mac": "Shift+Space" }],
+        "distractors": [
+          { "win": "Ctrl+Space", "mac": "Ctrl+Space" },
+          { "win": "Ctrl+A", "mac": "Cmd+A" },
+          { "win": "Shift+Enter", "mac": "Shift+Return" }
+        ]
+      },
+      "hintAr": "Shift مع مفتاح المسافة."
+    },
+    {
+      "slug": "review-lock-reference",
+      "type": "SHORTCUT",
+      "promptAr": "المؤشر على المرجع `E1` داخل معادلة. ثبّته ليصبح `$E$1`.",
+      "check": {
+        "combos": [{ "win": "F4", "mac": "Cmd+T" }],
+        "distractors": [
+          { "win": "F2", "mac": "Ctrl+U" },
+          { "win": "Shift+4", "mac": "Shift+4" },
+          { "win": "Ctrl+Shift+$", "mac": "Ctrl+Shift+$" }
+        ]
+      }
+    }
+  ]
+}

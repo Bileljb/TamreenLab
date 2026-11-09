@@ -273,7 +273,10 @@
   "shortcuts": {
     "title": "Raccourcis clavier Excel",
     "description": "Les raccourcis Excel les plus utiles pour se déplacer, sélectionner et modifier, sous Windows et Mac.",
-    "intro": "Voici les raccourcis les plus utiles au quotidien. Les exercices interactifs de raccourcis arrivent bientôt.",
+    "intro": "Voici les raccourcis les plus utiles au quotidien. Pour vous entraîner en appuyant vous-même sur les touches, commencez le parcours Raccourcis clavier.",
+    "practiceTitle": "Entraînez-vous aux raccourcis",
+    "practiceText": "Sept leçons courtes où vous appuyez vous-même sur chaque raccourci, sous Windows ou sur Mac.",
+    "practiceCta": "Commencer l'entraînement",
     "action": "Action",
     "windows": "Windows",
     "mac": "Mac",

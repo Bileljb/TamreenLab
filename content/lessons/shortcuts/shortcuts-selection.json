@@ -1,0 +1,106 @@
+{
+  "slug": "shortcuts-selection",
+  "track": "shortcuts",
+  "order": 22,
+  "kind": "CONCEPT",
+  "status": "PUBLISHED",
+  "titleAr": "تحديد الخلايا بلوحة المفاتيح",
+  "summaryAr": "وسّع التحديد خلية بخلية أو حتى آخر البيانات، وحدد عمودًا أو صفًا أو الورقة كلها.",
+  "minutes": 4,
+  "introAr": "المفتاح `Shift` هو مفتاح التحديد: أي حركة تقوم بها وهو مضغوط تحدد الخلايا التي تمر بها بدل أن تنتقل فقط. لذلك يصبح `Ctrl+↓` مع `Shift` تحديدًا حتى آخر البيانات.\n\nستتعلم أيضًا تحديد {{عمود}} كامل أو {{صف}} كامل أو كل الخلايا، قبل نسخها أو تنسيقها.",
+  "faq": [
+    {
+      "qAr": "ما الفرق بين Ctrl+↓ وCtrl+Shift+↓؟",
+      "aAr": "الأول ينقلك إلى آخر خلية مملوءة فقط، والثاني يحدد كل الخلايا من مكانك حتى تلك الخلية."
+    },
+    {
+      "qAr": "لماذا يظهر تحديد العمود على Mac خيارات بدل الضغط؟",
+      "aAr": "يستخدم نظام macOS الاختصار Ctrl+Space لتبديل لغة لوحة المفاتيح، فلا يصل إلى المتصفح. لذلك تختاره من القائمة على Mac."
+    }
+  ],
+  "steps": [
+    {
+      "slug": "extend-one-cell",
+      "type": "SHORTCUT",
+      "promptAr": "لتوسيع التحديد خلية واحدة نحو العمود التالي، اضغط `Shift+→`. كل ضغطة تضيف خلية إلى {{النطاق}} المحدد.",
+      "check": {
+        "combos": [{ "win": "Shift+Right", "mac": "Shift+Right" }],
+        "distractors": [
+          { "win": "Ctrl+Right", "mac": "Cmd+Right" },
+          { "win": "Tab", "mac": "Tab" },
+          { "win": "Ctrl+Shift+Right", "mac": "Cmd+Shift+Right" }
+        ]
+      }
+    },
+    {
+      "slug": "extend-to-the-end",
+      "type": "SHORTCUT",
+      "promptAr": "اجمع الفكرتين: `Ctrl+Shift+↓` (على Mac: `⌘+Shift+↓`) يحدد من الخلية الحالية حتى آخر خلية مملوءة في العمود. اضغطه الآن.",
+      "check": {
+        "combos": [{ "win": "Ctrl+Shift+Down", "mac": "Cmd+Shift+Down" }],
+        "distractors": [
+          { "win": "Shift+Down", "mac": "Shift+Down" },
+          { "win": "Ctrl+Down", "mac": "Cmd+Down" },
+          { "win": "Ctrl+Shift+End", "mac": "Ctrl+Shift+End" }
+        ]
+      },
+      "hintAr": "ثلاثة مفاتيح: Ctrl وShift والسهم إلى الأسفل."
+    },
+    {
+      "slug": "select-a-column",
+      "type": "SHORTCUT",
+      "promptAr": "لتحديد العمود كاملًا الذي فيه الخلية الحالية، اضغط `Ctrl+Space` (مفتاح المسافة).",
+      "check": {
+        "combos": [{ "win": "Ctrl+Space", "mac": "Ctrl+Space" }],
+        "distractors": [
+          { "win": "Shift+Space", "mac": "Shift+Space" },
+          { "win": "Ctrl+A", "mac": "Cmd+A" },
+          { "win": "Alt+Space", "mac": "Option+Space" }
+        ]
+      },
+      "hintAr": "Ctrl مع أطول مفتاح في لوحة المفاتيح."
+    },
+    {
+      "slug": "select-a-row",
+      "type": "SHORTCUT",
+      "promptAr": "ولتحديد الصف كاملًا، استبدل `Ctrl` بالمفتاح `Shift`: اضغط `Shift+Space`.",
+      "check": {
+        "combos": [{ "win": "Shift+Space", "mac": "Shift+Space" }],
+        "distractors": [
+          { "win": "Ctrl+Space", "mac": "Ctrl+Space" },
+          { "win": "Space", "mac": "Space" },
+          { "win": "Alt+Space", "mac": "Option+Space" }
+        ]
+      }
+    },
+    {
+      "slug": "select-everything",
+      "type": "SHORTCUT",
+      "promptAr": "لتحديد كل الخلايا في الورقة، اضغط `Ctrl+A` (على Mac: `⌘+A`). داخل جدول فيه بيانات، تحدد الضغطة الأولى الجدول والثانية الورقة كلها.",
+      "check": {
+        "combos": [{ "win": "Ctrl+A", "mac": "Cmd+A" }],
+        "distractors": [
+          { "win": "Ctrl+Space", "mac": "Ctrl+Space" },
+          { "win": "Ctrl+E", "mac": "Cmd+E" },
+          { "win": "Ctrl+S", "mac": "Cmd+S" }
+        ]
+      },
+      "hintAr": "A من كلمة All، أي الكل."
+    },
+    {
+      "slug": "which-selects-to-the-end",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "أنت في `A2` أعلى عمود فيه 500 اسم بلا خلايا فارغة. ماذا يفعل `Ctrl+Shift+↓`؟",
+      "check": {
+        "options": [
+          "يحدد النطاق `A2:A501`",
+          "ينقلك إلى `A501` دون تحديد",
+          "يحدد العمود A كاملًا",
+          "يحدد الخلية `A3` فقط"
+        ],
+        "correct": 0
+      },
+      "explainAr": "مع Shift تصبح القفزة تحديدًا: من `A2` حتى آخر خلية مملوءة، وهي `A501`."
+    }
+  ]
+}

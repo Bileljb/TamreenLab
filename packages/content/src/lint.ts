@@ -7,11 +7,14 @@ import {
   normalizeRange,
   parseAddress,
   referenceAnswer,
+  sameCombo,
+  shortcutMode,
   verifyReferenceSolution,
   type CellValue,
 } from '@tamreen/engine';
 import {
   ARABIC_SCRIPT,
+  PLATFORMS,
   FRENCH_EXCEL_NAMES,
   FunctionFileSchema,
   FunctionTranslationSchema,
@@ -44,6 +47,22 @@ export type LintIssue = { file: string; step?: string; message: string };
 export const MIN_STEPS = 5;
 export const MAX_STEPS = 8;
 export const MIN_FAQ = 2;
+export const MIN_DISTRACTORS = 2;
+
+/** Shortcut steps that become multiple choice on a keyboard, per platform (content:lint prints it). */
+export function shortcutFallbacks(lessons: LessonFile[]): { win: string[]; mac: string[] } {
+  const out = { win: [] as string[], mac: [] as string[] };
+  for (const lesson of lessons) {
+    for (const step of lesson.steps) {
+      if (step.type !== 'SHORTCUT') continue;
+      for (const platform of PLATFORMS) {
+        if (shortcutMode(step, platform) === 'choice')
+          out[platform].push(`${lesson.slug}:${step.slug}`);
+      }
+    }
+  }
+  return out;
+}
 
 type Options = {
   /** Text of docs/CONTENT.md; PUBLISHED lessons must appear in its review log. */
@@ -127,12 +146,29 @@ function texts(step: StepSpec): string[] {
 function lintStepLogic(step: StepSpec): string[] {
   const problems: string[] = [];
 
-  // Solvable: the reference answer passes the step's own check.
-  try {
-    const result = checkAnswer(step, referenceAnswer(step));
-    if (!result.correct) problems.push(`reference answer fails its own check (${result.code})`);
-  } catch (e) {
-    problems.push(`reference answer cannot be checked: ${e instanceof Error ? e.message : e}`);
+  // Solvable: the reference answer passes the step's own check (on both keyboards for shortcuts).
+  for (const platform of step.type === 'SHORTCUT' ? PLATFORMS : (['win'] as const)) {
+    try {
+      const result = checkAnswer(step, referenceAnswer(step, platform));
+      if (!result.correct) problems.push(`reference answer fails its own check (${result.code})`);
+    } catch (e) {
+      problems.push(`reference answer cannot be checked: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+
+  // Every shortcut step can fall back to multiple choice (touch screens), with no second answer.
+  if (step.type === 'SHORTCUT') {
+    const distractors = step.check.distractors ?? [];
+    if (distractors.length < MIN_DISTRACTORS) {
+      problems.push(`needs at least ${MIN_DISTRACTORS} distractors for the choice fallback`);
+    }
+    for (const d of distractors) {
+      for (const platform of PLATFORMS) {
+        if (step.check.combos.some((c) => sameCombo(c[platform], d[platform]))) {
+          problems.push(`distractor ${d[platform]} (${platform}) is also a correct combo`);
+        }
+      }
+    }
   }
 
   const visible = step.sheet?.visible;
@@ -239,7 +275,13 @@ export function lintContent(raw: RawContent, options: Options = {}): LintIssue[]
     }
   }
 
-  const functions = lintFunctions(raw.functions ?? [], new Set(slugs.keys()), glossary, style, issues);
+  const functions = lintFunctions(
+    raw.functions ?? [],
+    new Set(slugs.keys()),
+    glossary,
+    style,
+    issues,
+  );
   for (const translation of raw.translations ?? []) {
     lintTranslation(
       translation,
@@ -257,16 +299,17 @@ function translatedTextIssues(texts: string[]): string[] {
   const problems = new Set<string>();
   for (const text of texts) {
     if (ARABIC_SCRIPT.test(text)) problems.add(`Arabic text left: "${text.slice(0, 60)}"`);
-    if (/{{.+?}}/.test(text)) problems.add(`{{…}} markup is for Arabic only: "${text.slice(0, 60)}"`);
+    if (/{{.+?}}/.test(text))
+      problems.add(`{{…}} markup is for Arabic only: "${text.slice(0, 60)}"`);
   }
   return [...problems];
 }
 
 /** Every string inside a value (sheet cells, check fields), to look for untranslated text. */
 function allStrings(value: unknown): string[] {
-  if (typeof value === "string") return [value];
+  if (typeof value === 'string') return [value];
   if (Array.isArray(value)) return value.flatMap(allStrings);
-  if (value && typeof value === "object") return Object.values(value).flatMap(allStrings);
+  if (value && typeof value === 'object') return Object.values(value).flatMap(allStrings);
   return [];
 }
 
@@ -304,8 +347,8 @@ function lintTranslation(
       add(`no lesson "${tr.slug}" to translate`);
       continue;
     }
-    if (translationPath(locale, "lessons", tr.slug) !== file.path)
-      add(`must live at ${translationPath(locale, "lessons", tr.slug)}`);
+    if (translationPath(locale, 'lessons', tr.slug) !== file.path)
+      add(`must live at ${translationPath(locale, 'lessons', tr.slug)}`);
     translated.add(tr.slug);
     let out: LessonFile;
     try {
@@ -319,18 +362,19 @@ function lintTranslation(
     const pageTexts = [
       out.titleAr,
       out.summaryAr,
-      out.introAr ?? "",
+      out.introAr ?? '',
       ...(out.faq ?? []).flatMap((f) => [f.qAr, f.aAr]),
     ];
     for (const p of translatedTextIssues(pageTexts)) add(p);
     for (const step of out.steps) {
       const stepTexts = [...texts(step), ...allStrings(step.sheet), ...allStrings(step.check)];
-      for (const p of [...lintStepLogic(step), ...translatedTextIssues(stepTexts)]) add(p, step.slug);
+      for (const p of [...lintStepLogic(step), ...translatedTextIssues(stepTexts)])
+        add(p, step.slug);
     }
   }
   for (const lesson of lessons) {
     if (!translated.has(lesson.slug)) {
-      const where = translationPath(locale, "lessons", lesson.slug);
+      const where = translationPath(locale, 'lessons', lesson.slug);
       issues.push({ file: where, message: `no ${locale} translation (${where})` });
     }
   }
@@ -373,7 +417,7 @@ function lintTranslation(
   }
   for (const fn of functions) {
     if (!fnTranslated.has(fn.slug)) {
-      const where = translationPath(locale, "functions", fn.slug);
+      const where = translationPath(locale, 'functions', fn.slug);
       issues.push({ file: where, message: `no ${locale} translation (${where})` });
     }
   }

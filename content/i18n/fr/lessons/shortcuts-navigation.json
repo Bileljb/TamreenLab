@@ -1,0 +1,45 @@
+{
+  "slug": "shortcuts-navigation",
+  "title": "Se déplacer rapidement dans une feuille",
+  "summary": "Sautez au bout de vos données, au début et à la fin de la feuille, et passez d'une cellule ou d'une feuille à l'autre sans la souris.",
+  "intro": "Dans un tableau de plusieurs centaines de lignes, faire défiler avec la souris fait perdre du temps. Les raccourcis clavier vous emmènent en un instant à la fin de vos données ou en haut de la feuille.\n\nÀ chaque étape, appuyez sur le raccourci dans la zone prévue. Si vous utilisez un Mac, choisissez Mac au-dessus de la zone : `⌘` (Commande) remplace `Ctrl` dans la plupart des raccourcis.",
+  "faq": [
+    {
+      "q": "Où Excel s'arrête-t-il quand j'appuie sur Ctrl avec une flèche ?",
+      "a": "Il s'arrête sur la dernière cellule remplie avant la première cellule vide dans cette direction. Si la cellule suivante est vide, il saute à la prochaine cellule remplie, ou au bord de la feuille."
+    },
+    {
+      "q": "Pourquoi certaines étapes affichent-elles des choix au lieu de la zone de saisie ?",
+      "a": "Le navigateur se réserve certains raccourcis, comme le passage d'un onglet à l'autre : l'appui n'arrive jamais à la page. Dans ces étapes, et sur téléphone, vous choisissez le raccourci dans une liste."
+    }
+  ],
+  "steps": {
+    "jump-down": {
+      "prompt": "Pour sauter du haut d'une colonne de données à sa dernière cellule remplie, appuyez sur `Ctrl+↓` (sur Mac : `⌘+↓`). Appuyez maintenant.",
+      "hint": "Maintenez Ctrl et appuyez sur la flèche vers le bas."
+    },
+    "jump-right": {
+      "prompt": "La même idée fonctionne dans toutes les directions. Allez à la dernière cellule remplie de cette ligne, vers la colonne Z : appuyez sur `Ctrl+→` (sur Mac : `⌘+→`).",
+      "hint": "Ctrl ou ⌘ avec la flèche qui pointe vers la colonne Z."
+    },
+    "go-to-a1": {
+      "prompt": "Pour revenir à la cellule `A1` depuis n'importe où, appuyez sur `Ctrl+Home` (touche Origine ; sur Mac : `Ctrl+Home`, ou `Fn+Ctrl+←` sur les claviers compacts).",
+      "hint": "La touche Origine (Home), avec Ctrl."
+    },
+    "go-to-last-cell": {
+      "prompt": "Pour aller à la dernière cellule utilisée de la feuille (dernière ligne et dernière colonne contenant des données), appuyez sur `Ctrl+End` (touche Fin).",
+      "hint": "L'inverse de Ctrl+Origine."
+    },
+    "confirm-and-move-right": {
+      "prompt": "Quand vous saisissez une ligne de données, la touche `Tab` valide la saisie et passe à la cellule suivante de la même ligne. Appuyez dessus maintenant.",
+      "hint": "La touche au-dessus du verrouillage des majuscules."
+    },
+    "move-back-one-cell": {
+      "prompt": "Vous avez écrit dans la mauvaise cellule et voulez revenir d'une cellule sur la ligne. Ajoutez `Shift` (Maj) à la touche précédente : `Shift+Tab`."
+    },
+    "next-sheet": {
+      "prompt": "Pour passer à la feuille suivante du classeur, Excel utilise `Ctrl+PageDown` sous Windows et `Option+→` sur Mac. Sous Windows, le navigateur utilise ce raccourci pour changer d'onglet : vous le choisirez donc dans une liste.",
+      "hint": "Page Down (Pg. suiv.) veut dire la page suivante."
+    }
+  }
+}

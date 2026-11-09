@@ -68,9 +68,54 @@ const messages = (issues: LintIssue[]) => issues.map((i) => i.message);
 const lint = (lessons: LessonFileInput[], extra?: Partial<RawContent>, guide?: string) =>
   lintContent(content(lessons, extra), { contentGuide: guide });
 
+const shortcutStep = (
+  slug: string,
+  check: Partial<Extract<StepSpecInput, { type: 'SHORTCUT' }>['check']> = {},
+): StepSpecInput => ({
+  slug,
+  type: 'SHORTCUT',
+  promptAr: `اضغط الاختصار (${slug}).`,
+  check: {
+    combos: [{ win: 'Ctrl+D', mac: 'Cmd+D' }],
+    distractors: [
+      { win: 'Ctrl+R', mac: 'Cmd+R' },
+      { win: 'Ctrl+F', mac: 'Cmd+F' },
+    ],
+    ...check,
+  },
+});
+
 describe('lintContent', () => {
   it('passes a good lesson', () => {
     expect(lint([goodLesson()])).toEqual([]);
+  });
+
+  it('passes good shortcut steps, including one that falls back to choice', () => {
+    const steps = [...goodLesson().steps.slice(0, 4), shortcutStep('s5')];
+    steps.push(shortcutStep('s6', { combos: [{ win: 'Ctrl+1', mac: 'Cmd+1' }] }));
+    expect(lint([goodLesson({ steps })])).toEqual([]);
+  });
+
+  it.each<[string, Parameters<typeof shortcutStep>[1], RegExp]>([
+    ['no distractors', { distractors: undefined }, /needs at least 2 distractors/],
+    [
+      'one distractor',
+      { distractors: [{ win: 'Ctrl+R', mac: 'Cmd+R' }] },
+      /needs at least 2 distractors/,
+    ],
+    [
+      'a distractor that is also correct',
+      {
+        distractors: [
+          { win: 'Ctrl+R', mac: 'Cmd+R' },
+          { win: 'ctrl+d', mac: 'Cmd+F' },
+        ],
+      },
+      /distractor ctrl\+d \(win\) is also a correct combo/,
+    ],
+  ])('rejects a shortcut step with %s', (_name, check, message) => {
+    const steps = [...goodLesson().steps.slice(0, 4), shortcutStep('s5', check)];
+    expect(messages(lint([goodLesson({ steps })]))).toEqual([expect.stringMatching(message)]);
   });
 
   it('reports schema errors with their path', () => {
@@ -374,7 +419,10 @@ describe('translations', () => {
   ])('rejects %s', (_name, overrides, pattern) => {
     const lesson = JSON.parse(JSON.stringify(enLesson(overrides)));
     const issues = lintEn([lesson]);
-    expect(issues.some((m) => pattern.test(m)), issues.join('\n')).toBe(true);
+    expect(
+      issues.some((m) => pattern.test(m)),
+      issues.join('\n'),
+    ).toBe(true);
   });
 
   it('proves the translated steps are still solvable', () => {
@@ -389,7 +437,10 @@ describe('translations', () => {
       ],
     });
     const issues = lintEn([enLesson({ strings: { ...strings, دفتر: 'Pen' } })], [sumif]);
-    expect(issues.some((m) => /does not verify/.test(m)), issues.join('\n')).toBe(true);
+    expect(
+      issues.some((m) => /does not verify/.test(m)),
+      issues.join('\n'),
+    ).toBe(true);
   });
 });
 

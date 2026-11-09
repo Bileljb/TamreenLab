@@ -1,0 +1,107 @@
+{
+  "slug": "shortcuts-formatting",
+  "track": "shortcuts",
+  "order": 26,
+  "kind": "CONCEPT",
+  "status": "PUBLISHED",
+  "titleAr": "تنسيق الخلايا بلوحة المفاتيح",
+  "summaryAr": "اجعل النص عريضًا أو مائلًا أو مسطّرًا، واعرض الأرقام عملةً أو نسبةً مئوية، وافتح نافذة تنسيق الخلايا.",
+  "minutes": 4,
+  "introAr": "التنسيق لا يغيّر القيمة المخزنة في {{الخلية}}، بل طريقة عرضها فقط. الرقم 0.25 يبقى 0.25 حتى لو عرضته 25%.\n\nاختصارات الخط (عريض ومائل وتحته خط) هي نفسها في أغلب البرامج. واختصارات تنسيق الأرقام تستخدم Ctrl وShift مع رمز التنسيق نفسه: `$` للعملة و`%` للنسبة.",
+  "faq": [
+    {
+      "qAr": "كيف ألغي الخط العريض؟",
+      "aAr": "اضغط الاختصار نفسه مرة ثانية. اختصارات العريض والمائل وتحته خط تعمل تشغيلًا وإيقافًا."
+    },
+    {
+      "qAr": "أي عملة يعرضها اختصار العملة؟",
+      "aAr": "يعرض عملة إعدادات الجهاز. لاختيار عملة أخرى افتح نافذة تنسيق الخلايا واختر العملة من قسم الأرقام."
+    }
+  ],
+  "steps": [
+    {
+      "slug": "bold",
+      "type": "SHORTCUT",
+      "promptAr": "حددت عناوين الجدول. لجعلها بخط عريض، اضغط `Ctrl+B` (على Mac: `⌘+B`).",
+      "check": {
+        "combos": [{ "win": "Ctrl+B", "mac": "Cmd+B" }],
+        "distractors": [
+          { "win": "Ctrl+I", "mac": "Cmd+I" },
+          { "win": "Ctrl+U", "mac": "Cmd+U" },
+          { "win": "Ctrl+H", "mac": "Ctrl+H" }
+        ]
+      },
+      "hintAr": "B من كلمة Bold."
+    },
+    {
+      "slug": "italic",
+      "type": "SHORTCUT",
+      "promptAr": "لكتابة ملاحظة بخط مائل، اضغط `Ctrl+I` (على Mac: `⌘+I`).",
+      "check": {
+        "combos": [{ "win": "Ctrl+I", "mac": "Cmd+I" }],
+        "distractors": [
+          { "win": "Ctrl+B", "mac": "Cmd+B" },
+          { "win": "Ctrl+L", "mac": "Cmd+L" },
+          { "win": "Ctrl+U", "mac": "Cmd+U" }
+        ]
+      },
+      "hintAr": "I من كلمة Italic."
+    },
+    {
+      "slug": "underline",
+      "type": "SHORTCUT",
+      "promptAr": "ولوضع خط تحت النص، اضغط `Ctrl+U` (على Mac: `⌘+U`).",
+      "check": {
+        "combos": [{ "win": "Ctrl+U", "mac": "Cmd+U" }],
+        "distractors": [
+          { "win": "Ctrl+I", "mac": "Cmd+I" },
+          { "win": "Ctrl+B", "mac": "Cmd+B" },
+          { "win": "Ctrl+Shift+U", "mac": "Cmd+Shift+U" }
+        ]
+      },
+      "hintAr": "U من كلمة Underline."
+    },
+    {
+      "slug": "currency-format",
+      "type": "SHORTCUT",
+      "promptAr": "حددت عمود الأسعار. لعرضها بتنسيق العملة، اضغط `Ctrl+Shift+$` (المفتاح 4 مع Shift).",
+      "check": {
+        "combos": [{ "win": "Ctrl+Shift+$", "mac": "Ctrl+Shift+$" }],
+        "distractors": [
+          { "win": "Ctrl+Shift+%", "mac": "Ctrl+Shift+%" },
+          { "win": "Ctrl+Shift+#", "mac": "Ctrl+Shift+#" },
+          { "win": "Ctrl+4", "mac": "Cmd+4" }
+        ]
+      },
+      "hintAr": "رمز الدولار $ فوق الرقم 4."
+    },
+    {
+      "slug": "percent-format",
+      "type": "SHORTCUT",
+      "promptAr": "في العمود التالي نسب مثل 0.25. لعرضها 25%، اضغط `Ctrl+Shift+%` (المفتاح 5 مع Shift).",
+      "check": {
+        "combos": [{ "win": "Ctrl+Shift+%", "mac": "Ctrl+Shift+%" }],
+        "distractors": [
+          { "win": "Ctrl+Shift+$", "mac": "Ctrl+Shift+$" },
+          { "win": "Ctrl+5", "mac": "Cmd+Shift+X" },
+          { "win": "Ctrl+Shift+!", "mac": "Ctrl+Shift+!" }
+        ]
+      },
+      "hintAr": "رمز النسبة % فوق الرقم 5."
+    },
+    {
+      "slug": "format-cells-dialog",
+      "type": "SHORTCUT",
+      "promptAr": "لكل خيارات التنسيق في مكان واحد، افتح نافذة تنسيق الخلايا بالاختصار `Ctrl+1` (على Mac: `⌘+1`). المتصفح يستخدم هذا الاختصار للتنقل بين التبويبات، لذلك اختره من القائمة.",
+      "check": {
+        "combos": [{ "win": "Ctrl+1", "mac": "Cmd+1" }],
+        "distractors": [
+          { "win": "Ctrl+F", "mac": "Cmd+F" },
+          { "win": "Alt+1", "mac": "Option+1" },
+          { "win": "Ctrl+M", "mac": "Ctrl+M" }
+        ]
+      },
+      "hintAr": "Ctrl مع الرقم 1."
+    }
+  ]
+}

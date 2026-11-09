@@ -273,7 +273,10 @@
   "shortcuts": {
     "title": "Excel keyboard shortcuts",
     "description": "The most useful Excel shortcuts for moving, selecting and editing, on Windows and Mac.",
-    "intro": "These are the shortcuts that help most in everyday work. Interactive shortcut exercises are coming soon.",
+    "intro": "These are the shortcuts that help most in everyday work. To practise them by pressing the keys yourself, start the keyboard shortcuts track.",
+    "practiceTitle": "Practise these shortcuts",
+    "practiceText": "Seven short lessons where you press each shortcut yourself, on Windows or Mac.",
+    "practiceCta": "Start practising",
     "action": "Action",
     "windows": "Windows",
     "mac": "Mac",

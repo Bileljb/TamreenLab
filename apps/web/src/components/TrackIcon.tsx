@@ -6,6 +6,7 @@ const TRACKS: Record<string, { path: string; tone: string }> = {
   conditional: { path: 'M4 5h16l-6 8v5l-4 2v-7z', tone: 'from-amber-400 to-orange-500' },
   lookup: { path: 'M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zM21 21l-5-5', tone: 'from-rose-400 to-pink-500' },
   review: { path: 'm12 3 2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6L3.4 9.3l6-.7z', tone: 'from-lime-400 to-emerald-500' },
+  shortcuts: { path: 'M3 6h18v12H3zM7 10h.01M11 10h.01M15 10h.01M8 14h8', tone: 'from-cyan-400 to-blue-500' },
 };
 
 export function TrackIcon({ track, size = 'md' }: { track: string; size?: 'md' | 'lg' }) {

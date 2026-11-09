@@ -99,3 +99,10 @@ One row per reviewed lesson. Write the slug in backticks.
 | `vlookup-approximate` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
 | `vlookup-exact` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
 | `vlookup-not-found` | none: published by developer decision (Bilel Jabrane) | 2026-10-31 | Not yet reviewed by a native Arabic speaker; see ADR 008 |
+| `shortcuts-editing` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |
+| `shortcuts-fill` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |
+| `shortcuts-formatting` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |
+| `shortcuts-formulas` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |
+| `shortcuts-navigation` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |
+| `shortcuts-review` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |
+| `shortcuts-selection` | none: published by developer decision (Bilel Jabrane) | 2026-11-09 | Phase 6 shortcut lesson; not yet reviewed by a native Arabic speaker; same basis as ADR 008 |

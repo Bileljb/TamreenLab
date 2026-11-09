@@ -1,0 +1,117 @@
+{
+  "slug": "shortcuts-fill",
+  "track": "shortcuts",
+  "order": 24,
+  "kind": "CONCEPT",
+  "status": "PUBLISHED",
+  "titleAr": "التعبئة السريعة",
+  "summaryAr": "انسخ خلية إلى ما تحتها أو إلى يمينها، واكتب القيمة نفسها في عدة خلايا دفعة واحدة، وأضف سطرًا جديدًا داخل الخلية.",
+  "minutes": 4,
+  "introAr": "بدل سحب {{مقبض التعبئة}} بالفأرة، حدد {{النطاق}} واضغط اختصارًا واحدًا: ينسخ إكسل الخلية الأولى إلى بقية الخلايا. وإذا كانت الخلية الأولى تحتوي على {{معادلة}}، تتعدل مراجعها تلقائيًا في كل صف.\n\nتعلم أيضًا كيف تكتب القيمة نفسها في عدة خلايا محددة دفعة واحدة، وكيف تبدأ سطرًا جديدًا داخل خلية واحدة.",
+  "faq": [
+    {
+      "qAr": "هل يعمل Ctrl+D مع المعادلات؟",
+      "aAr": "نعم. ينسخ المعادلة من الخلية العليا إلى الخلايا المحددة تحتها، وتتغير المراجع النسبية في كل صف كما لو سحبت مقبض التعبئة."
+    },
+    {
+      "qAr": "لماذا لا يبدأ Enter سطرًا جديدًا داخل الخلية؟",
+      "aAr": "لأن Enter يؤكد الكتابة وينتقل إلى الخلية التالية. للسطر الجديد داخل الخلية اضغط Alt+Enter، وعلى Mac اضغط Option+Return."
+    }
+  ],
+  "steps": [
+    {
+      "slug": "fill-down",
+      "type": "SHORTCUT",
+      "promptAr": "في `B2` معادلة، وحددت `B2:B10`. لنسخها إلى بقية الخلايا تحتها، اضغط `Ctrl+D` (على Mac: `⌘+D`).",
+      "check": {
+        "combos": [
+          { "win": "Ctrl+D", "mac": "Cmd+D" },
+          { "win": "Ctrl+D", "mac": "Ctrl+D" }
+        ],
+        "distractors": [
+          { "win": "Ctrl+R", "mac": "Cmd+R" },
+          { "win": "Ctrl+F", "mac": "Cmd+F" },
+          { "win": "Ctrl+E", "mac": "Cmd+E" }
+        ]
+      },
+      "hintAr": "D من كلمة Down، أي إلى الأسفل."
+    },
+    {
+      "slug": "fill-right",
+      "type": "SHORTCUT",
+      "promptAr": "الآن تريد نسخ الخلية `B2` إلى الخلايا التالية في الصف نفسه، `B2:F2`. اضغط `Ctrl+R` (على Mac: `⌘+R`).",
+      "check": {
+        "combos": [
+          { "win": "Ctrl+R", "mac": "Cmd+R" },
+          { "win": "Ctrl+R", "mac": "Ctrl+R" }
+        ],
+        "distractors": [
+          { "win": "Ctrl+D", "mac": "Cmd+D" },
+          { "win": "Ctrl+Right", "mac": "Cmd+Right" },
+          { "win": "Ctrl+L", "mac": "Cmd+L" }
+        ]
+      },
+      "hintAr": "R من كلمة Right، أي نحو الأعمدة التالية."
+    },
+    {
+      "slug": "what-fill-down-copies",
+      "type": "MULTIPLE_CHOICE",
+      "promptAr": "حددت `C2:C6`، وفي `C2` المعادلة `=A2*B2`. ماذا تحتوي `C6` بعد `Ctrl+D`؟",
+      "check": {
+        "options": ["`=A6*B6`", "`=A2*B2`", "ناتج `C2` رقمًا ثابتًا", "تبقى فارغة"],
+        "correct": 0
+      },
+      "explainAr": "تتغير المراجع النسبية مع كل صف، فتصبح المعادلة في الصف 6 هي `=A6*B6`."
+    },
+    {
+      "slug": "fill-the-selection",
+      "type": "SHORTCUT",
+      "promptAr": "حدد عدة خلايا، واكتب قيمة، ثم اضغط `Ctrl+Enter` بدل Enter، فتُكتب القيمة في كل الخلايا المحددة. على Mac اضغط `Ctrl+Return`. جرّبه الآن.",
+      "check": {
+        "combos": [
+          { "win": "Ctrl+Enter", "mac": "Ctrl+Return" },
+          { "win": "Ctrl+Enter", "mac": "Cmd+Return" }
+        ],
+        "distractors": [
+          { "win": "Enter", "mac": "Return" },
+          { "win": "Shift+Enter", "mac": "Shift+Return" },
+          { "win": "Alt+Enter", "mac": "Option+Return" }
+        ]
+      }
+    },
+    {
+      "slug": "new-line-in-a-cell",
+      "type": "SHORTCUT",
+      "promptAr": "تكتب عنوانًا من سطرين في خلية واحدة. لبدء السطر الثاني دون مغادرة الخلية، اضغط `Alt+Enter` (على Mac: `Option+Return`).",
+      "check": {
+        "combos": [
+          { "win": "Alt+Enter", "mac": "Option+Return" },
+          { "win": "Alt+Enter", "mac": "Ctrl+Option+Return" }
+        ],
+        "distractors": [
+          { "win": "Ctrl+Enter", "mac": "Ctrl+Return" },
+          { "win": "Shift+Enter", "mac": "Shift+Return" },
+          { "win": "Enter", "mac": "Return" }
+        ]
+      },
+      "hintAr": "Alt مع Enter، وعلى Mac المفتاح Option مع Return."
+    },
+    {
+      "slug": "fill-down-again",
+      "type": "SHORTCUT",
+      "promptAr": "تدريب: في `D2` معادلة الإجمالي، وحددت `D2:D30`. انسخها إلى الأسفل باختصار واحد.",
+      "check": {
+        "combos": [
+          { "win": "Ctrl+D", "mac": "Cmd+D" },
+          { "win": "Ctrl+D", "mac": "Ctrl+D" }
+        ],
+        "distractors": [
+          { "win": "Ctrl+R", "mac": "Cmd+R" },
+          { "win": "Ctrl+Enter", "mac": "Ctrl+Return" },
+          { "win": "Ctrl+Shift+Down", "mac": "Cmd+Shift+Down" }
+        ]
+      },
+      "hintAr": "الحرف الأول من الكلمة الإنجليزية Down."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "slug": "shortcuts-selection",
+  "title": "Sélectionner des cellules au clavier",
+  "summary": "Étendez une sélection cellule par cellule ou jusqu'au bout des données, et sélectionnez une colonne, une ligne ou toute la feuille.",
+  "intro": "`Shift` (Maj) est la touche de sélection : tout déplacement fait en la maintenant sélectionne les cellules traversées au lieu de simplement vous déplacer. Ainsi `Ctrl+↓` avec `Shift` devient une sélection jusqu'au bout des données.\n\nVous apprendrez aussi à sélectionner une colonne entière, une ligne entière ou toutes les cellules, avant de les copier ou de les mettre en forme.",
+  "faq": [
+    {
+      "q": "Quelle différence entre Ctrl+↓ et Ctrl+Maj+↓ ?",
+      "a": "Le premier vous déplace seulement jusqu'à la dernière cellule remplie. Le second sélectionne toutes les cellules entre votre position et cette cellule."
+    },
+    {
+      "q": "Pourquoi la sélection d'une colonne affiche-t-elle des choix sur Mac ?",
+      "a": "macOS utilise Ctrl+Espace pour changer la langue du clavier : le navigateur ne le reçoit jamais. Sur Mac, vous le choisissez donc dans une liste."
+    }
+  ],
+  "steps": {
+    "extend-one-cell": {
+      "prompt": "Pour étendre la sélection d'une cellule vers la colonne suivante, appuyez sur `Shift+→`. Chaque appui ajoute une cellule à la plage sélectionnée."
+    },
+    "extend-to-the-end": {
+      "prompt": "Combinez les deux idées : `Ctrl+Shift+↓` (sur Mac : `⌘+Shift+↓`) sélectionne de la cellule active jusqu'à la dernière cellule remplie de la colonne. Appuyez maintenant.",
+      "hint": "Trois touches : Ctrl, Maj et la flèche vers le bas."
+    },
+    "select-a-column": {
+      "prompt": "Pour sélectionner toute la colonne de la cellule active, appuyez sur `Ctrl+Space` (la barre d'espace).",
+      "hint": "Ctrl avec la plus longue touche du clavier."
+    },
+    "select-a-row": {
+      "prompt": "Pour sélectionner toute la ligne, remplacez `Ctrl` par `Shift` : appuyez sur `Shift+Space`."
+    },
+    "select-everything": {
+      "prompt": "Pour sélectionner toutes les cellules de la feuille, appuyez sur `Ctrl+A` (sur Mac : `⌘+A`). Dans un tableau de données, le premier appui sélectionne le tableau et le second toute la feuille.",
+      "hint": "A comme All (tout), en anglais."
+    },
+    "which-selects-to-the-end": {
+      "prompt": "Vous êtes en `A2`, en haut d'une colonne de 500 noms sans cellule vide. Que fait `Ctrl+Shift+↓` ?",
+      "options": [
+        "Sélectionne la plage `A2:A501`",
+        "Vous déplace en `A501` sans sélectionner",
+        "Sélectionne toute la colonne A",
+        "Sélectionne seulement la cellule `A3`"
+      ],
+      "explain": "Avec Maj, le saut devient une sélection : de `A2` jusqu'à la dernière cellule remplie, `A501`."
+    }
+  }
+}

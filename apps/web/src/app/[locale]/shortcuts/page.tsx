@@ -29,6 +29,9 @@ const GROUPS = {
   ],
 } as const;
 
+/** The first lesson of the shortcuts track, where "Start practising" leads. */
+const FIRST_LESSON = 'shortcuts-navigation';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'shortcuts' });
@@ -50,6 +53,23 @@ export default async function ShortcutsPage({ params }: Props) {
     <main className="flex flex-col">
       <PageHero title={t('title')} intro={t('intro')} />
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-4 py-10">
+      <section
+        aria-labelledby="practice"
+        className="flex flex-col items-start gap-3 rounded-[var(--radius-card)] border border-brand/30 bg-brand-soft p-6 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="flex flex-col gap-1">
+          <h2 id="practice" className="text-xl font-bold">
+            {t('practiceTitle')}
+          </h2>
+          <p className="text-ink-soft">{t('practiceText')}</p>
+        </div>
+        <a
+          href={`/${locale}/lessons/shortcuts/${FIRST_LESSON}`}
+          className="shrink-0 rounded-full border border-brand bg-brand px-5 py-2.5 text-sm font-semibold text-brand-ink shadow-glow transition hover:-translate-y-px hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        >
+          {t('practiceCta')}
+        </a>
+      </section>
       {(Object.keys(GROUPS) as (keyof typeof GROUPS)[]).map((group) => (
         <section key={group} aria-labelledby={`g-${group}`} className="flex flex-col gap-2">
           <h2 id={`g-${group}`} className="text-xl font-bold">
