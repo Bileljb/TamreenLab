@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Sheet } from '@tamreen/engine';
 import type { Locale } from '@tamreen/shared';
+import { WelcomeBack } from '@tamreen/ui';
 import { HeroSheet } from '@/components/HeroSheet';
 import { JsonLd } from '@/components/JsonLd';
 import { ProgressRing } from '@/components/Progress';
@@ -56,6 +57,11 @@ export default async function HomePage({ params }: Props) {
           inLanguage: locale,
           description: meta('description'),
         }}
+      />
+      {/* Signed-in learners only; guests get nothing here, so the page they see is unchanged. */}
+      <WelcomeBack
+        locale={locale}
+        lessonTitles={Object.fromEntries(lessons.map((l) => [l.slug, l.titleAr]))}
       />
 
       <section className="relative isolate overflow-hidden">

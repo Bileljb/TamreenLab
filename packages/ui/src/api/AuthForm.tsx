@@ -46,6 +46,8 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
           email,
           password,
           displayName: String(form.get('displayName') ?? ''),
+          // Unticked by default: no reminder emails without an explicit opt-in (ADR 011).
+          emailOptIn: form.get('emailOptIn') === 'on',
         });
       } else {
         await session.login({ email, password });
@@ -103,6 +105,12 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
         />
         {mode === 'signUp' ? <span className="text-xs text-muted">{t('passwordHint')}</span> : null}
       </label>
+      {mode === 'signUp' ? (
+        <label className="flex items-start gap-2.5 text-sm text-ink-soft">
+          <input name="emailOptIn" type="checkbox" className="mt-1 size-4 accent-brand" />
+          <span>{t('emailOptIn')}</span>
+        </label>
+      ) : null}
       <div role="alert" aria-live="assertive" className="min-h-6 text-sm text-bad">
         {error ? t(`errors.${error}`) : null}
       </div>

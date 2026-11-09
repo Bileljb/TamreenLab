@@ -17,7 +17,10 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
     - `JWT_SECRET`: a long random value. The API refuses to start in production without it.
     - `NODE_ENV=production`. This also makes cookies `Secure`.
     - `DAY_UTC_OFFSET_MINUTES` stays at the default UTC+3 (ADR 008).
+    - `PUBLIC_SITE_URL`: the public origin, used for links in reminder emails.
+    - `MAIL_FROM`: the sender address of reminder emails.
   - Database and content: run `pnpm db:migrate`, then `pnpm content:sync` against the production database.
+- [ ] **Reminder emails (ADR 011).** Choose an email provider and add it as a `Mailer` in `apps/api/src/lib/mailer.ts`; until then `MAIL_TRANSPORT=log` only logs, and no email leaves the server. Set up the sending domain (SPF, DKIM, DMARC). Then schedule `pnpm reminders:send` once a week on the host: each learner who opted in gets at most one email per ISO week, so a retry is safe.
 - [ ] **Contact address.** The contact page says the address is "added at launch" (`pages.contact.body` in `apps/web/messages/ar.json`). Add a real address.
 - [x] **Account deletion.** Signed-in learners can delete their account from the bottom of the privacy page, with a confirmation step (`DELETE /api/me`).
 
@@ -25,7 +28,7 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
 
 - [ ] **Verify the domain** in Google Search Console with a DNS TXT record (works for all subdomains).
   - Optional: also verify in Bing Webmaster Tools. It can import the Google property.
-- [ ] **Submit `https://<domain>/sitemap.xml`.** It lists 129 URLs: 8 site pages, 20 lessons and 15 function pages in Arabic, English and French, with hreflang alternates. Sign-in pages are excluded and `noindex`. Watch indexing per language (`/ar/`, `/en/`, `/fr/`).
+- [ ] **Submit `https://<domain>/sitemap.xml`.** It lists 150 URLs: 8 site pages, 27 lessons and 15 function pages in Arabic, English and French, with hreflang alternates. Sign-in pages are excluded and `noindex`. Watch indexing per language (`/ar/`, `/en/`, `/fr/`).
 - [ ] **Inspect a few URLs and request indexing:** one lesson, one function page and the home page.
 - [ ] **Check the Enhancements reports after a few days.** Lessons publish `FAQPage` and `BreadcrumbList` structured data.
 - [ ] **Track weekly** (PLAN §6, risk 3): indexed pages, plus impressions and clicks by page type (`/ar/lessons/…` vs `/ar/functions/…`).

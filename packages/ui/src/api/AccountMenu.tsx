@@ -50,6 +50,12 @@ export function AccountMenu({
             {t('greeting', { name: session.user.displayName })}
           </span>
         </span>
+        <a
+          href={`/${locale}/account`}
+          className={`${link} text-ink-soft hover:bg-sunken max-sm:hidden`}
+        >
+          {t('settings')}
+        </a>
         <button
           type="button"
           className={`${link} border border-line-strong bg-raised text-ink hover:bg-sunken`}

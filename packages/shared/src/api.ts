@@ -97,6 +97,9 @@ export const StatsSchema = z.object({
 });
 export type Stats = z.infer<typeof StatsSchema>;
 
+/** Points for a correct review from the "review mistakes" queue, paid once per scheduled review. */
+export const REVIEW_POINTS = 50;
+
 /**
  * `GET /me/review`: the steps due for review today. Only slugs: the page loads the step text in
  * the learner's language from the content (the database keeps the Arabic source only).

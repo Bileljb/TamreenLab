@@ -7,6 +7,8 @@ import type {
   LoginRequest,
   ProgressSyncResponse,
   RegisterRequest,
+  ReviewQueue,
+  SettingsUpdate,
   Stats,
   User,
   GuestProgress,
@@ -72,7 +74,8 @@ const post = (body: unknown): RequestInit => ({ method: 'POST', body: JSON.strin
 
 export const api = {
   me: () => call<User>('/me'),
-  register: (body: RegisterRequest) => send<User>('/auth/register', post(body)),
+  register: (body: RegisterRequest) =>
+    send<User>('/auth/register', post({ ...body, locale: pageLocale() })),
   login: (body: LoginRequest) => send<User>('/auth/login', post(body)),
   logout: () => send<void>('/auth/logout', post({})),
   deleteAccount: () => call<void>('/me', { method: 'DELETE' }),
@@ -83,11 +86,21 @@ export const api = {
     timeMs: number;
     hintUsed: boolean;
     answerShown: boolean;
+    mode?: 'lesson' | 'review';
   }) => call<AttemptResponse>('/attempts', post({ ...body, locale: pageLocale() })),
   syncProgress: (guestProgress: GuestProgress) =>
     call<ProgressSyncResponse>('/progress/sync', post({ guestProgress })),
   progress: () => call<LessonProgressDto[]>('/me/progress'),
   stats: () => call<Stats>('/me/stats'),
+  settings: (update: SettingsUpdate) =>
+    call<User>('/me/settings', {
+      method: 'PATCH',
+      body: JSON.stringify({ ...update, locale: pageLocale() }),
+    }),
+  review: () => call<ReviewQueue>('/me/review'),
+  /** From the link in a reminder email; needs no session. */
+  unsubscribe: (u: string, t: string) =>
+    send<{ unsubscribed: true }>('/email/unsubscribe', post({ u, t })),
   leaderboard: (limit = 10) => send<Leaderboard>(`/leaderboard/daily?limit=${limit}`),
 };
 

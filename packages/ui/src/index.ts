@@ -23,3 +23,8 @@ export {
   type Consent,
 } from './consent/consent';
 export { track } from './analytics/track';
+export { LevelBar, GoalRing } from './engagement/Progress';
+export { WelcomeBack } from './engagement/WelcomeBack';
+export { AccountSettings } from './engagement/AccountSettings';
+export { ReviewSession } from './engagement/ReviewSession';
+export { UnsubscribeConfirm } from './engagement/Unsubscribe';

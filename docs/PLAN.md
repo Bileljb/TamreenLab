@@ -423,7 +423,7 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 
 ### Phase 7 — Engagement (about 1 week)
 **Tasks**
-- [ ] Levels and a daily goal; optional streak freeze; a "review mistakes" mode that re-queues missed steps with simple spacing; opt-in email capture with a weekly reminder; a share-your-result card via `next/og`.
+- [x] Levels and a daily goal; optional streak freeze; a "review mistakes" mode that re-queues missed steps with simple spacing; opt-in email capture with a weekly reminder; a share-your-result card via `next/og`.
 **Acceptance**
 - [ ] The returning-user flow works, the unsubscribe link works, and no email is sent without opt-in.
 

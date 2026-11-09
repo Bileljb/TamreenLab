@@ -64,3 +64,39 @@ export function ogImage(formula: string, label: string) {
     OG_SIZE,
   );
 }
+
+/** The card for a shared lesson result: stars only, no name or points (Phase 7, ADR 011). */
+export function shareImage(stars: number) {
+  return new ImageResponse(
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        padding: 64,
+        background: 'linear-gradient(135deg, #064e3b 0%, #047857 100%)',
+        color: 'white',
+      }}
+    >
+      <div style={{ display: 'flex', fontSize: 40, fontWeight: 700, letterSpacing: 1 }}>
+        {SITE_NAME}
+      </div>
+      <div style={{ display: 'flex', gap: 24 }}>
+        {[1, 2, 3].map((n) => (
+          <svg key={n} width="150" height="150" viewBox="0 0 24 24">
+            <path
+              d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"
+              fill={n <= stars ? '#fbbf24' : 'rgba(255,255,255,0.25)'}
+            />
+          </svg>
+        ))}
+      </div>
+      <div style={{ display: 'flex', fontSize: 44, fontWeight: 700 }}>
+        {`Lesson complete · ${stars}/3`}
+      </div>
+    </div>,
+    OG_SIZE,
+  );
+}

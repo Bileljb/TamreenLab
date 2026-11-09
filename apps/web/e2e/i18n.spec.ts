@@ -43,7 +43,7 @@ test('an English SUMIF step is checked and scored in English', async ({ page }) 
   const email = `e2e-en-${Date.now()}-${Math.floor(Math.random() * 1e6)}@example.com`;
   await page.goto(`/en/register?next=${encodeURIComponent(`/en${SUMIF}`)}`);
   await page.getByLabel('Display name').fill('English learner');
-  await page.getByLabel('Email').fill(email);
+  await page.getByRole('textbox', { name: 'Email' }).fill(email);
   await page.getByLabel('Password').fill('correct horse');
   await page.getByRole('button', { name: 'Create account' }).click();
   await expect(page).toHaveURL(new RegExp(`/en${SUMIF}$`));

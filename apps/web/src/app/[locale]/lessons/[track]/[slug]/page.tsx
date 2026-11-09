@@ -212,6 +212,7 @@ export default async function LessonPage({ params }: Props) {
             glossary={glossary}
             lessonsHref={`/${locale}/lessons`}
             nextLessonHref={next ? lessonHref(locale, next) : undefined}
+            sharePath={`/${locale}/share/${lesson.track}/${lesson.slug}`}
             preview={
               // The player's header and first prompt, painted with the page while the grid loads.
               <>
@@ -234,7 +235,10 @@ export default async function LessonPage({ params }: Props) {
         </section>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <StatsPanel loginHref={`/${locale}/login?next=${encodeURIComponent(path)}`} />
+          <StatsPanel
+            loginHref={`/${locale}/login?next=${encodeURIComponent(path)}`}
+            reviewHref={`/${locale}/review`}
+          />
           <LeaderboardPanel />
         </div>
 

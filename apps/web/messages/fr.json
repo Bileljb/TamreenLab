@@ -99,7 +99,8 @@
     "menu": "Menu",
     "themeSystem": "Thème : comme l'appareil",
     "themeLight": "Thème : clair",
-    "themeDark": "Thème : sombre"
+    "themeDark": "Thème : sombre",
+    "settings": "Paramètres"
   },
   "deleteAccount": {
     "title": "Supprimer le compte",
@@ -134,7 +135,8 @@
       "RATE_LIMITED": "Trop de tentatives. Patientez un peu, puis réessayez.",
       "NETWORK": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
       "other": "Une erreur inattendue s'est produite. Réessayez."
-    }
+    },
+    "emailOptIn": "Envoyez-moi un rappel d'entraînement par e-mail chaque semaine (vous pouvez l'arrêter à tout moment)."
   },
   "panels": {
     "statsTitle": "Votre progression",
@@ -196,7 +198,11 @@
     "stars": "{count, plural, one {# étoile sur 3} other {# étoiles sur 3}}",
     "statCorrect": "étapes réussies",
     "statFirstTry": "du premier coup",
-    "statPoints": "points"
+    "statPoints": "points",
+    "reviewCompleteTitle": "Bravo ! Révision terminée",
+    "share": "Partager votre résultat",
+    "shareCopied": "Lien copié",
+    "shareTitle": "Mon résultat sur TamreenLab"
   },
   "feedback": {
     "WRONG_VALUE": "Le résultat n'est pas juste. Vérifiez les cellules utilisées et réessayez.",
@@ -311,7 +317,7 @@
       "title": "Politique de confidentialité",
       "description": "Comment TamreenLab traite vos données.",
       "draft": "Brouillon : cette page doit être relue par un juriste avant le lancement.",
-      "body": "Nous collectons le moins de données possible.\n\nSi vous vous entraînez sans compte, votre progression est stockée uniquement dans votre navigateur. Si vous créez un compte, nous enregistrons votre e-mail, votre nom affiché et votre mot de passe, chiffré de façon irréversible, ainsi que vos réponses et vos points pour afficher votre progression et le classement.\n\nNous enregistrons des statistiques d'utilisation anonymes, comme le début ou la fin d'une leçon, avec un identifiant aléatoire qui n'est lié ni à votre nom ni à votre e-mail, afin d'améliorer les leçons. Vous pouvez les désactiver dans la fenêtre de consentement.\n\nDes publicités peuvent s'afficher sur les pages d'explication. Les publicités personnalisées ne sont autorisées qu'avec votre accord.\n\nVous pouvez supprimer votre compte et toutes ses données à tout moment en bas de cette page, une fois connecté, ou nous écrire via la page de contact."
+      "body": "Nous collectons le moins de données possible.\n\nSi vous vous entraînez sans compte, votre progression est stockée uniquement dans votre navigateur. Si vous créez un compte, nous enregistrons votre e-mail, votre nom affiché et votre mot de passe, chiffré de façon irréversible, ainsi que vos réponses et vos points pour afficher votre progression et le classement.\n\nNous enregistrons des statistiques d'utilisation anonymes, comme le début ou la fin d'une leçon, avec un identifiant aléatoire qui n'est lié ni à votre nom ni à votre e-mail, afin d'améliorer les leçons. Vous pouvez les désactiver dans la fenêtre de consentement.\n\nDes publicités peuvent s'afficher sur les pages d'explication. Les publicités personnalisées ne sont autorisées qu'avec votre accord.\n\nSi vous activez le rappel hebdomadaire, nous vous envoyons un e-mail par semaine et conservons la date de votre accord. Nous n'envoyons jamais de rappel sans votre accord, et vous pouvez l'arrêter depuis vos paramètres ou depuis le lien de chaque e-mail.\n\nVous pouvez supprimer votre compte et toutes ses données à tout moment en bas de cette page, une fois connecté, ou nous écrire via la page de contact."
     },
     "terms": {
       "title": "Conditions d'utilisation",
@@ -323,6 +329,23 @@
       "title": "Nous contacter",
       "description": "Pour vos questions, suggestions ou pour signaler une erreur dans une leçon.",
       "body": "Nous serions ravis de connaître votre avis sur les leçons, un sujet que vous aimeriez voir, ou une erreur dans une étape ou une explication.\n\nL'adresse de contact sera ajoutée au lancement."
+    },
+    "account": {
+      "title": "Paramètres",
+      "description": "Votre objectif quotidien, le gel de série et le rappel hebdomadaire."
+    },
+    "review": {
+      "title": "Réviser vos erreurs",
+      "intro": "Les étapes manquées reviennent après un jour, puis trois jours, puis une semaine, jusqu'à ce qu'elles soient acquises."
+    },
+    "unsubscribe": {
+      "title": "Se désabonner des rappels"
+    },
+    "share": {
+      "title": "J'ai terminé « {lesson} »",
+      "stars": "{stars, plural, one {# étoile sur 3} other {# étoiles sur 3}}",
+      "text": "Entraînez-vous à Excel sur TamreenLab : des exercices interactifs courts et une correction immédiate.",
+      "cta": "Essayer cette leçon"
     }
   },
   "ads": {
@@ -338,5 +361,44 @@
     "choose": "Choisir moi-même",
     "save": "Enregistrer mon choix",
     "rejectAll": "Refuser l'optionnel"
+  },
+  "engagement": {
+    "level": "Niveau {level}",
+    "toNextLevel": "{points} points avant le niveau suivant",
+    "levelProgress": "Progression dans le niveau {level}",
+    "goalTitle": "Objectif du jour",
+    "goalDone": "Objectif du jour atteint !",
+    "goalProgress": "{today} points sur {goal} aujourd'hui",
+    "welcomeBack": "Bon retour, {name}",
+    "streakDays": "{days, plural, one {# jour d'affilée} other {# jours d'affilée}}",
+    "streakNone": "Commencez une nouvelle série avec une étape aujourd'hui.",
+    "frozen": "Un gel de série couvre la journée d'hier.",
+    "continue": "Continuer : {lesson}",
+    "reviewDue": "{count, plural, one {Réviser # étape manquée} other {Réviser # étapes manquées}}",
+    "settingsLink": "Paramètres d'objectif et de rappel",
+    "settingsGuest": "<link>Connectez-vous</link> pour choisir votre objectif quotidien, le gel de série et le rappel hebdomadaire.",
+    "goalHelp": "Combien de points voulez-vous gagner chaque jour ? Vous pouvez le changer quand vous voulez.",
+    "goal300": "Léger",
+    "goal900": "Régulier",
+    "goal1800": "Intensif",
+    "goalPoints": "{points} points par jour",
+    "freezeTitle": "Gel de série",
+    "freezeHelp": "Si vous manquez une seule journée, votre série est conservée. Fonctionne au plus une fois par semaine.",
+    "emailTitle": "Rappel hebdomadaire par e-mail",
+    "emailHelp": "Un e-mail par semaine : votre série, les erreurs à réviser et votre prochaine leçon. Nous ne l'envoyons que si vous l'activez, et vous pouvez l'arrêter ici ou depuis le lien dans l'e-mail.",
+    "saving": "Enregistrement…",
+    "saved": "Paramètres enregistrés.",
+    "saveError": "Impossible d'enregistrer. Réessayez.",
+    "reviewTitle": "Réviser vos erreurs",
+    "reviewGuest": "<link>Connectez-vous</link> pour réviser les étapes manquées.",
+    "loading": "Chargement…",
+    "reviewError": "Impossible de charger la révision. Réessayez plus tard.",
+    "reviewEmpty": "Aucune erreur à réviser aujourd'hui. Bravo !",
+    "reviewToLessons": "Aller aux leçons",
+    "unsubscribing": "Désabonnement…",
+    "unsubscribed": "Vous êtes désabonné du rappel hebdomadaire.",
+    "unsubscribedHelp": "Nous ne vous enverrons plus de rappels. Vous pouvez les réactiver dans vos paramètres.",
+    "unsubscribeInvalid": "Ce lien n'est pas valide ou a expiré. Vous pouvez arrêter les rappels dans vos paramètres une fois connecté.",
+    "backHome": "Retour à l'accueil"
   }
 }

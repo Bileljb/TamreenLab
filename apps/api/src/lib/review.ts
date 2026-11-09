@@ -7,8 +7,7 @@ import { addDays, type DayKey } from './day';
  */
 export const REVIEW_INTERVALS_DAYS = [1, 3, 7] as const;
 
-/** Points for a correct review, paid once per scheduled review. */
-export const REVIEW_POINTS = 50;
+export { REVIEW_POINTS } from '@tamreen/shared';
 
 export type ReviewSlot = { box: number; dueDay: DayKey };
 

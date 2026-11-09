@@ -99,7 +99,8 @@
     "menu": "Menu",
     "themeSystem": "Theme: match device",
     "themeLight": "Theme: light",
-    "themeDark": "Theme: dark"
+    "themeDark": "Theme: dark",
+    "settings": "Settings"
   },
   "deleteAccount": {
     "title": "Delete account",
@@ -134,7 +135,8 @@
       "RATE_LIMITED": "Too many attempts. Wait a little and try again.",
       "NETWORK": "Couldn't reach the server. Check your connection and try again.",
       "other": "Something unexpected went wrong. Please try again."
-    }
+    },
+    "emailOptIn": "Send me a weekly practice reminder by email (you can stop it at any time)."
   },
   "panels": {
     "statsTitle": "Your progress",
@@ -196,7 +198,11 @@
     "stars": "{count, plural, one {# star of 3} other {# stars of 3}}",
     "statCorrect": "steps correct",
     "statFirstTry": "first try",
-    "statPoints": "points"
+    "statPoints": "points",
+    "reviewCompleteTitle": "Well done! Review complete",
+    "share": "Share your result",
+    "shareCopied": "Link copied",
+    "shareTitle": "My result on TamreenLab"
   },
   "feedback": {
     "WRONG_VALUE": "The result isn't right. Check the cells you used and try again.",
@@ -311,7 +317,7 @@
       "title": "Privacy policy",
       "description": "How TamreenLab handles your data.",
       "draft": "Draft: this page needs a legal review before launch.",
-      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
+      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nIf you switch on the weekly reminder, we send you one email a week and keep a record of when you agreed. We never send a reminder without your consent, and you can stop it from your settings or from the link in every email.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
     },
     "terms": {
       "title": "Terms of use",
@@ -323,6 +329,23 @@
       "title": "Contact us",
       "description": "For questions, suggestions and reporting a mistake in a lesson.",
       "body": "We'd love to hear what you think of the lessons, a topic you'd like to see, or a mistake in a step or explanation.\n\nThe contact address will be added at launch."
+    },
+    "account": {
+      "title": "Settings",
+      "description": "Your daily goal, streak freeze and weekly reminder."
+    },
+    "review": {
+      "title": "Review your mistakes",
+      "intro": "Steps you got wrong come back after a day, then three days, then a week, until they stick."
+    },
+    "unsubscribe": {
+      "title": "Unsubscribe from reminders"
+    },
+    "share": {
+      "title": "I finished \"{lesson}\"",
+      "stars": "{stars, plural, one {# star out of 3} other {# stars out of 3}}",
+      "text": "Practise Excel on TamreenLab: short interactive exercises with instant feedback.",
+      "cta": "Try this lesson"
     }
   },
   "ads": {
@@ -338,5 +361,44 @@
     "choose": "Let me choose",
     "save": "Save my choice",
     "rejectAll": "Reject optional"
+  },
+  "engagement": {
+    "level": "Level {level}",
+    "toNextLevel": "{points} points to the next level",
+    "levelProgress": "Progress in level {level}",
+    "goalTitle": "Today's goal",
+    "goalDone": "Daily goal reached!",
+    "goalProgress": "{today} of {goal} points today",
+    "welcomeBack": "Welcome back, {name}",
+    "streakDays": "{days, plural, one {# day in a row} other {# days in a row}}",
+    "streakNone": "Start a new streak with one step today.",
+    "frozen": "A streak freeze is covering yesterday.",
+    "continue": "Continue: {lesson}",
+    "reviewDue": "{count, plural, one {Review # missed step} other {Review # missed steps}}",
+    "settingsLink": "Goal and reminder settings",
+    "settingsGuest": "<link>Sign in</link> to choose your daily goal, streak freeze and weekly reminder.",
+    "goalHelp": "How many points do you want to earn each day? You can change it at any time.",
+    "goal300": "Light",
+    "goal900": "Steady",
+    "goal1800": "Intense",
+    "goalPoints": "{points} points a day",
+    "freezeTitle": "Streak freeze",
+    "freezeHelp": "If you miss a single day, your streak stays as it is. Works at most once a week.",
+    "emailTitle": "Weekly email reminder",
+    "emailHelp": "One email a week: your streak, the mistakes waiting for review, and your next lesson. We only send it if you switch it on, and you can stop it here or from the link in the email.",
+    "saving": "Saving…",
+    "saved": "Settings saved.",
+    "saveError": "Could not save. Try again.",
+    "reviewTitle": "Review your mistakes",
+    "reviewGuest": "<link>Sign in</link> to review the steps you got wrong.",
+    "loading": "Loading…",
+    "reviewError": "Could not load your review. Try again later.",
+    "reviewEmpty": "No mistakes waiting for review today. Well done!",
+    "reviewToLessons": "Go to lessons",
+    "unsubscribing": "Unsubscribing…",
+    "unsubscribed": "You are unsubscribed from the weekly reminder.",
+    "unsubscribedHelp": "We will not send you more reminders. You can switch them back on in your settings.",
+    "unsubscribeInvalid": "This link is not valid or has expired. You can stop reminders in your settings once signed in.",
+    "backHome": "Back to the home page"
   }
 }

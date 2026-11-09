@@ -31,12 +31,21 @@ const LessonPlayer = dynamic(() => import('@tamreen/ui').then((m) => m.LessonPla
 export function LessonIsland({
   minHeight,
   preview,
+  sharePath,
   ...props
-}: ComponentProps<typeof Player> & { minHeight: number; preview: ReactNode }) {
+}: Omit<ComponentProps<typeof Player>, 'shareHref'> & {
+  minHeight: number;
+  preview: ReactNode;
+  /** The lesson's share page; the stars are appended (`<sharePath>/3`). */
+  sharePath?: string;
+}) {
   return (
     <PreviewContext.Provider value={preview}>
       <div style={{ minHeight }} className="flex flex-col [&>*]:flex-1">
-        <LessonPlayer {...props} />
+        <LessonPlayer
+          {...props}
+          shareHref={sharePath ? (stars) => `${sharePath}/${stars}` : undefined}
+        />
       </div>
     </PreviewContext.Provider>
   );

@@ -10,7 +10,14 @@ import {
   shortcutMode,
   type CheckResult,
 } from '@tamreen/engine';
-import type { FeedbackCode, Glossary, LessonFile, Platform, StepSpec } from '@tamreen/shared';
+import {
+  REVIEW_POINTS,
+  type FeedbackCode,
+  type Glossary,
+  type LessonFile,
+  type Platform,
+  type StepSpec,
+} from '@tamreen/shared';
 import { track } from '../analytics/track';
 import { api, announcePoints } from '../api/client';
 import { useSession } from '../api/session';
@@ -36,9 +43,23 @@ type Props = {
   glossary: Glossary;
   lessonsHref: string;
   nextLessonHref?: string;
+  /**
+   * Review mode (ADR 011): the steps come from several lessons (`lessonSlugs`, one per step),
+   * attempts are sent as reviews, and nothing is resumed or saved as lesson progress.
+   */
+  review?: { lessonSlugs: string[] };
+  /** The share page for a result with this many stars (1–3); no share button without it. */
+  shareHref?: (stars: number) => string;
 };
 
-export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: Props) {
+export function LessonPlayer({
+  lesson,
+  glossary,
+  lessonsHref,
+  nextLessonHref,
+  review,
+  shareHref,
+}: Props) {
   const t = useTranslations('player');
   const [state, dispatch] = useReducer(lessonReducer, lesson.steps.length, (n) =>
     createLessonState(n, Date.now()),
@@ -54,10 +75,10 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
   // Resume once we know who is playing: from the server when signed in, else from localStorage.
   // One lesson_start per view of the lesson (and per restart).
   useEffect(() => {
-    track('lesson_start', { lessonSlug: lesson.slug });
-  }, [lesson.slug, round]);
+    if (!review) track('lesson_start', { lessonSlug: lesson.slug });
+  }, [lesson.slug, round, review]);
 
-  const resumeDone = useRef(false);
+  const resumeDone = useRef(!!review);
   useEffect(() => {
     if (resumeDone.current || session.status === 'loading') return;
     const resume = (stepsDone: string[]) => {
@@ -87,18 +108,20 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
     dispatch(action);
     const after = next.steps[index]!;
     const step = lesson.steps[index]!;
+    const lessonSlug = review?.lessonSlugs[index] ?? lesson.slug;
     const newlyCorrect = before.status !== 'correct' && after.status === 'correct';
 
     if (action.type === 'checked' && signedIn && after !== before) {
       // The server re-checks and decides the points (PLAN T3); local feedback stays instant.
       api
         .attempt({
-          lessonSlug: lesson.slug,
+          lessonSlug,
           stepSlug: step.slug,
           answer,
           timeMs: Math.max(0, action.now - (before.startedAt ?? action.now)),
           hintUsed: before.hintShown,
           answerShown: false,
+          mode: review ? 'review' : 'lesson',
         })
         .then((res) => {
           if (res.correct) dispatch({ type: 'scored', index, points: res.pointsAwarded });
@@ -106,17 +129,18 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
         })
         .catch(() => {
           // API unreachable: keep the step locally so nothing is lost; it merges on next sign-in.
-          if (newlyCorrect) guest.recordStep(step.slug, after.points, after.firstTry);
+          if (newlyCorrect && !review) guest.recordStep(step.slug, after.points, after.firstTry);
         });
-    } else if (newlyCorrect && !signedIn) {
+    } else if (newlyCorrect && !signedIn && !review) {
       guest.recordStep(step.slug, after.points, after.firstTry);
     }
     if (action.type === 'checked' && after !== before) {
       track(after.status === 'correct' ? 'step_correct' : 'step_incorrect', {
-        lessonSlug: lesson.slug,
+        lessonSlug,
         stepSlug: step.slug,
       });
     }
+    if (review) return;
     if (!state.finished && next.finished) track('lesson_complete', { lessonSlug: lesson.slug });
     if (!state.finished && next.finished && !signedIn) guest.complete();
   }
@@ -190,6 +214,8 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
           points={totals.points}
           lessonsHref={lessonsHref}
           nextLessonHref={nextLessonHref}
+          review={!!review}
+          shareHref={shareHref}
           onRestart={() => {
             setRound((r) => r + 1);
             act({ type: 'restart', now: Date.now() });
@@ -197,7 +223,7 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
         />
       ) : (
         <StepView
-          key={`${round}-${lesson.steps[state.index]!.slug}`}
+          key={`${round}-${state.index}-${lesson.steps[state.index]!.slug}`}
           step={lesson.steps[state.index]!}
           run={state.steps[state.index]!}
           canGoBack={state.index > 0}
@@ -209,7 +235,8 @@ export function LessonPlayer({ lesson, glossary, lessonsHref, nextLessonHref }: 
               {
                 type: 'checked',
                 result,
-                basePoints: lesson.steps[state.index]!.basePoints,
+                // A review pays less; the server decides the exact points either way.
+                basePoints: review ? REVIEW_POINTS : lesson.steps[state.index]!.basePoints,
                 now: Date.now(),
               },
               answer,
@@ -655,15 +682,31 @@ function Completion(props: {
   points: number;
   lessonsHref: string;
   nextLessonHref?: string;
+  review: boolean;
+  shareHref?: (stars: number) => string;
   onRestart: () => void;
 }) {
   const t = useTranslations('player');
+  const [copied, setCopied] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => heading.current?.focus(), []);
   const rate = props.total ? props.firstTry / props.total : 0;
   const stars = rate >= 0.8 ? 3 : rate >= 0.5 ? 2 : 1;
   const link =
     'rounded-full border px-5 py-2.5 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand';
+  /** The system share sheet where there is one (phones), else copy the link. */
+  async function share(url: string) {
+    if (typeof navigator.share === 'function') {
+      await navigator.share({ title: t('shareTitle'), url }).catch(() => undefined);
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+    } catch {
+      window.open(url, '_blank', 'noopener');
+    }
+  }
   const tiles = [
     { label: t('statCorrect'), value: `${props.correct}/${props.total}` },
     { label: t('statFirstTry'), value: String(props.firstTry) },
@@ -691,7 +734,7 @@ function Completion(props: {
         tabIndex={-1}
         className="text-3xl font-extrabold text-brand-strong focus:outline-none"
       >
-        {t('completeTitle')}
+        {t(props.review ? 'reviewCompleteTitle' : 'completeTitle')}
       </h2>
       <p className="text-muted">
         {t('completeSummary', {
@@ -723,13 +766,24 @@ function Completion(props: {
             {t('nextLesson')}
           </a>
         ) : null}
-        <button
-          type="button"
-          className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}
-          onClick={props.onRestart}
-        >
-          {t('restart')}
-        </button>
+        {props.shareHref ? (
+          <button
+            type="button"
+            className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}
+            onClick={() => void share(new URL(props.shareHref!(stars), window.location.href).href)}
+          >
+            {copied ? t('shareCopied') : t('share')}
+          </button>
+        ) : null}
+        {props.review ? null : (
+          <button
+            type="button"
+            className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}
+            onClick={props.onRestart}
+          >
+            {t('restart')}
+          </button>
+        )}
         <a
           href={props.lessonsHref}
           className={`${link} border-line-strong bg-raised text-ink hover:bg-sunken`}

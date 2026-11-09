@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import type { Leaderboard, Stats } from '@tamreen/shared';
 import { POINTS_EVENT, api } from './client';
 import { useSession } from './session';
+import { GoalRing, LevelBar } from '../engagement/Progress';
 
 /** Reloads when the server awards points. */
 function useReload(load: () => void, enabled: boolean) {
@@ -26,8 +27,9 @@ const MEDALS = [
   'bg-orange-300 text-orange-950',
 ];
 
-export function StatsPanel({ loginHref }: { loginHref: string }) {
+export function StatsPanel({ loginHref, reviewHref }: { loginHref: string; reviewHref?: string }) {
   const t = useTranslations('panels');
+  const tEngagement = useTranslations('engagement');
   const session = useSession();
   const [stats, setStats] = useState<Stats | null>(null);
   const [load] = useState(() => () => {
@@ -56,31 +58,43 @@ export function StatsPanel({ loginHref }: { loginHref: string }) {
         {t('statsTitle')}
       </h2>
       {session.status === 'user' && stats ? (
-        <dl className="grid grid-cols-2 gap-3 text-sm">
-          {(
-            [
-              ['pointsToday', stats.pointsToday],
-              ['pointsTotal', stats.pointsTotal],
-              ['streak', stats.streak.current],
+        <div className="flex flex-col gap-4">
+          <LevelBar {...stats.level} />
+          <GoalRing today={stats.pointsToday} goal={stats.dailyGoal} size={52} />
+          <dl className="grid grid-cols-2 gap-3 text-sm">
+            {(
               [
-                'accuracy',
-                stats.firstTryAccuracy === null
-                  ? '—'
-                  : `${Math.round(stats.firstTryAccuracy * 100)}%`,
-              ],
-            ] as const
-          ).map(([key, value]) => (
-            <div key={key} className="flex flex-col-reverse rounded-xl bg-sunken p-3">
-              <dt className="text-xs text-muted">{t(key)}</dt>
-              <dd
-                className="text-2xl font-extrabold tabular-nums text-ink"
-                data-testid={`stat-${key}`}
-              >
-                <bdi>{value}</bdi>
-              </dd>
-            </div>
-          ))}
-        </dl>
+                ['pointsToday', stats.pointsToday],
+                ['pointsTotal', stats.pointsTotal],
+                ['streak', stats.streak.current],
+                [
+                  'accuracy',
+                  stats.firstTryAccuracy === null
+                    ? '—'
+                    : `${Math.round(stats.firstTryAccuracy * 100)}%`,
+                ],
+              ] as const
+            ).map(([key, value]) => (
+              <div key={key} className="flex flex-col-reverse rounded-xl bg-sunken p-3">
+                <dt className="text-xs text-muted">{t(key)}</dt>
+                <dd
+                  className="text-2xl font-extrabold tabular-nums text-ink"
+                  data-testid={`stat-${key}`}
+                >
+                  <bdi>{value}</bdi>
+                </dd>
+              </div>
+            ))}
+          </dl>
+          {reviewHref && stats.reviewsDue > 0 ? (
+            <a
+              href={reviewHref}
+              className="rounded-xl border border-line-strong px-3 py-2 text-center text-sm font-semibold text-ink hover:bg-sunken"
+            >
+              {tEngagement('reviewDue', { count: stats.reviewsDue })}
+            </a>
+          ) : null}
+        </div>
       ) : session.status === 'guest' ? (
         <p className="text-sm text-muted">
           {t.rich('statsGuest', {

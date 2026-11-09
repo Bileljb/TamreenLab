@@ -13,6 +13,7 @@ import {
   emptyGuestProgress,
   type LoginRequest,
   type RegisterRequest,
+  type SettingsUpdate,
   type User,
 } from '@tamreen/shared';
 import { loadGuestProgress, saveGuestProgress } from '../player/guestProgress';
@@ -28,6 +29,8 @@ type SessionApi = Session & {
   login: (body: LoginRequest) => Promise<void>;
   register: (body: RegisterRequest) => Promise<void>;
   logout: () => Promise<void>;
+  /** Saves settings on the server and keeps the returned user; throws ApiError on failure. */
+  updateSettings: (update: SettingsUpdate) => Promise<void>;
   /** Deletes the account and all its data on the server; throws ApiError on failure. */
   deleteAccount: () => Promise<void>;
 };
@@ -79,6 +82,10 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         await api.logout().catch(() => undefined);
         setSession({ status: 'guest', user: null });
       },
+      updateSettings: async (update) => {
+        const user = await api.settings(update);
+        setSession({ status: 'user', user });
+      },
       deleteAccount: async () => {
         await api.deleteAccount();
         setSession({ status: 'guest', user: null });
@@ -96,6 +103,7 @@ const GUEST: SessionApi = {
   login: async () => undefined,
   register: async () => undefined,
   logout: async () => undefined,
+  updateSettings: async () => undefined,
   deleteAccount: async () => undefined,
 };
 

@@ -24,7 +24,7 @@ test('a guest plays, signs up, and keeps progress and points', async ({ page }) 
   await page.getByRole('link', { name: 'إنشاء حساب' }).click();
   await expect(page).toHaveURL(/\/ar\/register\?next=/);
   await page.getByLabel('الاسم الظاهر').fill('متعلم تجريبي');
-  await page.getByLabel('البريد الإلكتروني').fill(email);
+  await page.getByRole('textbox', { name: 'البريد الإلكتروني' }).fill(email);
   await page.getByLabel('كلمة المرور').fill('correct horse');
   await page.getByRole('button', { name: 'إنشاء الحساب' }).click();
   await expect(page).toHaveURL(new RegExp(`${LESSON}$`));
@@ -55,7 +55,7 @@ test('a guest plays, signs up, and keeps progress and points', async ({ page }) 
   await page.getByRole('button', { name: 'تسجيل الخروج' }).click();
   await expect(page.getByRole('link', { name: 'تسجيل الدخول' })).toBeVisible();
   await page.getByRole('link', { name: 'تسجيل الدخول' }).click();
-  await page.getByLabel('البريد الإلكتروني').fill(email);
+  await page.getByRole('textbox', { name: 'البريد الإلكتروني' }).fill(email);
   await page.getByLabel('كلمة المرور').fill('correct horse');
   await page.getByRole('button', { name: 'دخول' }).click();
   await expect(page).toHaveURL(new RegExp(`${LESSON}$`));
@@ -64,7 +64,7 @@ test('a guest plays, signs up, and keeps progress and points', async ({ page }) 
 
 test('shows a clear error for a wrong password', async ({ page }) => {
   await page.goto('/ar/login');
-  await page.getByLabel('البريد الإلكتروني').fill('nobody@example.com');
+  await page.getByRole('textbox', { name: 'البريد الإلكتروني' }).fill('nobody@example.com');
   await page.getByLabel('كلمة المرور').fill('wrong password');
   await page.getByRole('button', { name: 'دخول' }).click();
   // Scoped to the form: Next.js adds its own role="alert" route announcer.
@@ -83,7 +83,7 @@ test('a learner deletes their account from the privacy page', async ({ page }) =
 
   await page.goto(`/ar/register?next=${encodeURIComponent('/ar/privacy')}`);
   await page.getByLabel('الاسم الظاهر').fill('حساب للحذف');
-  await page.getByLabel('البريد الإلكتروني').fill(email);
+  await page.getByRole('textbox', { name: 'البريد الإلكتروني' }).fill(email);
   await page.getByLabel('كلمة المرور').fill('correct horse');
   await page.getByRole('button', { name: 'إنشاء الحساب' }).click();
   await expect(page).toHaveURL(/\/ar\/privacy$/);
@@ -101,7 +101,7 @@ test('a learner deletes their account from the privacy page', async ({ page }) =
 
   // The account is gone: signing in fails.
   await page.goto('/ar/login');
-  await page.getByLabel('البريد الإلكتروني').fill(email);
+  await page.getByRole('textbox', { name: 'البريد الإلكتروني' }).fill(email);
   await page.getByLabel('كلمة المرور').fill('correct horse');
   await page.getByRole('button', { name: 'دخول' }).click();
   await expect(page.locator('form').getByRole('alert')).toHaveText(
