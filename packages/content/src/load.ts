@@ -1,7 +1,10 @@
 import { readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import {
+  EmailCopySchema,
   FunctionFileSchema,
+  type ContentLocale,
+  type EmailCopy,
   FunctionTranslationSchema,
   GlossarySchema,
   LessonTranslationSchema,
@@ -41,6 +44,8 @@ export type RawContent = {
   style: RawFile;
   /** Only the languages whose `i18n/<locale>` folder exists. */
   translations?: RawTranslation[];
+  /** `emails/<locale>.json`; empty when the folder does not exist. */
+  emails?: RawFile[];
 };
 
 async function readJson(dir: string, relative: string): Promise<RawFile> {
@@ -87,7 +92,14 @@ export async function readContent(dir: string): Promise<RawContent> {
       tracks: await readJson(dir, `${base}/tracks.json`),
     });
   }
-  return { lessons, functions, tracks, glossary, style, translations };
+  const emails = await readFolder(dir, 'emails');
+  return { lessons, functions, tracks, glossary, style, translations, emails };
+}
+
+/** The email text in one language (ADR 011). */
+export async function loadEmailCopy(dir: string, locale: ContentLocale): Promise<EmailCopy> {
+  const raw = JSON.parse(await readFile(path.join(dir, `emails/${locale}.json`), 'utf8'));
+  return EmailCopySchema.parse(raw);
 }
 
 async function readFolder(dir: string, relative: string): Promise<RawFile[]> {

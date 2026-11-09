@@ -19,6 +19,11 @@ const EnvSchema = z
     /** Serve DRAFT lessons too. Defaults to true outside production. */
     CONTENT_INCLUDE_DRAFTS: bool.optional(),
     COOKIE_SECURE: bool.optional(),
+    /** The public site address, for links in emails. */
+    PUBLIC_SITE_URL: z.url().default('http://localhost:3000'),
+    /** Email transport. Only `log` exists until the developer picks a provider (ADR 011). */
+    MAIL_TRANSPORT: z.enum(['log']).default('log'),
+    MAIL_FROM: z.string().min(3).default('TamreenLab <noreply@localhost>'),
   })
   .superRefine((env, ctx) => {
     if (env.NODE_ENV === 'production' && !env.JWT_SECRET) {

@@ -6,6 +6,7 @@ import type { Prisma } from '../generated/prisma/client';
 import { HttpError } from '../lib/errors';
 import { requireUser, userId } from '../middleware/auth';
 import { payStep, refreshLessonProgress, touchStreak } from '../services/progress';
+import { recordMiss, recordReview } from '../services/review';
 import { findStep, stepFromRow } from '../services/steps';
 
 export function attemptsRouter(ctx: Ctx) {
@@ -44,6 +45,11 @@ export function attemptsRouter(ctx: Ctx) {
         },
       });
       let pointsAwarded = 0;
+      const today = ctx.today();
+      if (!result.correct) await recordMiss(tx, uid, row.id, today);
+      if (result.correct && body.mode === 'review') {
+        pointsAwarded += await recordReview(tx, uid, row.id, today, body);
+      }
       if (result.correct) {
         const points = scoreAttempt({
           basePoints: row.basePoints,
@@ -52,9 +58,8 @@ export function attemptsRouter(ctx: Ctx) {
           hintUsed: body.hintUsed,
           answerShown: body.answerShown,
         });
-        const today = ctx.today();
         if (await payStep(tx, uid, row.id, points, today)) {
-          pointsAwarded = points;
+          pointsAwarded += points;
           await touchStreak(tx, uid, today);
           await refreshLessonProgress(tx, uid, row.lessonId, ctx.config.now());
         }

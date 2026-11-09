@@ -1,9 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { emptyGuestProgress } from '@tamreen/shared';
-import { dayDate, dayKey, keyOfDate, previousDay } from './day';
+import { dayDate, dayKey, isoWeek, keyOfDate, previousDay } from './day';
 import { planGuestMerge, type KnownStep } from './merge';
 import { isAllowedDisplayName, normalizeName } from './moderation';
-import { nextStreak, visibleStreak } from './streak';
+import { afterMiss, afterReview } from './review';
+import { freezeAvailable, nextStreak, visibleStreak } from './streak';
+import { unsubscribeToken, verifyUnsubscribeToken } from './unsubscribe';
 import {
   accessKey,
   hashToken,
@@ -44,6 +46,75 @@ describe('streak', () => {
     expect(visibleStreak(s, '2026-10-11')).toBe(4);
     expect(visibleStreak(s, '2026-10-12')).toBe(0);
     expect(visibleStreak(null, '2026-10-12')).toBe(0);
+  });
+
+  describe('freeze', () => {
+    const on = { freeze: true };
+    const active = { current: 5, longest: 5, lastDay: '2026-10-10', freezeUsedOn: null };
+
+    it('covers one missed day when switched on', () => {
+      expect(nextStreak(active, '2026-10-12')).toMatchObject({ current: 1 });
+      const s = nextStreak(active, '2026-10-12', on);
+      expect(s).toEqual({
+        current: 6,
+        longest: 6,
+        lastDay: '2026-10-12',
+        freezeUsedOn: '2026-10-11',
+      });
+    });
+
+    it('never covers two missed days', () => {
+      expect(nextStreak(active, '2026-10-13', on).current).toBe(1);
+      expect(visibleStreak(active, '2026-10-13', on)).toBe(0);
+    });
+
+    it('keeps the streak visible during the missed day', () => {
+      expect(visibleStreak(active, '2026-10-12')).toBe(0);
+      expect(visibleStreak(active, '2026-10-12', on)).toBe(5);
+    });
+
+    it('works at most once a week', () => {
+      const used = { ...active, freezeUsedOn: '2026-10-05' };
+      expect(freezeAvailable(used, '2026-10-12')).toBe(false); // would cover the 11th: 6 days later
+      expect(nextStreak(used, '2026-10-12', on).current).toBe(1);
+      expect(freezeAvailable(used, '2026-10-13')).toBe(true); // would cover the 12th: 7 days later
+      expect(freezeAvailable({ ...active }, '2026-10-12')).toBe(true);
+    });
+  });
+});
+
+describe('isoWeek', () => {
+  it.each([
+    ['2026-11-09', '2026-W46'], // Monday
+    ['2026-11-15', '2026-W46'], // Sunday
+    ['2026-11-16', '2026-W47'],
+    ['2026-01-01', '2026-W01'], // Thursday
+    ['2027-01-01', '2026-W53'], // Friday: still the last week of 2026
+    ['2024-12-30', '2025-W01'], // Monday of the first week of 2025
+  ])('%s is in %s', (day, week) => {
+    expect(isoWeek(day)).toBe(week);
+  });
+});
+
+describe('review schedule', () => {
+  it('queues a miss for today, then spaces it 1, 3 and 7 days, then graduates it', () => {
+    expect(afterMiss('2026-10-10')).toEqual({ box: 0, dueDay: '2026-10-10' });
+    expect(afterReview(0, '2026-10-10')).toEqual({ box: 1, dueDay: '2026-10-11' });
+    expect(afterReview(1, '2026-10-11')).toEqual({ box: 2, dueDay: '2026-10-14' });
+    expect(afterReview(2, '2026-10-14')).toEqual({ box: 3, dueDay: '2026-10-21' });
+    expect(afterReview(3, '2026-10-21')).toBeNull();
+  });
+});
+
+describe('unsubscribe tokens', () => {
+  const key = 'a-secret-that-is-long-enough-for-hmac-use';
+  it('verifies only the token made for that user with that secret', () => {
+    const token = unsubscribeToken('user-1', key);
+    expect(verifyUnsubscribeToken('user-1', token, key)).toBe(true);
+    expect(verifyUnsubscribeToken('user-2', token, key)).toBe(false);
+    expect(verifyUnsubscribeToken('user-1', token, `${key}x`)).toBe(false);
+    expect(verifyUnsubscribeToken('user-1', 'short', key)).toBe(false);
+    expect(token).toMatch(/^[A-Za-z0-9_-]{43}$/);
   });
 });
 

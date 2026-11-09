@@ -6,6 +6,7 @@ export * from './formula';
 export * from './check';
 export { Sheet } from './sheet';
 export { scoreAttempt, type ScoreInput } from './score';
+export { levelFor, levelStart, type Level } from './progression';
 export { expandRange, normalizeAddress, normalizeRange, sameCell, sameRange } from './ref';
 export {
   anchoringMatches,

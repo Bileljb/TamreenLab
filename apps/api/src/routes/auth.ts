@@ -27,6 +27,9 @@ export function authRouter(ctx: Ctx) {
         email: body.email,
         displayName: body.displayName,
         passwordHash: await hash(body.password),
+        locale: body.locale,
+        emailOptIn: body.emailOptIn,
+        emailOptInAt: body.emailOptIn ? ctx.config.now() : null,
       },
     });
     await issueSession(ctx, res, user.id);
@@ -35,11 +38,14 @@ export function authRouter(ctx: Ctx) {
 
   router.post('/auth/login', async (req, res) => {
     const body = LoginRequestSchema.parse(req.body);
-    const user = await ctx.db.user.findUnique({ where: { email: body.email } });
+    const user = await ctx.db.user.findUnique({
+      where: { email: body.email },
+      include: { streak: true },
+    });
     const ok = await verify(user?.passwordHash ?? (await DUMMY_HASH), body.password);
     if (!user || !ok) throw new HttpError(401, 'INVALID_CREDENTIALS', 'Wrong email or password');
     await issueSession(ctx, res, user.id);
-    res.json(toUserDto(user));
+    res.json(toUserDto(user, user.streak));
   });
 
   router.post('/auth/refresh', async (req, res) => {
@@ -48,9 +54,9 @@ export function authRouter(ctx: Ctx) {
       res,
       req.cookies?.[REFRESH_COOKIE] as string | undefined,
     );
-    const user = await ctx.db.user.findUnique({ where: { id: userId } });
+    const user = await ctx.db.user.findUnique({ where: { id: userId }, include: { streak: true } });
     if (!user) throw new HttpError(401, 'NO_SESSION', 'Sign in again');
-    res.json(toUserDto(user));
+    res.json(toUserDto(user, user.streak));
   });
 
   router.post('/auth/logout', async (req, res) => {

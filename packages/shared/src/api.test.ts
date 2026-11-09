@@ -12,6 +12,9 @@ describe('auth requests', () => {
       email: 'huda@example.com',
       password: 'long enough',
       displayName: 'هدى علي',
+      // No reminder emails unless the learner ticks the box.
+      emailOptIn: false,
+      locale: 'ar',
     });
   });
 

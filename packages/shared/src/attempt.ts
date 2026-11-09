@@ -84,6 +84,8 @@ export const AttemptRequestSchema = z
     answerShown: z.boolean().default(false),
     /** The page language; the answer is checked against the step in that language (ADR 009). */
     locale: z.enum(CONTENT_LOCALES).default('ar'),
+    /** `review` when the step is played from the "review mistakes" queue (ADR 011). */
+    mode: z.enum(['lesson', 'review']).default('lesson'),
   })
   .strict();
 export type AttemptRequest = z.infer<typeof AttemptRequestSchema>;

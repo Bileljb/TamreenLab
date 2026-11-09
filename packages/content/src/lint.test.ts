@@ -90,6 +90,33 @@ describe('lintContent', () => {
     expect(lint([goodLesson()])).toEqual([]);
   });
 
+  it('checks email text: every language present, placeholders kept', () => {
+    const weekly = {
+      subject: 'س',
+      greeting: 'مرحبًا {name}',
+      streak: '{days} يوم',
+      streakNone: 'ابدأ',
+      reviews: '{count} خطوات',
+      reviewsNone: 'لا شيء',
+      next: 'التالي: {lesson}',
+      allDone: 'انتهيت',
+      cta: 'تابع',
+      why: 'لأنك اخترت',
+      unsubscribe: 'إلغاء',
+    };
+    const emails = (en: object) => ({
+      emails: [
+        { path: 'emails/ar.json', json: { weekly } },
+        { path: 'emails/en.json', json: en },
+      ],
+    });
+    expect(messages(lint([goodLesson()], emails({ weekly })))).toEqual(['no fr email text']);
+    const broken = { weekly: { ...weekly, greeting: 'Hello' } };
+    expect(messages(lint([goodLesson()], emails(broken)))).toContain(
+      'weekly.greeting: must contain {name}',
+    );
+  });
+
   it('passes good shortcut steps, including one that falls back to choice', () => {
     const steps = [...goodLesson().steps.slice(0, 4), shortcutStep('s5')];
     steps.push(shortcutStep('s6', { combos: [{ win: 'Ctrl+1', mac: 'Cmd+1' }] }));

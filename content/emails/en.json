@@ -1,0 +1,15 @@
+{
+  "weekly": {
+    "subject": "Your weekly Excel practice is waiting",
+    "greeting": "Hello {name},",
+    "streak": "Your streak: {days} days in a row. Keep it going with one step today.",
+    "streakNone": "Start a new streak today: one step is enough.",
+    "reviews": "You have {count} missed steps waiting for review.",
+    "reviewsNone": "No mistakes waiting for review. Well done!",
+    "next": "Next lesson: {lesson}",
+    "allDone": "You have finished every available lesson. Review your mistakes or replay a favourite.",
+    "cta": "Continue practising",
+    "why": "You get this email because you chose to receive a weekly reminder from TamreenLab.",
+    "unsubscribe": "Unsubscribe from reminders"
+  }
+}

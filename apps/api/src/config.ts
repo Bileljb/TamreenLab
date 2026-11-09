@@ -7,6 +7,9 @@ export type AppConfig = {
   cookieSecure: boolean;
   /** Requests allowed per window; tests raise them. */
   rateLimits: { auth: number; attempts: number; general: number };
+  /** The public site address, for links in emails (no trailing slash). */
+  siteUrl: string;
+  mailFrom: string;
   /** The clock, injectable for tests. */
   now: () => Date;
 };
@@ -20,6 +23,8 @@ export function configFromEnv(env: Env): AppConfig {
     includeDrafts: env.CONTENT_INCLUDE_DRAFTS,
     cookieSecure: env.COOKIE_SECURE,
     rateLimits: DEFAULT_RATE_LIMITS,
+    siteUrl: env.PUBLIC_SITE_URL.replace(/\/+$/, ''),
+    mailFrom: env.MAIL_FROM,
     now: () => new Date(),
   };
 }

@@ -13,6 +13,7 @@ import { errorHandler, notFound } from './middleware/errors';
 import { openApiDocument } from './openapi';
 import { attemptsRouter } from './routes/attempts';
 import { authRouter } from './routes/auth';
+import { emailRouter } from './routes/email';
 import { eventsRouter } from './routes/events';
 import { healthRouter, type DbCheck } from './routes/health';
 import { leaderboardRouter } from './routes/leaderboard';
@@ -59,6 +60,9 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
   if (db && config) {
     const ctx = createContext(db, config);
     const { rateLimits } = config;
+    // Before the JSON-only guard: mail apps post one-click unsubscribes as forms (RFC 8058).
+    app.use('/api/email', limiter(rateLimits.auth, 15 * 60_000));
+    app.use('/api', emailRouter(ctx));
     app.use('/api', requireJson, authenticate(ctx), limiter(rateLimits.general, 60_000));
     // The strict limit guards password guessing only; refresh and logout use the general limit.
     const authLimit = limiter(rateLimits.auth, 15 * 60_000);

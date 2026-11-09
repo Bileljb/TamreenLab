@@ -14,6 +14,8 @@ import {
 } from '@tamreen/engine';
 import {
   ARABIC_SCRIPT,
+  CONTENT_LOCALES,
+  EmailCopySchema,
   PLATFORMS,
   FRENCH_EXCEL_NAMES,
   FunctionFileSchema,
@@ -291,7 +293,19 @@ export function lintContent(raw: RawContent, options: Options = {}): LintIssue[]
       issues,
     );
   }
+  lintEmails(raw.emails ?? [], issues);
   return issues;
+}
+
+/** Email text: one valid file per language, each keeping its placeholders (ADR 011). */
+function lintEmails(files: RawFile[], issues: LintIssue[]) {
+  if (files.length === 0) return;
+  for (const file of files) parse(file, EmailCopySchema, issues);
+  for (const locale of CONTENT_LOCALES) {
+    const where = `emails/${locale}.json`;
+    if (!files.some((f) => f.path === where))
+      issues.push({ file: where, message: `no ${locale} email text` });
+  }
 }
 
 /** Text a learner reads in a translated lesson or page must not keep Arabic or glossary markup. */

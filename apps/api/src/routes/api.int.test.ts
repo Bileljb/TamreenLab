@@ -424,11 +424,15 @@ describe('progress, stats and streaks', () => {
     await agent
       .post('/api/attempts')
       .send({ ...attempt({ cell: 'B7', formula: '=B2+B3+B4+B5+B6' }), stepSlug: 'first-formula' });
-    expect((await agent.get('/api/me/stats')).body.streak).toEqual({ current: 2, longest: 2 });
+    expect((await agent.get('/api/me/stats')).body.streak).toEqual({
+      current: 2,
+      longest: 2,
+      frozen: false,
+    });
     clock.now = new Date('2026-11-03T09:00:00Z');
     expect((await agent.post('/api/auth/refresh').send({})).status).toBe(200);
     const stats = (await agent.get('/api/me/stats')).body;
-    expect(stats.streak).toEqual({ current: 0, longest: 2 });
+    expect(stats.streak).toEqual({ current: 0, longest: 2, frozen: false });
     expect(stats.pointsToday).toBe(0);
   });
 });
@@ -520,9 +524,11 @@ describe('GET /docs', () => {
   it('serves an OpenAPI document generated from the zod schemas', async () => {
     const res = await request(makeApp()).get('/api/docs');
     expect(res.body.openapi).toBe('3.1.0');
+    expect(res.body.paths['/api/me/settings'].patch).toBeTruthy();
+    expect(res.body.paths['/api/me/review'].get).toBeTruthy();
     const attempts = res.body.paths['/api/attempts'].post;
     expect(Object.keys(attempts.requestBody.content['application/json'].schema.properties)).toEqual(
-      ['lessonSlug', 'stepSlug', 'answer', 'timeMs', 'hintUsed', 'answerShown', 'locale'],
+      ['lessonSlug', 'stepSlug', 'answer', 'timeMs', 'hintUsed', 'answerShown', 'locale', 'mode'],
     );
   });
 });

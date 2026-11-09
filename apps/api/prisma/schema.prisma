@@ -42,12 +42,19 @@ model User {
   displayName   String
   role          Role             @default(USER)
   locale        String           @default("ar")
+  /// Points a day the learner aims for (ADR 011).
+  dailyGoal     Int              @default(900)
+  /// Weekly reminder emails, only after an explicit opt-in (ADR 011).
+  emailOptIn    Boolean          @default(false)
+  emailOptInAt  DateTime?
   createdAt     DateTime         @default(now())
   attempts      Attempt[]
   progress      LessonProgress[]
   points        PointEvent[]
   streak        Streak?
   refreshTokens RefreshToken[]
+  reviews       ReviewItem[]
+  emails        EmailLog[]
 }
 
 model Track {
@@ -75,22 +82,23 @@ model Lesson {
 }
 
 model Step {
-  id         String    @id @default(cuid())
-  lessonId   String
-  lesson     Lesson    @relation(fields: [lessonId], references: [id])
+  id          String       @id @default(cuid())
+  lessonId    String
+  lesson      Lesson       @relation(fields: [lessonId], references: [id])
   /// Stable id from the content file; steps are matched by slug, never by order (ADR 005).
-  slug       String
-  order      Int
-  type       StepType
-  promptAr   String // markdown-lite, glossary terms marked
-  sheetJson  Json // initial cells, visible range, formats
-  checkJson  Json // check spec (see §3.5)
-  hintAr     String?
-  explainAr  String?
-  basePoints Int       @default(300)
+  slug        String
+  order       Int
+  type        StepType
+  promptAr    String // markdown-lite, glossary terms marked
+  sheetJson   Json // initial cells, visible range, formats
+  checkJson   Json // check spec (see §3.5)
+  hintAr      String?
+  explainAr   String?
+  basePoints  Int          @default(300)
   /// The sheet and check in each translated language: {en: {sheet, check}, fr: ...} (ADR 009).
-  localesJson Json     @default("{}")
-  attempts   Attempt[]
+  localesJson Json         @default("{}")
+  attempts    Attempt[]
+  reviews     ReviewItem[]
 
   @@unique([lessonId, order])
   @@unique([lessonId, slug])
@@ -139,11 +147,39 @@ model PointEvent {
 }
 
 model Streak {
-  userId  String    @id
-  current Int       @default(0)
-  longest Int       @default(0)
-  lastDay DateTime? @db.Date
-  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String    @id
+  current       Int       @default(0)
+  longest       Int       @default(0)
+  lastDay       DateTime? @db.Date
+  /// Optional streak freeze: covers one missed day, at most once a week (ADR 011).
+  freezeEnabled Boolean   @default(false)
+  freezeUsedOn  DateTime? @db.Date
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// "Review mistakes": a missed step waits here until it is reviewed correctly at each spacing (ADR 011).
+model ReviewItem {
+  userId String
+  stepId String
+  box    Int      @default(0)
+  dueDay DateTime @db.Date
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  step   Step     @relation(fields: [stepId], references: [id], onDelete: Cascade)
+
+  @@id([userId, stepId])
+  @@index([userId, dueDay])
+}
+
+// One row per email sent; the unique key stops a second weekly reminder in the same week.
+model EmailLog {
+  id        String   @id @default(cuid())
+  userId    String
+  kind      String
+  periodKey String
+  sentAt    DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, kind, periodKey])
 }
 
 // Refresh tokens, stored hashed. Rotation: each use revokes the token and issues a new one in the

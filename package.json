@@ -19,7 +19,8 @@
     "db:seed": "pnpm --filter @tamreen/api db:seed",
     "content:lint": "pnpm --filter @tamreen/content content:lint",
     "content:sync": "pnpm --filter @tamreen/api content:sync",
-    "metrics:report": "pnpm --filter @tamreen/api metrics:report"
+    "metrics:report": "pnpm --filter @tamreen/api metrics:report",
+    "reminders:send": "pnpm --filter @tamreen/api reminders:send"
   },
   "devDependencies": {
     "@eslint/js": "9.39.5",

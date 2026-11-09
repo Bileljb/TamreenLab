@@ -1,6 +1,8 @@
+import type { Stats } from '@tamreen/shared';
+import type { Ctx } from '../context';
 import type { Prisma } from '../generated/prisma/client';
 import { dayDate, keyOfDate, type DayKey } from '../lib/day';
-import { nextStreak } from '../lib/streak';
+import { nextStreak, type StreakState } from '../lib/streak';
 import { stepReason } from './steps';
 
 type Tx = Prisma.TransactionClient;
@@ -17,14 +19,35 @@ export async function payStep(tx: Tx, userId: string, stepId: string, points: nu
   return count === 1;
 }
 
-/** Counts today as an active day for the streak. */
+type StreakRow = {
+  current: number;
+  longest: number;
+  lastDay: Date | null;
+  freezeUsedOn: Date | null;
+};
+
+/** A stored streak as the pure streak functions see it. */
+export function streakState(row: StreakRow | null): StreakState | null {
+  return (
+    row && {
+      current: row.current,
+      longest: row.longest,
+      lastDay: row.lastDay ? keyOfDate(row.lastDay) : null,
+      freezeUsedOn: row.freezeUsedOn ? keyOfDate(row.freezeUsedOn) : null,
+    }
+  );
+}
+
+/** Counts today as an active day for the streak, using the learner's freeze if it is on. */
 export async function touchStreak(tx: Tx, userId: string, day: DayKey) {
   const current = await tx.streak.findUnique({ where: { userId } });
-  const next = nextStreak(
-    current && { ...current, lastDay: current.lastDay ? keyOfDate(current.lastDay) : null },
-    day,
-  );
-  const data = { current: next.current, longest: next.longest, lastDay: dayDate(day) };
+  const next = nextStreak(streakState(current), day, { freeze: current?.freezeEnabled });
+  const data = {
+    current: next.current,
+    longest: next.longest,
+    lastDay: dayDate(day),
+    freezeUsedOn: next.freezeUsedOn ? dayDate(next.freezeUsedOn) : null,
+  };
   await tx.streak.upsert({ where: { userId }, create: { userId, ...data }, update: data });
 }
 
@@ -58,4 +81,26 @@ export async function refreshLessonProgress(tx: Tx, userId: string, lessonId: st
     create: { userId, lessonId, ...data },
     update: data,
   });
+}
+
+/**
+ * Where to continue: the first lesson in curriculum order that was started and not finished, or
+ * else the first one not finished yet. Null once everything is done.
+ */
+export async function nextLesson(ctx: Ctx, userId: string): Promise<Stats['nextLesson']> {
+  const [lessons, progress] = await Promise.all([
+    ctx.db.lesson.findMany({
+      where: { status: { in: ctx.visibleStatuses } },
+      orderBy: { order: 'asc' },
+      select: { id: true, slug: true, track: { select: { slug: true } } },
+    }),
+    ctx.db.lessonProgress.findMany({ where: { userId } }),
+  ]);
+  const byLesson = new Map(progress.map((p) => [p.lessonId, p]));
+  const pick =
+    lessons.find((l) => {
+      const p = byLesson.get(l.id);
+      return p && p.stepsDone > 0 && !p.completedAt;
+    }) ?? lessons.find((l) => !byLesson.get(l.id)?.completedAt);
+  return pick ? { slug: pick.slug, track: pick.track.slug } : null;
 }

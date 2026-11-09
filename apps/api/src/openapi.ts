@@ -8,12 +8,15 @@ import {
   ProgressSyncRequestSchema,
   ProgressSyncResponseSchema,
   RegisterRequestSchema,
+  ReviewQueueSchema,
+  SettingsUpdateSchema,
   StatsSchema,
+  UnsubscribeRequestSchema,
   UserSchema,
 } from '@tamreen/shared';
 
 type Operation = {
-  method: 'get' | 'post' | 'delete';
+  method: 'get' | 'post' | 'patch' | 'delete';
   path: string;
   summary: string;
   auth?: boolean;
@@ -68,9 +71,30 @@ const operations: Operation[] = [
   {
     method: 'get',
     path: '/me/stats',
-    summary: 'Points, streak and accuracy',
+    summary: 'Points, level, daily goal, streak, reviews due and where to continue',
     auth: true,
     response: StatsSchema,
+  },
+  {
+    method: 'patch',
+    path: '/me/settings',
+    summary: 'Daily goal, streak freeze and weekly reminder emails',
+    auth: true,
+    body: SettingsUpdateSchema,
+    response: UserSchema,
+  },
+  {
+    method: 'get',
+    path: '/me/review',
+    summary: 'Missed steps due for review today',
+    auth: true,
+    response: ReviewQueueSchema,
+  },
+  {
+    method: 'post',
+    path: '/email/unsubscribe',
+    summary: 'Stop reminder emails (signed link; also accepts a one-click form post)',
+    body: UnsubscribeRequestSchema,
   },
   { method: 'get', path: '/tracks', summary: 'Tracks in curriculum order' },
   { method: 'get', path: '/lessons', summary: 'Lessons, optionally of one track (?track=)' },

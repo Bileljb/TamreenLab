@@ -18,5 +18,21 @@ export function keyOfDate(date: Date): DayKey {
 }
 
 export function previousDay(key: DayKey): DayKey {
-  return keyOfDate(new Date(dayDate(key).getTime() - 86_400_000));
+  return addDays(key, -1);
+}
+
+/** The ISO week of a day, such as `2026-W46`: weeks start on Monday, week 1 holds 4 January. */
+export function isoWeek(key: DayKey): string {
+  const date = dayDate(key);
+  const weekday = (date.getUTCDay() + 6) % 7; // Monday 0 … Sunday 6
+  const thursday = new Date(date.getTime() + (3 - weekday) * 86_400_000);
+  // A week belongs to the year of its Thursday, and is numbered from that year's first Thursday.
+  const year = thursday.getUTCFullYear();
+  const dayOfYear = (thursday.getTime() - dayDate(`${year}-01-01`).getTime()) / 86_400_000;
+  const week = 1 + Math.floor(dayOfYear / 7);
+  return `${year}-W${String(week).padStart(2, '0')}`;
+}
+
+export function addDays(key: DayKey, days: number): DayKey {
+  return keyOfDate(new Date(dayDate(key).getTime() + days * 86_400_000));
 }

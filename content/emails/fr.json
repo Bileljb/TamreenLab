@@ -1,0 +1,15 @@
+{
+  "weekly": {
+    "subject": "Votre entraînement Excel de la semaine vous attend",
+    "greeting": "Bonjour {name},",
+    "streak": "Votre série : {days} jours d'affilée. Continuez avec une étape aujourd'hui.",
+    "streakNone": "Commencez une nouvelle série aujourd'hui : une étape suffit.",
+    "reviews": "{count} étapes manquées vous attendent pour révision.",
+    "reviewsNone": "Aucune erreur à réviser. Bravo !",
+    "next": "Prochaine leçon : {lesson}",
+    "allDone": "Vous avez terminé toutes les leçons disponibles. Révisez vos erreurs ou refaites une leçon.",
+    "cta": "Continuer l'entraînement",
+    "why": "Vous recevez cet e-mail car vous avez choisi de recevoir un rappel hebdomadaire de TamreenLab.",
+    "unsubscribe": "Se désabonner des rappels"
+  }
+}
