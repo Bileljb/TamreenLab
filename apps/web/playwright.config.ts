@@ -16,6 +16,8 @@ export default defineConfig({
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'] } },
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
+    // Shortcut capture must work in Firefox too (PLAN Phase 6 acceptance).
+    { name: 'firefox', use: { ...devices['Desktop Firefox'] }, testMatch: /shortcuts\.spec\.ts/ },
   ],
   // CI runs against production builds; locally running servers are reused. The API needs Postgres
   // with the curriculum synced (docker compose up -d db, pnpm db:migrate, pnpm content:sync).

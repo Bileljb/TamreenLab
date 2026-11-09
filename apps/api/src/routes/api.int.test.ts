@@ -262,6 +262,56 @@ describe('POST /attempts', () => {
   });
 });
 
+describe('POST /attempts for shortcut steps', () => {
+  const fillDown = { lessonSlug: 'shortcuts-fill', stepSlug: 'fill-down', timeMs: 4_000 };
+
+  it('scores a captured key press, on Windows and on Mac', async () => {
+    const { agent } = await signUp();
+    const wrong = await agent.post('/api/attempts').send({
+      ...fillDown,
+      answer: { keys: { key: 'r', code: 'KeyR', ctrlKey: true }, platform: 'win' },
+    });
+    expect(wrong.body).toMatchObject({ correct: false, code: 'WRONG_VALUE', pointsAwarded: 0 });
+    // Arabic layout: the key reads "ي" but the physical key is D.
+    const right = await agent.post('/api/attempts').send({
+      ...fillDown,
+      answer: { keys: { key: 'ي', code: 'KeyD', ctrlKey: true }, platform: 'win' },
+    });
+    expect(right.body).toMatchObject({ correct: true, code: 'OK' });
+    expect(right.body.pointsAwarded).toBeGreaterThan(0);
+
+    const { agent: macUser } = await signUp();
+    const mac = await macUser.post('/api/attempts').send({
+      ...fillDown,
+      answer: { keys: { key: 'd', code: 'KeyD', metaKey: true }, platform: 'mac' },
+    });
+    expect(mac.body).toMatchObject({ correct: true });
+  });
+
+  it('scores a picked option from the choice fallback, and a wrong pick earns nothing', async () => {
+    const { agent } = await signUp();
+    const autoSum = { lessonSlug: 'shortcuts-formulas', stepSlug: 'autosum', timeMs: 4_000 };
+    const wrong = await agent
+      .post('/api/attempts')
+      .send({ ...autoSum, answer: { combo: 'Cmd+=', platform: 'mac' } });
+    expect(wrong.body).toMatchObject({ correct: false, pointsAwarded: 0 });
+    const right = await agent
+      .post('/api/attempts')
+      .send({ ...autoSum, answer: { combo: 'Cmd+Shift+T', platform: 'mac' } });
+    expect(right.body).toMatchObject({ correct: true, code: 'OK' });
+    expect(right.body.pointsAwarded).toBeGreaterThan(0);
+    expect(await db.pointEvent.count()).toBe(1);
+  });
+
+  it('rejects a malformed shortcut answer', async () => {
+    const { agent } = await signUp();
+    const res = await agent
+      .post('/api/attempts')
+      .send({ ...fillDown, answer: { combo: 'Ctrl D', platform: 'win' } });
+    expect([res.status, res.body.error.code]).toEqual([400, 'INVALID_ANSWER']);
+  });
+});
+
 describe('POST /attempts in other languages', () => {
   // The SUMIF criterion is text, so an English learner types "North" where Arabic uses "الشمال".
   const SUMIF = { lessonSlug: 'sumif-basics', stepSlug: 'sumif-worked-example' };

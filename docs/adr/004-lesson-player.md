@@ -83,6 +83,6 @@ All are dev or peer dependencies:
 
 ## Consequences
 
-- SHORTCUT steps show a placeholder until Phase 6 adds key capture.
+- SHORTCUT steps showed a placeholder until Phase 6 added key capture (see ADR 010).
 - The lesson page renders the player directly. Phase 5 moves it to a lazy client island for the performance budget.
 - Native-Arabic review of the two lessons happens with the Phase 3 batch (PLAN §2.3).

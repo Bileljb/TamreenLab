@@ -75,7 +75,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @tamreen/web exec playwright install --with-deps chromium
+      - run: pnpm --filter @tamreen/web exec playwright install --with-deps chromium firefox
       - run: pnpm turbo run build --filter=@tamreen/web --filter=@tamreen/api
       - name: Database with the curriculum
         run: |

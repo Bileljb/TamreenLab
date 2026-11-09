@@ -5,18 +5,21 @@ test.skip(({ isMobile }) => isMobile, 'page checks need one viewport');
 test('every sitemap URL returns 200, is indexable, has a canonical URL and hreflang', async ({
   request,
 }) => {
+  // About 150 pages; the dev server compiles each route on its first request.
+  test.setTimeout(120_000);
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
   const xml = await sitemap.text();
   const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]!).pathname);
-  // 8 static pages, 20 lessons and 15 function pages, in Arabic, English and French.
-  expect(urls.length).toBeGreaterThanOrEqual(129);
+  // 8 static pages, 27 lessons and 15 function pages, in Arabic, English and French.
+  expect(urls.length).toBeGreaterThanOrEqual(150);
+  expect(urls).toContain('/fr/lessons/shortcuts/shortcuts-navigation');
   expect(urls).toContain('/fr/functions/vlookup');
   expect(urls).toContain('/ar/lessons/basics/cells-and-selection');
   expect(urls).toContain('/ar/functions/vlookup');
   expect(urls).not.toContain('/ar/login');
 
-  for (const path of urls) {
+  const check = async (path: string) => {
     const res = await request.get(path);
     expect(res.status(), path).toBe(200);
     expect(res.headers()['x-robots-tag'] ?? '', path).not.toContain('noindex');
@@ -29,7 +32,9 @@ test('every sitemap URL returns 200, is indexable, has a canonical URL and hrefl
       const alternate = path.replace(/^\/[a-z]{2}/, `/${l}`);
       expect(html, path).toContain(`hrefLang="${l}" href="http://localhost:3000${alternate}"`);
     }
-  }
+  };
+  // A few pages at a time keeps the run short without flooding the dev server.
+  for (let i = 0; i < urls.length; i += 6) await Promise.all(urls.slice(i, i + 6).map(check));
 });
 
 test('robots.txt points at the sitemap and keeps sign-in pages out', async ({ request }) => {

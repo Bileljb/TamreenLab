@@ -53,64 +53,64 @@ export default async function ShortcutsPage({ params }: Props) {
     <main className="flex flex-col">
       <PageHero title={t('title')} intro={t('intro')} />
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-10 px-4 py-10">
-      <section
-        aria-labelledby="practice"
-        className="flex flex-col items-start gap-3 rounded-[var(--radius-card)] border border-brand/30 bg-brand-soft p-6 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div className="flex flex-col gap-1">
-          <h2 id="practice" className="text-xl font-bold">
-            {t('practiceTitle')}
-          </h2>
-          <p className="text-ink-soft">{t('practiceText')}</p>
-        </div>
-        <a
-          href={`/${locale}/lessons/shortcuts/${FIRST_LESSON}`}
-          className="shrink-0 rounded-full border border-brand bg-brand px-5 py-2.5 text-sm font-semibold text-brand-ink shadow-glow transition hover:-translate-y-px hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        <section
+          aria-labelledby="practice"
+          className="flex flex-col items-start gap-3 rounded-[var(--radius-card)] border border-brand/30 bg-brand-soft p-6 sm:flex-row sm:items-center sm:justify-between"
         >
-          {t('practiceCta')}
-        </a>
-      </section>
-      {(Object.keys(GROUPS) as (keyof typeof GROUPS)[]).map((group) => (
-        <section key={group} aria-labelledby={`g-${group}`} className="flex flex-col gap-2">
-          <h2 id={`g-${group}`} className="text-xl font-bold">
-            {t(`groups.${group}`)}
-          </h2>
-          <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-raised shadow-soft">
-            <table className="w-full text-sm">
-              <thead className="bg-canvas text-muted">
-                <tr>
-                  <th scope="col" className="px-3 py-2 text-start font-medium">
-                    {t('action')}
-                  </th>
-                  <th scope="col" className="px-3 py-2 text-start font-medium">
-                    {t('windows')}
-                  </th>
-                  <th scope="col" className="px-3 py-2 text-start font-medium">
-                    {t('mac')}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {GROUPS[group].map(([item, win, mac]) => (
-                  <tr key={item} className="border-t border-line">
-                    <td className="px-3 py-2">{t(`items.${item}`)}</td>
-                    <td className="px-3 py-2">
-                      <kbd dir="ltr" className={key}>
-                        {win}
-                      </kbd>
-                    </td>
-                    <td className="px-3 py-2">
-                      <kbd dir="ltr" className={key}>
-                        {mac}
-                      </kbd>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex flex-col gap-1">
+            <h2 id="practice" className="text-xl font-bold">
+              {t('practiceTitle')}
+            </h2>
+            <p className="text-ink-soft">{t('practiceText')}</p>
           </div>
+          <a
+            href={`/${locale}/lessons/shortcuts/${FIRST_LESSON}`}
+            className="shrink-0 rounded-full border border-brand bg-brand px-5 py-2.5 text-sm font-semibold text-brand-ink shadow-glow transition hover:-translate-y-px hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            {t('practiceCta')}
+          </a>
         </section>
-      ))}
+        {(Object.keys(GROUPS) as (keyof typeof GROUPS)[]).map((group) => (
+          <section key={group} aria-labelledby={`g-${group}`} className="flex flex-col gap-2">
+            <h2 id={`g-${group}`} className="text-xl font-bold">
+              {t(`groups.${group}`)}
+            </h2>
+            <div className="overflow-x-auto rounded-[var(--radius-card)] border border-line bg-raised shadow-soft">
+              <table className="w-full text-sm">
+                <thead className="bg-canvas text-muted">
+                  <tr>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      {t('action')}
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      {t('windows')}
+                    </th>
+                    <th scope="col" className="px-3 py-2 text-start font-medium">
+                      {t('mac')}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {GROUPS[group].map(([item, win, mac]) => (
+                    <tr key={item} className="border-t border-line">
+                      <td className="px-3 py-2">{t(`items.${item}`)}</td>
+                      <td className="px-3 py-2">
+                        <kbd dir="ltr" className={key}>
+                          {win}
+                        </kbd>
+                      </td>
+                      <td className="px-3 py-2">
+                        <kbd dir="ltr" className={key}>
+                          {mac}
+                        </kbd>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ))}
       </div>
     </main>
   );
