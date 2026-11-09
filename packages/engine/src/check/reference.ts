@@ -1,6 +1,6 @@
 import type { Answer, Platform, StepSpec } from '@tamreen/shared';
 import { normalizeAddress, normalizeRange } from '../ref';
-import { parseCombo } from './shortcut';
+import { isReserved, parseCombo, shortcutMode } from './shortcut';
 
 /**
  * An answer that passes the step's check: what "Show Answer" reveals and applies.
@@ -23,7 +23,11 @@ export function referenceAnswer(step: StepSpec, platform: Platform = 'win'): Ans
     case 'MULTIPLE_CHOICE':
       return { choice: step.check.correct };
     case 'SHORTCUT': {
-      const combo = parseCombo(step.check.combos[0]![platform]);
+      const taught = step.check.combos[0]![platform];
+      if (shortcutMode(step, platform) === 'choice') return { combo: taught, platform };
+      const combo = parseCombo(
+        step.check.combos.find((c) => !isReserved(c[platform], platform))![platform],
+      );
       return {
         keys: {
           key: combo.key,

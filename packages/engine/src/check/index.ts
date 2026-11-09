@@ -39,3 +39,12 @@ export function verifyReferenceSolution(step: StepOf<'ENTER_FORMULA'>): CheckRes
 export { InvalidAnswerError, type CheckResult } from './result';
 
 export { referenceAnswer } from './reference';
+export {
+  RESERVED_COMBOS,
+  formatCombo,
+  isReserved,
+  sameCombo,
+  shortcutMode,
+  shortcutOptions,
+  type ShortcutMode,
+} from './shortcut';

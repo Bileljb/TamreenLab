@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { FEEDBACK_CODES } from './feedback';
 import { CONTENT_LOCALES } from './i18n';
-import { CellAddressSchema, RangeRefSchema } from './step';
+import { CellAddressSchema, KeyComboSchema, RangeRefSchema } from './step';
 
 const MAX_INPUT = 2000;
 
@@ -35,10 +35,11 @@ export const KeyPressSchema = z.object({
 });
 export type KeyPress = z.input<typeof KeyPressSchema>;
 
-export const ShortcutAnswerSchema = z.object({
-  keys: KeyPressSchema,
-  platform: z.enum(PLATFORMS),
-});
+/** A key press the browser captured, or the combo picked from the multiple-choice fallback. */
+export const ShortcutAnswerSchema = z.union([
+  z.object({ keys: KeyPressSchema, platform: z.enum(PLATFORMS) }),
+  z.object({ combo: KeyComboSchema, platform: z.enum(PLATFORMS) }),
+]);
 
 export const AnswerSchemas = {
   SELECT_CELL: SelectCellAnswerSchema,

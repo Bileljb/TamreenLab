@@ -76,8 +76,14 @@ export const KeyComboSchema = z
   .string()
   .regex(/^(?:[A-Za-z]+\+)*(?:\+|[^+\s]+)$/, 'Expected a combo like Ctrl+Shift+L');
 
+const PlatformCombosSchema = z.object({ win: KeyComboSchema, mac: KeyComboSchema });
+
 export const ShortcutCheckSchema = z.object({
-  combos: z.array(z.object({ win: KeyComboSchema, mac: KeyComboSchema })).min(1),
+  /** Every combo that counts as correct. The first one is the one taught and revealed. */
+  combos: z.array(PlatformCombosSchema).min(1),
+  /** Wrong options for the multiple-choice fallback (touch devices, combos the browser keeps). */
+  distractors: z.array(PlatformCombosSchema).optional(),
+  /** Forces the multiple-choice fallback on every platform. */
   blockedInBrowser: z.boolean().optional(),
 });
 

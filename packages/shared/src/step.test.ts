@@ -142,7 +142,35 @@ describe('answers and attempts', () => {
       keys: { key: 'l', ctrlKey: true },
       platform: 'win',
     });
-    expect(shortcut.keys.shiftKey).toBe(false);
+    expect('keys' in shortcut && shortcut.keys.shiftKey).toBe(false);
+  });
+
+  it('accepts a picked shortcut option, written as a combo', () => {
+    const pick = (combo: string) =>
+      AnswerSchemas.SHORTCUT.safeParse({ combo, platform: 'mac' }).success;
+    expect(pick('Cmd+Shift+T')).toBe(true);
+    expect(pick('Ctrl Shift')).toBe(false);
+    expect(AnswerSchemas.SHORTCUT.safeParse({ combo: 'Ctrl+D', platform: 'linux' }).success).toBe(
+      false,
+    );
+  });
+
+  it('accepts distractors on a shortcut step', () => {
+    const input = {
+      slug: 'fill-down',
+      type: 'SHORTCUT',
+      promptAr: 'اضغط',
+      check: {
+        combos: [{ win: 'Ctrl+D', mac: 'Cmd+D' }],
+        distractors: [
+          { win: 'Ctrl+R', mac: 'Cmd+R' },
+          { win: 'Ctrl+F', mac: 'Cmd+F' },
+        ],
+      },
+    };
+    expect(StepSpecSchema.safeParse(input).success).toBe(true);
+    const bad = { ...input, check: { ...input.check, distractors: [{ win: 'Ctrl D', mac: 'x' }] } };
+    expect(StepSpecSchema.safeParse(bad).success).toBe(false);
   });
 
   it('rejects a client-supplied "correct" flag', () => {
