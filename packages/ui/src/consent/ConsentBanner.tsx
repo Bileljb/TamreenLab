@@ -51,7 +51,12 @@ export function ConsentBanner({ privacyHref }: { privacyHref: string }) {
               {t('analytics')}
             </label>
             <label className="flex items-center gap-2">
-              <input className="size-4 accent-brand" type="checkbox" checked={ads} onChange={(e) => setAds(e.target.checked)} />
+              <input
+                className="size-4 accent-brand"
+                type="checkbox"
+                checked={ads}
+                onChange={(e) => setAds(e.target.checked)}
+              />
               {t('ads')}
             </label>
           </fieldset>

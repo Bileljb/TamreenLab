@@ -8,7 +8,11 @@ export const DEFAULT_LOCALE: Locale = 'ar';
 export const LOCALE_DIRECTION: Record<Locale, 'rtl' | 'ltr'> = { ar: 'rtl', en: 'ltr', fr: 'ltr' };
 
 /** Each language's name in itself, for the language switcher. */
-export const LOCALE_NAMES: Record<Locale, string> = { ar: 'العربية', en: 'English', fr: 'Français' };
+export const LOCALE_NAMES: Record<Locale, string> = {
+  ar: 'العربية',
+  en: 'English',
+  fr: 'Français',
+};
 
 /** Open Graph locale tags. Region-neutral where the format allows (ADR 008). */
 export const OG_LOCALES: Record<Locale, string> = { ar: 'ar_AR', en: 'en_US', fr: 'fr_FR' };

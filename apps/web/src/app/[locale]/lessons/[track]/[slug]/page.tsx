@@ -107,15 +107,22 @@ export default async function LessonPage({ params }: Props) {
       <section className="relative isolate overflow-hidden border-b border-line">
         <div aria-hidden className="sheet-pattern absolute inset-0 -z-10 opacity-60" />
         <div className="mx-auto flex max-w-4xl flex-col gap-4 px-4 py-10">
-          <nav aria-label={t('breadcrumb')} className="flex flex-wrap items-center gap-1.5 text-sm text-muted">
+          <nav
+            aria-label={t('breadcrumb')}
+            className="flex flex-wrap items-center gap-1.5 text-sm text-muted"
+          >
             <a href={`/${locale}`} className="hover:text-ink">
               {t('home')}
             </a>
-            <span aria-hidden className="rtl:-scale-x-100">›</span>
+            <span aria-hidden className="rtl:-scale-x-100">
+              ›
+            </span>
             <a href={`/${locale}/lessons`} className="hover:text-ink">
               {t('lessons')}
             </a>
-            <span aria-hidden className="rtl:-scale-x-100">›</span>
+            <span aria-hidden className="rtl:-scale-x-100">
+              ›
+            </span>
             <span aria-current="page" className="text-ink-soft">
               {lesson.titleAr}
             </span>
@@ -124,14 +131,22 @@ export default async function LessonPage({ params }: Props) {
             <TrackIcon track={lesson.track} size="lg" />
             <div className="flex flex-col gap-2">
               <span className="text-sm font-semibold text-brand-strong">{trackTitle}</span>
-              <h1 className="text-3xl font-extrabold tracking-tight text-balance sm:text-4xl">{lesson.titleAr}</h1>
+              <h1 className="text-3xl font-extrabold tracking-tight text-balance sm:text-4xl">
+                {lesson.titleAr}
+              </h1>
             </div>
           </div>
           <p className="max-w-3xl text-lg leading-8 text-muted">{lesson.summaryAr}</p>
           <div className="flex flex-wrap gap-2 text-xs font-semibold text-ink-soft">
-            <span className="rounded-full border border-line bg-raised px-3 py-1">{tc(`kind.${lesson.kind}`)}</span>
-            <span className="rounded-full border border-line bg-raised px-3 py-1">{home('minutes', { minutes: lesson.minutes })}</span>
-            <span className="rounded-full border border-line bg-raised px-3 py-1">{tc('stepCount', { count: lesson.steps.length })}</span>
+            <span className="rounded-full border border-line bg-raised px-3 py-1">
+              {tc(`kind.${lesson.kind}`)}
+            </span>
+            <span className="rounded-full border border-line bg-raised px-3 py-1">
+              {home('minutes', { minutes: lesson.minutes })}
+            </span>
+            <span className="rounded-full border border-line bg-raised px-3 py-1">
+              {tc('stepCount', { count: lesson.steps.length })}
+            </span>
           </div>
         </div>
       </section>
@@ -143,8 +158,18 @@ export default async function LessonPage({ params }: Props) {
             className="flex flex-col gap-3 rounded-[var(--radius-card)] border border-line bg-raised p-6 shadow-soft"
           >
             <h2 id="explanation" className="flex items-center gap-2 text-xl font-bold">
-              <span aria-hidden className="grid size-8 place-items-center rounded-lg bg-info-soft text-info">
-                <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+              <span
+                aria-hidden
+                className="grid size-8 place-items-center rounded-lg bg-info-soft text-info"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                >
                   <path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" />
                 </svg>
               </span>
@@ -155,13 +180,27 @@ export default async function LessonPage({ params }: Props) {
         ) : null}
 
         {locale === 'fr' ? (
-          <FrenchExcelNote names={functionsInFormulas(lesson)} text={t.raw('frenchExcelNote') as string} />
+          <FrenchExcelNote
+            names={functionsInFormulas(lesson)}
+            text={t.raw('frenchExcelNote') as string}
+          />
         ) : null}
 
         <section aria-labelledby="practice" className="flex flex-col gap-4" data-player-area="">
           <h2 id="practice" className="flex items-center gap-2 text-xl font-bold">
-            <span aria-hidden className="grid size-8 place-items-center rounded-lg bg-brand-soft text-brand-strong">
-              <svg viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <span
+              aria-hidden
+              className="grid size-8 place-items-center rounded-lg bg-brand-soft text-brand-strong"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="size-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M4 4h16v16H4zM4 10h16M10 4v16" />
               </svg>
             </span>
@@ -233,7 +272,14 @@ export default async function LessonPage({ params }: Props) {
             <span className="font-semibold text-brand-strong">
               {t('nextLesson', { title: plainText(next.titleAr) })}
             </span>
-            <svg viewBox="0 0 20 20" className="size-5 shrink-0 text-brand transition group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+            <svg
+              viewBox="0 0 20 20"
+              className="size-5 shrink-0 text-brand transition group-hover:translate-x-1 rtl:-scale-x-100 rtl:group-hover:-translate-x-1"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.2"
+              aria-hidden
+            >
               <path d="M4 10h12m-5-5 5 5-5 5" />
             </svg>
           </a>

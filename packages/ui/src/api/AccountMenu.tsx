@@ -8,7 +8,13 @@ import { useSession } from './session';
  * variant is the mobile menu's copy: only the guest sign-in link, which the header hides on
  * small screens to save space.
  */
-export function AccountMenu({ locale, variant = 'header' }: { locale: string; variant?: 'header' | 'menu' }) {
+export function AccountMenu({
+  locale,
+  variant = 'header',
+}: {
+  locale: string;
+  variant?: 'header' | 'menu';
+}) {
   const t = useTranslations('header');
   const session = useSession();
   const link =
@@ -19,7 +25,10 @@ export function AccountMenu({ locale, variant = 'header' }: { locale: string; va
   if (variant === 'menu') {
     if (session.status !== 'guest') return null;
     return (
-      <a href={`/${locale}/login${next}`} className="block rounded-xl px-3 py-2 font-medium hover:bg-sunken">
+      <a
+        href={`/${locale}/login${next}`}
+        className="block rounded-xl px-3 py-2 font-medium hover:bg-sunken"
+      >
         {t('signIn')}
       </a>
     );
@@ -53,7 +62,10 @@ export function AccountMenu({ locale, variant = 'header' }: { locale: string; va
   }
   return (
     <div className="flex items-center gap-1">
-      <a href={`/${locale}/login${next}`} className={`${link} text-ink-soft hover:bg-sunken max-sm:hidden`}>
+      <a
+        href={`/${locale}/login${next}`}
+        className={`${link} text-ink-soft hover:bg-sunken max-sm:hidden`}
+      >
         {t('signIn')}
       </a>
       <a

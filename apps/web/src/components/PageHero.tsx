@@ -15,7 +15,10 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden border-b border-line">
       <div aria-hidden className="sheet-pattern absolute inset-0 -z-10 opacity-60" />
-      <div aria-hidden className="brand-gradient absolute -top-32 end-0 -z-10 size-96 rounded-full opacity-15 blur-3xl" />
+      <div
+        aria-hidden
+        className="brand-gradient absolute -top-32 end-0 -z-10 size-96 rounded-full opacity-15 blur-3xl"
+      />
       <div className="mx-auto flex max-w-4xl flex-col gap-4 px-4 py-12 sm:py-16">
         {eyebrow ? <div className="text-sm font-semibold text-brand-strong">{eyebrow}</div> : null}
         <h1 className="text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">{title}</h1>

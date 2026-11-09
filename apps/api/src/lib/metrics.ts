@@ -83,10 +83,12 @@ export function computeMetrics(
   const lastLocale = new Map<string, { day: DayKey; locale: string }>();
   for (const e of events) {
     const seen = lastLocale.get(e.anonId);
-    if (!seen || e.day >= seen.day) lastLocale.set(e.anonId, { day: e.day, locale: e.locale ?? 'unknown' });
+    if (!seen || e.day >= seen.day)
+      lastLocale.set(e.anonId, { day: e.day, locale: e.locale ?? 'unknown' });
   }
   const visitorsByLocale: Record<string, number> = {};
-  for (const { locale } of lastLocale.values()) visitorsByLocale[locale] = (visitorsByLocale[locale] ?? 0) + 1;
+  for (const { locale } of lastLocale.values())
+    visitorsByLocale[locale] = (visitorsByLocale[locale] ?? 0) + 1;
 
   const stepsPerSession = new Map<string, number>();
   for (const e of events) {

@@ -60,7 +60,10 @@ export default async function HomePage({ params }: Props) {
 
       <section className="relative isolate overflow-hidden">
         <div aria-hidden className="sheet-pattern absolute inset-0 -z-10 opacity-70" />
-        <div aria-hidden className="brand-gradient absolute -top-40 start-1/2 -z-10 size-[36rem] -translate-x-1/2 rounded-full opacity-20 blur-3xl rtl:translate-x-1/2" />
+        <div
+          aria-hidden
+          className="brand-gradient absolute -top-40 start-1/2 -z-10 size-[36rem] -translate-x-1/2 rounded-full opacity-20 blur-3xl rtl:translate-x-1/2"
+        />
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pt-12 pb-4 sm:pt-20 lg:grid-cols-[1.05fr_1fr]">
           <div className="flex flex-col items-start gap-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-line bg-raised/80 px-3 py-1 text-xs font-semibold text-ink-soft shadow-soft backdrop-blur">
@@ -75,13 +78,26 @@ export default async function HomePage({ params }: Props) {
             </h1>
             <p className="max-w-xl text-lg leading-8 text-muted">{t('tagline')}</p>
             <div className="flex flex-wrap gap-3">
-              <a href={lessonHref(locale, first)} className={`${cta} bg-brand text-brand-ink shadow-glow hover:-translate-y-0.5 hover:bg-brand-strong`}>
+              <a
+                href={lessonHref(locale, first)}
+                className={`${cta} bg-brand text-brand-ink shadow-glow hover:-translate-y-0.5 hover:bg-brand-strong`}
+              >
                 {t('start')}
-                <svg viewBox="0 0 20 20" className="size-4 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden>
+                <svg
+                  viewBox="0 0 20 20"
+                  className="size-4 rtl:-scale-x-100"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.2"
+                  aria-hidden
+                >
                   <path d="M4 10h12m-5-5 5 5-5 5" />
                 </svg>
               </a>
-              <a href={`/${locale}/lessons`} className={`${cta} border border-line-strong bg-raised text-ink hover:-translate-y-0.5 hover:border-brand`}>
+              <a
+                href={`/${locale}/lessons`}
+                className={`${cta} border border-line-strong bg-raised text-ink hover:-translate-y-0.5 hover:border-brand`}
+              >
                 {t('browse')}
               </a>
             </div>
@@ -92,7 +108,9 @@ export default async function HomePage({ params }: Props) {
                 ['functions', functions.length],
               ].map(([key, count]) => (
                 <div key={key} className="flex flex-col">
-                  <dt className="order-2 text-muted">{t(`stats.${key}`, { count: Number(count) })}</dt>
+                  <dt className="order-2 text-muted">
+                    {t(`stats.${key}`, { count: Number(count) })}
+                  </dt>
                   <dd className="text-2xl font-extrabold tabular-nums text-ink">{count}</dd>
                 </div>
               ))}
@@ -118,7 +136,11 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       <section aria-labelledby="how" className="mx-auto w-full max-w-6xl px-4">
-        <h2 id="how" data-reveal className="mb-10 text-center text-3xl font-extrabold tracking-tight">
+        <h2
+          id="how"
+          data-reveal
+          className="mb-10 text-center text-3xl font-extrabold tracking-tight"
+        >
           {t('how.title')}
         </h2>
         <ol className="grid gap-5 md:grid-cols-3">
@@ -139,7 +161,11 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       <section aria-labelledby="features" className="mx-auto w-full max-w-6xl px-4">
-        <h2 id="features" data-reveal className="mb-10 text-center text-3xl font-extrabold tracking-tight">
+        <h2
+          id="features"
+          data-reveal
+          className="mb-10 text-center text-3xl font-extrabold tracking-tight"
+        >
           {t('featuresTitle')}
         </h2>
         <ul className="grid gap-5 sm:grid-cols-2">
@@ -150,7 +176,16 @@ export default async function HomePage({ params }: Props) {
               className="group flex gap-4 rounded-[var(--radius-card)] border border-line bg-raised p-6 shadow-soft transition hover:-translate-y-1 hover:shadow-lift"
             >
               <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand-soft text-brand-strong transition group-hover:scale-110">
-                <svg viewBox="0 0 24 24" className="size-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <svg
+                  viewBox="0 0 24 24"
+                  className="size-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden
+                >
                   <path d={FEATURE_ICONS[f]} />
                 </svg>
               </span>
@@ -168,7 +203,10 @@ export default async function HomePage({ params }: Props) {
           <h2 id="tracks" className="text-3xl font-extrabold tracking-tight">
             {t('tracksTitle')}
           </h2>
-          <a href={`/${locale}/lessons`} className="font-semibold text-brand-strong hover:underline">
+          <a
+            href={`/${locale}/lessons`}
+            className="font-semibold text-brand-strong hover:underline"
+          >
             {t('browse')}
           </a>
         </div>
@@ -185,9 +223,14 @@ export default async function HomePage({ params }: Props) {
                   <TrackIcon track={track.slug} />
                   <span className="flex flex-1 flex-col">
                     <span className="font-bold">{track.titleAr}</span>
-                    <span className="text-sm text-muted">{t('lessonCount', { count: inTrack.length })}</span>
+                    <span className="text-sm text-muted">
+                      {t('lessonCount', { count: inTrack.length })}
+                    </span>
                   </span>
-                  <ProgressRing slugs={inTrack.map((l) => l.slug)} label={t.raw('trackProgress') as string} />
+                  <ProgressRing
+                    slugs={inTrack.map((l) => l.slug)}
+                    label={t.raw('trackProgress') as string}
+                  />
                 </a>
               </li>
             );
@@ -196,13 +239,22 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       <section className="mx-auto w-full max-w-6xl px-4">
-        <div data-reveal className="relative overflow-hidden rounded-[2rem] bg-[#0b1220] p-8 text-white shadow-lift sm:p-12">
-          <div aria-hidden className="brand-gradient absolute -end-24 -top-24 size-80 rounded-full opacity-30 blur-3xl" />
+        <div
+          data-reveal
+          className="relative overflow-hidden rounded-[2rem] bg-[#0b1220] p-8 text-white shadow-lift sm:p-12"
+        >
+          <div
+            aria-hidden
+            className="brand-gradient absolute -end-24 -top-24 size-80 rounded-full opacity-30 blur-3xl"
+          />
           <div className="relative grid items-center gap-8 lg:grid-cols-2">
             <div className="flex flex-col gap-4">
               <h2 className="text-3xl font-extrabold tracking-tight">{t('functionsTitle')}</h2>
               <p className="leading-7 text-white/75">{t('functionsText')}</p>
-              <a href={`/${locale}/functions`} className={`${cta} w-fit bg-white text-[#0b1220] hover:-translate-y-0.5`}>
+              <a
+                href={`/${locale}/functions`}
+                className={`${cta} w-fit bg-white text-[#0b1220] hover:-translate-y-0.5`}
+              >
                 {t('functionsLink')}
               </a>
             </div>
@@ -222,10 +274,16 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      <section data-reveal className="mx-auto flex max-w-2xl flex-col items-center gap-5 px-4 text-center">
+      <section
+        data-reveal
+        className="mx-auto flex max-w-2xl flex-col items-center gap-5 px-4 text-center"
+      >
         <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{t('cta.title')}</h2>
         <p className="text-lg text-muted">{t('cta.text')}</p>
-        <a href={lessonHref(locale, first)} className={`${cta} bg-brand text-brand-ink shadow-glow hover:-translate-y-0.5 hover:bg-brand-strong`}>
+        <a
+          href={lessonHref(locale, first)}
+          className={`${cta} bg-brand text-brand-ink shadow-glow hover:-translate-y-0.5 hover:bg-brand-strong`}
+        >
           {t('start')}
         </a>
       </section>

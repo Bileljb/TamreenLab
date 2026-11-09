@@ -31,7 +31,9 @@ test('the switcher keeps the page, sets the direction and is remembered', async 
   await expect(page).toHaveURL(new RegExp(`/en${SUMIF}$`));
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.locator('html')).toHaveAttribute('dir', 'ltr');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Adding up with a condition: SUMIF');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Adding up with a condition: SUMIF',
+  );
   // The choice is remembered: the bare origin now opens English.
   await page.goto('/');
   await expect(page).toHaveURL(/\/en$/);

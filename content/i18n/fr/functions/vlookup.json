@@ -10,7 +10,10 @@
     "Le numéro de la colonne à renvoyer, compté depuis le début du tableau.",
     "`FALSE` pour une correspondance exacte, `TRUE` (par défaut) pour une correspondance approximative."
   ],
-  "examples": ["Le prix du produit de code `P-102`.", "Le nom du produit, pris dans la deuxième colonne."],
+  "examples": [
+    "Le prix du produit de code `P-102`.",
+    "Le nom du produit, pris dans la deuxième colonne."
+  ],
   "errors": [
     "La valeur n'est pas dans la première colonne, ou contient une espace en trop.",
     "Le numéro de colonne dépasse le nombre de colonnes du tableau."

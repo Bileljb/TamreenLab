@@ -62,7 +62,11 @@ export default async function CurriculumPage({ params }: Props) {
 
       <div className="mx-auto flex w-full max-w-4xl flex-col gap-12 px-4">
         <ContinueBanner
-          lessons={lessons.map((l) => ({ slug: l.slug, title: plainText(l.titleAr), href: lessonHref(locale, l) }))}
+          lessons={lessons.map((l) => ({
+            slug: l.slug,
+            title: plainText(l.titleAr),
+            href: lessonHref(locale, l),
+          }))}
           labels={{ title: t('continueTitle'), cta: t('continueCta') }}
         />
         {tracks.map((track, i) => {
@@ -81,9 +85,14 @@ export default async function CurriculumPage({ params }: Props) {
                   <h2 id={`track-${track.slug}`} className="text-2xl font-extrabold tracking-tight">
                     {track.titleAr}
                   </h2>
-                  <span className="text-sm text-muted">{home('lessonCount', { count: inTrack.length })}</span>
+                  <span className="text-sm text-muted">
+                    {home('lessonCount', { count: inTrack.length })}
+                  </span>
                 </div>
-                <ProgressRing slugs={inTrack.map((l) => l.slug)} label={home.raw('trackProgress') as string} />
+                <ProgressRing
+                  slugs={inTrack.map((l) => l.slug)}
+                  label={home.raw('trackProgress') as string}
+                />
               </div>
               <ol className="relative flex flex-col gap-3 ps-6 before:absolute before:inset-y-3 before:start-[11px] before:w-0.5 before:rounded-full before:bg-line">
                 {inTrack.map((lesson) => {
@@ -112,9 +121,15 @@ export default async function CurriculumPage({ params }: Props) {
                         </span>
                         <span className="leading-7 text-muted">{lesson.summaryAr}</span>
                         <span className="flex flex-wrap gap-2 text-xs font-medium text-muted">
-                          <span className="rounded-full bg-sunken px-2 py-0.5">{t(`kind.${lesson.kind}`)}</span>
-                          <span className="rounded-full bg-sunken px-2 py-0.5">{home('minutes', { minutes: lesson.minutes })}</span>
-                          <span className="rounded-full bg-sunken px-2 py-0.5">{t('stepCount', { count: lesson.steps.length })}</span>
+                          <span className="rounded-full bg-sunken px-2 py-0.5">
+                            {t(`kind.${lesson.kind}`)}
+                          </span>
+                          <span className="rounded-full bg-sunken px-2 py-0.5">
+                            {home('minutes', { minutes: lesson.minutes })}
+                          </span>
+                          <span className="rounded-full bg-sunken px-2 py-0.5">
+                            {t('stepCount', { count: lesson.steps.length })}
+                          </span>
                         </span>
                       </a>
                     </li>

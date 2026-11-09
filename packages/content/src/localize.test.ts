@@ -27,7 +27,16 @@ const lesson = LessonFileSchema.parse({
       hintAr: 'استخدم SUMIF.',
       sheet: {
         visible: 'A1:C4',
-        cells: { A1: 'المنطقة', B1: 'المبيعات', A2: 'الشمال', B2: 10, A3: 'الجنوب', B3: 5, A4: 'الشمال', B4: 7 },
+        cells: {
+          A1: 'المنطقة',
+          B1: 'المبيعات',
+          A2: 'الشمال',
+          B2: 10,
+          A3: 'الجنوب',
+          B3: 5,
+          A4: 'الشمال',
+          B4: 7,
+        },
       },
       check: {
         target: 'C2',
@@ -85,7 +94,10 @@ describe('localizeLesson', () => {
     expect(out.titleAr).toBe('Conditional sums');
     expect(out.introAr).toBe('Explanation');
     expect(out.faq).toEqual([{ qAr: 'Question?', aAr: 'Answer.' }]);
-    expect(out.steps[0]).toMatchObject({ promptAr: 'Add up the North sales.', hintAr: 'Use SUMIF.' });
+    expect(out.steps[0]).toMatchObject({
+      promptAr: 'Add up the North sales.',
+      hintAr: 'Use SUMIF.',
+    });
     expect(out.steps[1]!.check).toMatchObject({ options: ['First', 'Second'], correct: 1 });
   });
 
@@ -111,7 +123,10 @@ describe('localizeLesson', () => {
     const rest = Object.fromEntries(Object.entries(en.steps).filter(([slug]) => slug !== 'pick'));
     expect(() => localizeLesson(lesson, { ...en, steps: rest })).toThrow(/step "pick"/);
     expect(() =>
-      localizeLesson(lesson, { ...en, steps: { ...en.steps, pick: { prompt: 'x', options: ['a'] } } }),
+      localizeLesson(lesson, {
+        ...en,
+        steps: { ...en.steps, pick: { prompt: 'x', options: ['a'] } },
+      }),
     ).toThrow(/options/);
     expect(() => localizeLesson(lesson, { ...en, faq: [] })).toThrow(/faq/);
   });

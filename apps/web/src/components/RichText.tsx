@@ -49,8 +49,19 @@ export function Faq({
             <span className="inline [&>p]:inline [&>p]:text-base">
               <Prompt text={item.qAr} glossary={glossary} introduce={new Set()} />
             </span>
-            <span aria-hidden className="grid size-7 shrink-0 place-items-center rounded-full bg-sunken text-muted transition group-open:rotate-180 group-open:bg-brand-soft group-open:text-brand-strong">
-              <svg viewBox="0 0 20 20" className="size-4" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="m5 8 5 5 5-5" /></svg>
+            <span
+              aria-hidden
+              className="grid size-7 shrink-0 place-items-center rounded-full bg-sunken text-muted transition group-open:rotate-180 group-open:bg-brand-soft group-open:text-brand-strong"
+            >
+              <svg
+                viewBox="0 0 20 20"
+                className="size-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+              >
+                <path d="m5 8 5 5 5-5" />
+              </svg>
             </span>
           </summary>
           <div className="mt-3 text-ink-soft [&>p]:text-base [&>p]:leading-8">

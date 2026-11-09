@@ -101,9 +101,7 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
           dir="ltr"
           className={input}
         />
-        {mode === 'signUp' ? (
-          <span className="text-xs text-muted">{t('passwordHint')}</span>
-        ) : null}
+        {mode === 'signUp' ? <span className="text-xs text-muted">{t('passwordHint')}</span> : null}
       </label>
       <div role="alert" aria-live="assertive" className="min-h-6 text-sm text-bad">
         {error ? t(`errors.${error}`) : null}

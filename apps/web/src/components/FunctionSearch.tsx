@@ -24,7 +24,15 @@ export function FunctionSearch({
     <div className="flex flex-col gap-10">
       <label className="relative block">
         <span className="sr-only">{labels.search}</span>
-        <svg viewBox="0 0 24 24" className="pointer-events-none absolute start-4 top-1/2 size-5 -translate-y-1/2 text-faint" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+        <svg
+          viewBox="0 0 24 24"
+          className="pointer-events-none absolute start-4 top-1/2 size-5 -translate-y-1/2 text-faint"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          aria-hidden
+        >
           <path d="M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zM21 21l-5-5" />
         </svg>
         <input
@@ -57,7 +65,9 @@ export function FunctionSearch({
                         <span className="text-faint">()</span>
                       </span>
                       {fn.localName ? (
-                        <span className="rounded-full bg-sunken px-2 py-0.5 font-mono text-xs text-muted">{fn.localName}</span>
+                        <span className="rounded-full bg-sunken px-2 py-0.5 font-mono text-xs text-muted">
+                          {fn.localName}
+                        </span>
                       ) : null}
                     </span>
                     <span className="leading-7 text-muted">{fn.summary}</span>

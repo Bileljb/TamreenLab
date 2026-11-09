@@ -48,16 +48,19 @@ Otherwise the learner presses the keys. `referenceAnswer` and `content:lint` use
 Ctrl/⌘+1…9 are listed although some browsers let pages take them.
 
 **Options are fixed per step.**
+
 - `shortcutOptions` lists the taught combo plus the authored `distractors`, shuffled from a hash of the slug, so the player, the API and the tests always see the same order.
 - `content:lint` requires at least two distractors, none of which is a correct combo.
 - `content:lint` also prints the steps that fall back to choice on each platform, so every fallback is deliberate.
 
 **Key matching works across keyboard layouts.**
+
 - A press matches by the character typed and by the physical key (`code`). On an Arabic layout, Ctrl+D reports `ي` but `KeyD`.
 - Punctuation keys match by their code (`Equal`, `Semicolon`, `Backquote`).
 - With Shift held, a digit key also stands for its US symbol, so `Ctrl+Shift+$` matches Ctrl+Shift+4 on any layout.
 
 **The player:**
+
 - **Capture box.** A focusable box shows the modifiers being held, checks on the first non-modifier key, and shows what was pressed.
 - **Tab.** Tab still leaves the box, unless the step teaches a Tab combo.
 - **Platform.** The platform comes from `navigator.userAgentData.platform`, then `navigator.platform`, then the user agent. A Windows/Mac switch overrides it and is remembered in `tamreen.platform.v1`.

@@ -78,7 +78,16 @@ export function ThemeToggle({ labels }: { labels: Record<Choice, string> }) {
       data-theme-choice={choice}
       className="grid size-9 place-items-center rounded-full text-muted transition-colors hover:bg-sunken hover:text-ink focus-visible:outline-2 focus-visible:outline-brand"
     >
-      <svg viewBox="0 0 24 24" className="size-[18px]" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <svg
+        viewBox="0 0 24 24"
+        className="size-[18px]"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+      >
         <path d={ICONS[choice]} />
       </svg>
     </button>

@@ -16,7 +16,12 @@ import '../globals.css';
 
 // Cairo for Arabic (and for Latin text on Arabic pages), Inter for English and French. OFL-1.1.
 const cairo = Cairo({ subsets: ['arabic', 'latin'], display: 'swap', variable: '--font-arabic' });
-const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-latin', preload: false });
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-latin',
+  preload: false,
+});
 
 type Props = {
   children: ReactNode;
@@ -80,7 +85,10 @@ export default async function LocaleLayout({ children, params }: Props) {
             <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/75 backdrop-blur-xl backdrop-saturate-150">
               <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4">
                 <div className="flex items-center gap-6">
-                  <a href={`/${locale}`} className="rounded-lg focus-visible:outline-2 focus-visible:outline-brand">
+                  <a
+                    href={`/${locale}`}
+                    className="rounded-lg focus-visible:outline-2 focus-visible:outline-brand"
+                  >
                     <Logo name={t('brand')} />
                   </a>
                   <nav aria-label={nav('label')} className="flex items-center gap-1 max-md:hidden">
@@ -106,14 +114,26 @@ export default async function LocaleLayout({ children, params }: Props) {
                       aria-label={t('menu')}
                       className="grid size-9 cursor-pointer list-none place-items-center rounded-full text-muted hover:bg-sunken hover:text-ink [&::-webkit-details-marker]:hidden"
                     >
-                      <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="size-5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        aria-hidden
+                      >
                         <path d="M4 7h16M4 12h16M4 17h16" className="group-open:hidden" />
                         <path d="M6 6l12 12M18 6 6 18" className="hidden group-open:block" />
                       </svg>
                     </summary>
                     <div className="absolute end-0 top-12 flex w-64 animate-fade-up flex-col gap-1 rounded-2xl border border-line bg-raised p-3 shadow-lift">
                       {links.map((l) => (
-                        <a key={l.href} href={l.href} className="rounded-xl px-3 py-2 font-medium hover:bg-sunken">
+                        <a
+                          key={l.href}
+                          href={l.href}
+                          className="rounded-xl px-3 py-2 font-medium hover:bg-sunken"
+                        >
                           {l.label}
                         </a>
                       ))}
@@ -137,9 +157,16 @@ export default async function LocaleLayout({ children, params }: Props) {
                   <p className="text-sm leading-6 text-muted">{footer('note')}</p>
                 </div>
                 <div className="flex flex-col gap-4">
-                  <nav aria-label={footer('label')} className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+                  <nav
+                    aria-label={footer('label')}
+                    className="flex flex-wrap gap-x-5 gap-y-2 text-sm"
+                  >
                     {(['about', 'privacy', 'terms', 'contact'] as const).map((page) => (
-                      <a key={page} href={`/${locale}/${page}`} className="text-muted hover:text-ink">
+                      <a
+                        key={page}
+                        href={`/${locale}/${page}`}
+                        className="text-muted hover:text-ink"
+                      >
                         {footer(page)}
                       </a>
                     ))}

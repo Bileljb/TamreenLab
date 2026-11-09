@@ -7,7 +7,10 @@
     "The first number, reference or range to add.",
     "More numbers or ranges, up to 255 arguments."
   ],
-  "examples": ["Adds up the sales of every product.", "A range and a separate cell in one formula."],
+  "examples": [
+    "Adds up the sales of every product.",
+    "A range and a separate cell in one formula."
+  ],
   "errors": [
     "You typed text directly as an argument, such as `=SUM(\"abc\")`. Text inside a range is ignored."
   ],

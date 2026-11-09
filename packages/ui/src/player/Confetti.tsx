@@ -59,5 +59,7 @@ export function Confetti() {
     return () => cancelAnimationFrame(raf);
   }, []);
 
-  return <canvas ref={canvas} aria-hidden className="pointer-events-none absolute inset-0 size-full" />;
+  return (
+    <canvas ref={canvas} aria-hidden className="pointer-events-none absolute inset-0 size-full" />
+  );
 }

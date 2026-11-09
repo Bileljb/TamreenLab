@@ -16,7 +16,10 @@ const pct = (r: number | null) => (r === null ? '—' : `${(r * 100).toFixed(1)}
 const db = createPrisma();
 try {
   const [rows, curriculum] = await Promise.all([
-    db.analyticsEvent.findMany({ where: { createdAt: { gte: since } }, orderBy: { createdAt: 'asc' } }),
+    db.analyticsEvent.findMany({
+      where: { createdAt: { gte: since } },
+      orderBy: { createdAt: 'asc' },
+    }),
     loadCurriculum(path.resolve(import.meta.dirname, '../../../content')),
   ]);
   const lessons = curriculum.lessons.map((l) => ({

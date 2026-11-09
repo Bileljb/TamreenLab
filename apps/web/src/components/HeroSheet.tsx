@@ -32,9 +32,12 @@ function referenced(formula: string): Set<string> {
   for (const m of formula.toUpperCase().matchAll(/\b([AB])([1-5])(?::([AB])([1-5]))?\b/g)) {
     const from = { col: m[1]!, row: Number(m[2]) };
     const to = { col: m[3] ?? from.col, row: Number(m[4] ?? from.row) };
-    const cols = COLS.filter((c) => c >= [from.col, to.col].sort()[0]! && c <= [from.col, to.col].sort()[1]!);
+    const cols = COLS.filter(
+      (c) => c >= [from.col, to.col].sort()[0]! && c <= [from.col, to.col].sort()[1]!,
+    );
     for (const c of cols) {
-      for (let r = Math.min(from.row, to.row); r <= Math.max(from.row, to.row); r++) cells.add(`${c}${r}`);
+      for (let r = Math.min(from.row, to.row); r <= Math.max(from.row, to.row); r++)
+        cells.add(`${c}${r}`);
     }
   }
   return cells;
@@ -47,7 +50,8 @@ function display(value: unknown, syntaxError: string): string {
     const code = (value as { error: string }).error;
     return code.startsWith('#') ? code : syntaxError;
   }
-  if (typeof value === 'number') return new Intl.NumberFormat('en', { maximumFractionDigits: 2 }).format(value);
+  if (typeof value === 'number')
+    return new Intl.NumberFormat('en', { maximumFractionDigits: 2 }).format(value);
   if (typeof value === 'boolean') return value ? 'TRUE' : 'FALSE';
   return String(value);
 }
@@ -65,7 +69,11 @@ export function HeroSheet({ labels, rows, demoFormula, demoResult, suggestions }
   const input = useRef<HTMLInputElement>(null);
 
   const cells = useMemo(() => {
-    const out: Record<string, string | number> = { A1: labels.item, B1: labels.qty, A5: labels.total };
+    const out: Record<string, string | number> = {
+      A1: labels.item,
+      B1: labels.qty,
+      A5: labels.total,
+    };
     rows.forEach((r, i) => {
       out[`A${i + 2}`] = r.name;
       out[`B${i + 2}`] = r.qty;
@@ -122,7 +130,10 @@ export function HeroSheet({ labels, rows, demoFormula, demoResult, suggestions }
 
   return (
     <div className="relative">
-      <div aria-hidden className="brand-gradient absolute -inset-4 -z-10 rounded-[2rem] opacity-25 blur-2xl" />
+      <div
+        aria-hidden
+        className="brand-gradient absolute -inset-4 -z-10 rounded-[2rem] opacity-25 blur-2xl"
+      />
       <div className="overflow-hidden rounded-[var(--radius-card)] border border-line bg-raised shadow-lift">
         <div className="flex items-center justify-between gap-3 border-b border-line bg-sunken/60 px-4 py-2.5">
           <div className="flex items-center gap-1.5" aria-hidden>
@@ -135,7 +146,9 @@ export function HeroSheet({ labels, rows, demoFormula, demoResult, suggestions }
         </div>
 
         <div dir="ltr" className="flex items-center gap-2 border-b border-line px-3 py-2">
-          <span className="rounded-md border border-line bg-sunken px-2 py-1 font-mono text-xs text-muted">B5</span>
+          <span className="rounded-md border border-line bg-sunken px-2 py-1 font-mono text-xs text-muted">
+            B5
+          </span>
           <span className="font-serif text-sm italic text-faint" aria-hidden>
             fx
           </span>
@@ -170,7 +183,9 @@ export function HeroSheet({ labels, rows, demoFormula, demoResult, suggestions }
           <tbody>
             {[1, 2, 3, 4, 5].map((r) => (
               <tr key={r}>
-                <th className="border-b border-line bg-sunken/70 text-xs font-medium text-faint">{r}</th>
+                <th className="border-b border-line bg-sunken/70 text-xs font-medium text-faint">
+                  {r}
+                </th>
                 {COLS.map((c) => {
                   const address = `${c}${r}`;
                   const isTarget = address === 'B5';
@@ -182,10 +197,15 @@ export function HeroSheet({ labels, rows, demoFormula, demoResult, suggestions }
                       className={`h-10 border-b border-s border-line px-3 transition-colors ${
                         r === 1 ? 'font-semibold text-ink-soft' : ''
                       } ${typeof value === 'number' || isTarget ? 'text-end tabular-nums' : 'text-start'} ${
-                        lit.has(address) ? 'bg-accent-soft outline outline-2 -outline-offset-2 outline-accent/60' : ''
+                        lit.has(address)
+                          ? 'bg-accent-soft outline outline-2 -outline-offset-2 outline-accent/60'
+                          : ''
                       } ${isTarget ? 'font-bold text-brand-strong outline outline-2 -outline-offset-2 outline-brand' : ''}`}
                     >
-                      <span key={isTarget ? pulse : undefined} className={isTarget && pulse ? 'inline-block animate-pop' : ''}>
+                      <span
+                        key={isTarget ? pulse : undefined}
+                        className={isTarget && pulse ? 'inline-block animate-pop' : ''}
+                      >
                         {value}
                       </span>
                     </td>

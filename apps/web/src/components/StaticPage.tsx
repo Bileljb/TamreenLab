@@ -34,7 +34,10 @@ export async function StaticPage({
       <PageHero title={t('title')} intro={t('description')} />
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-10">
         {draft ? (
-          <p role="note" className="rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-medium text-warn">
+          <p
+            role="note"
+            className="rounded-2xl border border-warn/30 bg-warn-soft px-4 py-3 text-sm font-medium text-warn"
+          >
             {draft}
           </p>
         ) : null}

@@ -52,6 +52,7 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
   - per-lesson step drop-off.
 
   Run it weekly during the launch review and set your own targets. The plan's starting guesses are 30% activation and 15% 7-day return.
+
 - [ ] **Acquisition figures** (clicks, impressions, indexed pages) come from Search Console, not from our events.
 - [ ] **Event retention:** decide how long to keep raw `AnalyticsEvent` rows (suggestion: 13 months). The privacy page should state it.
 

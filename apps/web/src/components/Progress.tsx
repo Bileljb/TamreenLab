@@ -100,7 +100,14 @@ export function LessonStatus({
   if (p.completed) {
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-good-soft px-2 py-0.5 text-xs font-semibold text-good">
-        <svg viewBox="0 0 16 16" className="size-3" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
+        <svg
+          viewBox="0 0 16 16"
+          className="size-3"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          aria-hidden
+        >
           <path d="m3 8.5 3 3 7-7" />
         </svg>
         {labels.done}
@@ -142,7 +149,9 @@ export function ContinueBanner({
       className="group flex animate-fade-up items-center justify-between gap-4 rounded-[var(--radius-card)] border border-brand/30 bg-brand-soft p-4 transition hover:shadow-glow"
     >
       <span className="flex flex-col">
-        <span className="text-xs font-semibold uppercase tracking-wide text-brand-strong">{labels.title}</span>
+        <span className="text-xs font-semibold uppercase tracking-wide text-brand-strong">
+          {labels.title}
+        </span>
         <span className="font-semibold text-ink">{next.title}</span>
       </span>
       <span className="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-ink transition group-hover:-translate-x-0.5 rtl:group-hover:translate-x-0.5">

@@ -142,7 +142,10 @@ describe('translated steps', () => {
   it('stores the sheet and check of each language with the step', () => {
     const [step] = desiredState(tracks, [sheetLesson], { en: [en] }).steps;
     expect(step!.localesJson).toEqual({
-      en: { sheet: { visible: 'A1:A2', cells: { A1: 'Region' } }, check: { target: 'A2', expected: 'North' } },
+      en: {
+        sheet: { visible: 'A1:A2', cells: { A1: 'Region' } },
+        check: { target: 'A2', expected: 'North' },
+      },
     });
     expect(desiredState(tracks, [sheetLesson]).steps[0]!.localesJson).toEqual({});
   });

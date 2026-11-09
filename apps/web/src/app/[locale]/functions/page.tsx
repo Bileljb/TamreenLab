@@ -21,7 +21,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function FunctionsIndexPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const [t, fns] = await Promise.all([getTranslations('functions'), listFunctions(locale as Locale)]);
+  const [t, fns] = await Promise.all([
+    getTranslations('functions'),
+    listFunctions(locale as Locale),
+  ]);
 
   return (
     <main className="flex flex-col gap-10">
@@ -33,7 +36,10 @@ export default async function FunctionsIndexPage({ params }: Props) {
             summary: f.summaryAr,
             href: functionHref(locale, f),
             category: f.category,
-            localName: locale === 'fr' && FRENCH_EXCEL_NAMES[f.name] !== f.name ? FRENCH_EXCEL_NAMES[f.name] : undefined,
+            localName:
+              locale === 'fr' && FRENCH_EXCEL_NAMES[f.name] !== f.name
+                ? FRENCH_EXCEL_NAMES[f.name]
+                : undefined,
           }))}
           categories={FUNCTION_CATEGORIES.map((key) => ({ key, title: t(`categories.${key}`) }))}
           labels={{ search: t('search'), empty: t('noResults') }}

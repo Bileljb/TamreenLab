@@ -75,7 +75,10 @@ export async function readContent(dir: string): Promise<RawContent> {
   const translations: RawTranslation[] = [];
   for (const locale of TRANSLATED_LOCALES) {
     const base = `i18n/${locale}`;
-    const exists = await readdir(path.join(dir, base)).then(() => true, () => false);
+    const exists = await readdir(path.join(dir, base)).then(
+      () => true,
+      () => false,
+    );
     if (!exists) continue;
     translations.push({
       locale,
@@ -91,7 +94,7 @@ async function readFolder(dir: string, relative: string): Promise<RawFile[]> {
   const files = await readdir(path.join(dir, relative)).catch(() => [] as string[]);
   const out: RawFile[] = [];
   for (const file of files.sort()) {
-    if (file.endsWith(".json")) out.push(await readJson(dir, `${relative}/${file}`));
+    if (file.endsWith('.json')) out.push(await readJson(dir, `${relative}/${file}`));
   }
   return out;
 }
@@ -119,7 +122,7 @@ export const lessonPath = (lesson: { track: string; slug: string }) =>
   `lessons/${lesson.track}/${lesson.slug}.json`;
 
 /** The expected location of a translation file. */
-export const translationPath = (locale: string, kind: "lessons" | "functions", slug: string) =>
+export const translationPath = (locale: string, kind: 'lessons' | 'functions', slug: string) =>
   `i18n/${locale}/${kind}/${slug}.json`;
 
 /** The expected location of a function file. */

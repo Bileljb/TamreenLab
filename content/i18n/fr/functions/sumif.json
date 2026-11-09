@@ -13,7 +13,9 @@
     "Total des ventes de la région Nord : 120, 40 et 60.",
     "Total des ventes égales ou supérieures à 90."
   ],
-  "errors": ["Sur ce site, la plage de la condition et la plage à additionner n'ont pas la même taille."],
+  "errors": [
+    "Sur ce site, la plage de la condition et la plage à additionner n'ont pas la même taille."
+  ],
   "faq": [
     {
       "q": "Comment additionner selon plusieurs conditions ?",

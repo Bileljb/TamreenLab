@@ -45,7 +45,9 @@ export function translateDeep<T>(value: T, strings: Strings): T {
 
 function sameLength(what: string, source: unknown[] | undefined, target: unknown[] | undefined) {
   if ((source?.length ?? 0) !== (target?.length ?? 0)) {
-    throw new Error(`${what}: the translation has ${target?.length ?? 0}, the source ${source?.length ?? 0}`);
+    throw new Error(
+      `${what}: the translation has ${target?.length ?? 0}, the source ${source?.length ?? 0}`,
+    );
   }
 }
 

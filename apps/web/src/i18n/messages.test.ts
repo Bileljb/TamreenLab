@@ -34,9 +34,7 @@ describe('message files', () => {
     ['fr', fr],
   ])('%s keeps every placeholder and tag of the Arabic text', (_locale, messages) => {
     for (const path of arabic) {
-      expect(slots(String(lookup(messages, path))), path).toEqual(
-        slots(String(lookup(ar, path))),
-      );
+      expect(slots(String(lookup(messages, path))), path).toEqual(slots(String(lookup(ar, path))));
     }
   });
 });

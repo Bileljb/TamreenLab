@@ -9,7 +9,10 @@
     "The number of the column to return from, counted from the start of the table.",
     "`FALSE` for an exact match, `TRUE` (the default) for an approximate match."
   ],
-  "examples": ["The price of the product with code `P-102`.", "The product name from the second column."],
+  "examples": [
+    "The price of the product with code `P-102`.",
+    "The product name from the second column."
+  ],
   "errors": [
     "The value is not in the first column, or it has an extra space.",
     "The column number is larger than the number of columns in the table."
