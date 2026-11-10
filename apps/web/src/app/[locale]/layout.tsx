@@ -85,6 +85,13 @@ export default async function LocaleLayout({ children, params }: Props) {
       <body className="flex min-h-dvh flex-col">
         <NextIntlClientProvider>
           <SessionProvider>
+            {/* The first stop for keyboard users: past the header to the page itself. */}
+            <a
+              href="#content"
+              className="sr-only rounded-full bg-brand px-4 py-2 font-semibold text-brand-ink focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-50"
+            >
+              {t('skipToContent')}
+            </a>
             <header className="sticky top-0 z-40 border-b border-line/70 bg-canvas/75 backdrop-blur-xl backdrop-saturate-150">
               <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4">
                 <div className="flex items-center gap-6">
@@ -152,7 +159,9 @@ export default async function LocaleLayout({ children, params }: Props) {
                 </div>
               </div>
             </header>
-            <div className="flex-1">{children}</div>
+            <div id="content" tabIndex={-1} className="flex-1 focus:outline-none">
+              {children}
+            </div>
             <footer className="mt-20 border-t border-line bg-raised/60">
               <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex max-w-sm flex-col gap-3">

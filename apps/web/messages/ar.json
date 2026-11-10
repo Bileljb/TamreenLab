@@ -100,7 +100,8 @@
     "themeSystem": "المظهر: حسب الجهاز",
     "themeLight": "المظهر: فاتح",
     "themeDark": "المظهر: داكن",
-    "settings": "الإعدادات"
+    "settings": "الإعدادات",
+    "skipToContent": "انتقل إلى المحتوى"
   },
   "deleteAccount": {
     "title": "حذف الحساب",

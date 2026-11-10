@@ -70,18 +70,24 @@ export function AuthForm({ mode, fallbackNext, switchHref, forgotHref }: Props) 
   return (
     <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
       {mode === 'signUp' ? (
-        <label className="flex flex-col gap-1">
-          <span className="text-sm font-semibold text-ink-soft">{t('displayName')}</span>
-          <input
-            name="displayName"
-            required
-            minLength={2}
-            maxLength={30}
-            autoComplete="nickname"
-            className={input}
-          />
-          <span className="text-xs text-muted">{t('displayNameHint')}</span>
-        </label>
+        <div className="flex flex-col gap-1">
+          <label className="flex flex-col gap-1">
+            <span className="text-sm font-semibold text-ink-soft">{t('displayName')}</span>
+            <input
+              name="displayName"
+              required
+              minLength={2}
+              maxLength={30}
+              autoComplete="nickname"
+              aria-describedby="display-name-hint"
+              className={input}
+            />
+          </label>
+          {/* Outside the label, so the hint is a description and not part of the field's name. */}
+          <span id="display-name-hint" className="text-xs text-muted">
+            {t('displayNameHint')}
+          </span>
+        </div>
       ) : null}
       <label className="flex flex-col gap-1">
         <span className="text-sm font-semibold text-ink-soft">{t('email')}</span>
@@ -94,19 +100,26 @@ export function AuthForm({ mode, fallbackNext, switchHref, forgotHref }: Props) 
           className={input}
         />
       </label>
-      <label className="flex flex-col gap-1">
-        <span className="text-sm font-semibold text-ink-soft">{t('password')}</span>
-        <input
-          name="password"
-          type="password"
-          required
-          minLength={mode === 'signUp' ? 8 : 1}
-          autoComplete={mode === 'signUp' ? 'new-password' : 'current-password'}
-          dir="ltr"
-          className={input}
-        />
-        {mode === 'signUp' ? <span className="text-xs text-muted">{t('passwordHint')}</span> : null}
-      </label>
+      <div className="flex flex-col gap-1">
+        <label className="flex flex-col gap-1">
+          <span className="text-sm font-semibold text-ink-soft">{t('password')}</span>
+          <input
+            name="password"
+            type="password"
+            required
+            minLength={mode === 'signUp' ? 8 : 1}
+            autoComplete={mode === 'signUp' ? 'new-password' : 'current-password'}
+            aria-describedby={mode === 'signUp' ? 'password-hint' : undefined}
+            dir="ltr"
+            className={input}
+          />
+        </label>
+        {mode === 'signUp' ? (
+          <span id="password-hint" className="text-xs text-muted">
+            {t('passwordHint')}
+          </span>
+        ) : null}
+      </div>
       {mode === 'signIn' && forgotHref ? (
         <a
           href={forgotHref}

@@ -100,7 +100,8 @@
     "themeSystem": "Theme: match device",
     "themeLight": "Theme: light",
     "themeDark": "Theme: dark",
-    "settings": "Settings"
+    "settings": "Settings",
+    "skipToContent": "Skip to content"
   },
   "deleteAccount": {
     "title": "Delete account",

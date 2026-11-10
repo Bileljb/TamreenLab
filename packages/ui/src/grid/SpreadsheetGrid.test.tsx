@@ -49,6 +49,9 @@ describe('SpreadsheetGrid', () => {
     expect(cell('A2').textContent).toBe('قلم');
     expect(cell('A1')).toHaveProperty('tabIndex', 0);
     expect(cell('B1')).toHaveProperty('tabIndex', -1);
+    // Screen readers hear the address with the value, and the address alone for an empty cell.
+    expect(within(grid).getByRole('gridcell', { name: 'B4 200' })).toBe(cell('B4'));
+    expect(within(grid).getByRole('gridcell', { name: 'C5' })).toBe(cell('C5'));
   });
 
   it('selects with the mouse and shows the selection in the name box and formula bar', async () => {

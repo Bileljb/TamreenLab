@@ -16,11 +16,11 @@
   --ink: #0f172a;
   --ink-soft: #334155;
   --muted: #526075;
-  --faint: #64748b;
+  --faint: #5b6b82; /* 4.5:1 or better on canvas, raised and sunken (WCAG AA) */
   --line: #e3e8ef;
   --line-strong: #cbd5e1;
-  --brand: #059669;
-  --brand-strong: #047857;
+  --brand: #047857; /* white text on it: 5.5:1 */
+  --brand-strong: #065f46;
   --brand-ink: #ffffff;
   --brand-soft: #e8faf2;
   --accent: #7c3aed;

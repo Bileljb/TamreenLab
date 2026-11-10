@@ -100,7 +100,8 @@
     "themeSystem": "Thème : comme l'appareil",
     "themeLight": "Thème : clair",
     "themeDark": "Thème : sombre",
-    "settings": "Paramètres"
+    "settings": "Paramètres",
+    "skipToContent": "Aller au contenu"
   },
   "deleteAccount": {
     "title": "Supprimer le compte",

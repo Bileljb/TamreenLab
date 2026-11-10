@@ -381,7 +381,8 @@ export function SpreadsheetGrid({ sheet, state, dispatch, functions = [], onIdle
                       }}
                       role="gridcell"
                       aria-selected={selected}
-                      aria-label={text ? undefined : address}
+                      // Screen readers say the address first, as Excel does: "B2 140".
+                      aria-label={text ? `${address} ${text}` : address}
                       tabIndex={active ? 0 : -1}
                       data-row={r}
                       data-col={c}
