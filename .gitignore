@@ -16,3 +16,6 @@ spikes/formula-engine/out/
 .DS_Store
 Thumbs.db
 next-env.d.ts
+
+# Database dumps (pnpm db:backup)
+backups/

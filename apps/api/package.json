@@ -18,7 +18,9 @@
     "content:sync": "node --env-file-if-exists=.env --import tsx scripts/content-sync.ts",
     "metrics:report": "node --env-file-if-exists=.env --import tsx scripts/metrics-report.ts",
     "reminders:send": "node --env-file-if-exists=.env --import tsx scripts/send-reminders.ts",
-    "assistant:trial": "node --env-file-if-exists=.env --import tsx scripts/assistant-trial.ts"
+    "assistant:trial": "node --env-file-if-exists=.env --import tsx scripts/assistant-trial.ts",
+    "db:backup": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts backup",
+    "db:restore-drill": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts restore-drill"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",

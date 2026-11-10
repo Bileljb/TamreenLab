@@ -16,6 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "db:migrate": "pnpm --filter @tamreen/api db:migrate",
+    "db:backup": "pnpm --filter @tamreen/api db:backup",
+    "db:restore-drill": "pnpm --filter @tamreen/api db:restore-drill",
     "db:seed": "pnpm --filter @tamreen/api db:seed",
     "content:lint": "pnpm --filter @tamreen/content content:lint",
     "content:sync": "pnpm --filter @tamreen/api content:sync",
