@@ -173,6 +173,73 @@ describe('LessonPlayer', () => {
   });
 });
 
+describe('LessonPlayer AI explanations', () => {
+  /** Answers the assistant routes with `hint`, and records every request. */
+  function stubApi(hint: unknown) {
+    const calls: { url: string; body: unknown }[] = [];
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (url: string, init?: RequestInit) => {
+        calls.push({ url, body: init?.body ? JSON.parse(String(init.body)) : null });
+        if (url === '/api/assistant/hint') {
+          return hint instanceof Error ? Promise.reject(hint) : Response.json(hint);
+        }
+        return new Response(null, { status: 204 });
+      }),
+    );
+    return calls;
+  }
+
+  async function wrongFormula(user: ReturnType<typeof userEvent.setup>) {
+    await user.click(screen.getByRole('button', { name: 'تخطَّ' }));
+    await user.click(cell('B4'));
+    await user.keyboard('=SUM(B2){Enter}');
+    expect(feedback().textContent).toContain('النتيجة غير صحيحة');
+  }
+
+  it('explains a wrong formula, marks it as AI, and takes a vote', async () => {
+    const calls = stubApi({ source: 'ai', id: 'h1', text: 'النطاق `B2` وحده لا يكفي.' });
+    const user = userEvent.setup();
+    renderPlayer();
+    await wrongFormula(user);
+    await user.click(screen.getByRole('button', { name: 'اشرح خطئي' }));
+
+    const panel = await screen.findByRole('region', { name: 'شرح بالذكاء الاصطناعي' });
+    expect(within(panel).getByText('B2').closest('[dir="ltr"]')).toBeTruthy();
+    expect(within(panel).getByText(/قد يخطئ/)).toBeTruthy();
+    expect(calls.find((c) => c.url === '/api/assistant/hint')!.body).toEqual({
+      lessonSlug: 'test-lesson',
+      stepSlug: 'sum',
+      answer: { cell: 'B4', formula: '=SUM(B2)' },
+      locale: 'ar',
+    });
+    // One explanation per formula: the button returns only after a new wrong formula.
+    expect(screen.queryByRole('button', { name: 'اشرح خطئي' })).toBeNull();
+
+    await user.click(within(panel).getByRole('button', { name: 'مفيد' }));
+    expect(within(panel).getByText('شكرًا على رأيك.')).toBeTruthy();
+    expect(calls.at(-1)).toEqual({
+      url: '/api/assistant/hints/h1/feedback',
+      body: { helpful: true },
+    });
+    vi.unstubAllGlobals();
+  });
+
+  it('says so when no explanation is available', async () => {
+    for (const reply of [{ source: 'static', reason: 'UNAVAILABLE' }, new TypeError('offline')]) {
+      stubApi(reply);
+      const user = userEvent.setup();
+      const { unmount } = renderPlayer();
+      await wrongFormula(user);
+      await user.click(screen.getByRole('button', { name: 'اشرح خطئي' }));
+      expect(await screen.findByText(/الشرح الآلي غير متاح الآن/)).toBeTruthy();
+      expect(screen.queryByRole('region', { name: 'شرح بالذكاء الاصطناعي' })).toBeNull();
+      unmount();
+      vi.unstubAllGlobals();
+    }
+  });
+});
+
 describe('LessonPlayer analytics', () => {
   it('sends anonymous lesson and step events, unless the learner opted out', async () => {
     const sent: { name: string; stepSlug?: string; anonId: string }[] = [];

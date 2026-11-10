@@ -1,6 +1,8 @@
 'use client';
 
 import type {
+  AssistantHintRequest,
+  AssistantHintResponse,
   AttemptResponse,
   Leaderboard,
   LessonProgressDto,
@@ -101,6 +103,11 @@ export const api = {
   /** From the link in a reminder email; needs no session. */
   unsubscribe: (u: string, t: string) =>
     send<{ unsubscribed: true }>('/email/unsubscribe', post({ u, t })),
+  /** An AI explanation of a wrong formula; guests may ask too (ADR 012). */
+  assistantHint: (body: Omit<AssistantHintRequest, 'locale'>) =>
+    call<AssistantHintResponse>('/assistant/hint', post({ ...body, locale: pageLocale() })),
+  assistantFeedback: (id: string, helpful: boolean) =>
+    call<void>(`/assistant/hints/${encodeURIComponent(id)}/feedback`, post({ helpful })),
   leaderboard: (limit = 10) => send<Leaderboard>(`/leaderboard/daily?limit=${limit}`),
 };
 

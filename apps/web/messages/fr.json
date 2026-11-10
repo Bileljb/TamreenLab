@@ -202,7 +202,16 @@
     "reviewCompleteTitle": "Bravo ! Révision terminée",
     "share": "Partager votre résultat",
     "shareCopied": "Lien copié",
-    "shareTitle": "Mon résultat sur TamreenLab"
+    "shareTitle": "Mon résultat sur TamreenLab",
+    "aiExplain": "Expliquer mon erreur",
+    "aiLoading": "Explication en cours…",
+    "aiLabel": "Explication par IA",
+    "aiNote": "Cette explication est rédigée par une IA et peut se tromper. L’utiliser compte comme un indice.",
+    "aiHelpfulQuestion": "Cette explication vous a-t-elle aidé ?",
+    "aiHelpful": "Utile",
+    "aiNotHelpful": "Pas utile",
+    "aiThanks": "Merci pour votre avis.",
+    "aiUnavailable": "L’explication par IA n’est pas disponible pour le moment. Relisez le message ci-dessus et réessayez."
   },
   "feedback": {
     "WRONG_VALUE": "Le résultat n'est pas juste. Vérifiez les cellules utilisées et réessayez.",
@@ -317,7 +326,7 @@
       "title": "Politique de confidentialité",
       "description": "Comment TamreenLab traite vos données.",
       "draft": "Brouillon : cette page doit être relue par un juriste avant le lancement.",
-      "body": "Nous collectons le moins de données possible.\n\nSi vous vous entraînez sans compte, votre progression est stockée uniquement dans votre navigateur. Si vous créez un compte, nous enregistrons votre e-mail, votre nom affiché et votre mot de passe, chiffré de façon irréversible, ainsi que vos réponses et vos points pour afficher votre progression et le classement.\n\nNous enregistrons des statistiques d'utilisation anonymes, comme le début ou la fin d'une leçon, avec un identifiant aléatoire qui n'est lié ni à votre nom ni à votre e-mail, afin d'améliorer les leçons. Vous pouvez les désactiver dans la fenêtre de consentement.\n\nDes publicités peuvent s'afficher sur les pages d'explication. Les publicités personnalisées ne sont autorisées qu'avec votre accord.\n\nSi vous activez le rappel hebdomadaire, nous vous envoyons un e-mail par semaine et conservons la date de votre accord. Nous n'envoyons jamais de rappel sans votre accord, et vous pouvez l'arrêter depuis vos paramètres ou depuis le lien de chaque e-mail.\n\nVous pouvez supprimer votre compte et toutes ses données à tout moment en bas de cette page, une fois connecté, ou nous écrire via la page de contact."
+      "body": "Nous collectons le moins de données possible.\n\nSi vous vous entraînez sans compte, votre progression est stockée uniquement dans votre navigateur. Si vous créez un compte, nous enregistrons votre e-mail, votre nom affiché et votre mot de passe, chiffré de façon irréversible, ainsi que vos réponses et vos points pour afficher votre progression et le classement.\n\nNous enregistrons des statistiques d'utilisation anonymes, comme le début ou la fin d'une leçon, avec un identifiant aléatoire qui n'est lié ni à votre nom ni à votre e-mail, afin d'améliorer les leçons. Vous pouvez les désactiver dans la fenêtre de consentement.\n\nDes publicités peuvent s'afficher sur les pages d'explication. Les publicités personnalisées ne sont autorisées qu'avec votre accord.\n\nSi vous activez le rappel hebdomadaire, nous vous envoyons un e-mail par semaine et conservons la date de votre accord. Nous n'envoyons jamais de rappel sans votre accord, et vous pouvez l'arrêter depuis vos paramètres ou depuis le lien de chaque e-mail.\n\nSi vous appuyez sur « Expliquer mon erreur », l’exercice et la formule que vous avez saisie sont envoyés à un fournisseur d’IA (Groq) pour rédiger l’explication. Nous n’envoyons ni nom, ni e-mail, ni données de compte. Nous conservons l’explication, pour que la même formule reçoive la même réponse, ainsi que votre avis utile ou pas utile, sans votre nom ni votre adresse IP.\n\nVous pouvez supprimer votre compte et toutes ses données à tout moment en bas de cette page, une fois connecté, ou nous écrire via la page de contact."
     },
     "terms": {
       "title": "Conditions d'utilisation",

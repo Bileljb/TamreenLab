@@ -1,6 +1,15 @@
 'use client';
 
-import { useEffect, useMemo, useReducer, useRef, useState, type ReactNode } from 'react';
+import {
+  Suspense,
+  lazy,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import { useTranslations } from 'next-intl';
 import {
   InvalidAnswerError,
@@ -225,6 +234,7 @@ export function LessonPlayer({
         <StepView
           key={`${round}-${state.index}-${lesson.steps[state.index]!.slug}`}
           step={lesson.steps[state.index]!}
+          lessonSlug={review?.lessonSlugs[state.index] ?? lesson.slug}
           run={state.steps[state.index]!}
           canGoBack={state.index > 0}
           autoFocus={navigated.current}
@@ -253,8 +263,12 @@ export function LessonPlayer({
   );
 }
 
+// Only needed after a wrong formula: kept out of the lesson page's first load (ADR 012).
+const AiExplain = lazy(() => import('./AiExplain').then((m) => ({ default: m.AiExplain })));
+
 type StepViewProps = {
   step: StepSpec;
+  lessonSlug: string;
   run: StepRun;
   canGoBack: boolean;
   autoFocus: boolean;
@@ -330,6 +344,7 @@ function StepView(props: StepViewProps) {
   const [picked, setPicked] = useState<string | null>(null);
   const { platform, setPlatform, touch } = usePlatform();
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [aiShown, setAiShown] = useState(false);
   const continueButton = useRef<HTMLButtonElement>(null);
   const body = useRef<HTMLDivElement>(null);
   const settled = isSettled(run);
@@ -486,7 +501,27 @@ function StepView(props: StepViewProps) {
 
       <Feedback step={step} run={run} notice={notice} platform={platform} t={t} tf={tf} />
 
-      {run.hintShown && step.hintAr ? (
+      {step.type === 'ENTER_FORMULA' ? (
+        <Suspense fallback={null}>
+          <AiExplain
+            lessonSlug={props.lessonSlug}
+            stepSlug={step.slug}
+            wrong={
+              run.status === 'incorrect' && grid.lastCommit
+                ? { cell: grid.lastCommit.address, formula: grid.lastCommit.text }
+                : null
+            }
+            hasStaticHint={!!step.hintAr}
+            onUsed={(kind) => {
+              if (run.hintShown) return; // already counted, and a static hint stays open
+              if (kind === 'ai') setAiShown(true);
+              props.onHint();
+            }}
+          />
+        </Suspense>
+      ) : null}
+
+      {run.hintShown && step.hintAr && !aiShown ? (
         <aside className="flex animate-fade-up gap-3 rounded-2xl border border-info/30 bg-info-soft px-4 py-3 text-info">
           <svg
             viewBox="0 0 24 24"

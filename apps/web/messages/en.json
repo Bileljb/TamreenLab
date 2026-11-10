@@ -202,7 +202,16 @@
     "reviewCompleteTitle": "Well done! Review complete",
     "share": "Share your result",
     "shareCopied": "Link copied",
-    "shareTitle": "My result on TamreenLab"
+    "shareTitle": "My result on TamreenLab",
+    "aiExplain": "Explain my mistake",
+    "aiLoading": "Explaining…",
+    "aiLabel": "AI explanation",
+    "aiNote": "This explanation is written by AI and can be wrong. Using it counts as a hint.",
+    "aiHelpfulQuestion": "Was this helpful?",
+    "aiHelpful": "Helpful",
+    "aiNotHelpful": "Not helpful",
+    "aiThanks": "Thanks for your feedback.",
+    "aiUnavailable": "The AI explanation is not available right now. Check the message above and try again."
   },
   "feedback": {
     "WRONG_VALUE": "The result isn't right. Check the cells you used and try again.",
@@ -317,7 +326,7 @@
       "title": "Privacy policy",
       "description": "How TamreenLab handles your data.",
       "draft": "Draft: this page needs a legal review before launch.",
-      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nIf you switch on the weekly reminder, we send you one email a week and keep a record of when you agreed. We never send a reminder without your consent, and you can stop it from your settings or from the link in every email.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
+      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nIf you switch on the weekly reminder, we send you one email a week and keep a record of when you agreed. We never send a reminder without your consent, and you can stop it from your settings or from the link in every email.\n\nIf you press \"Explain my mistake\", the exercise and the formula you typed are sent to an AI provider (Groq) to write the explanation. We send no name, email or account details. We keep the explanation, so the same formula gets the same answer, and your helpful or not-helpful vote, without your name or IP address.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
     },
     "terms": {
       "title": "Terms of use",
