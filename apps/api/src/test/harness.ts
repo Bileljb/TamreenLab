@@ -21,6 +21,7 @@ export const config: AppConfig = {
   dayOffsetMinutes: 180,
   includeDrafts: true,
   cookieSecure: false,
+  trustProxy: 'loopback',
   rateLimits: { auth: 1000, attempts: 1000, general: 10_000, assistant: 1000 },
   siteUrl: 'https://tamreen.test',
   mailFrom: 'TamreenLab <noreply@tamreen.test>',

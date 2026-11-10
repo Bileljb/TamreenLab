@@ -27,5 +27,7 @@ export const errorHandler: ErrorRequestHandler = (err, req, res, _next) => {
     return;
   }
   req.log.error({ err }, 'unhandled error');
-  res.status(500).json(new HttpError(500, 'INTERNAL', 'Internal server error').toBody());
+  // The id lets a learner's report be matched to the log line.
+  const body = new HttpError(500, 'INTERNAL', 'Internal server error', { requestId: req.id });
+  res.status(500).json(body.toBody());
 };

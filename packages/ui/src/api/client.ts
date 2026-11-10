@@ -111,6 +111,19 @@ export const api = {
   leaderboard: (limit = 10) => send<Leaderboard>(`/leaderboard/daily?limit=${limit}`),
 };
 
+/** Sends an error caught by an error boundary to the API logs (ADR 013); never throws. */
+export function reportClientError(error: Error & { digest?: string }) {
+  void send<void>(
+    '/client-errors',
+    post({
+      message: error.message.slice(0, 500),
+      stack: error.stack?.slice(0, 4000),
+      digest: error.digest?.slice(0, 100),
+      path: window.location.pathname.slice(0, 300),
+    }),
+  ).catch(() => undefined);
+}
+
 /** Fired after the server awards points, so panels can refresh. */
 export const POINTS_EVENT = 'tamreen:points';
 export const announcePoints = () => window.dispatchEvent(new Event(POINTS_EVENT));

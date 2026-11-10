@@ -8,6 +8,14 @@ const EnvSchema = z
   .object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     PORT: z.coerce.number().int().positive().default(4000),
+    /** Only the web server talks to the API; set 0.0.0.0 only on a private network (ADR 013). */
+    HOST: z.string().min(1).default('127.0.0.1'),
+    /**
+     * Proxies in front of the web server that append the client address to X-Forwarded-For (a
+     * load balancer, a CDN). Next.js forwards the header without adding to it. Required in
+     * production: without it, client IPs are either shared or invented (ADR 013).
+     */
+    TRUST_PROXY_HOPS: z.coerce.number().int().min(1).max(5).optional(),
     DATABASE_URL: z.url(),
     LOG_LEVEL: z
       .enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'])
@@ -43,6 +51,13 @@ const EnvSchema = z
   .superRefine((env, ctx) => {
     if (env.NODE_ENV === 'production' && !env.JWT_SECRET) {
       ctx.addIssue({ code: 'custom', path: ['JWT_SECRET'], message: 'Required in production' });
+    }
+    if (env.NODE_ENV === 'production' && env.TRUST_PROXY_HOPS === undefined) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['TRUST_PROXY_HOPS'],
+        message: 'Required in production',
+      });
     }
   })
   .transform((env) => ({

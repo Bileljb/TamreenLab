@@ -18,6 +18,8 @@ export type AppConfig = {
   dayOffsetMinutes: number;
   includeDrafts: boolean;
   cookieSecure: boolean;
+  /** Express 'trust proxy': proxy hops that append the client IP, or 'loopback' in development. */
+  trustProxy: number | 'loopback';
   /** Requests allowed per window; tests raise them. */
   rateLimits: { auth: number; attempts: number; general: number; assistant: number };
   /** The public site address, for links in emails (no trailing slash). */
@@ -36,6 +38,7 @@ export function configFromEnv(env: Env): AppConfig {
     dayOffsetMinutes: env.DAY_UTC_OFFSET_MINUTES,
     includeDrafts: env.CONTENT_INCLUDE_DRAFTS,
     cookieSecure: env.COOKIE_SECURE,
+    trustProxy: env.TRUST_PROXY_HOPS ?? 'loopback',
     rateLimits: DEFAULT_RATE_LIMITS,
     siteUrl: env.PUBLIC_SITE_URL.replace(/\/+$/, ''),
     mailFrom: env.MAIL_FROM,

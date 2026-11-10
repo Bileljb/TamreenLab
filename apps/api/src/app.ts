@@ -8,12 +8,14 @@ import type { PrismaClient } from './generated/prisma/client';
 import type { AppConfig } from './config';
 import { createContext } from './context';
 import { HttpError } from './lib/errors';
-import { authenticate, requireJson } from './middleware/auth';
+import { requestId } from './lib/logger';
+import { authenticate, requireJson, requireSameSite } from './middleware/auth';
 import { errorHandler, notFound } from './middleware/errors';
 import { openApiDocument } from './openapi';
 import { assistantRouter } from './routes/assistant';
 import { attemptsRouter } from './routes/attempts';
 import { authRouter } from './routes/auth';
+import { clientErrorsRouter } from './routes/clientErrors';
 import { emailRouter } from './routes/email';
 import { eventsRouter } from './routes/events';
 import { healthRouter, type DbCheck } from './routes/health';
@@ -47,9 +49,19 @@ function limiter(limit: number, windowMs: number, key?: 'user'): RequestHandler 
 export function createApp({ logger, checkDb, db, config }: AppDeps) {
   const app = express();
   app.disable('x-powered-by');
-  app.set('trust proxy', 'loopback'); // requests arrive through the Next.js rewrite
+  // Requests arrive through the Next.js rewrite, which forwards X-Forwarded-For as it is (ADR 013).
+  app.set('trust proxy', config?.trustProxy ?? 'loopback');
   app.use(helmet());
-  app.use(pinoHttp({ logger }));
+  app.use(
+    pinoHttp({
+      logger,
+      genReqId: (req, res) => {
+        const id = requestId(req.headers['x-request-id']);
+        res.setHeader('X-Request-Id', id);
+        return id;
+      },
+    }),
+  );
   app.use(express.json({ limit: '100kb' }));
   app.use(cookieParser());
 
@@ -64,13 +76,21 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
     // Before the JSON-only guard: mail apps post one-click unsubscribes as forms (RFC 8058).
     app.use('/api/email', limiter(rateLimits.auth, 15 * 60_000));
     app.use('/api', emailRouter(ctx));
-    app.use('/api', requireJson, authenticate(ctx), limiter(rateLimits.general, 60_000));
+    app.use(
+      '/api',
+      requireJson,
+      requireSameSite(config.siteUrl),
+      authenticate(ctx),
+      limiter(rateLimits.general, 60_000),
+    );
     // The strict limit guards password guessing only; refresh and logout use the general limit.
     const authLimit = limiter(rateLimits.auth, 15 * 60_000);
     app.use('/api/auth/login', authLimit);
     app.use('/api/auth/register', authLimit);
     app.use('/api/attempts', limiter(rateLimits.attempts, 60_000, 'user'));
     app.use('/api/assistant', limiter(rateLimits.assistant, 60_000, 'user'));
+    app.use('/api/client-errors', limiter(10, 60_000));
+    app.use('/api', clientErrorsRouter());
     for (const router of [
       authRouter,
       meRouter,

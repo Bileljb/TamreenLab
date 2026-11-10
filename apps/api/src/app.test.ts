@@ -72,6 +72,14 @@ describe('error shape', () => {
 
     const boomRes = await request(app).get('/boom');
     expect(boomRes.status).toBe(500);
-    expect(boomRes.body).toEqual({ error: { code: 'INTERNAL', message: 'Internal server error' } });
+    // No detail of the error itself; only the request id, to match a report to the log line.
+    expect(boomRes.body).toEqual({
+      error: {
+        code: 'INTERNAL',
+        message: 'Internal server error',
+        details: { requestId: expect.anything() },
+      },
+    });
+    expect(JSON.stringify(boomRes.body)).not.toContain('secret detail');
   });
 });

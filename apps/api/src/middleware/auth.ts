@@ -38,6 +38,26 @@ export function userId(req: Request): string {
   return req.userId;
 }
 
+const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+
+/**
+ * CSRF, second layer (ADR 013): a browser names the page that sent a request (`Origin`, and
+ * `Sec-Fetch-Site` in current browsers). State changes from any other site are refused. Requests
+ * without either header come from non-browser clients, which carry no victim's cookies.
+ */
+export function requireSameSite(siteUrl: string): RequestHandler {
+  const site = new URL(siteUrl).origin;
+  return (req, _res, next) => {
+    if (SAFE_METHODS.has(req.method)) return next();
+    const origin = req.headers.origin;
+    const fetchSite = req.headers['sec-fetch-site'];
+    if ((origin && origin !== site) || fetchSite === 'cross-site') {
+      throw new HttpError(403, 'CROSS_SITE', 'Cross-site requests are not allowed');
+    }
+    next();
+  };
+}
+
 /**
  * State-changing requests must be JSON. A cross-site HTML form cannot send that content type
  * without a CORS preflight, which this API never allows: a basic CSRF guard (Phase 9 hardens it).

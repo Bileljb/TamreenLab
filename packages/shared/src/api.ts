@@ -132,3 +132,20 @@ export const LeaderboardSchema = z.object({
   entries: z.array(LeaderboardEntrySchema),
 });
 export type Leaderboard = z.infer<typeof LeaderboardSchema>;
+
+/**
+ * `POST /client-errors`: an error caught by a page's error boundary (ADR 013). The path has no
+ * query string, so links that carry tokens never reach the logs.
+ */
+export const ClientErrorReportSchema = z
+  .object({
+    message: z.string().max(500),
+    stack: z.string().max(4000).optional(),
+    digest: z.string().max(100).optional(),
+    path: z
+      .string()
+      .max(300)
+      .regex(/^\/[^?#]*$/),
+  })
+  .strict();
+export type ClientErrorReport = z.infer<typeof ClientErrorReportSchema>;

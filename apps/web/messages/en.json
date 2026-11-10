@@ -409,5 +409,11 @@
     "unsubscribedHelp": "We will not send you more reminders. You can switch them back on in your settings.",
     "unsubscribeInvalid": "This link is not valid or has expired. You can stop reminders in your settings once signed in.",
     "backHome": "Back to the home page"
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "body": "We could not show this page. The error was reported to us automatically, and your progress is saved.",
+    "retry": "Try again",
+    "home": "Home page"
   }
 }

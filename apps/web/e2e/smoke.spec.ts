@@ -35,3 +35,31 @@ test('no horizontal scroll', async ({ page }) => {
     expect(overflow, path).toBeLessThanOrEqual(0);
   }
 });
+
+test('pages send security headers, and nothing breaks the content security policy', async ({
+  page,
+}) => {
+  const violations: string[] = [];
+  page.on('console', (msg) => {
+    if (/Content.Security.Policy|Refused to/i.test(msg.text())) violations.push(msg.text());
+  });
+  const res = await page.goto('/ar/lessons/aggregation/sum-basics');
+  const headers = res!.headers();
+  expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
+  expect(headers['x-frame-options']).toBe('DENY');
+  expect(headers['x-content-type-options']).toBe('nosniff');
+
+  // Play a step, so the player's scripts, styles and API calls all run under the policy.
+  await page.locator('[data-address="B7"]').click();
+  await page.keyboard.type('=B2+B3+B4+B5+B6');
+  await page.keyboard.press('Enter');
+  await expect(page.locator('[data-feedback="correct"]')).toBeVisible();
+  for (const path of ['/en', '/fr/functions/vlookup']) await page.goto(path);
+  expect(violations).toEqual([]);
+});
+
+test('unknown top-level paths are a 404, not a server error', async ({ request }) => {
+  expect((await request.get('/favicon.ico')).status()).toBe(404);
+  expect((await request.get('/xx')).status()).toBe(404);
+  expect((await request.get('/icon.svg')).status()).toBe(200);
+});

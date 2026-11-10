@@ -28,6 +28,9 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+// Only the three locales exist: anything else (such as /favicon.ico) is a 404, not a page error.
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }

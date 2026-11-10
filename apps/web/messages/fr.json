@@ -409,5 +409,11 @@
     "unsubscribedHelp": "Nous ne vous enverrons plus de rappels. Vous pouvez les réactiver dans vos paramètres.",
     "unsubscribeInvalid": "Ce lien n'est pas valide ou a expiré. Vous pouvez arrêter les rappels dans vos paramètres une fois connecté.",
     "backHome": "Retour à l'accueil"
+  },
+  "errors": {
+    "title": "Une erreur est survenue",
+    "body": "Nous n’avons pas pu afficher cette page. L’erreur nous a été signalée automatiquement, et votre progression est enregistrée.",
+    "retry": "Réessayer",
+    "home": "Page d’accueil"
   }
 }
