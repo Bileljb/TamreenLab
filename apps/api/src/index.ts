@@ -5,7 +5,7 @@ import { createApp } from './app';
 import { configFromEnv } from './config';
 import { loadEnv } from './lib/env';
 import { createLogger } from './lib/logger';
-import { LogMailer } from './lib/mailer';
+import { createMailer } from './lib/mailer';
 import { prisma } from './lib/prisma';
 
 const env = loadEnv();
@@ -19,8 +19,7 @@ const app = createApp({
   logger,
   db: prisma,
   config: configFromEnv(env),
-  // Only the log transport exists until the developer picks a provider (ADR 011).
-  mail: { mailer: new LogMailer(logger), copy },
+  mail: { mailer: createMailer(env, logger), copy },
   checkDb: async () => {
     await prisma.$queryRaw`SELECT 1`;
   },

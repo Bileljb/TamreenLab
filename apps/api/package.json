@@ -21,7 +21,8 @@
     "assistant:trial": "node --env-file-if-exists=.env --import tsx scripts/assistant-trial.ts",
     "db:backup": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts backup",
     "db:restore-drill": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts restore-drill",
-    "load:test": "node --env-file-if-exists=.env --import tsx scripts/load-test.ts"
+    "load:test": "node --env-file-if-exists=.env --import tsx scripts/load-test.ts",
+    "mail:test": "node --env-file-if-exists=.env --import tsx scripts/mail-test.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",
@@ -35,6 +36,7 @@
     "express-rate-limit": "8.7.2",
     "helmet": "8.3.0",
     "jose": "6.2.14",
+    "nodemailer": "10.2.1",
     "pino": "10.4.0",
     "pino-http": "11.0.0",
     "zod": "4.6.7"
@@ -43,6 +45,7 @@
     "@types/cookie-parser": "1.4.10",
     "@types/express": "5.0.6",
     "@types/node": "26.6.6",
+    "@types/nodemailer": "8.0.2",
     "@types/supertest": "7.2.1",
     "dotenv": "18.0.9",
     "esbuild": "0.28.2",

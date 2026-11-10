@@ -47,6 +47,12 @@ Demonstrated on 2026-11-10: 16 tables and 1,609 rows matched in 1.3 s, and a man
 4. Start the API. Check `GET /api/health`, then sign in with a test account.
 5. Keep the old database until the restore is confirmed.
 
+## Email
+
+- Brevo over SMTP (ADR 014). `pnpm --filter @tamreen/api mail:test you@example.com` checks the settings.
+- Run `pnpm reminders:send` **daily**. It sends at most `MAIL_DAILY_LIMIT` emails a day (password resets included) and leaves the rest for the next day; nobody gets two reminders in a week.
+- Watch Brevo's dashboard for bounces and spam complaints; a high rate harms delivery for everyone.
+
 ## Monitoring
 
 - **Uptime:**

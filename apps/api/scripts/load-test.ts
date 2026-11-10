@@ -131,6 +131,7 @@ try {
       rateLimits: { auth: 1e9, attempts: 1e9, general: 1e9, assistant: 1e9 },
       siteUrl: 'http://localhost:3000',
       mailFrom: 'load <load@test>',
+      mailDailyLimit: 1000,
       assistant: {
         model: null,
         timeoutMs: 1000,

@@ -29,3 +29,38 @@ describe('loadEnv in production', () => {
     expect(loadEnv({ ...prod, TRUST_PROXY_HOPS: '1' }).HOST).toBe('127.0.0.1');
   });
 });
+
+describe('loadEnv for email', () => {
+  const base = { DATABASE_URL: 'postgresql://u:p@localhost:5432/db' };
+
+  it('logs instead of sending by default, with a daily limit under the free plan', () => {
+    const env = loadEnv(base);
+    expect(env.MAIL_TRANSPORT).toBe('log');
+    expect(env.MAIL_DAILY_LIMIT).toBe(280);
+  });
+
+  it('needs the SMTP host, user and password to send', () => {
+    expect(() => loadEnv({ ...base, MAIL_TRANSPORT: 'smtp' })).toThrow(/SMTP_USER/);
+    const env = loadEnv({
+      ...base,
+      MAIL_TRANSPORT: 'smtp',
+      SMTP_HOST: 'smtp-relay.brevo.com',
+      SMTP_USER: 'user@example.com',
+      SMTP_PASS: 'secret',
+    });
+    expect(env.SMTP_PORT).toBe(587);
+  });
+});
+
+describe('loadEnv with empty values', () => {
+  it('treats KEY= as not set, as .env files often leave it', () => {
+    const env = loadEnv({
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      SMTP_USER: '',
+      SMTP_PASS: '',
+      GROQ_API_KEY: '',
+    });
+    expect(env.SMTP_USER).toBeUndefined();
+    expect(env.GROQ_API_KEY).toBeUndefined();
+  });
+});

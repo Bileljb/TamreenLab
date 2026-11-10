@@ -217,7 +217,7 @@ describe('weekly reminders', () => {
     const ctx = createContext(db, config);
     const mailer = new LogMailer();
     const first = await sendWeeklyReminders(ctx, mailer, await content());
-    expect(first).toEqual({ periodKey: '2026-W44', sent: 1, skipped: 0 });
+    expect(first).toEqual({ periodKey: '2026-W44', sent: 1, skipped: 0, deferred: 0 });
     expect(mailer.sent.map((m) => m.to)).toEqual([keen.res.body.email]);
     expect(mailer.sent.map((m) => m.to)).not.toContain(quiet.res.body.email);
 
@@ -256,5 +256,41 @@ describe('weekly reminders', () => {
     await sendWeeklyReminders(createContext(db, config), mailer, await content());
     expect(mailer.sent[0]!.html).toContain('Ali &#60;b&#62;');
     expect(mailer.sent[0]!.html).toContain('dir="rtl"');
+  });
+
+  it('stops at the daily sending limit, counting password resets, and finishes the next day', async () => {
+    const names = ['Lina', 'Sami', 'Nour'];
+    for (const name of names) {
+      const { agent } = await signUp(makeApp(), name);
+      await agent.patch('/api/me/settings').send({ emailOptIn: true });
+    }
+    // One password-reset email already went out today.
+    const app = makeApp();
+    await request(app).post('/api/auth/password/forgot').send({ email: 'learner-any@example.com' });
+    const { user } = await signUp(app, 'Huda');
+    await request(app).post('/api/auth/password/forgot').send({ email: user.email });
+
+    const ctx = createContext(db, { ...config, mailDailyLimit: 3 });
+    const mailer = new LogMailer();
+    expect(await sendWeeklyReminders(ctx, mailer, await content())).toMatchObject({
+      sent: 2,
+      deferred: 1,
+    });
+
+    // The same day again: still nothing left in today's allowance.
+    expect(await sendWeeklyReminders(ctx, mailer, await content())).toMatchObject({
+      sent: 0,
+      skipped: 2,
+      deferred: 1,
+    });
+
+    // The next day, the learner left over gets this week's reminder, and nobody gets two.
+    clock.now = new Date('2026-10-31T09:00:00Z');
+    expect(await sendWeeklyReminders(ctx, mailer, await content())).toMatchObject({
+      sent: 1,
+      skipped: 2,
+      deferred: 0,
+    });
+    expect(new Set(mailer.sent.map((m) => m.to)).size).toBe(3);
   });
 });

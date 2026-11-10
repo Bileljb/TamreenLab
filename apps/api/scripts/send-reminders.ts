@@ -1,5 +1,5 @@
-// pnpm reminders:send — this week's reminder to every learner who opted in (ADR 011). Safe to run
-// more than once a week: each learner gets at most one per ISO week. Schedule it weekly on the host.
+// pnpm reminders:send — this week's reminder to every learner who opted in (ADR 011, ADR 014). Run it
+// daily: each run stops at MAIL_DAILY_LIMIT, and each learner gets at most one per ISO week.
 import path from 'node:path';
 import { pino } from 'pino';
 import { CONTENT_LOCALES, type ContentLocale, type EmailCopy } from '@tamreen/shared';
@@ -7,7 +7,7 @@ import { curriculumIn, loadCurriculum, loadEmailCopy } from '@tamreen/content';
 import { configFromEnv } from '../src/config';
 import { createContext } from '../src/context';
 import { loadEnv } from '../src/lib/env';
-import { LogMailer } from '../src/lib/mailer';
+import { createMailer } from '../src/lib/mailer';
 import { createPrisma } from '../src/lib/prisma';
 import { sendWeeklyReminders } from '../src/services/reminders';
 
@@ -26,7 +26,7 @@ try {
     }
   }
   const ctx = createContext(db, configFromEnv(env));
-  const result = await sendWeeklyReminders(ctx, new LogMailer(logger), {
+  const result = await sendWeeklyReminders(ctx, createMailer(env, logger), {
     copy,
     lessonTitle: (locale, slug) => titles.get(`${locale}:${slug}`),
   });

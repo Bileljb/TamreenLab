@@ -25,6 +25,8 @@ export type AppConfig = {
   /** The public site address, for links in emails (no trailing slash). */
   siteUrl: string;
   mailFrom: string;
+  /** Emails a day the provider allows; reminders stop here (ADR 014). */
+  mailDailyLimit: number;
   assistant: AssistantConfig;
   /** The clock, injectable for tests. */
   now: () => Date;
@@ -42,6 +44,7 @@ export function configFromEnv(env: Env): AppConfig {
     rateLimits: DEFAULT_RATE_LIMITS,
     siteUrl: env.PUBLIC_SITE_URL.replace(/\/+$/, ''),
     mailFrom: env.MAIL_FROM,
+    mailDailyLimit: env.MAIL_DAILY_LIMIT,
     assistant: {
       model: env.GROQ_API_KEY ? new GroqModel(env.GROQ_API_KEY, env.ASSISTANT_MODEL) : null,
       timeoutMs: env.ASSISTANT_TIMEOUT_MS,

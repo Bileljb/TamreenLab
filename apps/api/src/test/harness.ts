@@ -28,6 +28,7 @@ export const config: AppConfig = {
   rateLimits: { auth: 1000, attempts: 1000, general: 10_000, assistant: 1000 },
   siteUrl: 'https://tamreen.test',
   mailFrom: 'TamreenLab <noreply@tamreen.test>',
+  mailDailyLimit: 1000,
   assistant: {
     model: null,
     timeoutMs: 3500,

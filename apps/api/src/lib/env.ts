@@ -29,8 +29,15 @@ const EnvSchema = z
     COOKIE_SECURE: bool.optional(),
     /** The public site address, for links in emails. */
     PUBLIC_SITE_URL: z.url().default('http://localhost:3000'),
-    /** Email transport. Only `log` exists until the developer picks a provider (ADR 011). */
-    MAIL_TRANSPORT: z.enum(['log']).default('log'),
+    /** Email transport: `log` writes emails to the logs, `smtp` sends them (ADR 014). */
+    MAIL_TRANSPORT: z.enum(['log', 'smtp']).default('log'),
+    /** Any SMTP provider; Brevo for now (smtp-relay.brevo.com, port 587). */
+    SMTP_HOST: z.string().min(1).optional(),
+    SMTP_PORT: z.coerce.number().int().positive().default(587),
+    SMTP_USER: z.string().min(1).optional(),
+    SMTP_PASS: z.string().min(1).optional(),
+    /** Emails a day the provider allows, less a margin; reminders stop here (ADR 014). */
+    MAIL_DAILY_LIMIT: z.coerce.number().int().positive().default(280),
     MAIL_FROM: z.string().min(3).default('TamreenLab <noreply@localhost>'),
     /** The AI formula assistant (ADR 012). Without a key it is off and the static hint shows. */
     GROQ_API_KEY: z.string().min(1).optional(),
@@ -52,6 +59,12 @@ const EnvSchema = z
     if (env.NODE_ENV === 'production' && !env.JWT_SECRET) {
       ctx.addIssue({ code: 'custom', path: ['JWT_SECRET'], message: 'Required in production' });
     }
+    if (env.MAIL_TRANSPORT === 'smtp') {
+      for (const key of ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'] as const) {
+        if (!env[key])
+          ctx.addIssue({ code: 'custom', path: [key], message: 'Required to send email' });
+      }
+    }
     if (env.NODE_ENV === 'production' && env.TRUST_PROXY_HOPS === undefined) {
       ctx.addIssue({
         code: 'custom',
@@ -70,7 +83,9 @@ const EnvSchema = z
 export type Env = z.infer<typeof EnvSchema>;
 
 export function loadEnv(source: NodeJS.ProcessEnv = process.env): Env {
-  const result = EnvSchema.safeParse(source);
+  // `KEY=` in a .env file means "not set", not an empty value.
+  const set = Object.fromEntries(Object.entries(source).filter(([, value]) => value !== ''));
+  const result = EnvSchema.safeParse(set);
   if (!result.success) {
     throw new Error(`Invalid environment:\n${z.prettifyError(result.error)}`);
   }

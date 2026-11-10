@@ -25,6 +25,10 @@ const escapeHtml = (text: string) => text.replace(/[&<>"']/g, (c) => `&#${c.char
  * Only `emailOptIn = true` is ever selected, and the (user, kind, week) row is written before
  * sending, so a second run in the same week sends nothing. A failed send removes the row so the
  * next run retries.
+ *
+ * The provider allows `mailDailyLimit` emails a day (ADR 014), password resets included. A run
+ * stops there; learners left over are `deferred` and get this week's reminder on the next day's
+ * run, so the host runs this daily.
  */
 export async function sendWeeklyReminders(ctx: Ctx, mailer: Mailer, content: ReminderContent) {
   const today = ctx.today();
@@ -35,11 +39,25 @@ export async function sendWeeklyReminders(ctx: Ctx, mailer: Mailer, content: Rem
     orderBy: { createdAt: 'asc' },
   });
 
+  const now = ctx.config.now();
+  let used = await emailsSentToday(ctx, now);
   let sent = 0;
   let skipped = 0;
+  let deferred = 0;
   for (const user of users) {
+    const logged = await ctx.db.emailLog.findUnique({
+      where: { userId_kind_periodKey: { userId: user.id, kind: WEEKLY_REMINDER, periodKey } },
+    });
+    if (logged) {
+      skipped++;
+      continue;
+    }
+    if (used >= ctx.config.mailDailyLimit) {
+      deferred++;
+      continue;
+    }
     const { count } = await ctx.db.emailLog.createMany({
-      data: [{ userId: user.id, kind: WEEKLY_REMINDER, periodKey }],
+      data: [{ userId: user.id, kind: WEEKLY_REMINDER, periodKey, sentAt: now }],
       skipDuplicates: true,
     });
     if (count === 0) {
@@ -73,6 +91,7 @@ export async function sendWeeklyReminders(ctx: Ctx, mailer: Mailer, content: Rem
     try {
       await mailer.send(email);
       sent++;
+      used++;
     } catch (e) {
       await ctx.db.emailLog.deleteMany({
         where: { userId: user.id, kind: WEEKLY_REMINDER, periodKey },
@@ -80,7 +99,17 @@ export async function sendWeeklyReminders(ctx: Ctx, mailer: Mailer, content: Rem
       throw e;
     }
   }
-  return { periodKey, sent, skipped };
+  return { periodKey, sent, skipped, deferred };
+}
+
+/** Emails sent since midnight UTC, when providers reset their daily allowance. */
+async function emailsSentToday(ctx: Ctx, now: Date): Promise<number> {
+  const midnight = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const [reminders, resets] = await Promise.all([
+    ctx.db.emailLog.count({ where: { sentAt: { gte: midnight } } }),
+    ctx.db.passwordResetToken.count({ where: { createdAt: { gte: midnight } } }),
+  ]);
+  return reminders + resets;
 }
 
 type WeeklyInput = {

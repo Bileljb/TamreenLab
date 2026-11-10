@@ -75,5 +75,5 @@
 
 - **D5: consent model.** Analytics are opt-out today (ADR 007). Under Saudi PDPL or UAE PDPL readings, or if any EU visitors matter, opt-in is the safer default; it is a one-line change in `packages/ui/src/consent/consent.ts`.
 - **Legal review** of the privacy policy and terms (they are marked as drafts).
-- **Email provider (ADR 011).** Until there is one, password reset and reminders are logged, not sent.
+- **Email sending (ADR 014).** Brevo over SMTP is built; until the domain is verified and `MAIL_TRANSPORT=smtp` is set, password reset and reminders are only logged.
 - **Hosting.** Set `TRUST_PROXY_HOPS` and `HOST` to match the proxy layout, and keep the API port private. Also set up TLS, scheduled backups with an off-site copy, uptime checks and log retention (see `docs/OPERATIONS.md`).
