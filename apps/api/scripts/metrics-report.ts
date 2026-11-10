@@ -5,7 +5,7 @@ import { loadCurriculum } from '@tamreen/content';
 import { createPrisma } from '../src/lib/prisma';
 import { dayKey, keyOfDate } from '../src/lib/day';
 import { loadEnv } from '../src/lib/env';
-import { computeMetrics } from '../src/lib/metrics';
+import { assistantMetrics, computeMetrics } from '../src/lib/metrics';
 
 const env = loadEnv();
 const days = Number(process.argv.find((a) => a.startsWith('--days='))?.split('=')[1] ?? 30);
@@ -15,12 +15,20 @@ const pct = (r: number | null) => (r === null ? '—' : `${(r * 100).toFixed(1)}
 
 const db = createPrisma();
 try {
-  const [rows, curriculum] = await Promise.all([
+  const [rows, curriculum, calls, votes] = await Promise.all([
     db.analyticsEvent.findMany({
       where: { createdAt: { gte: since } },
       orderBy: { createdAt: 'asc' },
     }),
     loadCurriculum(path.resolve(import.meta.dirname, '../../../content')),
+    db.assistantCall.findMany({
+      where: { createdAt: { gte: since } },
+      select: { outcome: true, calledModel: true, latencyMs: true, costMicros: true },
+    }),
+    db.assistantFeedback.findMany({
+      where: { updatedAt: { gte: since } },
+      select: { helpful: true },
+    }),
   ]);
   const lessons = curriculum.lessons.map((l) => ({
     slug: l.slug,
@@ -51,6 +59,15 @@ try {
       `  ${lesson.lesson.padEnd(24)} starts ${String(lesson.starts).padStart(4)}  ${steps}`,
     );
   }
+
+  const ai = assistantMetrics(calls, votes);
+  const outcomes = Object.entries(ai.outcomes).map(([o, n]) => `${o} ${n}`);
+  const p95 = ai.p95LatencyMs === null ? '—' : `${ai.p95LatencyMs} ms`;
+  console.log('\nAI formula assistant:');
+  console.log(`  Requests:                  ${ai.requests}  (${outcomes.join(', ') || '-'})`);
+  console.log(`  p95 wait for the model:    ${p95}  (target under 4000 ms)`);
+  console.log(`  Spend at configured prices: $${ai.spendUsd.toFixed(4)}`);
+  console.log(`  Helpful votes:             ${pct(ai.helpfulRate)}  (${votes.length} votes)`);
 } finally {
   await db.$disconnect();
 }

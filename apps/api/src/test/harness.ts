@@ -21,9 +21,18 @@ export const config: AppConfig = {
   dayOffsetMinutes: 180,
   includeDrafts: true,
   cookieSecure: false,
-  rateLimits: { auth: 1000, attempts: 1000, general: 10_000 },
+  rateLimits: { auth: 1000, attempts: 1000, general: 10_000, assistant: 1000 },
   siteUrl: 'https://tamreen.test',
   mailFrom: 'TamreenLab <noreply@tamreen.test>',
+  assistant: {
+    model: null,
+    timeoutMs: 3500,
+    userDaily: 20,
+    ipDaily: 40,
+    dailyTokens: 200_000,
+    monthlyBudgetMicros: 2_000_000,
+    prices: { input: 0.6, output: 1.2 },
+  },
   now: () => clock.now,
 };
 

@@ -34,7 +34,9 @@ describe('auth', () => {
   });
 
   it('does not count refreshes against the sign-in rate limit', async () => {
-    const app = makeApp({ rateLimits: { auth: 1, attempts: 1000, general: 1000 } });
+    const app = makeApp({
+      rateLimits: { auth: 1, attempts: 1000, general: 1000, assistant: 1000 },
+    });
     for (let i = 0; i < 3; i++) {
       expect((await request(app).post('/api/auth/refresh').send({})).status).toBe(401);
     }
@@ -149,7 +151,9 @@ describe('auth', () => {
   });
 
   it('rate-limits sign-in attempts', async () => {
-    const app = makeApp({ rateLimits: { auth: 2, attempts: 1000, general: 1000 } });
+    const app = makeApp({
+      rateLimits: { auth: 2, attempts: 1000, general: 1000, assistant: 1000 },
+    });
     const login = () =>
       request(app).post('/api/auth/login').send({ email: 'a@b.co', password: 'x' });
     await login();

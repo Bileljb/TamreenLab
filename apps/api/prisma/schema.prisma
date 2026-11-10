@@ -99,6 +99,7 @@ model Step {
   localesJson Json         @default("{}")
   attempts    Attempt[]
   reviews     ReviewItem[]
+  hints       AssistantHint[]
 
   @@unique([lessonId, order])
   @@unique([lessonId, slug])
@@ -212,4 +213,57 @@ model AnalyticsEvent {
 
   @@index([name, day])
   @@index([anonId])
+}
+
+// AI formula assistant (ADR 012). Cached explanations, one per (step, language, formula). Content
+// sync drops a lesson's cached explanations whenever it rewrites that lesson's steps.
+model AssistantHint {
+  id         String              @id @default(cuid())
+  stepId     String
+  locale     String
+  /// The formula in the checker's canonical spelling (formulaKey).
+  formulaKey String
+  code       String
+  text       String
+  model      String
+  createdAt  DateTime            @default(now())
+  step       Step                @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  feedback   AssistantFeedback[]
+
+  @@unique([stepId, locale, formulaKey])
+}
+
+// One row per hint request, for the daily quotas, the token cap, the spend cap and latency. No user
+// id and no IP address: both are keyed with an HMAC, so the rows outlive a deleted account without
+// pointing to anyone.
+model AssistantCall {
+  id           String   @id @default(cuid())
+  day          DateTime @db.Date
+  userKey      String?
+  ipKey        String
+  /// ai, cached, or a fallback reason (QUOTA, BUDGET, UNAVAILABLE, UNSAFE, DISABLED).
+  outcome      String
+  /// True when the model was called (quotas count these; cache hits are free).
+  calledModel  Boolean
+  inputTokens  Int      @default(0)
+  outputTokens Int      @default(0)
+  costMicros   Int      @default(0)
+  latencyMs    Int
+  createdAt    DateTime @default(now())
+
+  @@index([day, userKey])
+  @@index([day, ipKey])
+  @@index([createdAt])
+}
+
+// Helpful / not helpful, kept for review. One vote per hint and voter (an HMAC of the user or IP).
+model AssistantFeedback {
+  hintId    String
+  voter     String
+  helpful   Boolean
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  hint      AssistantHint @relation(fields: [hintId], references: [id], onDelete: Cascade)
+
+  @@id([hintId, voter])
 }

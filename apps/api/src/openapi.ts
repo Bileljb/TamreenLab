@@ -1,5 +1,8 @@
 import { z } from 'zod';
 import {
+  AssistantFeedbackRequestSchema,
+  AssistantHintRequestSchema,
+  AssistantHintResponseSchema,
   AttemptRequestSchema,
   AttemptResponseSchema,
   LeaderboardSchema,
@@ -120,6 +123,20 @@ const operations: Operation[] = [
     path: '/leaderboard/daily',
     summary: "Today's top learners (?limit=1..50)",
     response: LeaderboardSchema,
+  },
+  {
+    method: 'post',
+    path: '/assistant/hint',
+    summary: 'Explain a wrong formula with AI, or say why the static hint applies',
+    body: AssistantHintRequestSchema,
+    response: AssistantHintResponseSchema,
+  },
+  {
+    method: 'post',
+    path: '/assistant/hints/{id}/feedback',
+    summary: 'Rate an AI explanation as helpful or not',
+    body: AssistantFeedbackRequestSchema,
+    status: 204,
   },
 ];
 

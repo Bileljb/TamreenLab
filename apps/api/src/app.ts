@@ -11,6 +11,7 @@ import { HttpError } from './lib/errors';
 import { authenticate, requireJson } from './middleware/auth';
 import { errorHandler, notFound } from './middleware/errors';
 import { openApiDocument } from './openapi';
+import { assistantRouter } from './routes/assistant';
 import { attemptsRouter } from './routes/attempts';
 import { authRouter } from './routes/auth';
 import { emailRouter } from './routes/email';
@@ -69,11 +70,13 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
     app.use('/api/auth/login', authLimit);
     app.use('/api/auth/register', authLimit);
     app.use('/api/attempts', limiter(rateLimits.attempts, 60_000, 'user'));
+    app.use('/api/assistant', limiter(rateLimits.assistant, 60_000, 'user'));
     for (const router of [
       authRouter,
       meRouter,
       lessonsRouter,
       attemptsRouter,
+      assistantRouter,
       progressRouter,
       leaderboardRouter,
       eventsRouter,

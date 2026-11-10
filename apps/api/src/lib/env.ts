@@ -24,6 +24,21 @@ const EnvSchema = z
     /** Email transport. Only `log` exists until the developer picks a provider (ADR 011). */
     MAIL_TRANSPORT: z.enum(['log']).default('log'),
     MAIL_FROM: z.string().min(3).default('TamreenLab <noreply@localhost>'),
+    /** The AI formula assistant (ADR 012). Without a key it is off and the static hint shows. */
+    GROQ_API_KEY: z.string().min(1).optional(),
+    ASSISTANT_MODEL: z.string().min(1).default('qwen/qwen3.8-27b'),
+    /** The model gets this long; then the static hint shows. Keeps p95 under 4 s. */
+    ASSISTANT_TIMEOUT_MS: z.coerce.number().int().min(500).max(10_000).default(3500),
+    /** Model calls per day; cached explanations do not count. */
+    ASSISTANT_USER_DAILY: z.coerce.number().int().nonnegative().default(20),
+    ASSISTANT_IP_DAILY: z.coerce.number().int().nonnegative().default(40),
+    /** All tokens per day, under the provider's free-tier limit. */
+    ASSISTANT_DAILY_TOKENS: z.coerce.number().int().nonnegative().default(200_000),
+    /** The spend cap for a calendar month (UTC), at the prices below. */
+    ASSISTANT_MONTHLY_BUDGET_USD: z.coerce.number().nonnegative().default(2),
+    /** US dollars per million tokens: an upper estimate; check the provider's price list. */
+    ASSISTANT_PRICE_INPUT_PER_M: z.coerce.number().nonnegative().default(0.6),
+    ASSISTANT_PRICE_OUTPUT_PER_M: z.coerce.number().nonnegative().default(1.2),
   })
   .superRefine((env, ctx) => {
     if (env.NODE_ENV === 'production' && !env.JWT_SECRET) {

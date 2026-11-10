@@ -121,6 +121,8 @@ async function apply(tx: Tx, plan: SyncPlan, desired: ReturnType<typeof desiredS
         update: data,
       });
     }
+    // Cached AI explanations quote the old prompt and solution (ADR 012).
+    await tx.assistantHint.deleteMany({ where: { step: { lessonId } } });
   }
 
   for (const op of plan.ops) {

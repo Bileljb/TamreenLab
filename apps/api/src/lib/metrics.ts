@@ -133,3 +133,40 @@ export function computeMetrics(
     dropOff,
   };
 }
+
+export type AssistantCallRow = {
+  outcome: string;
+  calledModel: boolean;
+  latencyMs: number;
+  costMicros: number;
+};
+
+export type AssistantMetrics = {
+  requests: number;
+  /** ai, cached, or the fallback reason. */
+  outcomes: Record<string, number>;
+  /** Nearest-rank p95 of requests that waited for the model (PLAN Phase 8: under 4 s). */
+  p95LatencyMs: number | null;
+  spendUsd: number;
+  helpfulRate: number | null;
+};
+
+/** The AI assistant's health for the report (ADR 012). */
+export function assistantMetrics(
+  calls: AssistantCallRow[],
+  votes: { helpful: boolean }[],
+): AssistantMetrics {
+  const outcomes: Record<string, number> = {};
+  for (const c of calls) outcomes[c.outcome] = (outcomes[c.outcome] ?? 0) + 1;
+  const waits = calls
+    .filter((c) => c.calledModel)
+    .map((c) => c.latencyMs)
+    .sort((a, b) => a - b);
+  return {
+    requests: calls.length,
+    outcomes,
+    p95LatencyMs: waits.length ? waits[Math.ceil(0.95 * waits.length) - 1]! : null,
+    spendUsd: calls.reduce((sum, c) => sum + c.costMicros, 0) / 1_000_000,
+    helpfulRate: rate(votes.filter((v) => v.helpful).length, votes.length),
+  };
+}

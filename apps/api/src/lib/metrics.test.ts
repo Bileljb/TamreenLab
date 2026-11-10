@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { computeMetrics, type EventRow } from './metrics';
+import { assistantMetrics, computeMetrics, type EventRow } from './metrics';
 
 const lessons = [
   { slug: 'cells', steps: ['a', 'b', 'c'] },
@@ -75,5 +75,39 @@ describe('computeMetrics', () => {
     expect(empty.sevenDayReturn.rate).toBeNull();
     expect(empty.medianStepsPerSession).toBeNull();
     expect(computeMetrics(events.slice(0, 2), lessons, '2026-10-30').medianStepsPerSession).toBe(1);
+  });
+});
+
+describe('assistantMetrics', () => {
+  const call = (outcome: string, latencyMs: number, costMicros = 0) => ({
+    outcome,
+    calledModel: outcome !== 'cached' && outcome !== 'QUOTA',
+    latencyMs,
+    costMicros,
+  });
+
+  it('reports outcomes, p95 latency of model calls, spend and the helpful rate', () => {
+    const calls = [
+      ...Array.from({ length: 19 }, (_, i) => call('ai', 200 + i * 10, 150)),
+      call('ai', 3000, 150),
+      call('cached', 5),
+      call('QUOTA', 2),
+    ];
+    const m = assistantMetrics(calls, [{ helpful: true }, { helpful: true }, { helpful: false }]);
+    expect(m.requests).toBe(22);
+    expect(m.outcomes).toEqual({ ai: 20, cached: 1, QUOTA: 1 });
+    expect(m.p95LatencyMs).toBe(380);
+    expect(m.spendUsd).toBeCloseTo(0.003);
+    expect(m.helpfulRate).toBeCloseTo(2 / 3);
+  });
+
+  it('handles no requests', () => {
+    expect(assistantMetrics([], [])).toEqual({
+      requests: 0,
+      outcomes: {},
+      p95LatencyMs: null,
+      spendUsd: 0,
+      helpfulRate: null,
+    });
   });
 });

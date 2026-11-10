@@ -31,3 +31,4 @@ export * from './functions';
 export * from './analytics';
 export * from './i18n';
 export * from './emails';
+export * from './assistant';

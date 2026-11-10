@@ -65,7 +65,8 @@ export const AnswerSchema = z.union([
 ]);
 export type Answer = z.output<typeof AnswerSchema>;
 
-const slug = z
+/** A content slug (lessons, steps). */
+export const SlugSchema = z
   .string()
   .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)
   .max(80);
@@ -76,8 +77,8 @@ const slug = z
  */
 export const AttemptRequestSchema = z
   .object({
-    lessonSlug: slug,
-    stepSlug: slug,
+    lessonSlug: SlugSchema,
+    stepSlug: SlugSchema,
     answer: z.unknown(),
     timeMs: z.number().int().nonnegative().max(86_400_000),
     hintUsed: z.boolean().default(false),
