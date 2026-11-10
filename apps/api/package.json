@@ -20,7 +20,8 @@
     "reminders:send": "node --env-file-if-exists=.env --import tsx scripts/send-reminders.ts",
     "assistant:trial": "node --env-file-if-exists=.env --import tsx scripts/assistant-trial.ts",
     "db:backup": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts backup",
-    "db:restore-drill": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts restore-drill"
+    "db:restore-drill": "node --env-file-if-exists=.env --import tsx scripts/db-backup.ts restore-drill",
+    "load:test": "node --env-file-if-exists=.env --import tsx scripts/load-test.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",

@@ -145,7 +145,8 @@ model PointEvent {
 
   // One award per reason (e.g. step:<id>): a step can never be paid twice (ADR 006).
   @@unique([userId, reason])
-  @@index([day, userId])
+  // Covers the daily leaderboard: an index-only scan sums a day without reading the table (ADR 013).
+  @@index([day, userId, delta])
 }
 
 model Streak {
