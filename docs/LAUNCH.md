@@ -21,6 +21,7 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
     - `MAIL_FROM`: the sender address of reminder emails.
   - Database and content: run `pnpm db:migrate`, then `pnpm content:sync` against the production database.
 - [ ] **Reminder emails (ADR 011).** Choose an email provider and add it as a `Mailer` in `apps/api/src/lib/mailer.ts`; until then `MAIL_TRANSPORT=log` only logs, and no email leaves the server. Set up the sending domain (SPF, DKIM, DMARC). Then schedule `pnpm reminders:send` once a week on the host: each learner who opted in gets at most one email per ISO week, so a retry is safe.
+- [ ] **AI formula assistant (ADR 012).** Set `GROQ_API_KEY` on the API host (never in the repo). Without it the button still shows and learners get the static hint. The defaults stay inside Groq's free tier: 20 model calls per learner and 40 per guest IP a day, 200,000 tokens a day, and a $2 monthly spend cap at the list prices in `ASSISTANT_PRICE_*`. If you ever enable paid billing at Groq, check those prices against Groq's price list first. `pnpm metrics:report` shows the p95 wait, the spend and the helpful votes; `pnpm --filter @tamreen/api assistant:trial` tries the model on real steps.
 - [ ] **Contact address.** The contact page says the address is "added at launch" (`pages.contact.body` in `apps/web/messages/ar.json`). Add a real address.
 - [x] **Account deletion.** Signed-in learners can delete their account from the bottom of the privacy page, with a confirmation step (`DELETE /api/me`).
 

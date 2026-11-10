@@ -430,11 +430,11 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 ### Phase 8 — AI formula assistant (about 1 week)
 **Goal:** Arabic hints after a wrong formula, with cost controls.
 **Tasks**
-- [ ] `POST /assistant/hint`: input is the step prompt, the learner's formula and the engine feedback code; call the Claude API; return a short Arabic explanation that does not reveal the exact answer unless "Show Answer" was used.
-- [ ] Cache by (stepId, normalised formula); per-user and per-IP daily quotas; timeouts; fall back to the static `hintAr`.
-- [ ] Helpful / not-helpful buttons stored for review, and a visible "AI can be wrong" note.
+- [x] `POST /assistant/hint`: input is the step prompt, the learner's formula and the engine feedback code; call the Claude API; return a short Arabic explanation that does not reveal the exact answer unless "Show Answer" was used. *The developer chose Groq instead of the Claude API (ADR 012).*
+- [x] Cache by (stepId, normalised formula); per-user and per-IP daily quotas; timeouts; fall back to the static `hintAr`.
+- [x] Helpful / not-helpful buttons stored for review, and a visible "AI can be wrong" note.
 **Acceptance**
-- [ ] p95 latency under 4s; a spend cap exists and is tested; with the API unreachable, the static hint appears.
+- [x] p95 latency under 4s; a spend cap exists and is tested; with the API unreachable, the static hint appears.
 
 ### Phase 9 — Hardening and launch (about 1 week)
 **Tasks**
