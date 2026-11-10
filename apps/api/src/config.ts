@@ -20,6 +20,8 @@ export type AppConfig = {
   cookieSecure: boolean;
   /** Express 'trust proxy': proxy hops that append the client IP, or 'loopback' in development. */
   trustProxy: number | 'loopback';
+  /** Set when the API is public: only requests carrying it are served (ADR 015). */
+  proxySecret: string | null;
   /** Requests allowed per window; tests raise them. */
   rateLimits: { auth: number; attempts: number; general: number; assistant: number };
   /** The public site address, for links in emails (no trailing slash). */
@@ -41,6 +43,7 @@ export function configFromEnv(env: Env): AppConfig {
     includeDrafts: env.CONTENT_INCLUDE_DRAFTS,
     cookieSecure: env.COOKIE_SECURE,
     trustProxy: env.TRUST_PROXY_HOPS ?? 'loopback',
+    proxySecret: env.PROXY_SECRET ?? null,
     rateLimits: DEFAULT_RATE_LIMITS,
     siteUrl: env.PUBLIC_SITE_URL.replace(/\/+$/, ''),
     mailFrom: env.MAIL_FROM,

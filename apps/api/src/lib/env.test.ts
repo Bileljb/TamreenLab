@@ -64,3 +64,18 @@ describe('loadEnv with empty values', () => {
     expect(env.GROQ_API_KEY).toBeUndefined();
   });
 });
+
+describe('loadEnv behind a web proxy on another host', () => {
+  it('accepts PROXY_SECRET instead of a proxy hop count', () => {
+    const env = loadEnv({
+      DATABASE_URL: 'postgresql://u:p@localhost:5432/db',
+      NODE_ENV: 'production',
+      JWT_SECRET: 'x'.repeat(40),
+      PROXY_SECRET: 'y'.repeat(32),
+    });
+    expect(env.PROXY_SECRET).toHaveLength(32);
+    expect(() =>
+      loadEnv({ DATABASE_URL: 'postgresql://u:p@localhost:5432/db', PROXY_SECRET: 'short' }),
+    ).toThrow(/PROXY_SECRET/);
+  });
+});

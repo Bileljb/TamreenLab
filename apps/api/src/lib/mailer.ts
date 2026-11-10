@@ -14,7 +14,7 @@ export type Email = {
 
 /**
  * Sends email (ADR 011, ADR 014). `log` records each email in the logs and sends nothing; `smtp`
- * sends through any SMTP provider (Brevo for now), so changing provider is a settings change.
+ * sends through any SMTP provider; `brevo` uses Brevo's HTTPS API where SMTP ports are blocked.
  */
 export interface Mailer {
   send(email: Email): Promise<void>;
@@ -62,11 +62,58 @@ export class SmtpMailer implements Mailer {
   }
 }
 
+/** "Name <email>" or a bare address, as Brevo's API wants it. */
+function parseAddress(value: string): { name?: string; email: string } {
+  const match = /^\s*(.*?)\s*<([^>]+)>\s*$/.exec(value);
+  return match
+    ? { ...(match[1] ? { name: match[1] } : {}), email: match[2]! }
+    : { email: value.trim() };
+}
+
+/**
+ * Sends through Brevo's HTTPS API (port 443). Hosts whose free tiers block SMTP ports, such as
+ * Render, still allow it (ADR 015).
+ */
+export class BrevoApiMailer implements Mailer {
+  constructor(
+    private readonly apiKey: string,
+    private readonly logger?: Logger,
+    private readonly fetchFn: typeof fetch = fetch,
+  ) {}
+
+  async send(email: Email) {
+    const res = await this.fetchFn('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': this.apiKey,
+        'content-type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        sender: parseAddress(email.from),
+        to: [{ email: email.to }],
+        subject: email.subject,
+        textContent: email.text,
+        htmlContent: email.html,
+        headers: email.headers,
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '');
+      throw new Error(`Brevo refused the email: ${res.status} ${detail.slice(0, 300)}`);
+    }
+    const { messageId } = (await res.json().catch(() => ({}))) as { messageId?: string };
+    this.logger?.info({ to: email.to, subject: email.subject, id: messageId }, 'email sent');
+  }
+}
+
 type MailEnv = Pick<Env, 'MAIL_TRANSPORT'> &
-  Partial<Pick<Env, 'SMTP_HOST' | 'SMTP_PORT' | 'SMTP_USER' | 'SMTP_PASS'>>;
+  Partial<Pick<Env, 'SMTP_HOST' | 'SMTP_PORT' | 'SMTP_USER' | 'SMTP_PASS' | 'BREVO_API_KEY'>>;
 
 /** The mailer the settings ask for; the env schema has already required the SMTP details. */
 export function createMailer(env: MailEnv, logger?: Logger): Mailer {
+  if (env.MAIL_TRANSPORT === 'brevo') return new BrevoApiMailer(env.BREVO_API_KEY!, logger);
   if (env.MAIL_TRANSPORT !== 'smtp') return new LogMailer(logger);
   const port = env.SMTP_PORT ?? 587;
   return new SmtpMailer(

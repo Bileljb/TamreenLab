@@ -1,3 +1,5 @@
+import { timingSafeEqual } from 'node:crypto';
+import { isIP } from 'node:net';
 import type { NextFunction, Request, RequestHandler, Response } from 'express';
 import type { Ctx } from '../context';
 import { HttpError } from '../lib/errors';
@@ -39,6 +41,28 @@ export function userId(req: Request): string {
 }
 
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+
+export const PROXY_HEADER = 'x-tamreen-proxy';
+export const CLIENT_IP_HEADER = 'x-tamreen-client-ip';
+
+/**
+ * For an API with a public address (ADR 015): only the web server knows the secret, so a request
+ * without it did not come through the site and is refused. The web server also sends the visitor's
+ * IP, which then replaces `req.ip` for rate limits and quotas. The host's health check is exempt.
+ */
+export function requireProxy(secret: string): RequestHandler {
+  const expected = Buffer.from(secret);
+  return (req, _res, next) => {
+    if (req.method === 'GET' && req.path === '/api/health') return next();
+    const given = Buffer.from(String(req.headers[PROXY_HEADER] ?? ''));
+    if (given.length !== expected.length || !timingSafeEqual(given, expected)) {
+      throw new HttpError(403, 'NOT_VIA_SITE', 'Use the website');
+    }
+    const ip = String(req.headers[CLIENT_IP_HEADER] ?? '').trim();
+    if (isIP(ip)) Object.defineProperty(req, 'ip', { value: ip, configurable: true });
+    next();
+  };
+}
 
 /**
  * CSRF, second layer (ADR 013): a browser names the page that sent a request (`Origin`, and

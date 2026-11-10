@@ -1,0 +1,42 @@
+# Render Blueprint for the API (ADR 015). Render > New > Blueprint, pick this repository.
+# Values marked `sync: false` are asked for once in the Render dashboard and never stored here.
+services:
+  - type: web
+    name: tamreenlab-api
+    runtime: node
+    plan: free # sleeps after 15 minutes idle; the first request then waits about a minute
+    region: frankfurt # the closest Render region to the Gulf
+    autoDeployTrigger: checksPass # deploy main only after CI passes
+    buildCommand: >-
+      corepack enable &&
+      pnpm install --frozen-lockfile --prod=false &&
+      pnpm turbo run build --filter=@tamreen/api &&
+      pnpm --filter @tamreen/api exec prisma migrate deploy &&
+      pnpm content:sync
+    startCommand: pnpm --filter @tamreen/api start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: '24'
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATABASE_URL # Neon connection string, with ?sslmode=require
+        sync: false
+      - key: JWT_SECRET # same value as the GitHub secret, for unsubscribe links
+        sync: false
+      - key: PROXY_SECRET # same value as on Vercel
+        sync: false
+      - key: PUBLIC_SITE_URL # the Vercel address, e.g. https://tamreenlab.vercel.app
+        sync: false
+      - key: MAIL_TRANSPORT
+        value: brevo # Render's free plan blocks SMTP ports; Brevo's API uses HTTPS
+      - key: BREVO_API_KEY
+        sync: false
+      - key: MAIL_FROM # a sender verified in Brevo, e.g. TamreenLab <you@example.com>
+        sync: false
+      - key: MAIL_DAILY_LIMIT
+        value: '280'
+      - key: GROQ_API_KEY
+        sync: false

@@ -116,3 +116,36 @@ describe('GET /me/export', () => {
     expect((await request(makeApp()).get('/api/me/export')).status).toBe(401);
   });
 });
+
+describe('a public API behind the web proxy (PROXY_SECRET)', () => {
+  const app = () => makeApp({ proxySecret: 'proxy-secret-proxy-secret-1234', rateLimits: strict });
+  const viaProxy = (ip: string) => ({
+    'x-tamreen-proxy': 'proxy-secret-proxy-secret-1234',
+    'x-tamreen-client-ip': ip,
+  });
+
+  it('refuses requests that did not come through the web server', async () => {
+    const res = await request(app()).get('/api/leaderboard/daily');
+    expect([res.status, res.body.error.code]).toEqual([403, 'NOT_VIA_SITE']);
+    const forged = await request(app())
+      .get('/api/leaderboard/daily')
+      .set({ 'x-tamreen-proxy': 'guess', 'x-tamreen-client-ip': '1.2.3.4' });
+    expect(forged.status).toBe(403);
+  });
+
+  it('still answers the health check directly, for the host', async () => {
+    expect((await request(app()).get('/api/health')).status).toBe(200);
+  });
+
+  it('takes the client IP from the web server, so limits apply per visitor', async () => {
+    const a = app();
+    const login = (ip: string) =>
+      request(a).post('/api/auth/login').set(viaProxy(ip)).send({
+        email: 'nobody@example.com',
+        password: 'wrong password',
+      });
+    expect((await login('198.51.100.7')).status).toBe(401);
+    expect((await login('198.51.100.7')).status).toBe(429);
+    expect((await login('198.51.100.8')).status).toBe(401);
+  });
+});

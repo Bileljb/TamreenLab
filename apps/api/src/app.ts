@@ -9,7 +9,7 @@ import type { AppConfig } from './config';
 import { createContext, type MailDeps } from './context';
 import { HttpError } from './lib/errors';
 import { requestId } from './lib/logger';
-import { authenticate, requireJson, requireSameSite } from './middleware/auth';
+import { authenticate, requireJson, requireProxy, requireSameSite } from './middleware/auth';
 import { errorHandler, notFound } from './middleware/errors';
 import { openApiDocument } from './openapi';
 import { assistantRouter } from './routes/assistant';
@@ -64,6 +64,8 @@ export function createApp({ logger, checkDb, db, config, mail }: AppDeps) {
       },
     }),
   );
+  // A public API (Render) serves only requests that came through the website (ADR 015).
+  if (config?.proxySecret) app.use(requireProxy(config.proxySecret));
   app.use(express.json({ limit: '100kb' }));
   app.use(cookieParser());
 

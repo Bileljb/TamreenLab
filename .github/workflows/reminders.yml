@@ -1,0 +1,43 @@
+name: Daily reminders
+
+# pnpm reminders:send once a day (ADR 014, ADR 015). Render's free plan has no scheduled jobs, so
+# GitHub runs it. It does nothing until the DATABASE_URL secret exists. Each run sends at most
+# MAIL_DAILY_LIMIT emails; nobody gets more than one reminder a week.
+on:
+  schedule:
+    - cron: '0 6 * * *' # 09:00 in the site's day (UTC+3)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      PUBLIC_SITE_URL: ${{ secrets.PUBLIC_SITE_URL }}
+      MAIL_TRANSPORT: brevo
+      BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+      MAIL_FROM: ${{ secrets.MAIL_FROM }}
+      MAIL_DAILY_LIMIT: '280'
+    steps:
+      - name: Skip until the production secrets are set
+        if: env.DATABASE_URL == ''
+        run: echo "No DATABASE_URL secret yet; nothing to send."
+      - uses: actions/checkout@v4
+        if: env.DATABASE_URL != ''
+      - uses: pnpm/action-setup@v4
+        if: env.DATABASE_URL != ''
+      - uses: actions/setup-node@v4
+        if: env.DATABASE_URL != ''
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - if: env.DATABASE_URL != ''
+        run: pnpm install --frozen-lockfile
+      - if: env.DATABASE_URL != ''
+        run: pnpm --filter @tamreen/api db:generate
+      - if: env.DATABASE_URL != ''
+        run: pnpm reminders:send

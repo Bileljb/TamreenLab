@@ -16,6 +16,11 @@ const EnvSchema = z
      * production: without it, client IPs are either shared or invented (ADR 013).
      */
     TRUST_PROXY_HOPS: z.coerce.number().int().min(1).max(5).optional(),
+    /**
+     * When the API has a public address of its own (Render), the web server sends this secret and
+     * the visitor's IP with every request; anything else is refused (ADR 015).
+     */
+    PROXY_SECRET: z.string().min(24).optional(),
     DATABASE_URL: z.url(),
     LOG_LEVEL: z
       .enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent'])
@@ -29,8 +34,10 @@ const EnvSchema = z
     COOKIE_SECURE: bool.optional(),
     /** The public site address, for links in emails. */
     PUBLIC_SITE_URL: z.url().default('http://localhost:3000'),
-    /** Email transport: `log` writes emails to the logs, `smtp` sends them (ADR 014). */
-    MAIL_TRANSPORT: z.enum(['log', 'smtp']).default('log'),
+    /** Email transport: `log` writes emails to the logs; `smtp` or `brevo` (HTTPS API) sends them. */
+    MAIL_TRANSPORT: z.enum(['log', 'smtp', 'brevo']).default('log'),
+    /** Brevo API key (Brevo > SMTP & API > API keys), for MAIL_TRANSPORT=brevo (ADR 015). */
+    BREVO_API_KEY: z.string().min(1).optional(),
     /** Any SMTP provider; Brevo for now (smtp-relay.brevo.com, port 587). */
     SMTP_HOST: z.string().min(1).optional(),
     SMTP_PORT: z.coerce.number().int().positive().default(587),
@@ -59,17 +66,20 @@ const EnvSchema = z
     if (env.NODE_ENV === 'production' && !env.JWT_SECRET) {
       ctx.addIssue({ code: 'custom', path: ['JWT_SECRET'], message: 'Required in production' });
     }
+    if (env.MAIL_TRANSPORT === 'brevo' && !env.BREVO_API_KEY) {
+      ctx.addIssue({ code: 'custom', path: ['BREVO_API_KEY'], message: 'Required to send email' });
+    }
     if (env.MAIL_TRANSPORT === 'smtp') {
       for (const key of ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'] as const) {
         if (!env[key])
           ctx.addIssue({ code: 'custom', path: [key], message: 'Required to send email' });
       }
     }
-    if (env.NODE_ENV === 'production' && env.TRUST_PROXY_HOPS === undefined) {
+    if (env.NODE_ENV === 'production' && env.TRUST_PROXY_HOPS === undefined && !env.PROXY_SECRET) {
       ctx.addIssue({
         code: 'custom',
         path: ['TRUST_PROXY_HOPS'],
-        message: 'Required in production',
+        message: 'Required in production (or PROXY_SECRET)',
       });
     }
   })
