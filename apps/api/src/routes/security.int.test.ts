@@ -1,7 +1,7 @@
 // Phase 9 (ADR 013): client IP behind proxies, and the cross-site request guard.
 import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 import request from 'supertest';
-import { db, makeApp, resetDatabase } from '../test/harness';
+import { db, makeApp, resetDatabase, signUp } from '../test/harness';
 
 beforeEach(resetDatabase);
 afterAll(() => db.$disconnect());
@@ -73,5 +73,46 @@ describe('POST /client-errors', () => {
     expect((await send({ ...report, message: 'x'.repeat(2000) })).status).toBe(400);
     expect((await send({ ...report, cookie: 'a=b' })).status).toBe(400);
     expect((await send({ ...report, path: '/ar/reset-password?token=secret' })).status).toBe(400);
+  });
+});
+
+describe('GET /me/export', () => {
+  it('gives the learner everything stored about them, as a JSON download', async () => {
+    const { agent, user } = await signUp(makeApp());
+    await agent.post('/api/attempts').send({
+      lessonSlug: 'sum-basics',
+      stepSlug: 'sum-function',
+      timeMs: 20_000,
+      answer: { cell: 'B7', formula: '=SUM(B2:B6)' },
+    });
+    const res = await agent.get('/api/me/export');
+    expect(res.status).toBe(200);
+    expect(res.headers['content-disposition']).toMatch(/attachment; filename="tamreenlab-data-/);
+    expect(res.headers['cache-control']).toBe('no-store');
+    const data = res.body;
+    expect(data.account).toMatchObject({ id: user.id, email: user.email, displayName: 'هدى' });
+    expect(data.account.passwordHash).toBeUndefined();
+    expect(data.attempts).toEqual([
+      expect.objectContaining({ lesson: 'sum-basics', step: 'sum-function', correct: true }),
+    ]);
+    expect(data.points).toHaveLength(1);
+    expect(data.progress).toEqual([expect.objectContaining({ lesson: 'sum-basics' })]);
+    expect(Object.keys(data).sort()).toEqual(
+      [
+        'account',
+        'attempts',
+        'emails',
+        'exportedAt',
+        'points',
+        'progress',
+        'reviews',
+        'streak',
+      ].sort(),
+    );
+    expect(JSON.stringify(data)).not.toMatch(/tokenHash|passwordHash/);
+  });
+
+  it('needs a session', async () => {
+    expect((await request(makeApp()).get('/api/me/export')).status).toBe(401);
   });
 });

@@ -341,7 +341,7 @@
       "title": "Privacy policy",
       "description": "How TamreenLab handles your data.",
       "draft": "Draft: this page needs a legal review before launch.",
-      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nIf you switch on the weekly reminder, we send you one email a week and keep a record of when you agreed. We never send a reminder without your consent, and you can stop it from your settings or from the link in every email.\n\nIf you press \"Explain my mistake\", the exercise and the formula you typed are sent to an AI provider (Groq) to write the explanation. We send no name, email or account details. We keep the explanation, so the same formula gets the same answer, and your helpful or not-helpful vote, without your name or IP address.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
+      "body": "We collect as little data as possible.\n\nIf you practise without an account, your progress is stored only in your browser. If you create an account, we store your email, your display name and your password, hashed so it cannot be reversed, together with your answers and points so we can show your progress and the leaderboard.\n\nWe record anonymous usage statistics, such as starting or finishing a lesson, with a random identifier that is not linked to your name or email, to improve the lessons. You can turn them off in the consent banner.\n\nAds may be shown on explanation pages. Personalised ads are only allowed with your consent.\n\nIf you switch on the weekly reminder, we send you one email a week and keep a record of when you agreed. We never send a reminder without your consent, and you can stop it from your settings or from the link in every email.\n\nIf you press \"Explain my mistake\", the exercise and the formula you typed are sent to an AI provider (Groq) to write the explanation. We send no name, email or account details. We keep the explanation, so the same formula gets the same answer, and your helpful or not-helpful vote, without your name or IP address.\n\nHow long we keep data: your account data stays until you delete your account, and is then removed at once. Password-reset links expire after 30 minutes and are deleted within a day. Server logs, which never contain passwords or session cookies, are kept only as long as needed to find and fix errors.\n\nYour rights: you can download a copy of all your data below, change your settings from your account page, stop reminder emails at any time, and delete your account with everything in it. For any other request, such as correcting your name or email, write to us through the contact page.\n\nYou can delete your account and all its data at any time from the bottom of this page once signed in, or write to us through the contact page."
     },
     "terms": {
       "title": "Terms of use",
@@ -430,5 +430,12 @@
     "body": "We could not show this page. The error was reported to us automatically, and your progress is saved.",
     "retry": "Try again",
     "home": "Home page"
+  },
+  "exportData": {
+    "title": "Download your data",
+    "explain": "Get a copy of everything we keep about your account: account details, answers, points and progress, as a JSON file.",
+    "button": "Download my data",
+    "working": "One moment…",
+    "failed": "The download failed. Please try again."
   }
 }

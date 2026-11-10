@@ -17,6 +17,7 @@ import { HttpError } from '../lib/errors';
 import { visibleStreak } from '../lib/streak';
 import { requireUser, userId } from '../middleware/auth';
 import { nextLesson, streakState } from '../services/progress';
+import { exportUserData } from '../services/export';
 import { clearSession } from '../services/session';
 
 const asGoal = (n: number): DailyGoal =>
@@ -85,6 +86,15 @@ export function meRouter(ctx: Ctx) {
     await ctx.db.user.deleteMany({ where: { id: userId(req) } });
     clearSession(ctx, res);
     res.status(204).end();
+  });
+
+  // Everything stored about the learner, as a file to keep (ADR 013).
+  router.get('/me/export', async (req, res) => {
+    const data = await exportUserData(ctx, userId(req));
+    const day = data.exportedAt.slice(0, 10);
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Content-Disposition', `attachment; filename="tamreenlab-data-${day}.json"`);
+    res.json(data);
   });
 
   router.get('/me/progress', async (req, res) => {

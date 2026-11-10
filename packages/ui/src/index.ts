@@ -13,6 +13,7 @@ export { AuthForm } from './api/AuthForm';
 export { ForgotPasswordForm, ResetPasswordForm } from './api/PasswordForms';
 export { AccountMenu } from './api/AccountMenu';
 export { DeleteAccount } from './api/DeleteAccount';
+export { DownloadMyData } from './api/DownloadMyData';
 export { StatsPanel, LeaderboardPanel } from './api/Panels';
 export { AdSlot, AD_SIZES } from './ads/AdSlot';
 export { ConsentBanner } from './consent/ConsentBanner';

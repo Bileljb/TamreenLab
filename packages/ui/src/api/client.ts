@@ -83,6 +83,8 @@ export const api = {
   forgotPassword: (email: string) => send<{ sent: true }>('/auth/password/forgot', post({ email })),
   resetPassword: (token: string, password: string) =>
     send<void>('/auth/password/reset', post({ token, password })),
+  /** Everything stored about the learner (ADR 013). */
+  exportData: () => call<{ exportedAt: string } & Record<string, unknown>>('/me/export'),
   deleteAccount: () => call<void>('/me', { method: 'DELETE' }),
   attempt: (body: {
     lessonSlug: string;
