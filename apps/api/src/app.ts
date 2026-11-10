@@ -6,7 +6,7 @@ import { pinoHttp } from 'pino-http';
 import type { Logger } from 'pino';
 import type { PrismaClient } from './generated/prisma/client';
 import type { AppConfig } from './config';
-import { createContext } from './context';
+import { createContext, type MailDeps } from './context';
 import { HttpError } from './lib/errors';
 import { requestId } from './lib/logger';
 import { authenticate, requireJson, requireSameSite } from './middleware/auth';
@@ -30,6 +30,8 @@ export type AppDeps = {
   /** Optional so the health-only tests need no database. */
   db?: PrismaClient;
   config?: AppConfig;
+  /** Email for requests (password reset); without it those routes answer 503. */
+  mail?: MailDeps;
 };
 
 function limiter(limit: number, windowMs: number, key?: 'user'): RequestHandler {
@@ -46,7 +48,7 @@ function limiter(limit: number, windowMs: number, key?: 'user'): RequestHandler 
   });
 }
 
-export function createApp({ logger, checkDb, db, config }: AppDeps) {
+export function createApp({ logger, checkDb, db, config, mail }: AppDeps) {
   const app = express();
   app.disable('x-powered-by');
   // Requests arrive through the Next.js rewrite, which forwards X-Forwarded-For as it is (ADR 013).
@@ -71,7 +73,7 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
   });
 
   if (db && config) {
-    const ctx = createContext(db, config);
+    const ctx = createContext(db, config, mail ?? null);
     const { rateLimits } = config;
     // Before the JSON-only guard: mail apps post one-click unsubscribes as forms (RFC 8058).
     app.use('/api/email', limiter(rateLimits.auth, 15 * 60_000));
@@ -87,6 +89,7 @@ export function createApp({ logger, checkDb, db, config }: AppDeps) {
     const authLimit = limiter(rateLimits.auth, 15 * 60_000);
     app.use('/api/auth/login', authLimit);
     app.use('/api/auth/register', authLimit);
+    app.use('/api/auth/password', authLimit);
     app.use('/api/attempts', limiter(rateLimits.attempts, 60_000, 'user'));
     app.use('/api/assistant', limiter(rateLimits.assistant, 60_000, 'user'));
     app.use('/api/client-errors', limiter(10, 60_000));

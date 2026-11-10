@@ -104,16 +104,27 @@ describe('lintContent', () => {
       why: 'لأنك اخترت',
       unsubscribe: 'إلغاء',
     };
+    const reset = {
+      subject: 'س',
+      greeting: 'مرحبًا {name}',
+      body: '{minutes} دقيقة',
+      cta: 'اختر',
+      ignore: 'تجاهل',
+    };
     const emails = (en: object) => ({
       emails: [
-        { path: 'emails/ar.json', json: { weekly } },
+        { path: 'emails/ar.json', json: { weekly, reset } },
         { path: 'emails/en.json', json: en },
       ],
     });
-    expect(messages(lint([goodLesson()], emails({ weekly })))).toEqual(['no fr email text']);
-    const broken = { weekly: { ...weekly, greeting: 'Hello' } };
+    expect(messages(lint([goodLesson()], emails({ weekly, reset })))).toEqual(['no fr email text']);
+    const broken = { weekly: { ...weekly, greeting: 'Hello' }, reset };
     expect(messages(lint([goodLesson()], emails(broken)))).toContain(
       'weekly.greeting: must contain {name}',
+    );
+    const noMinutes = { weekly, reset: { ...reset, body: 'soon' } };
+    expect(messages(lint([goodLesson()], emails(noMinutes)))).toContain(
+      'reset.body: must contain {minutes}',
     );
   });
 

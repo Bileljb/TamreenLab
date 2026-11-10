@@ -108,3 +108,22 @@ test('a learner deletes their account from the privacy page', async ({ page }) =
     'البريد الإلكتروني أو كلمة المرور غير صحيحة.',
   );
 });
+
+test('a learner who forgot the password can ask for a link from the sign-in page', async ({
+  page,
+}) => {
+  await page.goto('/ar/login');
+  await page.getByRole('link', { name: 'نسيت كلمة المرور؟' }).click();
+  await expect(page).toHaveURL(/\/ar\/forgot-password$/);
+  await page.getByRole('textbox', { name: 'البريد الإلكتروني' }).fill('nobody@example.com');
+  await page.getByRole('button', { name: 'أرسل الرابط' }).click();
+  await expect(page.getByRole('main').getByRole('status')).toContainText('إن كان لهذا البريد حساب');
+
+  // A link with no or a bad token never shows the form without a way forward.
+  await page.goto('/ar/reset-password?token=not-a-real-token-at-all-0123456789');
+  await expect(page).toHaveURL(/\/ar\/reset-password$/);
+  await page.getByLabel('كلمة المرور الجديدة').fill('a brand new secret');
+  await page.getByLabel('أعد كتابة كلمة المرور').fill('a brand new secret');
+  await page.getByRole('button', { name: 'احفظ كلمة المرور' }).click();
+  await expect(page.getByRole('main').getByRole('alert')).toContainText('انتهت صلاحيته');
+});

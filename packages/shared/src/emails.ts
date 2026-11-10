@@ -23,6 +23,16 @@ export const EmailCopySchema = z
         unsubscribe: text,
       })
       .strict(),
+    /** The forgotten-password email (ADR 013). */
+    reset: z
+      .object({
+        subject: text,
+        greeting: withVar('name'),
+        body: withVar('minutes'),
+        cta: text,
+        ignore: text,
+      })
+      .strict(),
   })
   .strict();
 export type EmailCopy = z.infer<typeof EmailCopySchema>;

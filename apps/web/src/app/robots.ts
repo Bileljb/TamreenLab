@@ -6,7 +6,15 @@ export default function robots(): MetadataRoute.Robots {
   // Sign-in and personal pages. Share pages stay crawlable so link previews can read them; they
   // carry noindex instead.
   const signIn = LOCALES.flatMap((l) =>
-    ['login', 'register', 'account', 'review', 'unsubscribe'].map((p) => `/${l}/${p}`),
+    [
+      'login',
+      'register',
+      'forgot-password',
+      'reset-password',
+      'account',
+      'review',
+      'unsubscribe',
+    ].map((p) => `/${l}/${p}`),
   );
   return {
     rules: { userAgent: '*', allow: '/', disallow: ['/api/', ...signIn] },

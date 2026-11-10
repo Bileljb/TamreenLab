@@ -7,6 +7,8 @@ import { useSession } from './session';
 
 type Props = {
   mode: 'signIn' | 'signUp';
+  /** The forgotten-password page, linked under the sign-in form. */
+  forgotHref?: string;
   /** Where to go after success when the URL has no safe ?next= (e.g. the home page). */
   fallbackNext: string;
   /** Link to the other form. */
@@ -27,7 +29,7 @@ export function safeNext(raw: string | null, fallback: string): string {
   return raw && /^\/(?![/\\])[^\\]*$/.test(raw) ? raw : fallback;
 }
 
-export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
+export function AuthForm({ mode, fallbackNext, switchHref, forgotHref }: Props) {
   const t = useTranslations('auth');
   const session = useSession();
   const [error, setError] = useState<string | null>(null);
@@ -105,6 +107,14 @@ export function AuthForm({ mode, fallbackNext, switchHref }: Props) {
         />
         {mode === 'signUp' ? <span className="text-xs text-muted">{t('passwordHint')}</span> : null}
       </label>
+      {mode === 'signIn' && forgotHref ? (
+        <a
+          href={forgotHref}
+          className="-mt-2 self-start text-sm text-brand-strong underline underline-offset-4"
+        >
+          {t('forgotLink')}
+        </a>
+      ) : null}
       {mode === 'signUp' ? (
         <label className="flex items-start gap-2.5 text-sm text-ink-soft">
           <input name="emailOptIn" type="checkbox" className="mt-1 size-4 accent-brand" />

@@ -10,6 +10,7 @@ export { Prompt, firstUses, tokenizePrompt } from './prompt/Prompt';
 export { api, ApiError, POINTS_EVENT, announcePoints, reportClientError } from './api/client';
 export { SessionProvider, useSession, type Session } from './api/session';
 export { AuthForm } from './api/AuthForm';
+export { ForgotPasswordForm, ResetPasswordForm } from './api/PasswordForms';
 export { AccountMenu } from './api/AccountMenu';
 export { DeleteAccount } from './api/DeleteAccount';
 export { StatsPanel, LeaderboardPanel } from './api/Panels';

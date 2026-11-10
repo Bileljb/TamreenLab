@@ -136,7 +136,21 @@
       "NETWORK": "Couldn't reach the server. Check your connection and try again.",
       "other": "Something unexpected went wrong. Please try again."
     },
-    "emailOptIn": "Send me a weekly practice reminder by email (you can stop it at any time)."
+    "emailOptIn": "Send me a weekly practice reminder by email (you can stop it at any time).",
+    "forgotLink": "Forgot your password?",
+    "forgotTitle": "Forgot your password",
+    "forgotIntro": "Enter your email and we will send you a link to choose a new password.",
+    "forgotSubmit": "Send the link",
+    "forgotSent": "If this email has an account with us, a message with a link valid for 30 minutes is on its way. Check your spam folder too.",
+    "backToSignIn": "Back to sign in",
+    "resetTitle": "Choose a new password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat the password",
+    "resetSubmit": "Save password",
+    "resetDone": "Your password has changed. Sign in with it now; we signed you out on every other device.",
+    "resetInvalid": "This link is invalid or has expired.",
+    "requestNewLink": "Request a new link",
+    "passwordsDiffer": "The two passwords do not match."
   },
   "panels": {
     "statsTitle": "Your progress",

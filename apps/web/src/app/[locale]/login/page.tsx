@@ -23,7 +23,12 @@ export default async function LoginPage({ params }: Props) {
       />
       <div className="flex w-full max-w-md animate-fade-up flex-col gap-6 rounded-[var(--radius-card)] border border-line bg-raised p-6 shadow-lift sm:p-8">
         <h1 className="text-3xl font-extrabold tracking-tight">{t('signInTitle')}</h1>
-        <AuthForm mode="signIn" fallbackNext={`/${locale}`} switchHref={`/${locale}/register`} />
+        <AuthForm
+          mode="signIn"
+          fallbackNext={`/${locale}`}
+          switchHref={`/${locale}/register`}
+          forgotHref={`/${locale}/forgot-password`}
+        />
       </div>
     </main>
   );

@@ -11,5 +11,12 @@
     "cta": "Continue practising",
     "why": "You get this email because you chose to receive a weekly reminder from TamreenLab.",
     "unsubscribe": "Unsubscribe from reminders"
+  },
+  "reset": {
+    "subject": "Reset your TamreenLab password",
+    "greeting": "Hello {name},",
+    "body": "You asked to reset your password. The link below works once and for {minutes} minutes.",
+    "cta": "Choose a new password",
+    "ignore": "If you did not ask for this, ignore this email: your current password has not changed."
   }
 }

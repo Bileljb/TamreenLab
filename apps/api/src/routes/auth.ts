@@ -1,10 +1,16 @@
 import { Router } from 'express';
 import { hash, verify } from '@node-rs/argon2';
-import { LoginRequestSchema, RegisterRequestSchema } from '@tamreen/shared';
+import {
+  ForgotPasswordRequestSchema,
+  LoginRequestSchema,
+  RegisterRequestSchema,
+  ResetPasswordRequestSchema,
+} from '@tamreen/shared';
 import type { Ctx } from '../context';
 import { HttpError } from '../lib/errors';
 import { isAllowedDisplayName } from '../lib/moderation';
 import { REFRESH_COOKIE } from '../middleware/auth';
+import { requestPasswordReset, resetPassword } from '../services/password';
 import { endSession, issueSession, rotateSession } from '../services/session';
 import { toUserDto } from './me';
 
@@ -61,6 +67,19 @@ export function authRouter(ctx: Ctx) {
 
   router.post('/auth/logout', async (req, res) => {
     await endSession(ctx, res, req.cookies?.[REFRESH_COOKIE] as string | undefined);
+    res.status(204).end();
+  });
+
+  // The same answer whether or not the email has an account (ADR 013).
+  router.post('/auth/password/forgot', async (req, res) => {
+    const { email } = ForgotPasswordRequestSchema.parse(req.body);
+    await requestPasswordReset(ctx, email);
+    res.status(202).json({ sent: true });
+  });
+
+  router.post('/auth/password/reset', async (req, res) => {
+    const { token, password } = ResetPasswordRequestSchema.parse(req.body);
+    await resetPassword(ctx, token, password);
     res.status(204).end();
   });
 

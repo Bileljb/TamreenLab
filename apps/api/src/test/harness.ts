@@ -2,8 +2,11 @@
 import path from 'node:path';
 import { pino } from 'pino';
 import request from 'supertest';
+import { CONTENT_LOCALES, type ContentLocale, type EmailCopy } from '@tamreen/shared';
+import { loadEmailCopy } from '@tamreen/content';
 import { createApp } from '../app';
 import type { AppConfig } from '../config';
+import { LogMailer, type Mailer } from '../lib/mailer';
 import { createPrisma } from '../lib/prisma';
 import { syncContent } from '../services/content-sync';
 
@@ -37,8 +40,18 @@ export const config: AppConfig = {
   now: () => clock.now,
 };
 
-export function makeApp(overrides: Partial<AppConfig> = {}) {
+const CONTENT_DIR = path.resolve(import.meta.dirname, '../../../../content');
+
+/** The real email text, loaded once. */
+export const emailCopy = Object.fromEntries(
+  await Promise.all(
+    CONTENT_LOCALES.map(async (l) => [l, await loadEmailCopy(CONTENT_DIR, l)] as const),
+  ),
+) as Record<ContentLocale, EmailCopy>;
+
+export function makeApp(overrides: Partial<AppConfig> = {}, deps: { mailer?: Mailer } = {}) {
   return createApp({
+    mail: { mailer: deps.mailer ?? new LogMailer(), copy: emailCopy },
     logger: pino({ level: 'silent' }),
     db,
     config: { ...config, ...overrides },
@@ -53,7 +66,7 @@ let seeded = false;
 /** Loads the content files once per run (idempotent anyway), and removes every user. */
 export async function resetDatabase() {
   if (!seeded) {
-    const result = await syncContent(db, path.resolve(import.meta.dirname, '../../../../content'));
+    const result = await syncContent(db, CONTENT_DIR);
     if (result.plan.errors.length) throw new Error(result.plan.errors.join('\n'));
     seeded = true;
   }

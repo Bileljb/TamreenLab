@@ -1,16 +1,26 @@
+import path from 'node:path';
+import { loadEmailCopy } from '@tamreen/content';
+import { CONTENT_LOCALES, type ContentLocale, type EmailCopy } from '@tamreen/shared';
 import { createApp } from './app';
 import { configFromEnv } from './config';
 import { loadEnv } from './lib/env';
 import { createLogger } from './lib/logger';
+import { LogMailer } from './lib/mailer';
 import { prisma } from './lib/prisma';
 
 const env = loadEnv();
 const logger = createLogger(env.LOG_LEVEL);
+// src/ and dist/ sit at the same depth, so this finds the repo's content folder from both.
+const contentDir = process.env.CONTENT_DIR ?? path.resolve(import.meta.dirname, '../../../content');
+const copy = {} as Record<ContentLocale, EmailCopy>;
+for (const locale of CONTENT_LOCALES) copy[locale] = await loadEmailCopy(contentDir, locale);
 
 const app = createApp({
   logger,
   db: prisma,
   config: configFromEnv(env),
+  // Only the log transport exists until the developer picks a provider (ADR 011).
+  mail: { mailer: new LogMailer(logger), copy },
   checkDb: async () => {
     await prisma.$queryRaw`SELECT 1`;
   },

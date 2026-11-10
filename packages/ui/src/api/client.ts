@@ -80,6 +80,9 @@ export const api = {
     send<User>('/auth/register', post({ ...body, locale: pageLocale() })),
   login: (body: LoginRequest) => send<User>('/auth/login', post(body)),
   logout: () => send<void>('/auth/logout', post({})),
+  forgotPassword: (email: string) => send<{ sent: true }>('/auth/password/forgot', post({ email })),
+  resetPassword: (token: string, password: string) =>
+    send<void>('/auth/password/reset', post({ token, password })),
   deleteAccount: () => call<void>('/me', { method: 'DELETE' }),
   attempt: (body: {
     lessonSlug: string;

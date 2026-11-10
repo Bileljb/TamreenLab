@@ -59,6 +59,16 @@ export const UserSchema = z.object({
 });
 export type User = z.infer<typeof UserSchema>;
 
+/** `POST /auth/password/forgot` (ADR 013). */
+export const ForgotPasswordRequestSchema = z.object({ email: EmailSchema }).strict();
+export type ForgotPasswordRequest = z.input<typeof ForgotPasswordRequestSchema>;
+
+/** `POST /auth/password/reset`: the token from the emailed link and the new password. */
+export const ResetPasswordRequestSchema = z
+  .object({ token: z.string().min(20).max(200), password: PasswordSchema })
+  .strict();
+export type ResetPasswordRequest = z.input<typeof ResetPasswordRequestSchema>;
+
 export const ProgressSyncRequestSchema = z.object({ guestProgress: GuestProgressSchema }).strict();
 export type ProgressSyncRequest = z.input<typeof ProgressSyncRequestSchema>;
 

@@ -136,7 +136,21 @@
       "NETWORK": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",
       "other": "Une erreur inattendue s'est produite. Réessayez."
     },
-    "emailOptIn": "Envoyez-moi un rappel d'entraînement par e-mail chaque semaine (vous pouvez l'arrêter à tout moment)."
+    "emailOptIn": "Envoyez-moi un rappel d'entraînement par e-mail chaque semaine (vous pouvez l'arrêter à tout moment).",
+    "forgotLink": "Mot de passe oublié ?",
+    "forgotTitle": "Mot de passe oublié",
+    "forgotIntro": "Saisissez votre e-mail et nous vous enverrons un lien pour choisir un nouveau mot de passe.",
+    "forgotSubmit": "Envoyer le lien",
+    "forgotSent": "Si cet e-mail correspond à un compte, un message avec un lien valable 30 minutes est en route. Vérifiez aussi vos courriers indésirables.",
+    "backToSignIn": "Retour à la connexion",
+    "resetTitle": "Choisissez un nouveau mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Répétez le mot de passe",
+    "resetSubmit": "Enregistrer le mot de passe",
+    "resetDone": "Votre mot de passe a changé. Connectez-vous avec dès maintenant ; nous vous avons déconnecté de tous les autres appareils.",
+    "resetInvalid": "Ce lien n’est pas valide ou a expiré.",
+    "requestNewLink": "Demander un nouveau lien",
+    "passwordsDiffer": "Les deux mots de passe ne correspondent pas."
   },
   "panels": {
     "statsTitle": "Votre progression",

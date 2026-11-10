@@ -55,6 +55,7 @@ model User {
   refreshTokens RefreshToken[]
   reviews       ReviewItem[]
   emails        EmailLog[]
+  passwordResets PasswordResetToken[]
 }
 
 model Track {
@@ -196,6 +197,19 @@ model RefreshToken {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([family])
+}
+
+// Forgotten-password links (ADR 013): hashed, single use, 30 minutes. A newer link replaces older ones.
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }
 
 // Anonymous usage events for the launch metrics (ADR 007): no user id, no IP address.
