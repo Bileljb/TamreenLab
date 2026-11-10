@@ -438,13 +438,13 @@ Durations are rough planning estimates, not deadlines. Each phase ends with a co
 
 ### Phase 9 — Hardening and launch (about 1 week)
 **Tasks**
-- [ ] Security pass: OWASP basics, dependency audit, secrets management, CSRF strategy, password-reset flow.
-- [ ] Backups with a tested restore, error tracking, uptime checks, structured logs.
-- [ ] Accessibility pass: keyboard-only use, screen-reader labels for the grid.
-- [ ] Cookie consent and privacy policy suitable for the target countries.
-- [ ] Load test `POST /attempts` and the leaderboard query; add indexes as needed.
+- [x] Security pass: OWASP basics, dependency audit, secrets management, CSRF strategy, password-reset flow. *(docs/SECURITY.md, ADR 013)*
+- [x] Backups with a tested restore, error tracking, uptime checks, structured logs. *(Scripts, drill, logs, error reporting and the health check are built; scheduling and monitors are hosting tasks in docs/OPERATIONS.md.)*
+- [x] Accessibility pass: keyboard-only use, screen-reader labels for the grid.
+- [x] Cookie consent and privacy policy suitable for the target countries. *(Data export, retention and rights added; the opt-in/opt-out choice waits for D5 and the policy for legal review.)*
+- [x] Load test `POST /attempts` and the leaderboard query; add indexes as needed.
 **Acceptance**
-- [ ] A restore from backup is demonstrated, and no critical findings remain open.
+- [x] A restore from backup is demonstrated, and no critical findings remain open.
 
 ---
 

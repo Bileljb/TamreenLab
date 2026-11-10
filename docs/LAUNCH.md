@@ -18,10 +18,14 @@ Everything the developer needs to do or decide before the Phase 5 launch gate (P
     - `NODE_ENV=production`. This also makes cookies `Secure`.
     - `DAY_UTC_OFFSET_MINUTES` stays at the default UTC+3 (ADR 008).
     - `PUBLIC_SITE_URL`: the public origin, used for links in reminder emails.
-    - `MAIL_FROM`: the sender address of reminder emails.
+    - `MAIL_FROM`: the sender address of reminder and password-reset emails.
+    - `TRUST_PROXY_HOPS`: proxies in front of the web server that append the client IP (a load balancer = 1). Required; the API refuses to start without it (ADR 013, docs/OPERATIONS.md).
+    - `HOST`: keep the default `127.0.0.1` unless the API runs on a private network; the API port must never be public.
   - Database and content: run `pnpm db:migrate`, then `pnpm content:sync` against the production database.
-- [ ] **Reminder emails (ADR 011).** Choose an email provider and add it as a `Mailer` in `apps/api/src/lib/mailer.ts`; until then `MAIL_TRANSPORT=log` only logs, and no email leaves the server. Set up the sending domain (SPF, DKIM, DMARC). Then schedule `pnpm reminders:send` once a week on the host: each learner who opted in gets at most one email per ISO week, so a retry is safe.
+- [ ] **Reminder and password-reset emails (ADR 011, ADR 013).** Choose an email provider and add it as a `Mailer` in `apps/api/src/lib/mailer.ts`; until then `MAIL_TRANSPORT=log` only logs, and no email leaves the server. Set up the sending domain (SPF, DKIM, DMARC). Then schedule `pnpm reminders:send` once a week on the host: each learner who opted in gets at most one email per ISO week, so a retry is safe.
 - [ ] **AI formula assistant (ADR 012).** Set `GROQ_API_KEY` on the API host (never in the repo). Without it the button still shows and learners get the static hint. The defaults stay inside Groq's free tier: 20 model calls per learner and 40 per guest IP a day, 200,000 tokens a day, and a $2 monthly spend cap at the list prices in `ASSISTANT_PRICE_*`. If you ever enable paid billing at Groq, check those prices against Groq's price list first. `pnpm metrics:report` shows the p95 wait, the spend and the helpful votes; `pnpm --filter @tamreen/api assistant:trial` tries the model on real steps.
+- [ ] **Operations (ADR 013, docs/OPERATIONS.md).** Schedule `pnpm db:backup` daily with an off-site copy, run `pnpm db:restore-drill` monthly, add uptime checks on `/api/health` and `/ar`, alert on error-level logs, and keep logs 30 days at most.
+- [ ] **D5 consent model.** Analytics are opt-out (ADR 007). Decide whether the target countries need opt-in; it is one line in `packages/ui/src/consent/consent.ts` (docs/SECURITY.md).
 - [ ] **Contact address.** The contact page says the address is "added at launch" (`pages.contact.body` in `apps/web/messages/ar.json`). Add a real address.
 - [x] **Account deletion.** Signed-in learners can delete their account from the bottom of the privacy page, with a confirmation step (`DELETE /api/me`).
 
